@@ -15,7 +15,6 @@
 #include <random>
 #include <cstdlib>
 #include <memory>
-#include <vector>
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -53,13 +52,16 @@
 #include <typeinfo>
 #include <utility>
 #include <valarray>
+#include <vector>
 
 const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
 using namespace std;
+float RAY_EPSILON = 0.000000001;
 
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
+int rootNodeIndex = 0;
 
 inline
 float deg2rad(const float& deg)
@@ -541,14 +543,96 @@ inline float modulo(const float& f)
 	return f - std::floor(f);
 }
 
+bool intersectSphere(Vec3f position, Vec3f direction, SceneObject s, float& iTime, Vec3f& normal, Vec3f& intersection)
+{
+
+	float a = direction.dotProduct(direction);
+	float b = 2 * direction.dotProduct(position - s.center);
+	float c = s.center.dotProduct(s.center) + position.dotProduct(position) + (-2 * s.center.dotProduct(position)) - pow(s.radius, 2);
+
+	float discriminant = b * b - 4 * a * c;
+
+	if (discriminant > 0.0 + RAY_EPSILON)
+	{
+
+		float t = (-b - sqrt(discriminant)) / (2 * a);
+
+		float t2 = (-b + sqrt(discriminant)) / (2 * a);
+
+
+		if (t2 > RAY_EPSILON)
+		{
+			//we know we have some intersection
+
+			if (t > RAY_EPSILON)
+			{
+				iTime = t;
+			}
+			else
+			{
+				iTime = t2;
+			}
+
+			intersection = position + t * direction;
+			normal = ((intersection - s.center) / s.radius).normalize();
+			return true;
+		}
+	}
+	return false;
+}
+
 Vec3f castRay(
 	const Vec3f& rayorig,
 	const Vec3f& raydir,
 	std::vector<Sphere>& spheres,
 	std::vector<Sphere>& lights,
+	std::vector<SceneObject>& scene,
+	std::vector<Node>& tree,
 	const int& depth, TreeNode* node)
 {
+	float minT = std::numeric_limits<float>::max();
+	SceneObject intersectObj;
+	Vec3f minTnormal;
+	Vec3f minTintersection;
+	bool intersect = false;
+	std::vector<int> boundingBoxes;
+	bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
 
+	if (boundingBoxes.size() == 0)
+	{
+		return Vec3f(0.6, 0.8, 1);
+	}
+
+	for (int box : boundingBoxes)
+	{
+		for (int i = 0; i < tree[box].numObjs; i++)
+		{
+			if (scene[tree[box].objs[i]].sphere)
+			{
+				float intersectT;
+				Vec3f normal;
+				Vec3f intersection;
+				if (intersectSphere(rayorig, raydir, scene[tree[box].objs[i]], intersectT, normal, intersection))
+				{
+					if (intersectT < minT)
+					{
+						minTnormal = normal;
+						minTintersection = intersection;
+						intersectObj = scene[tree[box].objs[i]];
+						minT = intersectT;
+						intersect = true;
+					}
+				}
+			}
+		}
+	}
+
+	if (intersect)
+	{
+		return Vec3f(0, 0, 0);
+	}
+	return Vec3f(0.6, 0.8, 1);
+	////
 	if (depth > 5) {
 		return Vec3f(0.6, 0.8, 1);
 	}
@@ -639,8 +723,8 @@ Vec3f castRay(
 			Vec3f refractionRayOrig = (refractionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, depth + 1, node);
-			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, depth + 1, node);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, node);
+			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights,scene, tree, depth + 1, node);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = refractionColor * (1 - kr);
@@ -653,7 +737,7 @@ Vec3f castRay(
 			Vec3f reflectionRayOrig = (reflectionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, depth + 1, node);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights,scene, tree, depth + 1, node);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = (1 - kr);
@@ -734,7 +818,7 @@ void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 
 	delete[] image;
 }
-void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, TreeNode* node)
+void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, TreeNode* node, std::vector<SceneObject>& scene, std::vector<Node>& tree)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
 	float invWidth = 1 / float(settings.width), invHeight = 1 / float(settings.height);
@@ -750,7 +834,7 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 				float yy = (1 - 2 * ((y + random_double()) * invHeight)) * angle;
 				Vec3f raydir(xx, yy, -1);
 				raydir.normalize();
-				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, 5, node);
+				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights,scene, tree, 5, node);
 			}
 			*pixel = sampled_pixel;
 		}
@@ -957,9 +1041,38 @@ int main(int argc, char** argv)
 			root.maxZ = obj.position[2] + obj.radius;
 	}
 
-	std::cout << root.minX<< "\n";
-	std::cout << root.minY << "\n";
-	std::cout << root.minZ << "\n";
+	// we try to find the midpoint and longest axis of the root box
+	if (root.maxX - root.minX > root.maxY - root.minY)
+	{
+		if (root.maxX - root.minX > root.maxZ - root.minZ)
+		{
+			root.longestAxis = 0;
+			root.midpoint = (root.maxX + root.minX) / 2;
+		}
+	}
+	if (root.maxY - root.minY > root.maxX - root.minX)
+	{
+		if (root.maxY - root.minY > root.maxZ - root.minZ)
+		{
+			root.longestAxis = 1;
+			root.midpoint = (root.maxY + root.minY) / 2;
+		}
+	}
+	if (root.maxZ - root.minZ > root.maxX - root.minX)
+	{
+		if (root.maxZ - root.minZ > root.maxY - root.minY)
+		{
+			root.longestAxis = 2;
+			root.midpoint = (root.maxZ + root.minZ) / 2;
+		}
+	}
+
+	rootNodeIndex = constructTree(scene, root, nodes);
+
+	std::vector<int> boundingBoxes;
+
+	//intersectObjects(rayPosition, sample, *args->scene, *args->lights, colorTest, false, numBounces, dummyt, *args->tree))
+
 	/////////////////////////////////
 	Settings settings;
 
@@ -985,88 +1098,7 @@ int main(int argc, char** argv)
 		spheres.push_back(Sphere(Vec3f(0.0, -100, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0)); // ground
 		spheres.push_back(Sphere(Vec3f(5, 0, -20), 2, Vec3f(0.1, 0.77, 0.97), 1, 0.0)); //yellow right
 
-
-		// particles
-
-		//BVSphere root = BVSphere(Vec3f(0, 0, -20), 6, Sphere(Vec3f(-3.2, 0, -20), 2.5, Vec3f(0.2, 0.42, 0.33), 1, 0.0), Sphere(Vec3f(-3.2, 0, -20), 2.5, Vec3f(0.2, 0.42, 0.33), 1, 0.0));
-
-
-
-				// bv left l 3
-		Sphere p_1 = Sphere(Vec3f(-5, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere p_2 = Sphere(Vec3f(-4.5, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere bv_l_3 = Sphere(Vec3f(-4.75, 0, -20), 0.6, Vec3f(0.2, 0.77, 0.33), 1, 0.0); //yellow right
-		bv_l_3.setChildes(&p_1, &p_2);
-		// bv right l 3
-		Sphere p_3 = Sphere(Vec3f(-2, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere p_4 = Sphere(Vec3f(-1.5, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere bv_r_3 = Sphere(Vec3f(-1.75, 0, -20), 0.6, Vec3f(0.2, 0.77, 0.33), 1, 0.0); //yellow right
-		bv_r_3.setChildes(&p_3, &p_4);
-
-		// bv left l 2
-		Sphere bv_l_2 = Sphere(Vec3f(-3.2, 0, -20), 2.5, Vec3f(0.2, 0.42, 0.33), 1, 0.0); //yellow right
-		bv_l_2.setChildes(&bv_l_3, &bv_r_3);
-
-
-		// bv left l 3
-		Sphere p_5 = Sphere(Vec3f(1.5, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere p_6 = Sphere(Vec3f(2, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere bv_l_3_2 = Sphere(Vec3f(1.75, 0, -20), 0.6, Vec3f(0.2, 0.77, 0.33), 1, 0.0);
-		bv_l_3_2.setChildes(&p_5, &p_6);
-
-		// bv right l 3
-		Sphere p_7 = Sphere(Vec3f(4.5, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere p_8 = Sphere(Vec3f(5, 0, -20), 0.2, Vec3f(0.1, 0.77, 0.97), 1, 0.0); //yellow right
-		Sphere bv_r_3_2 = Sphere(Vec3f(4.75, 0, -20), 0.6, Vec3f(0.2, 0.77, 0.33), 1, 0.0);
-		bv_r_3_2.setChildes(&p_7, &p_8);
-
-		// bv right l 2
-		Sphere bv_r_2 = Sphere(Vec3f(3.2, 0, -20), 2.5, Vec3f(0.2, 0.42, 0.33), 1, 0.0); //yellow right
-		bv_r_2.setChildes(&bv_l_3_2, &bv_r_3_2);
-
-
-		//bv root l1
-		Sphere root = Sphere(Vec3f(0, 0, -20), 6, Vec3f(0.0, 0, 0), 1, 0.0); //yellow right
-		root.setChildes(&bv_l_2, &bv_r_2);
-
-		lights.push_back(light);
-		lights.push_back(light2);
-
-		//vector<int> v = { 1, 2,3, 4,5,6,7, 8,9,10,11,12,13,14,15 };
-
-		vector<Sphere*> v = { &root, &bv_l_2,&bv_r_2, &bv_l_3,&bv_r_3,&bv_l_3_2,&bv_r_3_2, &p_1,&p_2,&p_3,&p_4,&p_5,&p_6,&p_7,&p_8 };
-		TreeNode* tt = make_tree(v);
-		//spheres.push_back(p_1);
-		//spheres.push_back(p_2);
-		//spheres.push_back(p_3);
-		//spheres.push_back(p_4);
-		//spheres.push_back(p_5);
-		//spheres.push_back(p_6);
-		//spheres.push_back(p_7);
-		//spheres.push_back(p_8);
-
-		//// This is a cube
-		//triangles.push_back(Triangle(Vec3f(-1, -1 - sh_y, 1 - shift), Vec3f(1, -1 - sh_y, 1 - shift), Vec3f(1, 1 - sh_y, 1 - shift), Vec3f(0.1, 0.3, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(-1, -1 - sh_y, 1 - shift), Vec3f(1, 1 - sh_y, 1 - shift), Vec3f(-1, 1 - sh_y, 1 - shift), Vec3f(0.90, 0.1, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1, -1 - sh_y, 1 - shift), Vec3f(1, -1 - sh_y, -1 - shift), Vec3f(1, 1 - sh_y, -1 - shift), Vec3f(0.90, 0.3, 0.1), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1, -1 - sh_y, 1 - shift), Vec3f(1, 1 - sh_y, -1 - shift), Vec3f(1, 1 - sh_y, 1 - shift), Vec3f(0.1, 0.3, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1, -1 - sh_y, -1 - shift), Vec3f(-1, -1 - sh_y, -1 - shift), Vec3f(-1, 1 - sh_y, -1 - shift), Vec3f(0.90, 1, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1, -1 - sh_y, -1 - shift), Vec3f(-1, 1 - sh_y, -1 - shift), Vec3f(1, 1 - sh_y, -1 - shift), Vec3f(0.90, 0.3, 0.1), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(-1, -1 - sh_y, -1 - shift), Vec3f(-1, -1 - sh_y, 1 - shift), Vec3f(-1, 1 - sh_y, 1 - shift), Vec3f(0.1, 0.3, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(-1, -1 - sh_y, -1 - shift), Vec3f(-1, 1 - sh_y, 1 - shift), Vec3f(-1, 1 - sh_y, -1 - shift), Vec3f(0.90, 0.1, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(-1, 1 - sh_y, 1 - shift), Vec3f(1, 1 - sh_y, 1 - shift), Vec3f(1, 1 - sh_y, -1 - shift), Vec3f(0.90, 0.3, 0.1), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(-1, 1 - sh_y, 1 - shift), Vec3f(1, 1 - sh_y, -1 - shift), Vec3f(-1, 1 - sh_y, -1 - shift), Vec3f(0.1, 0.3, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1, -1 - sh_y, 1 - shift), Vec3f(-1, -1 - sh_y, -1 - shift), Vec3f(1, -1 - sh_y, -1 - shift), Vec3f(0.90, 0.1, 0.46), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1, -1 - sh_y, 1 - shift), Vec3f(-1, -1 - sh_y, 1 - shift), Vec3f(-1, -1 - sh_y, -1 - shift), Vec3f(0.90, 0.3, 0.1), 1, 0.0));
-
-
-		//// This is a tetrahidron
-		//triangles.push_back(Triangle(Vec3f(-1.0 - sh_y, 1.0, -1.0 + 2 - shift), Vec3f(1.0 - sh_y, -1.0, -1.0 + 2 - shift), Vec3f(-1.0 - sh_y, -1.0, 1.0 + 2 - shift), Vec3f(0.2, 0.3, 0.1), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1.0 - sh_y, 1.0, 1.0 + 2 - shift), Vec3f(-1.0 - sh_y, -1.0, 1.0 + 2 - shift), Vec3f(1.0 - sh_y, -1.0, -1.0 + 2 - shift), Vec3f(0.90, 0.3, 0.1), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1.0 - sh_y, 1.0, 1.0 + 2 - shift), Vec3f(-1.0 - sh_y, 1.0, -1.0 + 2 - shift), Vec3f(-1.0 - sh_y, -1.0, 1.0 + 2 - shift), Vec3f(0.90, 0.3, 0.6), 1, 0.0));
-		//triangles.push_back(Triangle(Vec3f(1.0 - sh_y, 1.0, 1.0 + 2 - shift), Vec3f(1.0 - sh_y, -1.0, -1.0 + 2 - shift), Vec3f(-1.0 - sh_y, 1.0, -1.0 + 2 - shift), Vec3f(0.90, 0.7, 0.1), 1, 0.0));
-
-		render(settings, spheres, lights, triangles, frame, tt);
+		render(settings, spheres, lights, triangles, frame, NULL,scene, nodes);
 	}
 	return 0;
 }
