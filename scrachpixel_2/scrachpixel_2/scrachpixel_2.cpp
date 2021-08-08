@@ -7,7 +7,7 @@
 //      stackoverflow.com
 //      www.tutorialspoint.com/binary-search-tree-iterator-in-cplusplus
 
-
+#include "bvh.h"
 #include <cstdio>
 #include <utility>
 #include <cstdint>
@@ -21,7 +21,7 @@
 #include <cmath>
 #include <sstream>
 #include <chrono>
-#include "geometry.h"
+//#include "geometry.h"
 #include <algorithm>
 #include <bitset>
 #include <complex>
@@ -759,10 +759,208 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 }
 
 
+std::vector<SceneObject> createScene() {
+		std::vector<SceneObject> scene;
 
+		SceneObject s1;
+		s1.objId = 0;
+		s1.radius = 1.0;
+		s1.ambient = Vec3f(0, 0, 1);
+		s1.specular = Vec3f(0.9, 0.4, 0);
+		s1.diffuse = Vec3f(0.8, 0.3, 0.1);
+		s1.center = Vec3f(-4, 3, 0);
+		s1.position = s1.center;
+		s1.shininess = 64;
+		s1.reflective = Vec3f(.5, .5, .5);
+		s1.sphere = true;
+		scene.push_back(s1);
+
+		SceneObject s2;
+		s2.objId = 1;
+		s2.radius = 1.5;
+		s2.ambient = Vec3f(1.0, 1, 1);
+		s2.specular = Vec3f(.5, .5, .5);
+		s2.diffuse = Vec3f(1, 1, 1);
+		s2.center = Vec3f(-2, 0, 0);
+		s2.position = s2.center;
+		s2.reflective = Vec3f(.5, .5, .5);
+		s2.shininess = 64;
+		s2.sphere = true;
+		scene.push_back(s2);
+
+		SceneObject s3;
+		s3.objId = 2;
+		s3.radius = 1;
+		s3.ambient = Vec3f(1.0, 1.0, 0.0);
+		s3.specular = Vec3f(.5, .5, .5);
+		s3.diffuse = Vec3f(1, 1, 1);
+		s3.center = Vec3f(1, 0, 3);
+		s3.position = s3.center;
+		s3.reflective = Vec3f(.5, .5, .5);
+		s3.shininess = 64;
+		s3.sphere = true;
+		scene.push_back(s3);
+
+		SceneObject s4;
+		s4.objId = 3;
+		s4.radius = 1;
+		s4.ambient = Vec3f(1.0, 1.0, 0.0);
+		s4.specular = Vec3f(.5, .5, .5);
+		s4.diffuse = Vec3f(1, 1, 1);
+		s4.center = Vec3f(2, 0, 3);
+		s4.position = s4.center;
+		s4.reflective = Vec3f(.5, .5, .5);
+		s4.shininess = 64;
+		s4.sphere = true;
+		scene.push_back(s4);
+
+		SceneObject s5;
+		s5.objId = 4;
+		s5.radius = .75;
+		s5.ambient = Vec3f(1.0, 1.0, 0.0);
+		s5.specular = Vec3f(.5, .5, .5);
+		s5.diffuse = Vec3f(1, 1, 1);
+		s5.center = Vec3f(1.5, 1, 3);
+		s5.position = s5.center;
+		s5.reflective = Vec3f(.5, .5, .5);
+		s5.shininess = 64;
+		s5.sphere = true;
+		scene.push_back(s5);
+
+		SceneObject s6;
+		s6.objId = 5;
+		s6.radius = .75;
+		s6.ambient = Vec3f(1.0, 1.0, 0.0);
+		s6.specular = Vec3f(.5, .5, .5);
+		s6.diffuse = Vec3f(1, 1, 1);
+		s6.center = Vec3f(1.5, -1, 3);
+		s6.position = s6.center;
+		s6.reflective = Vec3f(.5, .5, .5);
+		s6.shininess = 64;
+		s6.sphere = true;
+		scene.push_back(s6);
+
+		SceneObject s7;
+		s7.objId = 6;
+		s7.radius = 1.0;
+		s7.ambient = Vec3f(1.0, 1, 1);
+		s7.specular = Vec3f(.5, .5, .5);
+		s7.diffuse = Vec3f(1, 1, 1);
+		s7.center = Vec3f(0, 2, 0);
+		s7.position = s7.center;
+		s7.reflective = Vec3f(.5, .5, .5);
+		s7.shininess = 64;
+		s7.sphere = true;
+		scene.push_back(s7);
+
+		SceneObject s8;
+		s8.objId = 7;
+		s8.radius = 1;
+		s8.ambient = Vec3f(0, 1, 0);
+		s8.specular = Vec3f(.2, .2, .2);
+		s8.diffuse = Vec3f(1, 1, 1);
+		s8.center = Vec3f(3, 3, 4);
+		s8.position = s8.center;
+		s8.reflective = Vec3f(.5, .5, .5);
+		s8.shininess = 64;
+		s8.sphere = true;
+		scene.push_back(s8);
+
+		SceneObject s9;
+		s9.objId = 8;
+		s9.radius = .75;
+		s9.ambient = Vec3f(.9, .9, .9);
+		s9.specular = Vec3f(.2, .2, .2);
+		s9.diffuse = Vec3f(1, 1, 1);
+		s9.center = Vec3f(3, 2, 5.5);
+		s9.position = s9.center;
+		s9.reflective = Vec3f(.5, .5, .5);
+		s9.shininess = 64;
+		s9.sphere = true;
+		scene.push_back(s9);
+
+		SceneObject s10;
+		s10.objId = 9;
+		s10.radius = 1;
+		s10.ambient = Vec3f(0, 0, 1);
+		s10.specular = Vec3f(1, 1, 1);
+		s10.diffuse = Vec3f(1, 1, 1);
+		s10.center = Vec3f(-3, -.5, 5);
+		s10.position = s10.center;
+		s10.reflective = Vec3f(.5, .5, .5);
+		s10.shininess = 64;
+		s10.sphere = true;
+		scene.push_back(s10);
+
+		SceneObject s11;
+		s11.objId = 10;
+		s11.radius = 1;
+		s11.ambient = Vec3f(1, 0, 1);
+		s11.specular = Vec3f(1, 1, 1);
+		s11.diffuse = Vec3f(1, 1, 1);
+		s11.center = Vec3f(-4.5, 2, 4);
+		s11.position = s11.center;
+		s11.reflective = Vec3f(.5, .5, .5);
+		s11.shininess = 64;
+		s11.sphere = true;
+		scene.push_back(s11);
+
+		SceneObject s12;
+		s12.objId = 11;
+		s12.radius = 1;
+		s12.ambient = Vec3f(0, 1, 1);
+		s12.specular = Vec3f(.5, .5, .5);
+		s12.diffuse = Vec3f(1, 1, 1);
+		s12.center = Vec3f(2.5, 3.5, -3.5);
+		s12.position = s12.center;
+		s12.reflective = Vec3f(.3, .3, .3);
+		s12.shininess = 64;
+		s12.sphere = true;
+		scene.push_back(s12);
+		return scene;
+	
+}
 
 int main(int argc, char** argv)
 {
+	
+	/////////////////////////////////
+    //*****Builds bvh tree*****
+	std::vector<Node> nodes;
+	Node root;
+	root.maxX = std::numeric_limits<float>::min();
+	root.minX = std::numeric_limits<float>::max();
+	root.maxY = std::numeric_limits<float>::min();
+	root.minY = std::numeric_limits<float>::max();;
+	root.maxZ = std::numeric_limits<float>::min();
+	root.minZ = std::numeric_limits<float>::max();;
+
+	std::vector<SceneObject> scene = createScene();
+	
+	// Lets bound each object with BBOX
+	for (SceneObject obj : scene)
+	 {	
+		// we calculate the minimum edges of the box
+		if (obj.position[0] - obj.radius < root.minX)
+			root.minX = obj.position[0] - obj.radius;
+		if (obj.position[1] - obj.radius < root.minY)
+			root.minY = obj.position[1] - obj.radius;
+		if (obj.position[2] - obj.radius < root.minZ)
+			root.minZ = obj.position[2] - obj.radius;
+
+		// we calculate the maximum edges of the box
+		if (obj.position[0] + obj.radius > root.maxX)
+			root.maxX = obj.position[0] + obj.radius;
+		if (obj.position[1] + obj.radius > root.maxY)
+			root.maxY = obj.position[1] + obj.radius;
+		if (obj.position[2] + obj.radius > root.maxZ)
+			root.maxZ = obj.position[2] + obj.radius;
+	}
+
+	std::cout << root.minX<< "\n";
+	std::cout << root.minY << "\n";
+	std::cout << root.minZ << "\n";
+	/////////////////////////////////
 	Settings settings;
 
 	for (int frame = 15; frame > 14; frame--) {
