@@ -14,6 +14,69 @@
 #include <vector>
 
 using namespace std;
+enum MaterialType { DIFFUSE_AND_GLOSSY, REFLECTION_AND_REFRACTION, REFLECTION };
+
+inline
+Vec3f mix(const Vec3f& a, const Vec3f& b, const float& mixValue)
+{
+	return a * (1 - mixValue) + b * mixValue;
+}
+
+class Sphere
+{
+public:
+	int id;
+	Vec3f center;                           /// position of the sphere
+	float radius, radius2;                  /// sphere radius and radius^2
+	Vec3f surfaceColor, emissionColor;      /// surface color and emission (light)
+	float transparency, reflection;         /// surface transparency and reflectivity
+	MaterialType materialType;
+	Sphere* left_child = NULL;
+	Sphere* right_child = NULL;
+	bool is_bv = false;
+	Sphere(
+		const int& id,
+		const Vec3f& c,
+		const float& r,
+		const Vec3f& sc, const float& refl = 0,
+		const float& transp = 0,
+		const Vec3f& ec = 0) :
+		id(id), center(c), radius(r), radius2(r* r), surfaceColor(sc), emissionColor(ec),
+		transparency(transp), reflection(refl), materialType(DIFFUSE_AND_GLOSSY)
+	{ /* empty */
+	}
+
+	void setChildes(Sphere* left, Sphere* right) {
+		left_child = left;
+		right_child = right;
+		is_bv = true;
+	}
+
+	//[comment]
+	// Compute a ray-sphere intersection using the geometric solution
+	//[/comment]
+	bool raySphereIntersect(const Vec3f& rayorig, const Vec3f& raydir, float& t0, float& t1) const
+	{
+		Vec3f l = center - rayorig;
+		float tca = l.dotProduct(raydir);
+		if (tca < 0) return false;
+		float d2 = l.dotProduct(l) - tca * tca;
+		if (d2 > radius2) return false;
+		float thc = sqrt(radius2 - d2);
+		t0 = tca - thc;
+		t1 = tca + thc;
+
+		return true;
+	}
+
+	Vec3f getDiffuseColor(const Vec2f& st) const
+	{
+		float scale = 5;
+		float pattern = (fmodf(st.x * scale, 1) > 0.5) ^ (fmodf(st.y * scale, 1) > 0.5);
+		return mix(Vec3f(0.815, 0.235, 0.031), Vec3f(0.937, 0.937, 0.231), pattern);
+	}
+};
+
 
 // This is the node BVH uses
 class Node
@@ -43,15 +106,18 @@ class SceneObject
 public:
 	int objId; // this is the ID of the object
 	Vec3f position;
-	Vec3f ambient;
-	Vec3f diffuse;
-	Vec3f specular;
-	Vec3f reflective;
 	float radius;
 	Vec3f center;
 	float shininess;
-	bool sphere;
+	bool isSphere;
+	Sphere sphere = Sphere(0, Vec3f(-5, 0, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
+
+	Sphere getSphere() {
+		return sphere;
+	}
 };
+
+
 
 int constructTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
 {   // If this is a leaf node
