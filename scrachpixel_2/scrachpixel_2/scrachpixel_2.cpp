@@ -86,6 +86,8 @@ struct Settings
 	float bias = 0.0001; // Error allowed
 	uint32_t maxDepth = 0; // Max number of ray trating into the scene
 	uint32_t aa_samples = 5; // Anti aliasing samples
+	int dataStructure = 0; // 0 bvh, 1 kd tree
+	int kdtreeDepth = 3;
 };
 
 
@@ -223,44 +225,6 @@ public:
 	}
 };
 
-// This is for BVH
-class TreeNode {
-public:
-	Sphere* val;
-	TreeNode* left, * right;
-	TreeNode(Sphere* data) {
-		val = data;
-		left = right = NULL;
-	}
-};
-void insert(TreeNode** root, Sphere* val) {
-	queue<TreeNode*> q;
-	q.push(*root);
-	while (q.size()) {
-		TreeNode* temp = q.front();
-		q.pop();
-		if (!temp->left) {
-			if (val != NULL)
-				temp->left = new TreeNode(val);
-			else
-				temp->left = new TreeNode(0);
-			return;
-		}
-		else {
-			q.push(temp->left);
-		}
-		if (!temp->right) {
-			if (val != NULL)
-				temp->right = new TreeNode(val);
-			else
-				temp->right = new TreeNode(0);
-			return;
-		}
-		else {
-			q.push(temp->right);
-		}
-	}
-}
 
 
 Vec3f reflect(const Vec3f& I, const Vec3f& N)
@@ -392,7 +356,7 @@ Vec3f castRay(
 	std::vector<Sphere>& lights,
 	std::vector<SceneObject>& scene,
 	std::vector<Node>& tree,
-	const int& depth, TreeNode* node)
+	const int& depth)
 {
 	float minT = std::numeric_limits<float>::max();
 	SceneObject intersectObj;
@@ -497,8 +461,8 @@ Vec3f castRay(
 			Vec3f refractionRayOrig = (refractionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, node);
-			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, scene, tree, depth + 1, node);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1);
+			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, scene, tree, depth + 1);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = refractionColor * (1 - kr);
@@ -511,7 +475,7 @@ Vec3f castRay(
 			Vec3f reflectionRayOrig = (reflectionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, node);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = (1 - kr);
@@ -592,7 +556,7 @@ void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 
 	delete[] image;
 }
-void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, TreeNode* node, std::vector<SceneObject>& scene, std::vector<Node>& tree)
+void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::vector<Node>& tree)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
 	float invWidth = 1 / float(settings.width), invHeight = 1 / float(settings.height);
@@ -608,7 +572,7 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 				float yy = (1 - 2 * ((y + random_double()) * invHeight)) * angle;
 				Vec3f raydir(xx, yy, -1);
 				raydir.normalize();
-				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 5, node);
+				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 5);
 			}
 			*pixel = sampled_pixel;
 		}
@@ -629,7 +593,7 @@ inline double random_double_2(double min, double max) {
 std::vector<SceneObject> createScene() {
 	std::vector<SceneObject> scene;
 	int id = 0;
-	for (int i = -100; i < 100; i++) {
+	for (int i = -1; i < 3; i++) {
 		SceneObject s;
 		s.objId = id;
 		s.radius = 1;
@@ -647,11 +611,13 @@ std::vector<SceneObject> createScene() {
 
 int main(int argc, char** argv)
 {
+	Settings settings;
 
 	/////////////////////////////////
 	//*****Builds bvh tree*****
 	std::vector<Node> nodes;
 	Node root;
+
 	root.maxX = std::numeric_limits<float>::min();
 	root.minX = std::numeric_limits<float>::max();
 	root.maxY = std::numeric_limits<float>::min();
@@ -662,6 +628,7 @@ int main(int argc, char** argv)
 	std::vector<SceneObject> scene = createScene();
 
 	// Lets bound each object with BBOX
+	// This is same for KD-tree and BVH
 	for (SceneObject obj : scene)
 	{
 		// we calculate the minimum edges of the box
@@ -707,14 +674,13 @@ int main(int argc, char** argv)
 		}
 	}
 
-	rootNodeIndex = constructTree(scene, root, nodes);
-
-	std::vector<int> boundingBoxes;
-
-	//intersectObjects(rayPosition, sample, *args->scene, *args->lights, colorTest, false, numBounces, dummyt, *args->tree))
+	// rootNodeIndex = constructBVHTree(scene, root, nodes);
+	
+	// This is for KDtree
+	root.longestAxis = 0;
+	rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
 
 	/////////////////////////////////
-	Settings settings;
 
 	for (int frame = 15; frame > 14; frame--) {
 		int shift = 20;
@@ -741,7 +707,7 @@ int main(int argc, char** argv)
 		lights.push_back(light);
 		lights.push_back(light2);
 
-		render(settings, spheres, lights, triangles, frame, NULL, scene, nodes);
+		render(settings, spheres, lights, triangles, frame, scene, nodes);
 	}
 	return 0;
 }

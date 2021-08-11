@@ -1,5 +1,5 @@
-#ifndef BVH_H
-#define BVH_H
+#ifndef KDTREE_H
+#define KDTREE_H
 //==============================================================================================
 // To the extent possible under law, the author(s) have dedicated all copyright and related and
 // neighboring rights to this software to the public domain worldwide. This software is
@@ -13,116 +13,19 @@
 #include "geometry.h"
 #include <vector>
 
-using namespace std;
-enum MaterialType { DIFFUSE_AND_GLOSSY, REFLECTION_AND_REFRACTION, REFLECTION };
 
-inline
-Vec3f mix(const Vec3f& a, const Vec3f& b, const float& mixValue)
+KDShield(Phys i c sObj e c t newObject)
 {
-	return a * (1 - mixValue) + b * mixValue;
+	// Find the most extreme po int s in t h i s o b j e c t in each
+	// dimens ion . ( x , y and z )
+	f l o a t[3][2] ext remes = findExt r eme s(newObject.polygons);
+	BoundingBox box = createBox(ext remes);
+	// Begin b u i l d i n g the KD t r e e at the r o o t node , from
+	// the new obj e c t ’ s polygons , and with s t a r t i n g depth 0 .
+	buildKDTree(kdRootNode, newObject.polygons, box, 0);
 }
 
-class Sphere
-{
-public:
-	int id;
-	Vec3f center;                           /// position of the sphere
-	float radius, radius2;                  /// sphere radius and radius^2
-	Vec3f surfaceColor, emissionColor;      /// surface color and emission (light)
-	float transparency, reflection;         /// surface transparency and reflectivity
-	MaterialType materialType;
-	Sphere* left_child = NULL;
-	Sphere* right_child = NULL;
-	bool is_bv = false;
-	Sphere(
-		const int& id,
-		const Vec3f& c,
-		const float& r,
-		const Vec3f& sc, const float& refl = 0,
-		const float& transp = 0,
-		const Vec3f& ec = 0) :
-		id(id), center(c), radius(r), radius2(r* r), surfaceColor(sc), emissionColor(ec),
-		transparency(transp), reflection(refl), materialType(DIFFUSE_AND_GLOSSY)
-	{ /* empty */
-	}
-
-	void setChildes(Sphere* left, Sphere* right) {
-		left_child = left;
-		right_child = right;
-		is_bv = true;
-	}
-
-	//[comment]
-	// Compute a ray-sphere intersection using the geometric solution
-	//[/comment]
-	bool raySphereIntersect(const Vec3f& rayorig, const Vec3f& raydir, float& t0, float& t1) const
-	{
-		Vec3f l = center - rayorig;
-		float tca = l.dotProduct(raydir);
-		if (tca < 0) return false;
-		float d2 = l.dotProduct(l) - tca * tca;
-		if (d2 > radius2) return false;
-		float thc = sqrt(radius2 - d2);
-		t0 = tca - thc;
-		t1 = tca + thc;
-
-		return true;
-	}
-
-	Vec3f getDiffuseColor(const Vec2f& st) const
-	{
-		float scale = 5;
-		float pattern = (fmodf(st.x * scale, 1) > 0.5) ^ (fmodf(st.y * scale, 1) > 0.5);
-		return mix(Vec3f(0.815, 0.235, 0.031), Vec3f(0.937, 0.937, 0.231), pattern);
-	}
-};
-
-
-// This is the node BVH uses
-class Node
-{
-public:
-	int left; // left child id
-	int right; //right child id
-	bool isleaf = false;
-	int objs[3]; // Each node saves three objects
-	int numObjs;
-	//some bounding box variables 
-	// here I can create BBOX node is general
-	double minX;
-	double maxX;
-	double minY;
-	double maxY;
-	double minZ;
-	double maxZ;
-
-	double midpoint;
-	double longestAxis;
-
-	// this is for KDtree
-	std::vector<int> kdLeafChildren;
-};
-
-// This can be sphere, Triangle or anything
-class SceneObject
-{
-public:
-	int objId; // this is the ID of the object
-	Vec3f position;
-	float radius;
-	Vec3f center;
-	float shininess;
-	bool isSphere;
-	Sphere sphere = Sphere(0, Vec3f(-5, 0, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
-
-	Sphere getSphere() {
-		return sphere;
-	}
-};
-
-
-
-int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
+int constructTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes, int maxDepth)
 {   // If this is a leaf node
     if(objects.size() <= 3) // this measn we only have one node and two children
     {
@@ -277,171 +180,14 @@ int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::
     newRightNode.minZ = minRightZ;
     newRightNode.maxZ = maxRightZ;
     
-    int l = constructBVHTree(leftObjects, newLeftNode,nodes);
-    int r = constructBVHTree(rightObjects, newRightNode,nodes);
+    int l = constructTree(leftObjects, newLeftNode,nodes);
+    int r = constructTree(rightObjects, newRightNode,nodes);
     
     currentNode.left = l;
     currentNode.right = r;
     
     nodes.push_back(currentNode);
     return (int)nodes.size()-1;
-}
-
-
-int constructKDTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes, int depth)
-{   
-	//bool shouldSplit;
-	//int count = objects.size();
-
-	//// If this is a leaf node
-	//if(count <= 3 || (depth >= 20 && count <= 2))
-	//{
-	//	for (int i = 0; i < (int)objects.size(); i++)
-	//	{
-	//		currentNode.objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
-	//	}
-	//	currentNode.numObjs = (int)objects.size(); // how many objects node has
-	//	currentNode.isleaf = true; // leaf node has two objects as children
-	//	nodes.push_back(currentNode);
-	//	return (int)nodes.size() - 1;
-	//}
-
-	   // If this is a leaf node
-	if (objects.size() <= 3) // this measn we only have one node and two children
-	{
-		for (int i = 0; i < (int)objects.size(); i++)
-		{
-			currentNode.objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
-		}
-		currentNode.numObjs = (int)objects.size(); // how many objects node has
-		currentNode.isleaf = true; // leaf node has two objects as children
-		nodes.push_back(currentNode);
-		return (int)nodes.size() - 1;
-	}
-
-
-	// If it is not a leaf node
-	Node newLeftNode;
-	newLeftNode.left = NULL;
-	newLeftNode.right = NULL;
-	Node newRightNode;
-	newRightNode.left = NULL;
-	newRightNode.right = NULL;
-	std::vector<int> leftPointers;
-	std::vector<SceneObject> leftObjects;
-	Vec3f midLeft;
-	float maxLeftX = std::numeric_limits<float>::min();
-	float minLeftX = std::numeric_limits<float>::max();
-	float maxLeftY = std::numeric_limits<float>::min();
-	float minLeftY = std::numeric_limits<float>::max();
-	float maxLeftZ = std::numeric_limits<float>::min();
-	float minLeftZ = std::numeric_limits<float>::max();
-	Vec3f midRight;
-	float maxRightX = std::numeric_limits<float>::min();
-	float minRightX = std::numeric_limits<float>::max();
-	float maxRightY = std::numeric_limits<float>::min();
-	float minRightY = std::numeric_limits<float>::max();
-	float maxRightZ = std::numeric_limits<float>::min();
-	float minRightZ = std::numeric_limits<float>::max();
-	std::vector<int> rightPointers;
-	std::vector<SceneObject> rightObjects;
-	for (int i = 0; i < objects.size(); i++)
-	{
-		// here I am splitting the objects which are their center is in the left of the 
-		// Middle point of the node to the left, we can change the currentNode.midpoint,
-		// By using splitting average or other ways look at my presentations
-		if (objects[i].position[currentNode.longestAxis] < currentNode.midpoint)
-		{
-			// we create the new left bbox parameters
-			if (objects[i].position[0] - objects[i].radius < minLeftX)
-				minLeftX = objects[i].position[0] - objects[i].radius;
-			if (objects[i].position[1] - objects[i].radius < minLeftY)
-				minLeftY = objects[i].position[1] - objects[i].radius;
-			if (objects[i].position[2] - objects[i].radius < minLeftZ)
-				minLeftZ = objects[i].position[2] - objects[i].radius;
-
-			if (objects[i].position[0] + objects[i].radius > maxLeftX)
-				maxLeftX = objects[i].position[0] + objects[i].radius;
-			if (objects[i].position[1] + objects[i].radius > maxLeftY)
-				maxLeftY = objects[i].position[1] + objects[i].radius;
-			if (objects[i].position[2] + objects[i].radius > maxLeftZ)
-				maxLeftZ = objects[i].position[2] + objects[i].radius;
-
-			midLeft += objects[i].position; // here we are using the average for middle point 
-			leftObjects.push_back(objects[i]);
-		}
-		else
-		{
-			// we create the new right bbox parameters
-			if (objects[i].position[0] - objects[i].radius < minRightX)
-				minRightX = objects[i].position[0] - objects[i].radius;
-			if (objects[i].position[1] - objects[i].radius < minRightY)
-				minRightY = objects[i].position[1] - objects[i].radius;
-			if (objects[i].position[2] - objects[i].radius < minRightZ)
-				minRightZ = objects[i].position[2] - objects[i].radius;
-
-			if (objects[i].position[0] + objects[i].radius > maxRightX)
-				maxRightX = objects[i].position[0] + objects[i].radius;
-			if (objects[i].position[1] + objects[i].radius > maxRightY)
-				maxRightY = objects[i].position[1] + objects[i].radius;
-			if (objects[i].position[2] + objects[i].radius > maxRightZ)
-				maxRightZ = objects[i].position[2] + objects[i].radius;
-
-			midRight += objects[i].position; // here we are using the average for middle point 
-			rightObjects.push_back(objects[i]);
-		}
-	}
-
-	midLeft = Vec3f(midLeft[0] / leftObjects.size(), midLeft[1] / leftObjects.size(), midLeft[2] / leftObjects.size());
-	midRight = Vec3f(midRight[0] / rightObjects.size(), midRight[1] / rightObjects.size(), midRight[2] / rightObjects.size());
-
-	int axisindex = currentNode.longestAxis;
-	switch (axisindex) {
-	case 0:
-		newLeftNode.longestAxis = 1;
-		newLeftNode.midpoint = midLeft[0];
-		newRightNode.longestAxis = 1;
-		newRightNode.midpoint = midRight[0];
-
-		break;
-	case 1:
-		newLeftNode.longestAxis = 2;
-		newLeftNode.midpoint = midLeft[1];
-		newRightNode.longestAxis = 2;
-		newRightNode.midpoint = midRight[1];
-
-		break;
-	default:
-		newLeftNode.longestAxis = 0;
-		newLeftNode.midpoint = midLeft[2];
-		newRightNode.longestAxis = 0;
-		newRightNode.midpoint = midRight[2];
-
-	}
-
-
-	newLeftNode.minX = minLeftX;
-	newLeftNode.maxX = maxLeftX;
-	newLeftNode.minY = minLeftY;
-	newLeftNode.maxY = maxLeftY;
-	newLeftNode.minZ = minLeftZ;
-	newLeftNode.maxZ = maxLeftZ;
-
-	newRightNode.minX = minRightX;
-	newRightNode.maxX = maxRightX;
-	newRightNode.minY = minRightY;
-	newRightNode.maxY = maxRightY;
-	newRightNode.minZ = minRightZ;
-	newRightNode.maxZ = maxRightZ;
-
-	int l = constructKDTree(leftObjects, newLeftNode, nodes, 3);
-	int r = constructKDTree(rightObjects, newRightNode, nodes, 3);
-
-	currentNode.left = l;
-	currentNode.right = r;
-	
-	nodes.push_back(currentNode);
-	return (int)nodes.size() - 1;
 }
 
 
