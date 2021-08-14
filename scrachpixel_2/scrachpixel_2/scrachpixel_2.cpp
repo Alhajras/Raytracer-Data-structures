@@ -10,16 +10,13 @@
 #include "bvh.h"
 #include <cstdio>
 #include <utility>
-#include <cstdint>
 #include <limits>
-#include <random>
 #include <cstdlib>
 #include <memory>
-#include <iostream>
-#include <fstream>
 #include <cmath>
 #include <sstream>
 #include <chrono>
+//#include "uniform_grid.h"
 //#include "geometry.h"
 #include <algorithm>
 #include <bitset>
@@ -31,7 +28,6 @@
 #include <iomanip>
 #include <ios>
 #include <iosfwd>
-#include <iostream>
 #include <istream>
 #include <iterator>
 #include <limits>
@@ -48,11 +44,9 @@
 #include <stack>
 #include <stdexcept>
 #include <streambuf>
-#include <string>
 #include <typeinfo>
 #include <utility>
 #include <valarray>
-#include <vector>
 
 const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
@@ -86,7 +80,7 @@ struct Settings
 	float bias = 0.0001; // Error allowed
 	uint32_t maxDepth = 0; // Max number of ray trating into the scene
 	uint32_t aa_samples = 5; // Anti aliasing samples
-	int dataStructure = 0; // 0 bvh, 1 kd tree
+	AccType dataStructure = KDTREE; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
 };
 
@@ -356,15 +350,16 @@ Vec3f castRay(
 	std::vector<Sphere>& lights,
 	std::vector<SceneObject>& scene,
 	std::vector<Node>& tree,
-	const int& depth)
+	const int& depth,
+	const std::unique_ptr<Grid>& accel, const Settings& settings)
 {
 	float minT = std::numeric_limits<float>::max();
-	SceneObject intersectObj;
+	//SceneObject intersectObj;
 	Vec3f minTnormal;
 	Vec3f minTintersection;
 	bool intersect = false;
 	std::vector<int> boundingBoxes;
-	bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+
 
 	std::vector<int> sphereids;
 
@@ -388,43 +383,89 @@ Vec3f castRay(
 
 	std::vector<int> ints;
 
-	if (boundingBoxes.size() == 0)
+	switch (settings.dataStructure) {
+	case BVH:
 	{
-		return Vec3f(0.6, 0.8, 1);
-	}
-
-	for (int box : boundingBoxes)
-	{
-		for (int i = 0; i < tree[box].numObjs; i++)
+		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		if (boundingBoxes.size() == 0)
 		{
-			if (scene[tree[box].objs[i]].isSphere)
+			return Vec3f(0.6, 0.8, 1);
+		}
+
+		for (int box : boundingBoxes)
+		{
+			for (int i = 0; i < tree[box].numObjs; i++)
 			{
-				t0 = INFINITY, t1 = INFINITY;
-				if (scene[tree[box].objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
-					if (t0 < 0) t0 = t1;
-					if (t0 < tnear) {
-						tnear = t0;
-						sphere = &scene[tree[box].objs[i]].sphere;
-						hitColor = sphere->surfaceColor;
+				if (scene[tree[box].objs[i]].isSphere)
+				{
+					t0 = INFINITY, t1 = INFINITY;
+					if (scene[tree[box].objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+						if (t0 < 0) t0 = t1;
+						if (t0 < tnear) {
+							tnear = t0;
+							sphere = &scene[tree[box].objs[i]].sphere;
+							hitColor = sphere->surfaceColor;
+						}
 					}
 				}
 			}
 		}
+
+		break;
+	}
+	case KDTREE:
+	{
+		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		if (boundingBoxes.size() == 0)
+		{
+			return Vec3f(0.6, 0.8, 1);
+		}
+
+		for (int box : boundingBoxes)
+		{
+			for (int i = 0; i < tree[box].numObjs; i++)
+			{
+				if (scene[tree[box].objs[i]].isSphere)
+				{
+					t0 = INFINITY, t1 = INFINITY;
+					if (scene[tree[box].objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+						if (t0 < 0) t0 = t1;
+						if (t0 < tnear) {
+							tnear = t0;
+							sphere = &scene[tree[box].objs[i]].sphere;
+							hitColor = sphere->surfaceColor;
+						}
+					}
+				}
+			}
+		}		break;
+	}
+	case UNIFORM_GRID:
+	{
+		int rayId = 0;
+		Sphere hitsphere = Sphere(-1, Vec3f(0), 0, Vec3f(0, 0, 0), 0, 0.0);
+		accel->intersect(rayorig, raydir, rayId++, tnear, hitsphere);
+		sphere = &hitsphere;
+		break;
+	}
+	default: {
+		// This is without using any data structures
+		for (unsigned i = 0; i < spheres.size(); ++i) {
+			t0 = INFINITY, t1 = INFINITY;
+			if (spheres[i].raySphereIntersect(rayorig, raydir, t0, t1)) {
+				if (t0 < 0) t0 = t1;
+				if (t0 < tnear) {
+					tnear = t0;
+					sphere = &spheres[i];
+					hitColor = sphere->surfaceColor;
+				}
+			}
+		}
+	}
 	}
 
-	//for (unsigned i = 0; i < spheres.size(); ++i) {
-	//	t0 = INFINITY, t1 = INFINITY;
-	//	if (spheres[i].raySphereIntersect(rayorig, raydir, t0, t1)) {
-	//		if (t0 < 0) t0 = t1;
-	//		if (t0 < tnear) {
-	//			tnear = t0;
-	//			sphere = &spheres[i];
-	//			hitColor = sphere->surfaceColor;
-	//		}
-	//	}
-	//}
-
 	t0 = 500000;
+
 
 	// if there's no intersection return black or background color
 	if (!type && !sphere) return hitColor;
@@ -461,8 +502,8 @@ Vec3f castRay(
 			Vec3f refractionRayOrig = (refractionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1);
-			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, scene, tree, depth + 1);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, accel, settings);
+			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, scene, tree, depth + 1, accel, settings);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = refractionColor * (1 - kr);
@@ -475,7 +516,7 @@ Vec3f castRay(
 			Vec3f reflectionRayOrig = (reflectionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, accel, settings);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = (1 - kr);
@@ -556,7 +597,7 @@ void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 
 	delete[] image;
 }
-void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::vector<Node>& tree)
+void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::vector<Node>& tree, const std::unique_ptr<Grid>& accel)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
 	float invWidth = 1 / float(settings.width), invHeight = 1 / float(settings.height);
@@ -572,7 +613,7 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 				float yy = (1 - 2 * ((y + random_double()) * invHeight)) * angle;
 				Vec3f raydir(xx, yy, -1);
 				raydir.normalize();
-				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 5);
+				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 5, accel, settings);
 			}
 			*pixel = sampled_pixel;
 		}
@@ -593,7 +634,7 @@ inline double random_double_2(double min, double max) {
 std::vector<SceneObject> createScene() {
 	std::vector<SceneObject> scene;
 	int id = 0;
-	for (int i = -1; i < 3; i++) {
+	for (int i = -5; i < 3; i++) {
 		SceneObject s;
 		s.objId = id;
 		s.radius = 1;
@@ -674,13 +715,11 @@ int main(int argc, char** argv)
 		}
 	}
 
-	// rootNodeIndex = constructBVHTree(scene, root, nodes);
-	
-	// This is for KDtree
-	root.longestAxis = 0;
-	rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
 
-	/////////////////////////////////
+
+
+
+
 
 	for (int frame = 15; frame > 14; frame--) {
 		int shift = 20;
@@ -707,7 +746,34 @@ int main(int argc, char** argv)
 		lights.push_back(light);
 		lights.push_back(light2);
 
-		render(settings, spheres, lights, triangles, frame, scene, nodes);
+
+		switch (settings.dataStructure) {
+		case BVH:
+		{
+			std::cout << "<<<<<<< This is BVH >>>>>>";
+			rootNodeIndex = constructBVHTree(scene, root, nodes);
+			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			break;
+		}
+		case KDTREE:
+		{
+			std::cout << "<<<<<<< This is KDTREE >>>>>>";
+			root.longestAxis = 0;
+			rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
+			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			break;
+		}
+		case UNIFORM_GRID:
+		{
+			std::cout << "<<<<<<< This is UNIFORM_GRID >>>>>>";
+			std::unique_ptr<Grid> accel(new Grid(scene));
+			render(settings, spheres, lights, triangles, frame, scene, nodes, accel);
+			break;
+		}
+		default: {
+
+		}
+		}
 	}
 	return 0;
 }

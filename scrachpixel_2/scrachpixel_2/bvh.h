@@ -12,9 +12,20 @@
 #include <iostream>
 #include "geometry.h"
 #include <vector>
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <random>
+#include <string>
 
 using namespace std;
+enum AccType { BVH, KDTREE, UNIFORM_GRID, LBVH, NONE };
 enum MaterialType { DIFFUSE_AND_GLOSSY, REFLECTION_AND_REFRACTION, REFLECTION };
+using Vec3f = Vec3<float>;
+using Vec3b = Vec3<bool>;
+using Vec3i = Vec3<int32_t>;
+using Vec3ui = Vec3<uint32_t>;
+using Matrix44f = Matrix44<float>;
 
 inline
 Vec3f mix(const Vec3f& a, const Vec3f& b, const float& mixValue)
@@ -103,6 +114,11 @@ public:
 	std::vector<int> kdLeafChildren;
 };
 
+template<typename T> inline T clamp(const T& v, const T& lo, const T& hi)
+{
+	return std::max(lo, std::min(v, hi));
+}
+
 // This can be sphere, Triangle or anything
 class SceneObject
 {
@@ -114,6 +130,7 @@ public:
 	float shininess;
 	bool isSphere;
 	Sphere sphere = Sphere(0, Vec3f(-5, 0, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
+	//Sphere sphere;
 
 	Sphere getSphere() {
 		return sphere;
@@ -508,6 +525,318 @@ void bvhTraverse(Vec3f position, Vec3f direction, std::vector<Node>& tree, int c
 	}
 }
 
+
+
+
+//////////////////////////////////////// Uniform Grid //////////////////////////////////
+
+const float kInfinity = std::numeric_limits<float>::max();
+
+uint32_t numPrimaryRays(0);
+uint32_t numRayTriangleTests(0);
+uint32_t numRayTriangleIntersections(0);
+uint32_t  numRayBBoxTests(0);
+uint32_t numRayBoundingVolumeTests(0);
+
+
+template<typename T = float>
+class BBox
+{
+public:
+	BBox() {}
+	BBox(Vec3<T> min_, Vec3<T> max_)
+	{
+		bounds[0] = min_;
+		bounds[1] = max_;
+	}
+	BBox& extendBy(const Vec3<T>& p)
+	{
+		if (p.x < bounds[0].x) bounds[0].x = p.x;
+		if (p.y < bounds[0].y) bounds[0].y = p.y;
+		if (p.z < bounds[0].z) bounds[0].z = p.z;
+		if (p.x > bounds[1].x) bounds[1].x = p.x;
+		if (p.y > bounds[1].y) bounds[1].y = p.y;
+		if (p.z > bounds[1].z) bounds[1].z = p.z;
+
+		return *this;
+	}
+	/*inline */ Vec3<T> centroid() const { return (bounds[0] + bounds[1]) * 0.5; }
+	Vec3<T>& operator [] (bool i) { return bounds[i]; }
+	const Vec3<T> operator [] (bool i) const { return bounds[i]; }
+	bool intersect(const Vec3<T>&, const Vec3<T>&, const Vec3b&, float&) const;
+	Vec3<T> bounds[2] = { kInfinity, -kInfinity };
+};
+
+template<typename T>
+bool BBox<T>::intersect(const Vec3<T>& orig, const Vec3<T>& invDir, const Vec3b& sign, float& tHit) const
+{
+	numRayBBoxTests++;
+	float tmin, tmax, tymin, tymax, tzmin, tzmax;
+
+	tmin = (bounds[sign[0]].x - orig.x) * invDir.x;
+	tmax = (bounds[1 - sign[0]].x - orig.x) * invDir.x;
+	tymin = (bounds[sign[1]].y - orig.y) * invDir.y;
+	tymax = (bounds[1 - sign[1]].y - orig.y) * invDir.y;
+
+	if ((tmin > tymax) || (tymin > tmax))
+		return false;
+
+	if (tymin > tmin)
+		tmin = tymin;
+	if (tymax < tmax)
+		tmax = tymax;
+
+	tzmin = (bounds[sign[2]].z - orig.z) * invDir.z;
+	tzmax = (bounds[1 - sign[2]].z - orig.z) * invDir.z;
+
+	if ((tmin > tzmax) || (tzmin > tmax))
+		return false;
+
+	if (tzmin > tmin)
+		tmin = tzmin;
+	if (tzmax < tmax)
+		tmax = tzmax;
+
+	tHit = tmin;
+
+	return true;
+}
+
+
+struct CellHG
+{
+	CellHG() {}
+
+	void insert(SceneObject s)
+	{
+		spheres.push_back(s);
+	}
+
+	void intersect(const Vec3f&, const Vec3f&, const uint32_t&, float& , Sphere&) const;
+
+	std::vector<SceneObject> spheres;
+};
+
+class Grid
+{
+public:
+	Grid(std::vector<SceneObject> spheres);
+	~Grid()
+	{
+		//for (uint32_t i = 0; i < resolution[0] * resolution[1] * resolution[2]; ++i)
+		//	if (cells[i] != NULL) delete cells[i];
+		//delete[] cells;
+	}
+	void intersect(const Vec3f&, const Vec3f&, const uint32_t&, float&, Sphere& sphere) const;
+	//Cell** cells;
+	std::vector<CellHG> cells;
+	BBox<> bbox;
+	Vec3<uint32_t> resolution;
+	Vec3f cellDimension;
+};
+
+std::vector<CellHG> cells_S;
+
+
+
+Grid::Grid(std::vector<SceneObject> spheres) {
+	uint32_t totalNumTriangles = spheres.size();
+
+	Node root;
+
+	for (SceneObject obj : spheres)
+	{
+		// we calculate the minimum edges of the box
+		if (obj.position[0] - obj.radius < root.minX)
+			root.minX = obj.position[0] - obj.radius;
+		if (obj.position[1] - obj.radius < root.minY)
+			root.minY = obj.position[1] - obj.radius;
+		if (obj.position[2] - obj.radius < root.minZ)
+			root.minZ = obj.position[2] - obj.radius;
+
+		// we calculate the maximum edges of the box
+		if (obj.position[0] + obj.radius > root.maxX)
+			root.maxX = obj.position[0] + obj.radius;
+		if (obj.position[1] + obj.radius > root.maxY)
+			root.maxY = obj.position[1] + obj.radius;
+		if (obj.position[2] + obj.radius > root.maxZ)
+			root.maxZ = obj.position[2] + obj.radius;
+	}
+
+	//min
+	bbox.bounds[0].x = root.minX;
+	bbox.bounds[0].y = root.minY;
+	bbox.bounds[0].z = root.minZ;
+
+	//max
+	bbox.bounds[1].x = root.maxX;
+	bbox.bounds[1].y = root.maxY;
+	bbox.bounds[1].z = root.maxZ;
+
+
+	// Create the grid
+	Vec3f size = bbox[1] - bbox[0];
+	float cubeRoot = std::powf(totalNumTriangles / (size.x * size.y * size.z), 1. / 3.f);
+	for (uint8_t i = 0; i < 3; ++i) {
+		resolution[i] = std::floor(size[i] * cubeRoot);
+		if (resolution[i] < 1) resolution[i] = 1;
+		if (resolution[i] > 128) resolution[i] = 128;
+	}
+	//resolution[0] = 1;
+	//resolution[1] = 1;
+	//resolution[2] = 1;
+	// I have fixed this try to change it
+	cellDimension = size / resolution;
+
+	// [comment]
+	// Allocate memory - note that we don't create the cells yet at this
+	// point but just an array of pointers to cell. We will create the cells
+	// dynamically later when we are sure to insert something in them
+	// [/comment]
+	uint32_t numCells = resolution.x * resolution.y * resolution.z; 
+
+	//cells = new Grid::Cell * [numCells];
+	for (uint32_t index = 0; index < numCells; ++index) {
+		cells_S.push_back(CellHG());
+	}
+	//memset(cells, 0x0, sizeof(Grid) * numCells);
+
+	for (const auto& sphere : spheres) {
+
+		Vec3f min = 10000000000;
+		Vec3f max = -10000000000;
+		min.x = sphere.position.x - sphere.radius; 
+		min.y = sphere.position.y - sphere.radius;
+		min.z= sphere.position.z - sphere.radius;
+
+		max.x = sphere.position.x + sphere.radius;
+		max.y = sphere.position.y + sphere.radius;
+		max.z = sphere.position.z + sphere.radius;
+
+			// Convert to cell coordinates
+			min = (min - bbox[0]) / cellDimension;
+			max = (max - bbox[0]) / cellDimension;
+
+
+			uint32_t zmin = clamp<uint32_t>(std::floor(min[2]), 0, resolution[2] - 1);
+			uint32_t zmax = clamp<uint32_t>(std::floor(max[2]), 0, resolution[2] - 1);
+			uint32_t ymin = clamp<uint32_t>(std::floor(min[1]), 0, resolution[1] - 1);
+			uint32_t ymax = clamp<uint32_t>(std::floor(max[1]), 0, resolution[1] - 1);
+			uint32_t xmin = clamp<uint32_t>(std::floor(min[0]), 0, resolution[0] - 1);
+			uint32_t xmax = clamp<uint32_t>(std::floor(max[0]), 0, resolution[0] - 1);
+			// Loop over the cells the triangle overlaps and insert
+			for (uint32_t z = zmin; z <= zmax; ++z) {
+				for (uint32_t y = ymin; y <= ymax; ++y) {
+					for (uint32_t x = xmin; x <= xmax; ++x) {
+						uint32_t index = z * resolution[0] * resolution[1] + y * resolution[0] + x;
+						std::cout << index << "\n";
+						cells_S[index].insert(sphere);
+					}
+				}
+			}
+		}
+	std::cout << "";
+}
+	
+
+void CellHG::intersect(
+	const Vec3f& orig, const Vec3f& dir, const uint32_t& rayId,
+	float& tHit, Sphere& sphere) const
+{
+	float uhit, vhit;
+	float t0, t1;
+	Vec3f  hitColor = Vec3f(0.6, 0.8, 1);
+
+	for (uint32_t i = 0; i < spheres.size(); ++i) {
+		// [comment]
+		// Be sure that rayId is never 0 - because all mailbox values
+		// in the array are initialized with 0 too
+		// [/comment]
+
+		// TODO Add the mailbox here
+		//if (rayId != triangles[i].mesh->mailbox[triangles[i].tri]) {
+			//triangles[i].mesh->mailbox[triangles[i].tri] = rayId;
+			float t, u, v;
+			float t0 = INFINITY, t1 = INFINITY;
+				if (spheres[i].sphere.raySphereIntersect(orig, dir, t0, t1)) {
+					if (t0 < 0) t0 = t1;
+					if (t0 < tHit) {
+						tHit = t0;
+						sphere = spheres[i].sphere;
+						return;
+						//sphere = &spheres[i].sphere;
+						//hitColor = sphere->surfaceColor;
+					}
+				}
+		//}
+	}
+
+	return ;
+}
+
+
+void Grid::intersect(const Vec3f& orig, const Vec3f& dir, const uint32_t& rayId, float& tHit, Sphere& sphere) const
+{
+	//SceneObject sceneObject;
+	Sphere* hitsphere = NULL;
+
+	const Vec3f invDir = 1 / dir;
+	const Vec3b sign(dir.x < 0, dir.y < 0, dir.z < 0);
+	float tHitBox;
+	if (!bbox.intersect(orig, invDir, sign, tHitBox)) return;
+
+	// initialization step
+	Vec3i exit, step, cell;
+	Vec3f deltaT, nextCrossingT;
+	for (uint8_t i = 0; i < 3; ++i) {
+		// convert ray starting point to cell coordinates
+		float rayOrigCell = ((orig[i] + dir[i] * tHitBox) - bbox[0][i]);
+		cell[i] = clamp<uint32_t>(std::floor(rayOrigCell / cellDimension[i]), 0, resolution[i] - 1);
+		if (dir[i] < 0) {
+			deltaT[i] = -cellDimension[i] * invDir[i];
+			nextCrossingT[i] = tHitBox + (cell[i] * cellDimension[i] - rayOrigCell) * invDir[i];
+			exit[i] = -1;
+			step[i] = -1;
+		}
+		else {
+			deltaT[i] = cellDimension[i] * invDir[i];
+			nextCrossingT[i] = tHitBox + ((cell[i] + 1) * cellDimension[i] - rayOrigCell) * invDir[i];
+			exit[i] = resolution[i];
+			step[i] = 1;
+		}
+	}
+
+	// Walk through each cell of the grid and test for an intersection if
+	// current cell contains geometry
+
+	for (int i = 0; i < cells_S.size(); i++) {
+		cells_S[i].intersect(orig, dir, rayId, tHit, sphere);
+		if (!&sphere) return ;
+
+	}
+	//while (1) {
+	//	uint32_t o = cell[2] * resolution[0] * resolution[1] + cell[1] * resolution[0] + cell[0];
+	//std:cout << o << "\n";
+	//	//if (cells_S[o]. NULL) {
+	//	b = cells_S[o].intersect(orig, dir, rayId, tHit, sceneObject);
+	//	if (b) return true;
+	//	//if (intersectedMesh != nullptr) { ray.color = cells[o]->color; }
+	////}
+	//	uint8_t k =
+	//		((nextCrossingT[0] < nextCrossingT[1]) << 2) +
+	//		((nextCrossingT[0] < nextCrossingT[2]) << 1) +
+	//		((nextCrossingT[1] < nextCrossingT[2]));
+	//	static const uint8_t map[8] = { 2, 1, 2, 1, 2, 2, 0, 0 };
+	//	uint8_t axis = map[k];
+
+	//	if (tHit < nextCrossingT[axis]) break;
+	//	cell[axis] += step[axis];
+	//	if (cell[axis] == exit[axis]) break;
+	//	nextCrossingT[axis] += deltaT[axis];
+	//}
+
+	return ;
+}
 
 // Common Headers
 

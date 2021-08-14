@@ -79,7 +79,7 @@ public:
     Vec3() : x(T(0)), y(T(0)), z(T(0)) {}
     Vec3(T xx) : x(xx), y(xx), z(xx) {}
     Vec3(T xx, T yy, T zz) : x(xx), y(yy), z(zz) {}
-    
+
     // const operators
     Vec3 operator + (const Vec3 &v) const
     { return Vec3(x + v.x, y + v.y, z + v.z); }
@@ -95,7 +95,10 @@ public:
     { return x * v.x + y * v.y + z * v.z; }
     Vec3 operator / (const T &r) const
     { return Vec3(x / r, y / r, z / r); }
-    
+	friend Vec3 operator / (const T r, const Vec3& v)
+	{
+		return Vec3(r / v.x, r / v.y, r / v.z);
+	}
     Vec3& operator /= (const T &r)
     { x /= r, y /= r, z /= r; return *this; }
     Vec3& operator *= (const T &r)
@@ -132,14 +135,17 @@ public:
 
     friend Vec3 operator * (const T &r, const Vec3 &v)
     { return Vec3<T>(v.x * r, v.y * r, v.z * r); }
-    friend Vec3 operator / (const T &r, const Vec3 &v)
-    { return Vec3<T>(r / v.x, r / v.y, r / v.z); }
+    //friend Vec3 operator / (const T &r, const Vec3 &v)
+    //{ return Vec3<T>(r / v.x, r / v.y, r / v.z); }
 
     friend std::ostream& operator << (std::ostream &s, const Vec3<T> &v)
     {
         return s << '[' << v.x << ' ' << v.y << ' ' << v.z << ']';
     }
     
+	template<typename U>
+	Vec3 operator / (const Vec3<U>& v) const { return Vec3(x / v.x, y / v.y, z / v.z); }
+
     T x, y, z;
 };
 
