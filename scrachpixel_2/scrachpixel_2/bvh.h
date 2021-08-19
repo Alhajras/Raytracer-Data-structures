@@ -9,6 +9,7 @@
 // along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 //==============================================================================================
 
+#include<list>
 #include <iostream>
 #include "geometry.h"
 #include <vector>
@@ -26,7 +27,24 @@ using Vec3b = Vec3<bool>;
 using Vec3i = Vec3<int32_t>;
 using Vec3ui = Vec3<uint32_t>;
 using Matrix44f = Matrix44<float>;
-
+static int bytePrefix[] = {
+	    8, 7, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,
+		3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
 inline
 Vec3f mix(const Vec3f& a, const Vec3f& b, const float& mixValue)
 {
@@ -97,6 +115,33 @@ public:
 	int right; //right child id
 	bool isleaf = false;
 	int objs[3]; // Each node saves three objects
+	int objsMorID[3]; // Each node saves three objects
+	int numObjs;
+	//some bounding box variables 
+	// here I can create BBOX node is general
+	double minX;
+	double maxX;
+	double minY;
+	double maxY;
+	double minZ;
+	double maxZ;
+
+	double midpoint;
+	double longestAxis;
+
+	// this is for KDtree
+	std::vector<int> kdLeafChildren;
+};
+
+
+class MoreInfo
+{
+public:
+	int code; // left child id
+	int right; //right child id
+	bool isleaf = false;
+	int objs[3]; // Each node saves three objects
+	int objsMorID[3]; // Each node saves three objects
 	int numObjs;
 	//some bounding box variables 
 	// here I can create BBOX node is general
@@ -130,7 +175,6 @@ public:
 	float shininess;
 	bool isSphere;
 	Sphere sphere = Sphere(0, Vec3f(-5, 0, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
-	//Sphere sphere;
 
 	Sphere getSphere() {
 		return sphere;
@@ -304,6 +348,213 @@ int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::
     return (int)nodes.size()-1;
 }
 
+
+
+////////////////// LBVH /////////////////////////
+
+// C++ implementation of Radix Sort
+
+void display(int* array, int size) {
+	for (int i = 0; i < size; i++)
+		cout << array[i] << " ";
+	cout << endl;
+}
+void radixSort(std::vector<unsigned int> mortonEncode, int n, int max) {
+	int i, j, m, p = 1, index, temp, count = 0;
+	list<int> pocket[10];      //radix of decimal number is 10
+	for (i = 0; i < max; i++) {
+		m = pow(10, i + 1);
+		p = pow(10, i);
+		for (j = 0; j < n; j++) {
+			temp = mortonEncode[j] % m;
+			index = temp / p;      //find index for pocket array
+			pocket[index].push_back(mortonEncode[j]);
+		}
+		count = 0;
+		for (j = 0; j < 10; j++) {
+			//delete from linked lists and store to array
+			while (!pocket[j].empty()) {
+				mortonEncode[count] = *(pocket[j].begin());
+				pocket[j].erase(pocket[j].begin());
+				count++;
+			}
+		}
+	}
+}
+
+// https://developer.nvidia.com/blog/thinking-parallel-part-iii-tree-construction-gpu/
+// Expands a 10-bit integer into 30 bits
+// by inserting 2 zeros after each bit.
+unsigned int expandBits(unsigned int v)
+{
+	v = (v * 0x00010001u) & 0xFF0000FFu;
+	v = (v * 0x00000101u) & 0x0F00F00Fu;
+	v = (v * 0x00000011u) & 0xC30C30C3u;
+	v = (v * 0x00000005u) & 0x49249249u;
+	return v;
+}
+
+// Calculates a 30-bit Morton code for the
+// given 3D point located within the unit cube [0,1].
+unsigned int morton3D(float x, float y, float z)
+{
+	x = min(max(x * 1024.0f, 0.0f), 1023.0f);
+	y = min(max(y * 1024.0f, 0.0f), 1023.0f);
+	z = min(max(z * 1024.0f, 0.0f), 1023.0f);
+	unsigned int xx = expandBits((unsigned int)x);
+	unsigned int yy = expandBits((unsigned int)y);
+	unsigned int zz = expandBits((unsigned int)z);
+	return xx * 4 + yy * 2 + zz;
+}
+
+
+int findSplit(std::vector<unsigned int> sortedMortonCodes,
+	int           first,
+	int           last)
+{
+	// Identical Morton codes => split the range in the middle.
+
+	int firstCode = sortedMortonCodes[first];
+	int lastCode = sortedMortonCodes[last];
+
+	if (firstCode == lastCode)
+		return (first + last) >> 1;
+
+	// Calculate the number of highest bits that are the same
+	// for all objects, using the count-leading-zeros intrinsic.
+
+	//int x = firstCode ^ lastCode;
+
+	int c = firstCode ^ lastCode;
+	int len = -1;
+	while ((++len < 8) && ((c & 0x80) == 0))
+		c = c << 1;
+	
+	int commonPrefix = len;
+
+	// Use binary search to find where the next bit differs.
+	// Specifically, we are looking for the highest object that
+	// shares more than commonPrefix bits with the first one.
+
+	int split = first; // initial guess
+	int step = last - first;
+
+	do
+	{
+		step = (step + 1) >> 1; // exponential decrease
+		int newSplit = split + step; // proposed new position
+
+		if (newSplit < last)
+		{
+			unsigned int splitCode = sortedMortonCodes[newSplit];
+
+			c = firstCode ^ splitCode;
+			len = -1;
+			while ((++len < 8) && ((c & 0x80) == 0))
+				c = c << 1;
+
+			int splitPrefix = len;
+			if (splitPrefix > commonPrefix)
+				split = newSplit; // accept proposal
+		}
+	} while (step > 1);
+
+	return split;
+}
+
+
+int generateHierarchy(std::vector<SceneObject> objects, 
+	std::vector<unsigned int> sortedMortonCodes,
+	Node& currentNode,
+	std::vector<Node>& nodes,
+	uint64_t           first,
+	uint64_t           last)
+{
+
+	if (first == last) // this measn we only have one node and two children
+	{
+		for (int i = 0; i < (int)sortedMortonCodes.size(); i++)
+		{
+			currentNode.objsMorID[i] = sortedMortonCodes[i]; //we assign the ids of the root node, left and right nodes
+		}
+		currentNode.numObjs = (int)sortedMortonCodes.size(); // how many objects node has
+		currentNode.isleaf = true; // leaf node has two objects as children
+		nodes.push_back(currentNode);
+		return (int)nodes.size() - 1;
+	}
+	//if (first == last)
+	//{
+	//	currentNode.isleaf = true; // leaf node has two objects as children
+	//	nodes.push_back(currentNode);
+	//	return (int)nodes.size() - 1;
+
+	//}
+
+	int split = findSplit(sortedMortonCodes, first, last);
+
+	Node newLeftNode;
+	newLeftNode.left = NULL;
+	newLeftNode.right = NULL;
+	Node newRightNode;
+	newRightNode.left = NULL;
+	newRightNode.right = NULL;
+
+
+/*	for (int i = 0; i < (int)objects.size(); i++)
+	{
+		if (objects[i].objId == first){
+		
+		}
+		if (objects[i].objId == last) {
+		
+		}
+	}*/
+	newLeftNode.minX = -50;
+	newLeftNode.maxX = 50;
+	newLeftNode.minY = -50;
+	newLeftNode.maxY = 50;
+	newLeftNode.minZ = -50;
+	newLeftNode.maxZ = 50;
+
+	newRightNode.minX = -50;
+	newRightNode.maxX = 50;
+	newRightNode.minY = -50;
+	newRightNode.maxY = 50;
+	newRightNode.minZ = -50;
+	newRightNode.maxZ = 50;
+#	/*leftObjects.push_back(objects[i]);
+	leftObjects.push_back(objects[i]);*/
+
+		
+	int l = generateHierarchy(objects, sortedMortonCodes,newLeftNode, nodes,
+		first, split);
+	int r = generateHierarchy(objects, sortedMortonCodes,newRightNode, nodes,
+		split + 1, last);
+
+
+	currentNode.left = l;
+	currentNode.right = r;
+
+	nodes.push_back(currentNode);
+	return (int)nodes.size() - 1;
+}
+
+int constructLBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
+{  
+	std::vector<unsigned int> sortedMortonCodes;
+
+	// we map the centrod of spheres
+	for (uint64_t i = 0; i < objects.size() ; ++i) {
+		Vec3f centroid = (objects[i].center + 30)/1000 ;
+		unsigned int moCode = morton3D(centroid.x, centroid.y, centroid.z);
+		objects[i].objId = moCode;
+		sortedMortonCodes.push_back(moCode);
+		std::cout << sortedMortonCodes[i] << "\n";
+	}
+	radixSort(sortedMortonCodes, sortedMortonCodes.size(), 10);
+
+	return generateHierarchy(objects, sortedMortonCodes,currentNode,nodes,  0, sortedMortonCodes.size()-1);
+}
 
 int constructKDTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes, int depth)
 {   
@@ -777,6 +1028,7 @@ void CellHG::intersect(
 
 void Grid::intersect(const Vec3f& orig, const Vec3f& dir, const uint32_t& rayId, float& tHit, Sphere& sphere) const
 {
+	std::cout << rayId << "\n";
 	//SceneObject sceneObject;
 	Sphere* hitsphere = NULL;
 

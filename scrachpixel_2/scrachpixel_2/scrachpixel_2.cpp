@@ -52,7 +52,7 @@ const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
 using namespace std;
 float RAY_EPSILON = 0.000000001;
-
+int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
 int rootNodeIndex = 0;
@@ -80,7 +80,7 @@ struct Settings
 	float bias = 0.0001; // Error allowed
 	uint32_t maxDepth = 0; // Max number of ray trating into the scene
 	uint32_t aa_samples = 5; // Anti aliasing samples
-	AccType dataStructure = KDTREE; // 0 bvh, 1 kd tree
+	AccType dataStructure = LBVH; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
 };
 
@@ -277,7 +277,7 @@ bool trace_more(
 	bool hit = false;
 	for (int box : boundingBoxes)
 	{
-		for (int i = 0; i < tree[box].numObjs; i++)
+		/*for (int i = 0; i < tree[box].numObjs; i++)
 		{
 			if (scene[tree[box].objs[i]].isSphere)
 			{
@@ -293,7 +293,7 @@ bool trace_more(
 					uv = uvK;
 				}
 			}
-		}
+		}*/
 	}
 
 	return hit;
@@ -442,11 +442,47 @@ Vec3f castRay(
 	}
 	case UNIFORM_GRID:
 	{
-		int rayId = 0;
 		Sphere hitsphere = Sphere(-1, Vec3f(0), 0, Vec3f(0, 0, 0), 0, 0.0);
 		accel->intersect(rayorig, raydir, rayId++, tnear, hitsphere);
 		sphere = &hitsphere;
 		break;
+	}
+	case LBVH:
+	{
+
+		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		if (boundingBoxes.size() == 0)
+		{
+			return Vec3f(0.6, 0.8, 1);
+		}
+
+		for (int box : boundingBoxes)
+		{
+			for (int i = 0; i < tree[box].numObjs; i++)
+			{
+				int x = tree[box].objsMorID[i];
+				SceneObject sob; 
+				for (int j = 0; j < scene.size(); j++)
+				{
+					if (scene[j].objId == x) {
+						sob = scene[j];
+						break;
+					}
+				}
+				if (sob.isSphere)
+				{
+					t0 = INFINITY, t1 = INFINITY;
+					if (sob.sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+						if (t0 < 0) t0 = t1;
+						if (t0 < tnear) {
+							tnear = t0;
+							sphere = &sob.sphere;
+							hitColor = sphere->surfaceColor;
+						}
+					}
+				}
+			}
+		}		break;
 	}
 	default: {
 		// This is without using any data structures
@@ -768,6 +804,13 @@ int main(int argc, char** argv)
 			std::cout << "<<<<<<< This is UNIFORM_GRID >>>>>>";
 			std::unique_ptr<Grid> accel(new Grid(scene));
 			render(settings, spheres, lights, triangles, frame, scene, nodes, accel);
+			break;
+		}
+		case LBVH:
+		{
+			std::cout << "<<<<<<< This is LBVH >>>>>>";
+			rootNodeIndex = constructLBVHTree(scene, root, nodes);
+			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		default: {
