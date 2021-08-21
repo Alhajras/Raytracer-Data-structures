@@ -272,23 +272,23 @@ bool trace_more( Settings settings,
 	std::vector<Sphere>& spheres,
 	float& tNear, uint32_t& index, Vec2f& uv, Sphere* hitObject, 
 	std::vector<SceneObject>& scene,
-	std::vector<Node>& tree, std::vector<int> boundingBoxes)
+	std::vector<std::shared_ptr<Node>>& tree, std::vector<int> boundingBoxes)
 {
 
 	bool hit = false;
 	for (int box : boundingBoxes)
 	{
-		for (int i = 0; i < tree[box].numObjs; i++)
+		for (int i = 0; i < tree[box]->numObjs; i++)
 		{
 			SceneObject sob;
 
 			if (settings.dataStructure == LBVH){
-			int moreId = tree[box].objsMorID[i];
+			int moreId = tree[box]->objsMorID[i];
 			sob = hashMap[moreId];
 			}
 			else
 			{
-				sob = scene[tree[box].objs[i]];
+				sob = scene[tree[box]->objs[i]];
 			}
 			if (sob.isSphere)
 			{
@@ -360,7 +360,7 @@ Vec3f castRay(
 	std::vector<Sphere>& spheres,
 	std::vector<Sphere>& lights,
 	std::vector<SceneObject>& scene,
-	std::vector<Node>& tree,
+	std::vector<std::shared_ptr<Node>>& tree,
 	const int& depth,
 	const std::unique_ptr<Grid>& accel, const Settings& settings)
 {
@@ -405,16 +405,16 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box].numObjs; i++)
+			for (int i = 0; i < tree[box]->numObjs; i++)
 			{
-				if (scene[tree[box].objs[i]].isSphere)
+				if (scene[tree[box]->objs[i]].isSphere)
 				{
 					t0 = INFINITY, t1 = INFINITY;
-					if (scene[tree[box].objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+					if (scene[tree[box]->objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 						if (t0 < 0) t0 = t1;
 						if (t0 < tnear) {
 							tnear = t0;
-							sphere = &scene[tree[box].objs[i]].sphere;
+							sphere = &scene[tree[box]->objs[i]].sphere;
 							hitColor = sphere->surfaceColor;
 						}
 					}
@@ -434,16 +434,16 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box].numObjs; i++)
+			for (int i = 0; i < tree[box]->numObjs; i++)
 			{
-				if (scene[tree[box].objs[i]].isSphere)
+				if (scene[tree[box]->objs[i]].isSphere)
 				{
 					t0 = INFINITY, t1 = INFINITY;
-					if (scene[tree[box].objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+					if (scene[tree[box]->objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 						if (t0 < 0) t0 = t1;
 						if (t0 < tnear) {
 							tnear = t0;
-							sphere = &scene[tree[box].objs[i]].sphere;
+							sphere = &scene[tree[box]->objs[i]].sphere;
 							hitColor = sphere->surfaceColor;
 						}
 					}
@@ -469,9 +469,9 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box].numObjs; i++)
+			for (int i = 0; i < tree[box]->numObjs; i++)
 			{
-				int moreId = tree[box].objsMorID[i];
+				int moreId = tree[box]->objsMorID[i];
 				SceneObject sob; 
 				sob = hashMap[moreId];
 
@@ -639,7 +639,7 @@ void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 
 	delete[] image;
 }
-void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::vector<Node>& tree, const std::unique_ptr<Grid>& accel)
+void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::vector<std::shared_ptr<Node>>& tree, const std::unique_ptr<Grid>& accel)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
 	float invWidth = 1 / float(settings.width), invHeight = 1 / float(settings.height);
@@ -676,15 +676,19 @@ inline double random_double_2(double min, double max) {
 std::vector<SceneObject> createScene() {
 	std::vector<SceneObject> scene;
 	int id = 0;
-	for (int i = -5; i < 3; i++) {
+	for (int i = -10; i < 10; i++) {
 		SceneObject s;
 		s.objId = id;
 		s.radius = 1;
-		s.center = Vec3f(i + 0.9 * random_double_2(), i + 0.9 * random_double_2(), i + -20 + 0.9 * random_double_2());
+		s.center = Vec3f(i * 0.9 * random_double_2(), i * 0.9 * random_double_2(), i + -20);
 		s.position = s.center;
 		s.shininess = 64;
 		s.isSphere = true;
-		s.sphere = Sphere(id++, s.center, s.radius, Vec3f(random_double_2(), random_double_2(), random_double_2()), 0, 0.0);
+		s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0.9 * random_double_2(), random_double_2(), 0.9 * random_double_2()), 0, 0.0);
+		double random = random_double_2(); 
+		if (random < 0.5) {
+			s.sphere.materialType = REFLECTION_AND_REFRACTION;
+		}
 		scene.push_back(s);
 
 		}
@@ -698,15 +702,14 @@ int main(int argc, char** argv)
 
 	/////////////////////////////////
 	//*****Builds bvh tree*****
-	std::vector<Node> nodes;
-	Node root;
-
-	root.maxX = std::numeric_limits<float>::min();
-	root.minX = std::numeric_limits<float>::max();
-	root.maxY = std::numeric_limits<float>::min();
-	root.minY = std::numeric_limits<float>::max();;
-	root.maxZ = std::numeric_limits<float>::min();
-	root.minZ = std::numeric_limits<float>::max();;
+	std::vector<std::shared_ptr<Node>> nodes;
+	std::shared_ptr<Node> root = std::make_shared<Node>();
+	root->maxX = -1 * std::numeric_limits<float>::max();
+	root->minX = std::numeric_limits<float>::max();
+	root->maxY = -1 * std::numeric_limits<float>::max();
+	root->minY = std::numeric_limits<float>::max();;
+	root->maxZ = -1 * std::numeric_limits<float>::max();
+	root->minZ = std::numeric_limits<float>::max();;
 
 	std::vector<SceneObject> scene = createScene();
 
@@ -715,45 +718,45 @@ int main(int argc, char** argv)
 	for (SceneObject obj : scene)
 	{
 		// we calculate the minimum edges of the box
-		if (obj.position[0] - obj.radius < root.minX)
-			root.minX = obj.position[0] - obj.radius;
-		if (obj.position[1] - obj.radius < root.minY)
-			root.minY = obj.position[1] - obj.radius;
-		if (obj.position[2] - obj.radius < root.minZ)
-			root.minZ = obj.position[2] - obj.radius;
+		if (obj.position[0] - obj.radius < root->minX)
+			root->minX = obj.position[0] - obj.radius;
+		if (obj.position[1] - obj.radius < root->minY)
+			root->minY = obj.position[1] - obj.radius;
+		if (obj.position[2] - obj.radius < root->minZ)
+			root->minZ = obj.position[2] - obj.radius;
 
 		// we calculate the maximum edges of the box
-		if (obj.position[0] + obj.radius > root.maxX)
-			root.maxX = obj.position[0] + obj.radius;
-		if (obj.position[1] + obj.radius > root.maxY)
-			root.maxY = obj.position[1] + obj.radius;
-		if (obj.position[2] + obj.radius > root.maxZ)
-			root.maxZ = obj.position[2] + obj.radius;
+		if (obj.position[0] + obj.radius > root->maxX)
+			root->maxX = obj.position[0] + obj.radius;
+		if (obj.position[1] + obj.radius > root->maxY)
+			root->maxY = obj.position[1] + obj.radius;
+		if (obj.position[2] + obj.radius > root->maxZ)
+			root->maxZ = obj.position[2] + obj.radius;
 	}
 
 	// we try to find the midpoint and longest axis of the root box
-	if (root.maxX - root.minX > root.maxY - root.minY)
+	if (root->maxX - root->minX > root->maxY - root->minY)
 	{
-		if (root.maxX - root.minX > root.maxZ - root.minZ)
+		if (root->maxX - root->minX > root->maxZ - root->minZ)
 		{
-			root.longestAxis = 0;
-			root.midpoint = (root.maxX + root.minX) / 2;
+			root->longestAxis = 0;
+			root->midpoint = (root->maxX + root->minX) / 2;
 		}
 	}
-	if (root.maxY - root.minY > root.maxX - root.minX)
+	if (root->maxY - root->minY > root->maxX - root->minX)
 	{
-		if (root.maxY - root.minY > root.maxZ - root.minZ)
+		if (root->maxY - root->minY > root->maxZ - root->minZ)
 		{
-			root.longestAxis = 1;
-			root.midpoint = (root.maxY + root.minY) / 2;
+			root->longestAxis = 1;
+			root->midpoint = (root->maxY + root->minY) / 2;
 		}
 	}
-	if (root.maxZ - root.minZ > root.maxX - root.minX)
+	if (root->maxZ - root->minZ > root->maxX - root->minX)
 	{
-		if (root.maxZ - root.minZ > root.maxY - root.minY)
+		if (root->maxZ - root->minZ > root->maxY - root->minY)
 		{
-			root.longestAxis = 2;
-			root.midpoint = (root.maxZ + root.minZ) / 2;
+			root->longestAxis = 2;
+			root->midpoint = (root->maxZ + root->minZ) / 2;
 		}
 	}
 
@@ -800,7 +803,7 @@ int main(int argc, char** argv)
 		case KDTREE:
 		{
 			std::cout << "<<<<<<< This is KDTREE >>>>>>";
-			root.longestAxis = 0;
+			//root->longestAxis = 0;
 			rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
 			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;

@@ -166,43 +166,43 @@ public:
 
 
 
-int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
+int constructBVHTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {   // If this is a leaf node
     if(objects.size() <= 3) // this measn we only have one node and two children
     {
         for(int i = 0; i<(int)objects.size();i++)
         {
-            currentNode.objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
+            currentNode->objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
         }
-        currentNode.numObjs = (int)objects.size(); // how many objects node has
-        currentNode.isleaf = true; // leaf node has two objects as children
+        currentNode->numObjs = (int)objects.size(); // how many objects node has
+        currentNode->isleaf = true; // leaf node has two objects as children
         nodes.push_back(currentNode);
         return (int)nodes.size()-1;
     }
     
 	// If it is not a leaf node
-    Node newLeftNode;
-    newLeftNode.left = NULL;
-    newLeftNode.right = NULL;
-    Node newRightNode;
-    newRightNode.left = NULL;
-    newRightNode.right = NULL;
+	std::shared_ptr<Node> newLeftNode = std::make_shared<Node>();
+	newLeftNode->left = NULL;
+    newLeftNode->right = NULL;
+	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
+    newRightNode->left = NULL;
+    newRightNode->right = NULL;
     std::vector<int> leftPointers;
     std::vector<SceneObject> leftObjects;
-    Vec3f midLeft;
-    float maxLeftX = std::numeric_limits<float>::min();
-    float minLeftX = std::numeric_limits<float>::max();
-    float maxLeftY = std::numeric_limits<float>::min();
-    float minLeftY = std::numeric_limits<float>::max();
-    float maxLeftZ = std::numeric_limits<float>::min();
-    float minLeftZ = std::numeric_limits<float>::max();
+	Vec3f midLeft;
+	float maxLeftX = -1 * std::numeric_limits<float>::max();
+	float minLeftX = std::numeric_limits<float>::max();
+	float maxLeftY = -1 * std::numeric_limits<float>::max();
+	float minLeftY = std::numeric_limits<float>::max();
+	float maxLeftZ = -1 * std::numeric_limits<float>::max();
+	float minLeftZ = std::numeric_limits<float>::max();
 	Vec3f midRight;
-    float maxRightX = std::numeric_limits<float>::min();
-    float minRightX = std::numeric_limits<float>::max();
-    float maxRightY = std::numeric_limits<float>::min();
-    float minRightY = std::numeric_limits<float>::max();
-    float maxRightZ = std::numeric_limits<float>::min();
-    float minRightZ = std::numeric_limits<float>::max();
+	float maxRightX = -1 * std::numeric_limits<float>::max();
+	float minRightX = std::numeric_limits<float>::max();
+	float maxRightY = -1 * std::numeric_limits<float>::max();
+	float minRightY = std::numeric_limits<float>::max();
+	float maxRightZ = -1 * std::numeric_limits<float>::max();
+	float minRightZ = std::numeric_limits<float>::max();
     std::vector<int> rightPointers;
     std::vector<SceneObject> rightObjects;
     for(int i = 0; i < objects.size(); i++)
@@ -210,7 +210,7 @@ int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::
 		// here I am splitting the objects which are their center is in the left of the 
 		// Middle point of the node to the left, we can change the currentNode.midpoint,
 		// By using splitting average or other ways look at my presentations
-        if(objects[i].position[currentNode.longestAxis] < currentNode.midpoint)
+        if(objects[i].position[currentNode->longestAxis] < currentNode->midpoint)
         {
 			// we create the new left bbox parameters
             if(objects[i].position[0]-objects[i].radius < minLeftX)
@@ -260,24 +260,24 @@ int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::
     {
         if(maxLeftX-minLeftX > maxLeftZ - minLeftZ)
         {
-            newLeftNode.longestAxis = 0;
-            newLeftNode.midpoint = midLeft[0];
+            newLeftNode->longestAxis = 0;
+            newLeftNode->midpoint = midLeft[0];
         }
     }
     if(maxLeftY-minLeftY > maxLeftX - minLeftX)
     {
         if(maxLeftY-minLeftY > maxLeftZ - minLeftZ)
         {
-            newLeftNode.longestAxis = 1;
-            newLeftNode.midpoint = midLeft[1];
+            newLeftNode->longestAxis = 1;
+            newLeftNode->midpoint = midLeft[1];
         }
     }
     if(maxLeftZ - minLeftZ > maxLeftX - minLeftX)
     {
         if(maxLeftZ - minLeftZ > maxLeftY-minLeftY)
         {
-            newLeftNode.longestAxis = 2;
-            newLeftNode.midpoint = midLeft[2];
+            newLeftNode->longestAxis = 2;
+            newLeftNode->midpoint = midLeft[2];
         }
     }
 
@@ -286,46 +286,46 @@ int constructBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::
     {
         if(maxRightX-minRightX > maxRightZ - minRightZ)
         {
-            newRightNode.longestAxis = 0;
-            newRightNode.midpoint = midRight[0];
+            newRightNode->longestAxis = 0;
+            newRightNode->midpoint = midRight[0];
         }
     }
     if(maxRightY-minRightY > maxRightX - minRightX)
     {
         if(maxRightY-minRightY > maxRightZ - minRightZ)
         {
-            newRightNode.longestAxis = 1;
-            newRightNode.midpoint = midRight[1];
+            newRightNode->longestAxis = 1;
+            newRightNode->midpoint = midRight[1];
         }
     }
     if(maxRightZ-minRightZ > maxRightX - minRightX)
     {
         if(maxRightZ-minRightZ > maxRightY - minRightY)
         {
-            newRightNode.longestAxis = 2;
-            newRightNode.midpoint = midRight[2];
+            newRightNode->longestAxis = 2;
+            newRightNode->midpoint = midRight[2];
         }
     }
 
-    newLeftNode.minX = minLeftX;
-    newLeftNode.maxX = maxLeftX;
-    newLeftNode.minY = minLeftY;
-    newLeftNode.maxY = maxLeftY;
-    newLeftNode.minZ = minLeftZ;
-    newLeftNode.maxZ = maxLeftZ;
+    newLeftNode->minX = minLeftX;
+    newLeftNode->maxX = maxLeftX;
+    newLeftNode->minY = minLeftY;
+    newLeftNode->maxY = maxLeftY;
+    newLeftNode->minZ = minLeftZ;
+    newLeftNode->maxZ = maxLeftZ;
     
-    newRightNode.minX = minRightX;
-    newRightNode.maxX = maxRightX;
-    newRightNode.minY = minRightY;
-    newRightNode.maxY = maxRightY;
-    newRightNode.minZ = minRightZ;
-    newRightNode.maxZ = maxRightZ;
+    newRightNode->minX = minRightX;
+    newRightNode->maxX = maxRightX;
+    newRightNode->minY = minRightY;
+    newRightNode->maxY = maxRightY;
+    newRightNode->minZ = minRightZ;
+    newRightNode->maxZ = maxRightZ;
     
     int l = constructBVHTree(leftObjects, newLeftNode,nodes);
     int r = constructBVHTree(rightObjects, newRightNode,nodes);
     
-    currentNode.left = l;
-    currentNode.right = r;
+    currentNode->left = l;
+    currentNode->right = r;
     
     nodes.push_back(currentNode);
     return (int)nodes.size()-1;
@@ -448,8 +448,7 @@ int findSplit(std::vector<unsigned int> sortedMortonCodes,
 
 int generateHierarchy(std::vector<SceneObject> objects, 
 	std::vector<unsigned int> sortedMortonCodes,
-	Node& currentNode,
-	std::vector<Node>& nodes,
+	std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes,
 	uint64_t           first,
 	uint64_t           last)
 {
@@ -458,10 +457,10 @@ int generateHierarchy(std::vector<SceneObject> objects,
 	{
 		for (int i = 0; i < (int)sortedMortonCodes.size(); i++)
 		{
-			currentNode.objsMorID[i] = sortedMortonCodes[i]; //we assign the ids of the root node, left and right nodes
+			currentNode->objsMorID[i] = sortedMortonCodes[i]; //we assign the ids of the root node, left and right nodes
 		}
-		currentNode.numObjs = (int)sortedMortonCodes.size(); // how many objects node has
-		currentNode.isleaf = true; // leaf node has two objects as children
+		currentNode->numObjs = (int)sortedMortonCodes.size(); // how many objects node has
+		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
 		return (int)nodes.size() - 1;
 	}
@@ -475,12 +474,12 @@ int generateHierarchy(std::vector<SceneObject> objects,
 
 	int split = findSplit(sortedMortonCodes, first, last);
 
-	Node newLeftNode;
-	newLeftNode.left = NULL;
-	newLeftNode.right = NULL;
-	Node newRightNode;
-	newRightNode.left = NULL;
-	newRightNode.right = NULL;
+	std::shared_ptr<Node> newLeftNode = std::make_shared<Node>();
+	newLeftNode->left = NULL;
+	newLeftNode->right = NULL;
+	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
+	newRightNode->left = NULL;
+	newRightNode->right = NULL;
 
 
 /*	for (int i = 0; i < (int)objects.size(); i++)
@@ -492,19 +491,19 @@ int generateHierarchy(std::vector<SceneObject> objects,
 		
 		}
 	}*/
-	newLeftNode.minX = currentNode.minX;
-	newLeftNode.maxX = currentNode.maxX / 2;
-	newLeftNode.minY = currentNode.minY;
-	newLeftNode.maxY = currentNode.maxY/2;
-	newLeftNode.minZ = currentNode.minZ;
-	newLeftNode.maxZ = currentNode.maxZ/3;
+	newLeftNode->minX = currentNode->minX;
+	newLeftNode->maxX = currentNode->maxX / 2;
+	newLeftNode->minY = currentNode->minY;
+	newLeftNode->maxY = currentNode->maxY/2;
+	newLeftNode->minZ = currentNode->minZ;
+	newLeftNode->maxZ = currentNode->maxZ/3;
 
-	newRightNode.minX = currentNode.maxX / 2;
-	newRightNode.maxX = currentNode.maxX;
-	newRightNode.minY = currentNode.maxY / 2;
-	newRightNode.maxY = currentNode.maxY;
-	newRightNode.minZ = currentNode.maxZ/2;
-	newRightNode.maxZ = currentNode.maxZ;
+	newRightNode->minX = currentNode->maxX / 2;
+	newRightNode->maxX = currentNode->maxX;
+	newRightNode->minY = currentNode->maxY / 2;
+	newRightNode->maxY = currentNode->maxY;
+	newRightNode->minZ = currentNode->maxZ/2;
+	newRightNode->maxZ = currentNode->maxZ;
 #	/*leftObjects.push_back(objects[i]);
 	leftObjects.push_back(objects[i]);*/
 
@@ -515,14 +514,14 @@ int generateHierarchy(std::vector<SceneObject> objects,
 		split + 1, last);
 
 
-	currentNode.left = l;
-	currentNode.right = r;
+	currentNode->left = l;
+	currentNode->right = r;
 
 	nodes.push_back(currentNode);
 	return (int)nodes.size() - 1;
 }
 
-int constructLBVHTree(std::map<unsigned int, SceneObject >& hashMap, std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
+int constructLBVHTree(std::map<unsigned int, SceneObject >& hashMap, std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {  
 	std::vector<unsigned int> sortedMortonCodes;
 	// we map the centrod of spheres
@@ -539,7 +538,7 @@ int constructLBVHTree(std::map<unsigned int, SceneObject >& hashMap, std::vector
 	return generateHierarchy(objects, sortedMortonCodes,currentNode,nodes,  0, sortedMortonCodes.size()-1);
 }
 
-int constructKDTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes, int depth)
+int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes, int depth)
 {   
 	//bool shouldSplit;
 	//int count = objects.size();
@@ -557,42 +556,43 @@ int constructKDTree(std::vector<SceneObject>& objects, Node& currentNode, std::v
 	//	return (int)nodes.size() - 1;
 	//}
 
+
 	   // If this is a leaf node
 	if (objects.size() <= 3) // this measn we only have one node and two children
 	{
 		for (int i = 0; i < (int)objects.size(); i++)
 		{
-			currentNode.objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
+			currentNode->objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
 		}
-		currentNode.numObjs = (int)objects.size(); // how many objects node has
-		currentNode.isleaf = true; // leaf node has two objects as children
+		currentNode->numObjs = (int)objects.size(); // how many objects node has
+		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
 		return (int)nodes.size() - 1;
 	}
 
 
 	// If it is not a leaf node
-	Node newLeftNode;
-	newLeftNode.left = NULL;
-	newLeftNode.right = NULL;
-	Node newRightNode;
-	newRightNode.left = NULL;
-	newRightNode.right = NULL;
+	std::shared_ptr<Node> newLeftNode = std::make_shared<Node>();
+	newLeftNode->left = NULL;
+	newLeftNode->right = NULL;
+	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
+	newRightNode->left = NULL;
+	newRightNode->right = NULL;
 	std::vector<int> leftPointers;
 	std::vector<SceneObject> leftObjects;
 	Vec3f midLeft;
-	float maxLeftX = std::numeric_limits<float>::min();
+	float maxLeftX = -1 * std::numeric_limits<float>::max();
 	float minLeftX = std::numeric_limits<float>::max();
-	float maxLeftY = std::numeric_limits<float>::min();
+	float maxLeftY = -1 * std::numeric_limits<float>::max();
 	float minLeftY = std::numeric_limits<float>::max();
-	float maxLeftZ = std::numeric_limits<float>::min();
+	float maxLeftZ = -1 * std::numeric_limits<float>::max();
 	float minLeftZ = std::numeric_limits<float>::max();
 	Vec3f midRight;
-	float maxRightX = std::numeric_limits<float>::min();
+	float maxRightX = -1 * std::numeric_limits<float>::max();
 	float minRightX = std::numeric_limits<float>::max();
-	float maxRightY = std::numeric_limits<float>::min();
+	float maxRightY = -1 * std::numeric_limits<float>::max();
 	float minRightY = std::numeric_limits<float>::max();
-	float maxRightZ = std::numeric_limits<float>::min();
+	float maxRightZ = -1 * std::numeric_limits<float>::max();
 	float minRightZ = std::numeric_limits<float>::max();
 	std::vector<int> rightPointers;
 	std::vector<SceneObject> rightObjects;
@@ -601,7 +601,7 @@ int constructKDTree(std::vector<SceneObject>& objects, Node& currentNode, std::v
 		// here I am splitting the objects which are their center is in the left of the 
 		// Middle point of the node to the left, we can change the currentNode.midpoint,
 		// By using splitting average or other ways look at my presentations
-		if (objects[i].position[currentNode.longestAxis] < currentNode.midpoint)
+		if (objects[i].position[currentNode->longestAxis] < currentNode->midpoint)
 		{
 			// we create the new left bbox parameters
 			if (objects[i].position[0] - objects[i].radius < minLeftX)
@@ -646,66 +646,66 @@ int constructKDTree(std::vector<SceneObject>& objects, Node& currentNode, std::v
 	midLeft = Vec3f(midLeft[0] / leftObjects.size(), midLeft[1] / leftObjects.size(), midLeft[2] / leftObjects.size());
 	midRight = Vec3f(midRight[0] / rightObjects.size(), midRight[1] / rightObjects.size(), midRight[2] / rightObjects.size());
 
-	int axisindex = currentNode.longestAxis;
+	int axisindex = currentNode->longestAxis;
 	switch (axisindex) {
 	case 0:
-		newLeftNode.longestAxis = 1;
-		newLeftNode.midpoint = midLeft[0];
-		newRightNode.longestAxis = 1;
-		newRightNode.midpoint = midRight[0];
+		newLeftNode->longestAxis = 1;
+		newLeftNode->midpoint = midLeft[1];
+		newRightNode->longestAxis = 1;
+		newRightNode->midpoint = midRight[1];
 
 		break;
 	case 1:
-		newLeftNode.longestAxis = 2;
-		newLeftNode.midpoint = midLeft[1];
-		newRightNode.longestAxis = 2;
-		newRightNode.midpoint = midRight[1];
+		newLeftNode->longestAxis = 2;
+		newLeftNode->midpoint = midLeft[2];
+		newRightNode->longestAxis = 2;
+		newRightNode->midpoint = midRight[2];
 
 		break;
 	default:
-		newLeftNode.longestAxis = 0;
-		newLeftNode.midpoint = midLeft[2];
-		newRightNode.longestAxis = 0;
-		newRightNode.midpoint = midRight[2];
+		newLeftNode->longestAxis = 0;
+		newLeftNode->midpoint = midLeft[0];
+		newRightNode->longestAxis = 0;
+		newRightNode->midpoint = midRight[0];
 
 	}
 
 
-	newLeftNode.minX = minLeftX;
-	newLeftNode.maxX = maxLeftX;
-	newLeftNode.minY = minLeftY;
-	newLeftNode.maxY = maxLeftY;
-	newLeftNode.minZ = minLeftZ;
-	newLeftNode.maxZ = maxLeftZ;
+	newLeftNode->minX = minLeftX;
+	newLeftNode->maxX = maxLeftX;
+	newLeftNode->minY = minLeftY;
+	newLeftNode->maxY = maxLeftY;
+	newLeftNode->minZ = minLeftZ;
+	newLeftNode->maxZ = maxLeftZ;
 
-	newRightNode.minX = minRightX;
-	newRightNode.maxX = maxRightX;
-	newRightNode.minY = minRightY;
-	newRightNode.maxY = maxRightY;
-	newRightNode.minZ = minRightZ;
-	newRightNode.maxZ = maxRightZ;
+	newRightNode->minX = minRightX;
+	newRightNode->maxX = maxRightX;
+	newRightNode->minY = minRightY;
+	newRightNode->maxY = maxRightY;
+	newRightNode->minZ = minRightZ;
+	newRightNode->maxZ = maxRightZ;
 
-	int l = constructKDTree(leftObjects, newLeftNode, nodes, 3);
+	int l = constructKDTree(leftObjects, newLeftNode , nodes, 3);
 	int r = constructKDTree(rightObjects, newRightNode, nodes, 3);
 
-	currentNode.left = l;
-	currentNode.right = r;
+	currentNode->left = l;
+	currentNode->right = r;
 	
 	nodes.push_back(currentNode);
 	return (int)nodes.size() - 1;
 }
 
 
-bool boundingBoxIntersection(Vec3f position, Vec3f direction, Node& box)
+bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<Node> box)
 {
-	float tmin = (box.minX - position[0]) / direction[0];
-	float tmax = (box.maxX - position[0]) / direction[0];
+	float tmin = (box->minX - position[0]) / direction[0];
+	float tmax = (box->maxX - position[0]) / direction[0];
 
 	if (tmin > tmax)
 		std::swap(tmin, tmax);
 
-	float tymin = (box.minY - position[1]) / direction[1];
-	float tymax = (box.maxY - position[1]) / direction[1];
+	float tymin = (box->minY - position[1]) / direction[1];
+	float tymax = (box->maxY - position[1]) / direction[1];
 
 	if (tymin > tymax)
 		std::swap(tymin, tymax);
@@ -719,8 +719,8 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, Node& box)
 	if (tymax < tmax)
 		tmax = tymax;
 
-	float tzmin = (box.minZ - position[2]) / direction[2];
-	float tzmax = (box.maxZ - position[2]) / direction[2];
+	float tzmin = (box->minZ - position[2]) / direction[2];
+	float tzmax = (box->maxZ - position[2]) / direction[2];
 
 	if (tzmin > tzmax)
 		std::swap(tzmin, tzmax);
@@ -739,10 +739,10 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, Node& box)
 
 
 
-void bvhTraverse(Vec3f position, Vec3f direction, std::vector<Node>& tree, int currentNode, std::vector<int>& boxes)
+void bvhTraverse(Vec3f position, Vec3f direction, std::vector<std::shared_ptr<Node>>& tree, int currentNode, std::vector<int>& boxes)
 {
 	int retValue = -1;
-	if (tree[currentNode].isleaf)
+	if (tree[currentNode]->isleaf)
 	{
 		if (boundingBoxIntersection(position, direction, tree[currentNode]))
 		{
@@ -752,10 +752,10 @@ void bvhTraverse(Vec3f position, Vec3f direction, std::vector<Node>& tree, int c
 	}
 	else
 	{
-		if (boundingBoxIntersection(position, direction, tree[tree[currentNode].left]))
-			bvhTraverse(position, direction, tree, tree[currentNode].left, boxes);
-		if (boundingBoxIntersection(position, direction, tree[tree[currentNode].right]))
-			bvhTraverse(position, direction, tree, tree[currentNode].right, boxes);
+		if (boundingBoxIntersection(position, direction, tree[tree[currentNode]->left]))
+			bvhTraverse(position, direction, tree, tree[currentNode]->left, boxes);
+		if (boundingBoxIntersection(position, direction, tree[tree[currentNode]->right]))
+			bvhTraverse(position, direction, tree, tree[currentNode]->right, boxes);
 	}
 }
 
