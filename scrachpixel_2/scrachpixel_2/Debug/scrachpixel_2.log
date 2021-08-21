@@ -1,213 +1,214 @@
 ﻿  scrachpixel_2.cpp
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(104,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(105,1): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(105,1): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(105,1): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(105,1): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(105,1): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(177,83): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(177,83): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(177,83): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(177,83): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(177,83): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(225,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(230,43): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(366,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(367,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(493,50): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(493,43): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(548,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(550,11): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(552,34): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(616,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(621,38): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(666,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(718,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(719,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(724,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(725,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(739,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(740,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(918,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(918,25): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(918,25): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(918,25): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(918,25): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(919,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(919,25): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(919,25): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(919,25): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(919,25): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(920,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(920,25): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(920,25): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(920,25): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(920,25): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(923,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(923,25): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(923,25): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(923,25): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(923,25): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(924,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(924,25): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(924,25): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(924,25): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(924,25): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(925,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(925,25): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(925,25): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(925,25): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(925,25): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(930,85): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(932,29): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(932,29): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(932,29): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(932,29): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(932,29): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(972,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(972,46): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(972,46): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(972,46): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(972,46): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(973,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(973,46): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(973,46): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(973,46): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(973,46): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(974,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(974,46): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(974,46): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(974,46): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(974,46): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(975,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(975,46): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(975,46): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(975,46): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(975,46): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(976,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(976,46): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(976,46): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(976,46): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(976,46): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(977,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(977,46): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(977,46): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(977,46): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(977,46): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(999,37): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(999,37): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(999,37): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(999,37): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(999,37): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(998,8): warning C4101: 't0': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(997,14): warning C4101: 'vhit': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(997,8): warning C4101: 'uhit': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(998,12): warning C4101: 't1': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1010,16): warning C4101: 'v': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1010,10): warning C4101: 't': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1010,13): warning C4101: 'u': unreferenced local variable
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1046,39): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1046,39): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1046,39): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1046,39): warning C4244:             T=uint32_t
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1046,39): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1064,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(105,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(106,1): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(106,1): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(106,1): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(106,1): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(106,1): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(160,83): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(160,83): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(160,83): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(160,83): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(160,83): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(208,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(213,43): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(349,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(350,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(476,50): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(476,43): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(530,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(532,11): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(534,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(535,34): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(599,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(604,38): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(649,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(701,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(702,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(707,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(708,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(722,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(723,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(901,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(901,25): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(901,25): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(901,25): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(901,25): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(902,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(902,25): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(902,25): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(902,25): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(902,25): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(903,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(903,25): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(903,25): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(903,25): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(903,25): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(906,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(906,25): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(906,25): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(906,25): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(906,25): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(907,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(907,25): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(907,25): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(907,25): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(907,25): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(908,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(908,25): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(908,25): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(908,25): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(908,25): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(913,85): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(915,29): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(915,29): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(915,29): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(915,29): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(915,29): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(955,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(955,46): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(955,46): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(955,46): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(955,46): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(956,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(956,46): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(956,46): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(956,46): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(956,46): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(957,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(957,46): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(957,46): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(957,46): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(957,46): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(958,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(958,46): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(958,46): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(958,46): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(958,46): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(959,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(959,46): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(959,46): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(959,46): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(959,46): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(960,46): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(960,46): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(960,46): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(960,46): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(960,46): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(982,37): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(982,37): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(982,37): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(982,37): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(982,37): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(981,8): warning C4101: 't0': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(980,14): warning C4101: 'vhit': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(980,8): warning C4101: 'uhit': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(981,12): warning C4101: 't1': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(993,16): warning C4101: 'v': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(993,10): warning C4101: 't': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(993,13): warning C4101: 'u': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1029,39): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1029,39): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1029,39): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1029,39): warning C4244:             T=uint32_t
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1029,39): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\bvh.h(1047,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(54,32): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(57,27): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(63,20): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(80,21): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(367,27): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(367,27): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(367,27): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(367,27): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(367,27): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(373,37): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(373,37): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(373,37): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(373,37): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(373,37): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(392,28): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(392,28): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(392,28): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(392,28): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(392,28): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(421,28): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(421,28): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(421,28): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(421,28): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(421,28): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(456,28): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(456,28): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(456,28): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(456,28): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(456,28): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(465,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(517,19): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(586,20): warning C4244: 'argument': conversion from 'int' to 'const T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(586,20): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(586,20): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(586,20): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(586,20): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(590,18): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(590,18): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(590,18): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(590,18): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(590,18): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(593,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(594,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(596,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(601,74): warning C4305: 'argument': truncation from 'double' to 'const T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(601,74): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(601,74): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(601,74): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(601,74): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(641,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(648,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(649,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,86): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,86): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,86): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,86): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,86): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,51): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,51): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,51): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,51): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,51): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,22): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,22): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,22): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,22): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(677,22): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,106): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,106): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,106): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,106): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,106): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,87): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,87): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,87): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,87): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,87): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,68): warning C4244:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,68): warning C4244:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,68): warning C4244:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(681,68): warning C4244:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(770,85): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(772,68): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(772,68): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(772,68): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(772,68): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(772,68): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(779,80): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(779,80): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(779,80): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(779,80): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(779,80): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(780,73): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(780,73): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(780,73): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(780,73): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(780,73): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(64,20): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(81,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(296,14): warning C4101: 'indexK': unreferenced local variable
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(378,27): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(378,27): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(378,27): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(378,27): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(378,27): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(384,37): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(384,37): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(384,37): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(384,37): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(384,37): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(403,28): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(403,28): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(403,28): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(403,28): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(403,28): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(432,28): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(432,28): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(432,28): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(432,28): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(432,28): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(467,28): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(467,28): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(467,28): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(467,28): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(467,28): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(523,19): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(592,20): warning C4244: 'argument': conversion from 'int' to 'const T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(592,20): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(592,20): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(592,20): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(592,20): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(596,18): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(596,18): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(596,18): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(596,18): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(596,18): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(599,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(600,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(602,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(607,74): warning C4305: 'argument': truncation from 'double' to 'const T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(607,74): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(607,74): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(607,74): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(607,74): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(647,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(654,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(655,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,86): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,86): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,86): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,86): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,86): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,51): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,51): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,51): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,51): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,51): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,22): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,22): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,22): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,22): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(683,22): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,106): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,106): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,106): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,106): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,106): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,87): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,87): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,87): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,87): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,87): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,68): warning C4244: 'argument': conversion from 'double' to 'T', possible loss of data
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,68): warning C4244:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,68): warning C4244:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,68): warning C4244:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(687,68): warning C4244:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(776,85): warning C4305: 'argument': truncation from 'double' to 'const float'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(778,68): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(778,68): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(778,68): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(778,68): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(778,68): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(785,80): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(785,80): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(785,80): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(785,80): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(785,80): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(786,73): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(786,73): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(786,73): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(786,73): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(786,73): warning C4305:         ]
   scrachpixel_2.vcxproj -> C:\Users\alhaj\source\repos\scrachpixel_2\Debug\scrachpixel_2.exe

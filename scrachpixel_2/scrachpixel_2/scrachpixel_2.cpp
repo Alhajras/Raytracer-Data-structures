@@ -56,6 +56,7 @@ int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
 int rootNodeIndex = 0;
+std::map<unsigned int, SceneObject > hashMap; // This is for the LBVH
 
 inline
 float deg2rad(const float& deg)
@@ -266,7 +267,7 @@ Vec3f derivBezier(const Vec3f* P, const float& t)
 		3 * t * t * P[3];
 }
 
-bool trace_more(
+bool trace_more( Settings settings, 
 	const Vec3f& orig, const Vec3f& dir,
 	std::vector<Sphere>& spheres,
 	float& tNear, uint32_t& index, Vec2f& uv, Sphere* hitObject, 
@@ -277,23 +278,33 @@ bool trace_more(
 	bool hit = false;
 	for (int box : boundingBoxes)
 	{
-		/*for (int i = 0; i < tree[box].numObjs; i++)
+		for (int i = 0; i < tree[box].numObjs; i++)
 		{
-			if (scene[tree[box].objs[i]].isSphere)
+			SceneObject sob;
+
+			if (settings.dataStructure == LBVH){
+			int moreId = tree[box].objsMorID[i];
+			sob = hashMap[moreId];
+			}
+			else
+			{
+				sob = scene[tree[box].objs[i]];
+			}
+			if (sob.isSphere)
 			{
 				float tNearK = INF;
 				uint32_t indexK;
 				Vec2f uvK;
 				float t1;
-				if (scene[tree[box].objs[i]].sphere.raySphereIntersect(orig, dir, tNearK, t1) && tNearK < tNear) {
-					hitObject = &scene[tree[box].objs[i]].sphere;
+				if (sob.sphere.raySphereIntersect(orig, dir, tNearK, t1) && tNearK < tNear) {
+					hitObject = &sob.sphere;
 					hit = true;
 					tNear = tNearK;
 					index = 0;
 					uv = uvK;
 				}
 			}
-		}*/
+		}
 	}
 
 	return hit;
@@ -460,15 +471,10 @@ Vec3f castRay(
 		{
 			for (int i = 0; i < tree[box].numObjs; i++)
 			{
-				int x = tree[box].objsMorID[i];
+				int moreId = tree[box].objsMorID[i];
 				SceneObject sob; 
-				for (int j = 0; j < scene.size(); j++)
-				{
-					if (scene[j].objId == x) {
-						sob = scene[j];
-						break;
-					}
-				}
+				sob = hashMap[moreId];
+
 				if (sob.isSphere)
 				{
 					t0 = INFINITY, t1 = INFINITY;
@@ -581,7 +587,7 @@ Vec3f castRay(
 				Sphere* shadowHitObject = nullptr;
 				float tNearShadow = INF;
 				// is the point in shadow, and is the nearest occluding object closer to the object than the light itself?
-				bool inShadow = trace_more(shadowPointOrig, lightDir, spheres, tNearShadow, index, uv, shadowHitObject,scene, tree, boundingBoxes) &&
+				bool inShadow = trace_more(settings, shadowPointOrig, lightDir, spheres, tNearShadow, index, uv, shadowHitObject,scene, tree, boundingBoxes) &&
 					tNearShadow * tNearShadow < lightDistance2;
 				lightAmt += (1 - inShadow) * lights[i].emissionColor * LdotN;
 				Vec3f reflectionDirection = reflect(-lightDir, N);
@@ -809,7 +815,7 @@ int main(int argc, char** argv)
 		case LBVH:
 		{
 			std::cout << "<<<<<<< This is LBVH >>>>>>";
-			rootNodeIndex = constructLBVHTree(scene, root, nodes);
+			rootNodeIndex = constructLBVHTree(hashMap, scene, root, nodes);
 			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}

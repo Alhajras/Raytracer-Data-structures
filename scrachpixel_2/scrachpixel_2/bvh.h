@@ -18,6 +18,7 @@
 #include <iostream>
 #include <random>
 #include <string>
+#include <map>
 
 using namespace std;
 enum AccType { BVH, KDTREE, UNIFORM_GRID, LBVH, NONE };
@@ -138,25 +139,7 @@ class MoreInfo
 {
 public:
 	int code; // left child id
-	int right; //right child id
-	bool isleaf = false;
-	int objs[3]; // Each node saves three objects
-	int objsMorID[3]; // Each node saves three objects
-	int numObjs;
-	//some bounding box variables 
-	// here I can create BBOX node is general
-	double minX;
-	double maxX;
-	double minY;
-	double maxY;
-	double minZ;
-	double maxZ;
-
-	double midpoint;
-	double longestAxis;
-
-	// this is for KDtree
-	std::vector<int> kdLeafChildren;
+	
 };
 
 template<typename T> inline T clamp(const T& v, const T& lo, const T& hi)
@@ -509,19 +492,19 @@ int generateHierarchy(std::vector<SceneObject> objects,
 		
 		}
 	}*/
-	newLeftNode.minX = -50;
-	newLeftNode.maxX = 50;
-	newLeftNode.minY = -50;
-	newLeftNode.maxY = 50;
-	newLeftNode.minZ = -50;
-	newLeftNode.maxZ = 50;
+	newLeftNode.minX = currentNode.minX;
+	newLeftNode.maxX = currentNode.maxX / 2;
+	newLeftNode.minY = currentNode.minY;
+	newLeftNode.maxY = currentNode.maxY/2;
+	newLeftNode.minZ = currentNode.minZ;
+	newLeftNode.maxZ = currentNode.maxZ/3;
 
-	newRightNode.minX = -50;
-	newRightNode.maxX = 50;
-	newRightNode.minY = -50;
-	newRightNode.maxY = 50;
-	newRightNode.minZ = -50;
-	newRightNode.maxZ = 50;
+	newRightNode.minX = currentNode.maxX / 2;
+	newRightNode.maxX = currentNode.maxX;
+	newRightNode.minY = currentNode.maxY / 2;
+	newRightNode.maxY = currentNode.maxY;
+	newRightNode.minZ = currentNode.maxZ/2;
+	newRightNode.maxZ = currentNode.maxZ;
 #	/*leftObjects.push_back(objects[i]);
 	leftObjects.push_back(objects[i]);*/
 
@@ -539,16 +522,16 @@ int generateHierarchy(std::vector<SceneObject> objects,
 	return (int)nodes.size() - 1;
 }
 
-int constructLBVHTree(std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
+int constructLBVHTree(std::map<unsigned int, SceneObject >& hashMap, std::vector<SceneObject>& objects, Node& currentNode, std::vector<Node>& nodes)
 {  
 	std::vector<unsigned int> sortedMortonCodes;
-
 	// we map the centrod of spheres
 	for (uint64_t i = 0; i < objects.size() ; ++i) {
 		Vec3f centroid = (objects[i].center + 30)/1000 ;
 		unsigned int moCode = morton3D(centroid.x, centroid.y, centroid.z);
 		objects[i].objId = moCode;
 		sortedMortonCodes.push_back(moCode);
+		hashMap[moCode] = objects[i];
 		std::cout << sortedMortonCodes[i] << "\n";
 	}
 	radixSort(sortedMortonCodes, sortedMortonCodes.size(), 10);
