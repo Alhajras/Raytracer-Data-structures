@@ -6935,7 +6935,7 @@ std::vector<SceneObject> createScene() {
 
 	//Loads OBJ file from path
 	std::ifstream file;
-	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/armadillo.obj");
+	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/bunny.obj");
 	if (!file.good())
 	{
 		std::cout << "Can't open texture file " << std::endl;
@@ -6959,8 +6959,16 @@ std::vector<SceneObject> createScene() {
 			//vertices.push_back(vertex);
 		SceneObject s;
 		s.objId = id;
-		s.radius = 0.1;
-		s.center = vertex / 20;
+
+		//Bunny scale
+		// Min leaf node = 10
+		s.radius = 0.01 *5;
+        s.center = vertex * 20;
+
+		// Armadillo
+		// Min leaf node = 1000
+		//s.radius = 0.1;
+		//s.center = vertex / 20;
 		s.center.z += -20;
 		s.position = s.center;
 		s.shininess = 64;

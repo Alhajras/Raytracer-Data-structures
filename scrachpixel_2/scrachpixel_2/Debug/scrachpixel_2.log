@@ -165,21 +165,21 @@ C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(6815,7
 C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(6855,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(6862,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(6863,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(6962,17): warning C4305: '=': truncation from 'double' to 'float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7101,85): warning C4305: 'argument': truncation from 'double' to 'const float'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7103,68): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7103,68): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7103,68): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7103,68): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7103,68): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7110,80): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7110,80): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7110,80): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7110,80): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7110,80): warning C4305:         ]
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,73): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,73): warning C4305:         with
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,73): warning C4305:         [
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,73): warning C4305:             T=float
-C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,73): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(6965,21): warning C4305: '=': truncation from 'double' to 'float'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7109,85): warning C4305: 'argument': truncation from 'double' to 'const float'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,68): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,68): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,68): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,68): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7111,68): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7118,80): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7118,80): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7118,80): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7118,80): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7118,80): warning C4305:         ]
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7119,73): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7119,73): warning C4305:         with
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7119,73): warning C4305:         [
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7119,73): warning C4305:             T=float
+C:\Users\alhaj\source\repos\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(7119,73): warning C4305:         ]
   scrachpixel_2.vcxproj -> C:\Users\alhaj\source\repos\scrachpixel_2\Debug\scrachpixel_2.exe
