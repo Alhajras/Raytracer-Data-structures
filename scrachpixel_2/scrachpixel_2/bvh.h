@@ -115,7 +115,7 @@ public:
 	int left; // left child id
 	int right; //right child id
 	bool isleaf = false;
-	int objs[3]; // Each node saves three objects
+	int objs[1000]; // Each node saves three objects
 	int objsMorID[3]; // Each node saves three objects
 	int numObjs;
 	//some bounding box variables 
@@ -168,7 +168,7 @@ public:
 
 int constructBVHTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {   // If this is a leaf node
-    if(objects.size() <= 100) // this measn we only have one node and two children
+    if(objects.size() <= 1000) // this measn we only have one node and two children
     {
         for(int i = 0; i<(int)objects.size();i++)
         {
