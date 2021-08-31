@@ -6812,7 +6812,8 @@ Vec3f castRay(
 				//float pattern = (modulo(s * scaleS) < 0.5);
 				//hitColor += vis * pattern * lightIntensity * std::max(0.f, hitNormal.dotProduct(-lightDir));
 				// Remove the pattern to git rid of the texture
-				hitColor += pattern * lightAmt * (lights[i].getDiffuseColor(st) * 0.8) / (2) + specularColor * 0.5;
+				//hitColor += pattern * lightAmt * (lights[i].getDiffuseColor(st) * 0.8) / (2) + specularColor * 0.5;
+				hitColor +=  lightAmt * (lights[i].getDiffuseColor(st) * 0.8) / (2) + specularColor * 0.5;
 				hitColor += sphere->surfaceColor;
 
 			}
@@ -6885,54 +6886,7 @@ std::vector<SceneObject> createScene() {
 	std::vector<SceneObject> scene;
 	int id = 0;
 
-	// Bunny
-		//for (int i = 0; i < 2556; i++) {
-		//SceneObject s;
-		//s.objId = id;
-		//s.radius = 0.01 *20;
-		//s.center = bunny[i] * 20;
-		//s.center.z += -20;
-		//s.position = s.center;
-		//s.shininess = 64;
-		//s.isSphere = true;
-		//s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0, 0, 0), 0, 0.0);
-		//double random = random_double_2(); 
-		//scene.push_back(s);
-		//}
-
-	// Teapot
-	//for (int i = 0; i < 3643; i++) {
-	//	SceneObject s;
-	//	s.objId = id;
-	//	s.radius = 0.2;
-	//	s.center = teepot[i];
-	//	s.center.z += -20;
-	//	s.position = s.center;
-	//	s.shininess = 64;
-	//	s.isSphere = true;
-	//	s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0, 0, 0), 0, 0.0);
-	//	double random = random_double_2();
-	//	scene.push_back(s);
-	//}
-
-	// dragon
-	//for (int i = 0; i < 125067; i++) {
-	//	SceneObject s;
-	//	s.objId = id;
-	//	s.radius = 0.5;
-	//	s.center = dragon[i] / 100;
-	//	s.center.z += -20;
-	//	s.position = s.center;
-	//	s.shininess = 64;
-	//	s.isSphere = true;
-	//	s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0, 0, 0), 0, 0.0);
-	//	double random = random_double_2();
-	//	scene.push_back(s);
-	//}
-	
 	std::vector<Vec3f> vertices;
-
-
 	//Loads OBJ file from path
 	std::ifstream file;
 	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/bunny.obj");
@@ -6960,15 +6914,15 @@ std::vector<SceneObject> createScene() {
 		SceneObject s;
 		s.objId = id;
 
-		//Bunny scale
-		// Min leaf node = 10
+	//	//Bunny scale
+	//	// Min leaf node = 10
 		s.radius = 0.01 *5;
         s.center = vertex * 20;
 
-		// Armadillo
-		// Min leaf node = 1000
-		//s.radius = 0.1;
-		//s.center = vertex / 20;
+	//	// Armadillo
+	//	// Min leaf node = 1000
+	//	//s.radius = 0.1;
+	//	//s.center = vertex / 20;
 		s.center.z += -20;
 		s.position = s.center;
 		s.shininess = 64;
@@ -6984,44 +6938,57 @@ std::vector<SceneObject> createScene() {
 		}
 	}
 
-	// Random
-	//for (int i = 0; i < 2; i++) {
-	//	SceneObject s;
-	//	s.objId = id;
-	//	s.radius = 1;
-	//	s.center = Vec3f(i * 0.9 * random_double_2(), i * 0.9 * random_double_2(), i + -20);
-	//	s.position = s.center;
-	//	s.shininess = 64;
-	//	s.isSphere = true;
-	//	s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0.9 * random_double_2(), random_double_2(), 0.9 * random_double_2()), 0, 0.0);
-	//	double random = random_double_2(); 
-	//	if (random < 0.5) {
-	//		s.sphere.materialType = REFLECTION_AND_REFRACTION;
-	//	}
-	//	scene.push_back(s);
-
-	//	}
 
 	// The box
-	//SceneObject floor;
-	//floor.objId = id++;
-	//floor.radius = 98;
-	//floor.center = Vec3f(0.0, -100, -20);
-	//floor.position = floor.center;
-	//floor.shininess = 64;
-	//floor.isSphere = true;
-	//floor.sphere = Sphere(id, floor.center, floor.radius, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
-	//scene.push_back(floor);
+	SceneObject rWall;
+	rWall.objId = id++;
+	rWall.radius = 98;
+	rWall.center = Vec3f(0.0, -100, -20);
+	rWall.position = rWall.center;
+	rWall.shininess = 64;
+	rWall.isSphere = true;
+	rWall.sphere = Sphere(id, Vec3f(33, 0, -20), 30, Vec3f(0, 0, 1), 1, 0.0);
+	scene.push_back(rWall);
 
-	//SceneObject lWall;
-	//lWall.objId = id++;
-	//lWall.radius = 98;
-	//lWall.center = Vec3f(-5, -90, -20);
-	//lWall.position = lWall.center;
-	//lWall.shininess = 64;
-	//lWall.isSphere = true;
-	//lWall.sphere = Sphere(id, lWall.center, lWall.radius, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
-	//scene.push_back(lWall);
+	SceneObject lWall;
+	lWall.objId = id++;
+	lWall.radius = 98;
+	lWall.center = Vec3f(-5, -98, -20);
+	lWall.position = lWall.center;
+	lWall.shininess = 64;
+	lWall.isSphere = true;
+	lWall.sphere = Sphere(id, Vec3f(-33, 0, -20), 30, Vec3f(1, 0, 0), 1, 0.0);
+	scene.push_back(lWall);
+
+	SceneObject bWall;
+	bWall.objId = id++;
+	bWall.radius = 98;
+	bWall.center = Vec3f(-5, -98, -20);
+	bWall.position = bWall.center;
+	bWall.shininess = 64;
+	bWall.isSphere = true;
+	bWall.sphere = Sphere(id, Vec3f(0, 0, -32), 12, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
+	scene.push_back(bWall);
+
+	SceneObject cWall;
+	cWall.objId = id++;
+	cWall.radius = 98;
+	cWall.center = Vec3f(-5, -98, -20);
+	cWall.position = cWall.center;
+	cWall.shininess = 64;
+	cWall.isSphere = true;
+	cWall.sphere = Sphere(id, Vec3f(0, 33, -20), 30, Vec3f(0, 0.0, 0), 1, 0.0);
+	scene.push_back(cWall);
+
+	SceneObject fWall;
+	fWall.objId = id++;
+	fWall.radius = 98;
+	fWall.center = Vec3f(-5, -98, -20);
+	fWall.position = fWall.center;
+	fWall.shininess = 64;
+	fWall.isSphere = true;
+	fWall.sphere = Sphere(id, Vec3f(0, -33, -20), 30, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
+	scene.push_back(fWall);
 	return scene;
 
 }
@@ -7105,8 +7072,8 @@ int main(int argc, char** argv)
 		std::vector<Triangle> triangles;
 
 
-		Sphere light = Sphere(0,Vec3f(0, 10, -10), 1, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
-		Sphere light2 = Sphere(0,Vec3f(10, 10, -20), 0.2, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
+		//Sphere light = Sphere(0,Vec3f(0, 10, -10), 1, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
+		Sphere light2 = Sphere(0,Vec3f(0, 3, -15), 3, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
 
 		Sphere gray = Sphere(0, Vec3f(-5, 0, -20), 2, Vec3f(0.1, 0.4, 0.6), 1, 0.0);
 		Sphere gray_1 = Sphere(1,Vec3f(-5.5, 0, -23), 0.5, Vec3f(0, 0, 0), 1, 0.0);
@@ -7118,7 +7085,7 @@ int main(int argc, char** argv)
 		spheres.push_back(Sphere(2, Vec3f(0.0, -100, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0)); // ground
 		spheres.push_back(Sphere(3, Vec3f(5, 0, -20), 2, Vec3f(0.1, 0.77, 0.97), 1, 0.0)); //yellow right
 
-		lights.push_back(light);
+		//lights.push_back(light);
 		lights.push_back(light2);
 
 
