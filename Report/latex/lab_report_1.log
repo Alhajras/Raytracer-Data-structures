@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  31 AUG 2021 23:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  1 SEP 2021 00:29
 entering extended mode
 **./lab_report_1.tex
 (lab_report_1.tex
@@ -556,16 +556,19 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 25.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-LaTeX Warning: Citation `Shirley2020RTW1' undefined on input line 36.
+LaTeX Warning: Citation `Shirley2020RTW1' undefined on input line 39.
 
 
-LaTeX Warning: Citation `suffern2016ray' undefined on input line 36.
+LaTeX Warning: Citation `suffern2016ray' undefined on input line 39.
 
 
-LaTeX Warning: Citation `scratchapixel' undefined on input line 36.
+LaTeX Warning: Citation `scratchapixel' undefined on input line 39.
 
+[1
 
-LaTeX Warning: File `hyperion_renderer.png' not found on input line 42.
+{C:/Users/alhaj/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+
+LaTeX Warning: File `hyperion_renderer.png' not found on input line 45.
 
 
 ! Package pdftex.def Error: File `hyperion_renderer.png' not found: using draft
@@ -575,7 +578,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.42 ...idth=0.7\textwidth]{hyperion_renderer.png}
+l.45 ...idth=0.7\textwidth]{hyperion_renderer.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -583,7 +586,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.43 ...Renderer \protect\cite{burley2018design}.}
+l.46 ...Renderer \protect\cite{burley2018design}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -598,23 +601,20 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.43 ...Renderer \protect\cite{burley2018design}.}
+l.46 ...Renderer \protect\cite{burley2018design}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 
-LaTeX Warning: Citation `burley2018design' undefined on input line 43.
+LaTeX Warning: Citation `burley2018design' undefined on input line 46.
 
 
-LaTeX Warning: Citation `burley2018design' undefined on input line 43.
+LaTeX Warning: Citation `burley2018design' undefined on input line 46.
 
-[1
 
-{C:/Users/alhaj/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-
-LaTeX Warning: File `nvidia_marbles.png' not found on input line 49.
+LaTeX Warning: File `nvidia_marbles.png' not found on input line 52.
 
 
 ! Package pdftex.def Error: File `nvidia_marbles.png' not found: using draft se
@@ -624,7 +624,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.49 ...s[width=0.7\textwidth]{nvidia_marbles.png}
+l.52 ...s[width=0.7\textwidth]{nvidia_marbles.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -632,7 +632,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.50 ...Night Demo. \protect\cite{nvidiamarbles}.}
+l.53 ...Night Demo. \protect\cite{nvidiamarbles}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -647,21 +647,21 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.50 ...Night Demo. \protect\cite{nvidiamarbles}.}
+l.53 ...Night Demo. \protect\cite{nvidiamarbles}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 
-LaTeX Warning: Citation `nvidiamarbles' undefined on input line 50.
+LaTeX Warning: Citation `nvidiamarbles' undefined on input line 53.
 
 
-LaTeX Warning: Citation `nvidiamarbles' undefined on input line 50.
+LaTeX Warning: Citation `nvidiamarbles' undefined on input line 53.
 
 [2]
 
-LaTeX Warning: File `raytracing_gems.png' not found on input line 58.
+LaTeX Warning: File `raytracing_gems.png' not found on input line 61.
 
 
 ! Package pdftex.def Error: File `raytracing_gems.png' not found: using draft s
@@ -671,7 +671,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.58 ...[width=0.6\textwidth]{raytracing_gems.png}
+l.61 ...[width=0.6\textwidth]{raytracing_gems.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -679,7 +679,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.59 ...ray tracing \protect\cite{haines2019ray}.}
+l.62 ...ray tracing \protect\cite{haines2019ray}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -694,32 +694,32 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.59 ...ray tracing \protect\cite{haines2019ray}.}
+l.62 ...ray tracing \protect\cite{haines2019ray}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 
-LaTeX Warning: Citation `haines2019ray' undefined on input line 59.
+LaTeX Warning: Citation `haines2019ray' undefined on input line 62.
 
 
-LaTeX Warning: Citation `haines2019ray' undefined on input line 59.
+LaTeX Warning: Citation `haines2019ray' undefined on input line 62.
 
 [3] [4]
 
-LaTeX Warning: Citation `raytriangle' undefined on input line 77.
+LaTeX Warning: Citation `raytriangle' undefined on input line 80.
 
 
-LaTeX Warning: Citation `stackoverflow' undefined on input line 77.
+LaTeX Warning: Citation `stackoverflow' undefined on input line 80.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 83--90
+Underfull \hbox (badness 10000) in paragraph at lines 86--93
 
  []
 
 
-LaTeX Warning: File `ppm_example.png' not found on input line 98.
+LaTeX Warning: File `ppm_example.png' not found on input line 101.
 
 
 ! Package pdftex.def Error: File `ppm_example.png' not found: using draft setti
@@ -729,7 +729,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.98 ...ncludegraphics[width=3cm]{ppm_example.png}
+l.101 ...cludegraphics[width=3cm]{ppm_example.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -737,7 +737,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.99 ...an actual image \protect\cite{ppmformat}.}
+l.102 ...n actual image \protect\cite{ppmformat}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -752,21 +752,21 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.99 ...an actual image \protect\cite{ppmformat}.}
+l.102 ...n actual image \protect\cite{ppmformat}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 
-LaTeX Warning: Citation `ppmformat' undefined on input line 99.
+LaTeX Warning: Citation `ppmformat' undefined on input line 102.
 
 
-LaTeX Warning: Citation `ppmformat' undefined on input line 99.
+LaTeX Warning: Citation `ppmformat' undefined on input line 102.
 
 [5]
 
-LaTeX Warning: File `ray1.png' not found on input line 106.
+LaTeX Warning: File `ray1.png' not found on input line 109.
 
 
 ! Package pdftex.def Error: File `ray1.png' not found: using draft setting.
@@ -775,7 +775,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.106 		\includegraphics[width=8cm]{ray1.png}
+l.109 		\includegraphics[width=8cm]{ray1.png}
                                              
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -783,7 +783,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.107 ...mbol{d}$ \protect\cite{Shirley2020RTW1}.}
+l.110 ...mbol{d}$ \protect\cite{Shirley2020RTW1}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -798,19 +798,19 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.107 ...mbol{d}$ \protect\cite{Shirley2020RTW1}.}
+l.110 ...mbol{d}$ \protect\cite{Shirley2020RTW1}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 103--108
+Underfull \hbox (badness 10000) in paragraph at lines 106--111
 
  []
 
 
-LaTeX Warning: File `camera.png' not found on input line 121.
+LaTeX Warning: File `camera.png' not found on input line 124.
 
 
 ! Package pdftex.def Error: File `camera.png' not found: using draft setting.
@@ -819,7 +819,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.121 		\includegraphics[width=8cm]{camera.png}
+l.124 		\includegraphics[width=8cm]{camera.png}
                                                
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -827,7 +827,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.122 ...e) setup \protect\cite{Shirley2020RTW1}.}
+l.125 ...e) setup \protect\cite{Shirley2020RTW1}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -842,19 +842,19 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.122 ...e) setup \protect\cite{Shirley2020RTW1}.}
+l.125 ...e) setup \protect\cite{Shirley2020RTW1}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
 
  []
 
 
-LaTeX Warning: File `axb_normal.png' not found on input line 135.
+LaTeX Warning: File `axb_normal.png' not found on input line 138.
 
 
 ! Package pdftex.def Error: File `axb_normal.png' not found: using draft settin
@@ -864,7 +864,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.135 ...ncludegraphics[width=6cm]{axb_normal.png}
+l.138 ...ncludegraphics[width=6cm]{axb_normal.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -872,7 +872,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.136 ...$ and the normal $\boldsymbol{\hat{n}}$.}
+l.139 ...$ and the normal $\boldsymbol{\hat{n}}$.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -887,7 +887,7 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.136 ...$ and the normal $\boldsymbol{\hat{n}}$.}
+l.139 ...$ and the normal $\boldsymbol{\hat{n}}$.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
@@ -895,7 +895,7 @@ My plan is to forget the whole thing and hope for the best.
 
 [7]
 
-LaTeX Warning: File `triangle.png' not found on input line 146.
+LaTeX Warning: File `triangle.png' not found on input line 149.
 
 
 ! Package pdftex.def Error: File `triangle.png' not found: using draft setting.
@@ -905,7 +905,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.146 		\includegraphics[width=5cm]{triangle.png}
+l.149 		\includegraphics[width=5cm]{triangle.png}
                                                  
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -913,7 +913,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.147 ... triangle \protect\cite{trianglemeshes}.}
+l.150 ... triangle \protect\cite{trianglemeshes}.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -928,42 +928,42 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.147 ... triangle \protect\cite{trianglemeshes}.}
+l.150 ... triangle \protect\cite{trianglemeshes}.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
 My plan is to forget the whole thing and hope for the best.
 
 
-LaTeX Warning: Citation `trianglemeshes' undefined on input line 147.
+LaTeX Warning: Citation `trianglemeshes' undefined on input line 150.
 
 
-LaTeX Warning: Citation `trianglemeshes' undefined on input line 147.
+LaTeX Warning: Citation `trianglemeshes' undefined on input line 150.
 
 
-LaTeX Warning: Citation `moller1997fast' undefined on input line 172.
+LaTeX Warning: Citation `moller1997fast' undefined on input line 175.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 172--175
+Underfull \hbox (badness 10000) in paragraph at lines 175--178
 
  []
 
 [8]
 
-LaTeX Warning: Citation `cramersrule' undefined on input line 207.
+LaTeX Warning: Citation `cramersrule' undefined on input line 210.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--208
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 264--267
+Underfull \hbox (badness 10000) in paragraph at lines 207--211
 
  []
 
 
-LaTeX Warning: File `ray_triangle.png' not found on input line 273.
+Underfull \hbox (badness 10000) in paragraph at lines 267--270
+
+ []
+
+
+LaTeX Warning: File `ray_triangle.png' not found on input line 276.
 
 
 ! Package pdftex.def Error: File `ray_triangle.png' not found: using draft sett
@@ -973,14 +973,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.273 ...cs[width=.45\textwidth]{ray_triangle.png}
+l.276 ...cs[width=.45\textwidth]{ray_triangle.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [9]
 
-LaTeX Warning: File `circle.png' not found on input line 284.
+LaTeX Warning: File `circle.png' not found on input line 287.
 
 
 ! Package pdftex.def Error: File `circle.png' not found: using draft setting.
@@ -989,7 +989,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.284 		\includegraphics[width=6cm]{circle.png}
+l.287 		\includegraphics[width=6cm]{circle.png}
                                                
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -997,7 +997,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Argument of \caption@ydblarg has an extra }.
 <inserted text> 
                 \par 
-l.285 ...n at $(4, 4)$ along with 3 other points.}
+l.288 ...n at $(4, 4)$ along with 3 other points.}
                                                   
 I've run across a `}' that doesn't seem to match anything.
 For example, `\def\a#1{...}' and `\a}' would produce
@@ -1012,7 +1012,7 @@ C.
 ! Paragraph ended before \caption@ydblarg was complete.
 <to be read again> 
                    \par 
-l.285 ...n at $(4, 4)$ along with 3 other points.}
+l.288 ...n at $(4, 4)$ along with 3 other points.}
                                                   
 I suspect you've forgotten a `}', causing me to apply this
 control sequence to too much text. How can we recover?
@@ -1020,7 +1020,7 @@ My plan is to forget the whole thing and hope for the best.
 
 [10]
 
-LaTeX Warning: File `ray_sphere_triangle.png' not found on input line 321.
+LaTeX Warning: File `ray_sphere_triangle.png' not found on input line 324.
 
 
 ! Package pdftex.def Error: File `ray_sphere_triangle.png' not found: using dra
@@ -1030,13 +1030,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.321 ...h=.45\textwidth]{ray_sphere_triangle.png}
+l.324 ...h=.45\textwidth]{ray_sphere_triangle.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `dolphin_mesh.png' not found on input line 333.
+LaTeX Warning: File `dolphin_mesh.png' not found on input line 336.
 
 
 ! Package pdftex.def Error: File `dolphin_mesh.png' not found: using draft sett
@@ -1046,23 +1046,23 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.333 ...phics[width=\linewidth]{dolphin_mesh.png}
+l.336 ...phics[width=\linewidth]{dolphin_mesh.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `trianglemesh' undefined on input line 334.
+LaTeX Warning: Citation `trianglemesh' undefined on input line 337.
 
 
-LaTeX Warning: Citation `trianglemesh' undefined on input line 334.
+LaTeX Warning: Citation `trianglemesh' undefined on input line 337.
 
 [11]
 
-LaTeX Warning: Citation `stanfordbunny' undefined on input line 336.
+LaTeX Warning: Citation `stanfordbunny' undefined on input line 339.
 
 
-LaTeX Warning: File `normal_mesh.png' not found on input line 341.
+LaTeX Warning: File `normal_mesh.png' not found on input line 344.
 
 
 ! Package pdftex.def Error: File `normal_mesh.png' not found: using draft setti
@@ -1072,35 +1072,35 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.341 ...cs[width=0.54\textwidth]{normal_mesh.png}
+l.344 ...cs[width=0.54\textwidth]{normal_mesh.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 336--343
+Underfull \hbox (badness 10000) in paragraph at lines 339--346
 
  []
 
 
-LaTeX Warning: Citation `phong' undefined on input line 350.
+LaTeX Warning: Citation `phong' undefined on input line 353.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--353
+Underfull \hbox (badness 10000) in paragraph at lines 351--356
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--353
+Underfull \hbox (badness 10000) in paragraph at lines 351--356
 
  []
 
 [12]
 
-LaTeX Warning: Citation `inversesquarelaw2' undefined on input line 354.
+LaTeX Warning: Citation `inversesquarelaw2' undefined on input line 357.
 
 
-LaTeX Warning: File `inverse_square_law.png' not found on input line 357.
+LaTeX Warning: File `inverse_square_law.png' not found on input line 360.
 
 
 ! Package pdftex.def Error: File `inverse_square_law.png' not found: using draf
@@ -1110,23 +1110,23 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.357 ...dth=.5\textwidth]{inverse_square_law.png}
+l.360 ...dth=.5\textwidth]{inverse_square_law.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `inversesquarelaw' undefined on input line 358.
+LaTeX Warning: Citation `inversesquarelaw' undefined on input line 361.
 
 
-LaTeX Warning: Citation `inversesquarelaw' undefined on input line 358.
+LaTeX Warning: Citation `inversesquarelaw' undefined on input line 361.
 
 [13]
 
-LaTeX Warning: Citation `lambertscosinelaw' undefined on input line 367.
+LaTeX Warning: Citation `lambertscosinelaw' undefined on input line 370.
 
 
-LaTeX Warning: File `diffuse_reflection.png' not found on input line 379.
+LaTeX Warning: File `diffuse_reflection.png' not found on input line 382.
 
 
 ! Package pdftex.def Error: File `diffuse_reflection.png' not found: using draf
@@ -1136,7 +1136,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.379 ...th=0.5\textwidth]{diffuse_reflection.png}
+l.382 ...th=0.5\textwidth]{diffuse_reflection.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1149,7 +1149,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.395 ....5\textwidth]{diffuse_ambient_reflection}
+l.398 ....5\textwidth]{diffuse_ambient_reflection}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1163,7 +1163,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.402 ...[width=0.65\linewidth]{r_vector_v_vector}
+l.405 ...[width=0.65\linewidth]{r_vector_v_vector}
                                                   
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1171,10 +1171,10 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `shadinglecture' undefined on input line 403.
+LaTeX Warning: Citation `shadinglecture' undefined on input line 406.
 
 
-LaTeX Warning: Citation `shadinglecture' undefined on input line 403.
+LaTeX Warning: Citation `shadinglecture' undefined on input line 406.
 
 
 ! LaTeX Error: File `diffuse_ambient_specular_reflection' not found.
@@ -1183,7 +1183,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.421 ...dth]{diffuse_ambient_specular_reflection}
+l.424 ...dth]{diffuse_ambient_specular_reflection}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1191,12 +1191,12 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--428
+Underfull \hbox (badness 10000) in paragraph at lines 430--431
 
  []
 
 
-LaTeX Warning: File `shadow_ray_problem.png' not found on input line 432.
+LaTeX Warning: File `shadow_ray_problem.png' not found on input line 435.
 
 
 ! Package pdftex.def Error: File `shadow_ray_problem.png' not found: using draf
@@ -1206,14 +1206,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.432 ...th=0.5\textwidth]{shadow_ray_problem.png}
+l.435 ...th=0.5\textwidth]{shadow_ray_problem.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [15]
 
-LaTeX Warning: File `shadow_ray_problem_fix.png' not found on input line 442.
+LaTeX Warning: File `shadow_ray_problem_fix.png' not found on input line 445.
 
 
 ! Package pdftex.def Error: File `shadow_ray_problem_fix.png' not found: using 
@@ -1223,19 +1223,19 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.442 ....5\textwidth]{shadow_ray_problem_fix.png}
+l.445 ....5\textwidth]{shadow_ray_problem_fix.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 436--444
+Underfull \hbox (badness 10000) in paragraph at lines 439--447
 
  []
 
 [16]
 
-LaTeX Warning: File `aliased_pointlight.png' not found on input line 459.
+LaTeX Warning: File `aliased_pointlight.png' not found on input line 462.
 
 
 ! Package pdftex.def Error: File `aliased_pointlight.png' not found: using draf
@@ -1245,13 +1245,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.459 ...th=.45\textwidth]{aliased_pointlight.png}
+l.462 ...th=.45\textwidth]{aliased_pointlight.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `aliased_pointlight_zoomed.png' not found on input line 460
+LaTeX Warning: File `aliased_pointlight_zoomed.png' not found on input line 463
 .
 
 
@@ -1262,13 +1262,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.460 ...textwidth]{aliased_pointlight_zoomed.png}
+l.463 ...textwidth]{aliased_pointlight_zoomed.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `antialiasing_1.png' not found on input line 468.
+LaTeX Warning: File `antialiasing_1.png' not found on input line 471.
 
 
 ! Package pdftex.def Error: File `antialiasing_1.png' not found: using draft se
@@ -1278,14 +1278,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.468 ...width=0.25\textwidth]{antialiasing_1.png}
+l.471 ...width=0.25\textwidth]{antialiasing_1.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [17]
 
-LaTeX Warning: File `antialiasing_2.png' not found on input line 476.
+LaTeX Warning: File `antialiasing_2.png' not found on input line 479.
 
 
 ! Package pdftex.def Error: File `antialiasing_2.png' not found: using draft se
@@ -1295,13 +1295,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.476 ...width=0.25\textwidth]{antialiasing_2.png}
+l.479 ...width=0.25\textwidth]{antialiasing_2.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `antialiased_pointlight.png' not found on input line 486.
+LaTeX Warning: File `antialiased_pointlight.png' not found on input line 489.
 
 
 ! Package pdftex.def Error: File `antialiased_pointlight.png' not found: using 
@@ -1311,13 +1311,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.486 ...45\textwidth]{antialiased_pointlight.png}
+l.489 ...45\textwidth]{antialiased_pointlight.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `10x_antialiasing.png' not found on input line 487.
+LaTeX Warning: File `10x_antialiasing.png' not found on input line 490.
 
 
 ! Package pdftex.def Error: File `10x_antialiasing.png' not found: using draft 
@@ -1327,14 +1327,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.487 ...idth=.39\textwidth]{10x_antialiasing.png}
+l.490 ...idth=.39\textwidth]{10x_antialiasing.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [18]
 
-LaTeX Warning: File `texture_mapping.png' not found on input line 497.
+LaTeX Warning: File `texture_mapping.png' not found on input line 500.
 
 
 ! Package pdftex.def Error: File `texture_mapping.png' not found: using draft s
@@ -1344,14 +1344,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.497 ...[width=.7\textwidth]{texture_mapping.png}
+l.500 ...[width=.7\textwidth]{texture_mapping.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [19]
 
-LaTeX Warning: File `textured_triangles.png' not found on input line 525.
+LaTeX Warning: File `textured_triangles.png' not found on input line 528.
 
 
 ! Package pdftex.def Error: File `textured_triangles.png' not found: using draf
@@ -1361,14 +1361,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.525 ...dth=.5\textwidth]{textured_triangles.png}
+l.528 ...dth=.5\textwidth]{textured_triangles.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [20]
 
-LaTeX Warning: File `textured_sphere.png' not found on input line 538.
+LaTeX Warning: File `textured_sphere.png' not found on input line 541.
 
 
 ! Package pdftex.def Error: File `textured_sphere.png' not found: using draft s
@@ -1378,7 +1378,7 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.538 ...cs[width=\linewidth]{textured_sphere.png}
+l.541 ...cs[width=\linewidth]{textured_sphere.png}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -1391,7 +1391,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.563 ...phics[width=4cm, height=4cm]{translation}
+l.566 ...phics[width=4cm, height=4cm]{translation}
                                                   
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1399,10 +1399,10 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `2dtransformations' undefined on input line 564.
+LaTeX Warning: Citation `2dtransformations' undefined on input line 567.
 
 
-LaTeX Warning: Citation `2dtransformations' undefined on input line 564.
+LaTeX Warning: Citation `2dtransformations' undefined on input line 567.
 
 
 ! LaTeX Error: File `scale' not found.
@@ -1411,7 +1411,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.577 ...ludegraphics[width=4cm,height=4cm]{scale}
+l.580 ...ludegraphics[width=4cm,height=4cm]{scale}
                                                   
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1419,14 +1419,14 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `2dtransformations' undefined on input line 578.
+LaTeX Warning: Citation `2dtransformations' undefined on input line 581.
 
 
-LaTeX Warning: Citation `2dtransformations' undefined on input line 578.
+LaTeX Warning: Citation `2dtransformations' undefined on input line 581.
 
 [22]
 
-LaTeX Warning: File `rotation.png' not found on input line 602.
+LaTeX Warning: File `rotation.png' not found on input line 605.
 
 
 ! Package pdftex.def Error: File `rotation.png' not found: using draft setting.
@@ -1436,16 +1436,16 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.602 ...aphics[width=.28\textwidth]{rotation.png}
+l.605 ...aphics[width=.28\textwidth]{rotation.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `2dtransformations' undefined on input line 603.
+LaTeX Warning: Citation `2dtransformations' undefined on input line 606.
 
 
-LaTeX Warning: Citation `2dtransformations' undefined on input line 603.
+LaTeX Warning: Citation `2dtransformations' undefined on input line 606.
 
 [23] [24]
 
@@ -1455,7 +1455,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.656 ...raphics[width=0.8\linewidth]{camera_rays}
+l.659 ...raphics[width=0.8\linewidth]{camera_rays}
                                                   
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1463,15 +1463,15 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `marschner2018fundamentals' undefined on input line 657
+LaTeX Warning: Citation `marschner2018fundamentals' undefined on input line 660
 .
 
 
-LaTeX Warning: Citation `marschner2018fundamentals' undefined on input line 657
+LaTeX Warning: Citation `marschner2018fundamentals' undefined on input line 660
 .
 
 
-LaTeX Warning: File `fov.png' not found on input line 666.
+LaTeX Warning: File `fov.png' not found on input line 669.
 
 
 ! Package pdftex.def Error: File `fov.png' not found: using draft setting.
@@ -1480,16 +1480,16 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.666 ...udegraphics[width=.25\textwidth]{fov.png}
+l.669 ...udegraphics[width=.25\textwidth]{fov.png}
                                                   \quad
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `fieldofview' undefined on input line 667.
+LaTeX Warning: Citation `fieldofview' undefined on input line 670.
 
 
-LaTeX Warning: Citation `fieldofview' undefined on input line 667.
+LaTeX Warning: Citation `fieldofview' undefined on input line 670.
 
 [25]
 
@@ -1499,7 +1499,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.699 ...ludegraphics[width=.3\textwidth]{camera3}
+l.702 ...ludegraphics[width=.3\textwidth]{camera3}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1513,7 +1513,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.700 ...ludegraphics[width=.3\textwidth]{camera1}
+l.703 ...ludegraphics[width=.3\textwidth]{camera1}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1527,7 +1527,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.701 ...ludegraphics[width=.3\textwidth]{camera2}
+l.704 ...ludegraphics[width=.3\textwidth]{camera2}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1541,7 +1541,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.711 		\includegraphics[width=.2\textwidth]{aabb}
+l.714 		\includegraphics[width=.2\textwidth]{aabb}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1549,13 +1549,13 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `ericson2004real' undefined on input line 712.
+LaTeX Warning: Citation `ericson2004real' undefined on input line 715.
 
 
-LaTeX Warning: Citation `ericson2004real' undefined on input line 712.
+LaTeX Warning: Citation `ericson2004real' undefined on input line 715.
 
 
-LaTeX Warning: Citation `kay1986ray' undefined on input line 715.
+LaTeX Warning: Citation `kay1986ray' undefined on input line 718.
 
 
 ! LaTeX Error: File `aabb1' not found.
@@ -1564,7 +1564,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.721 ...cludegraphics[width=.35\textwidth]{aabb1}
+l.724 ...cludegraphics[width=.35\textwidth]{aabb1}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1578,7 +1578,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.722 ...cludegraphics[width=.35\textwidth]{aabb2}
+l.725 ...cludegraphics[width=.35\textwidth]{aabb2}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1592,7 +1592,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.730 ...ncludegraphics[width=.7\textwidth]{aabb3}
+l.733 ...ncludegraphics[width=.7\textwidth]{aabb3}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1601,10 +1601,10 @@ If that doesn't work, type  X <return>  to quit.
 
 [26]
 
-LaTeX Warning: Citation `stanfordbunny' undefined on input line 748.
+LaTeX Warning: Citation `stanfordbunny' undefined on input line 751.
 
 
-LaTeX Warning: Citation `utahteapot' undefined on input line 749.
+LaTeX Warning: Citation `utahteapot' undefined on input line 752.
 
 
 ! LaTeX Error: File `cubescene' not found.
@@ -1613,7 +1613,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.756 ...degraphics[width=.5\textwidth]{cubescene}
+l.759 ...degraphics[width=.5\textwidth]{cubescene}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1621,17 +1621,17 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 766--766
+Underfull \hbox (badness 10000) in paragraph at lines 769--769
 []\OT1/cmr/m/n/10.95 Ray-mesh in-ter-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 766--766
+Underfull \hbox (badness 10000) in paragraph at lines 769--769
 []\OT1/cmr/m/n/10.95 Ray-triangle
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 766--767
+Underfull \hbox (badness 10000) in paragraph at lines 769--770
 []\OT1/cmr/m/n/10.95 Time taken to
  []
 
@@ -1642,7 +1642,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.778 ...egraphics[width=.5\textwidth]{bunnyscene}
+l.781 ...egraphics[width=.5\textwidth]{bunnyscene}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1650,17 +1650,17 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 788--788
+Underfull \hbox (badness 10000) in paragraph at lines 791--791
 []\OT1/cmr/m/n/10.95 Ray-mesh in-ter-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 788--788
+Underfull \hbox (badness 10000) in paragraph at lines 791--791
 []\OT1/cmr/m/n/10.95 Ray-triangle
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 788--789
+Underfull \hbox (badness 10000) in paragraph at lines 791--792
 []\OT1/cmr/m/n/10.95 Time taken to
  []
 
@@ -1674,7 +1674,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.800 ...graphics[width=.5\textwidth]{teapotscene}
+l.803 ...graphics[width=.5\textwidth]{teapotscene}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1682,22 +1682,22 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 810--810
+Underfull \hbox (badness 10000) in paragraph at lines 813--813
 []\OT1/cmr/m/n/10.95 Ray-mesh in-ter-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 810--810
+Underfull \hbox (badness 10000) in paragraph at lines 813--813
 []\OT1/cmr/m/n/10.95 Ray-triangle
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 810--811
+Underfull \hbox (badness 10000) in paragraph at lines 813--814
 []\OT1/cmr/m/n/10.95 Time taken to
  []
 
 
-LaTeX Warning: Citation `TRTChallenge' undefined on input line 822.
+LaTeX Warning: Citation `TRTChallenge' undefined on input line 825.
 
 
 ! LaTeX Error: File `point_light_hard_shadows' not found.
@@ -1706,7 +1706,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.827 ...h=.4\textwidth]{point_light_hard_shadows}
+l.830 ...h=.4\textwidth]{point_light_hard_shadows}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1714,7 +1714,7 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `penumbra' undefined on input line 831.
+LaTeX Warning: Citation `penumbra' undefined on input line 834.
 
 
 ! LaTeX Error: File `softshadows' not found.
@@ -1723,7 +1723,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.835 ...graphics[width=.3\textwidth]{softshadows}
+l.838 ...graphics[width=.3\textwidth]{softshadows}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1731,11 +1731,11 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: Citation `christensen2018renderman' undefined on input line 836.
+LaTeX Warning: Citation `christensen2018renderman' undefined on input line 839.
 
 
 
-LaTeX Warning: Citation `christensen2018renderman' undefined on input line 836.
+LaTeX Warning: Citation `christensen2018renderman' undefined on input line 839.
 
 
 
@@ -1745,7 +1745,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.843 ...egraphics[width=.4\textwidth]{arealight1}
+l.846 ...egraphics[width=.4\textwidth]{arealight1}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1760,7 +1760,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.851 ...egraphics[width=.4\textwidth]{arealight2}
+l.854 ...egraphics[width=.4\textwidth]{arealight2}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1768,7 +1768,7 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 854--859
+Underfull \hbox (badness 10000) in paragraph at lines 857--862
 
  []
 
@@ -1779,7 +1779,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.867 ...egraphics[width=.4\textwidth]{arealight3}
+l.870 ...egraphics[width=.4\textwidth]{arealight3}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1793,7 +1793,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.868 ...phics[width=.365\textwidth]{wrongshadows}
+l.871 ...phics[width=.365\textwidth]{wrongshadows}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1807,7 +1807,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.876 ...egraphics[width=.4\textwidth]{arealight4}
+l.879 ...egraphics[width=.4\textwidth]{arealight4}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1821,7 +1821,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.889 ...egraphics[width=.5\textwidth]{arealight5}
+l.892 ...egraphics[width=.5\textwidth]{arealight5}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1836,7 +1836,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.897 ...graphics[width=.35\textwidth]{arealight6}
+l.900 ...graphics[width=.35\textwidth]{arealight6}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1850,7 +1850,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.898 ...cludegraphics[width=.32\textwidth]{noisy}
+l.901 ...cludegraphics[width=.32\textwidth]{noisy}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1864,7 +1864,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.907 ...egraphics[width=.5\textwidth]{arealight7}
+l.910 ...egraphics[width=.5\textwidth]{arealight7}
                                                   \quad
 I could not locate the file with any of these extensions:
 .pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps
@@ -1876,14 +1876,14 @@ If that doesn't work, type  X <return>  to quit.
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 917.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 920.
  [30]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 917.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 920.
  (lab_report_1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 917.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 917.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 920.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 920.
 Package rerunfilecheck Info: File `lab_report_1.out' has not changed.
-(rerunfilecheck)             Checksum: F1F00D5CE2BF1C1A870B582868DFD00A;2718.
+(rerunfilecheck)             Checksum: 8B38F46DA2E252D2CF703AA4D8C6FBD1;2672.
 
 
 LaTeX Warning: There were undefined references.
@@ -1891,13 +1891,13 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 917.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 920.
  ) 
 Here is how much of TeX's memory you used:
- 8924 strings out of 492942
- 137838 string characters out of 3126214
+ 8922 strings out of 492942
+ 137816 string characters out of 3126214
  238254 words of memory out of 3000000
- 12367 multiletter control sequences out of 15000+200000
+ 12366 multiletter control sequences out of 15000+200000
  13684 words of font info for 51 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,12n,41p,1477b,436s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2005,9 +2005,9 @@ blic/amsfonts/cm/cmr8.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/alhaj/AppData/Local/Programs/M
 iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/alhaj/AppData/Loca
 l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on lab_report_1.pdf (30 pages, 329374 bytes).
+Output written on lab_report_1.pdf (30 pages, 329816 bytes).
 PDF statistics:
- 696 PDF objects out of 1000 (max. 8388607)
- 227 named destinations out of 1000 (max. 500000)
- 337 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 692 PDF objects out of 1000 (max. 8388607)
+ 226 named destinations out of 1000 (max. 500000)
+ 329 words of extra memory for PDF output out of 10000 (max. 10000000)
 

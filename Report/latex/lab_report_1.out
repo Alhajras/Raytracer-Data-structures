@@ -1,42 +1,41 @@
-\BOOKMARK [1][-]{section.1}{Abstract}{}% 1
-\BOOKMARK [1][-]{section.2}{Introduction}{}% 2
-\BOOKMARK [1][-]{section.3}{Object subdivision}{}% 3
-\BOOKMARK [1][-]{section.4}{Spatial Subdivision}{}% 4
-\BOOKMARK [1][-]{section.5}{Introduction}{}% 5
-\BOOKMARK [1][-]{section.6}{Why Ray tracing?}{}% 6
-\BOOKMARK [1][-]{section.7}{How ray tracing works?}{}% 7
-\BOOKMARK [1][-]{section.8}{Implementation Details}{}% 8
-\BOOKMARK [2][-]{subsection.8.1}{External Libraries}{section.8}% 9
-\BOOKMARK [2][-]{subsection.8.2}{Code Structure}{section.8}% 10
-\BOOKMARK [1][-]{section.9}{Using PPM \(Portable Pixmap\) format to generate images}{}% 11
-\BOOKMARK [1][-]{section.10}{Sending rays into the scene}{}% 12
-\BOOKMARK [1][-]{section.11}{Adding a triangle to the scene \(ray-triangle intersection\)}{}% 13
-\BOOKMARK [2][-]{subsection.11.1}{Introduction}{section.11}% 14
-\BOOKMARK [2][-]{subsection.11.2}{Barycentric Coordinates}{section.11}% 15
-\BOOKMARK [2][-]{subsection.11.3}{M\366ller-Trumbore Algorithm}{section.11}% 16
-\BOOKMARK [1][-]{section.12}{Adding a sphere to the scene \(ray-sphere intersection\)}{}% 17
-\BOOKMARK [1][-]{section.13}{Adding a triangular mesh to the scene}{}% 18
-\BOOKMARK [1][-]{section.14}{Shading}{}% 19
-\BOOKMARK [2][-]{subsection.14.1}{Point light}{section.14}% 20
-\BOOKMARK [2][-]{subsection.14.2}{Diffuse Reflection}{section.14}% 21
-\BOOKMARK [2][-]{subsection.14.3}{Ambient Reflection}{section.14}% 22
-\BOOKMARK [2][-]{subsection.14.4}{Specular Reflection}{section.14}% 23
-\BOOKMARK [1][-]{section.15}{Shadows}{}% 24
-\BOOKMARK [1][-]{section.16}{Antialiasing}{}% 25
-\BOOKMARK [1][-]{section.17}{Texture mapping}{}% 26
-\BOOKMARK [2][-]{subsection.17.1}{Texturing background}{section.17}% 27
-\BOOKMARK [2][-]{subsection.17.2}{Texturing a triangle}{section.17}% 28
-\BOOKMARK [2][-]{subsection.17.3}{Texturing a sphere}{section.17}% 29
-\BOOKMARK [1][-]{section.18}{Transformations}{}% 30
-\BOOKMARK [2][-]{subsection.18.1}{Translation}{section.18}% 31
-\BOOKMARK [2][-]{subsection.18.2}{Scale}{section.18}% 32
-\BOOKMARK [2][-]{subsection.18.3}{Rotation}{section.18}% 33
-\BOOKMARK [1][-]{section.19}{Camera}{}% 34
-\BOOKMARK [1][-]{section.20}{Axis Aligned Bounding Box \(Ray-AABB intersection\)}{}% 35
-\BOOKMARK [2][-]{subsection.20.1}{Analysis of AABB}{section.20}% 36
-\BOOKMARK [3][-]{subsubsection.20.1.1}{Scene 1 - Cube}{subsection.20.1}% 37
-\BOOKMARK [3][-]{subsubsection.20.1.2}{Scene 2 - Stanford Bunny}{subsection.20.1}% 38
-\BOOKMARK [3][-]{subsubsection.20.1.3}{Scene 3 - Utah Teapot}{subsection.20.1}% 39
-\BOOKMARK [1][-]{section.21}{Area lights}{}% 40
-\BOOKMARK [1][-]{section.22}{Final remarks}{}% 41
-\BOOKMARK [1][-]{section.22}{References}{}% 42
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Object subdivision}{}% 2
+\BOOKMARK [1][-]{section.3}{Spatial Subdivision}{}% 3
+\BOOKMARK [1][-]{section.4}{Introduction}{}% 4
+\BOOKMARK [1][-]{section.5}{Why Ray tracing?}{}% 5
+\BOOKMARK [1][-]{section.6}{How ray tracing works?}{}% 6
+\BOOKMARK [1][-]{section.7}{Implementation Details}{}% 7
+\BOOKMARK [2][-]{subsection.7.1}{External Libraries}{section.7}% 8
+\BOOKMARK [2][-]{subsection.7.2}{Code Structure}{section.7}% 9
+\BOOKMARK [1][-]{section.8}{Using PPM \(Portable Pixmap\) format to generate images}{}% 10
+\BOOKMARK [1][-]{section.9}{Sending rays into the scene}{}% 11
+\BOOKMARK [1][-]{section.10}{Adding a triangle to the scene \(ray-triangle intersection\)}{}% 12
+\BOOKMARK [2][-]{subsection.10.1}{Introduction}{section.10}% 13
+\BOOKMARK [2][-]{subsection.10.2}{Barycentric Coordinates}{section.10}% 14
+\BOOKMARK [2][-]{subsection.10.3}{M\366ller-Trumbore Algorithm}{section.10}% 15
+\BOOKMARK [1][-]{section.11}{Adding a sphere to the scene \(ray-sphere intersection\)}{}% 16
+\BOOKMARK [1][-]{section.12}{Adding a triangular mesh to the scene}{}% 17
+\BOOKMARK [1][-]{section.13}{Shading}{}% 18
+\BOOKMARK [2][-]{subsection.13.1}{Point light}{section.13}% 19
+\BOOKMARK [2][-]{subsection.13.2}{Diffuse Reflection}{section.13}% 20
+\BOOKMARK [2][-]{subsection.13.3}{Ambient Reflection}{section.13}% 21
+\BOOKMARK [2][-]{subsection.13.4}{Specular Reflection}{section.13}% 22
+\BOOKMARK [1][-]{section.14}{Shadows}{}% 23
+\BOOKMARK [1][-]{section.15}{Antialiasing}{}% 24
+\BOOKMARK [1][-]{section.16}{Texture mapping}{}% 25
+\BOOKMARK [2][-]{subsection.16.1}{Texturing background}{section.16}% 26
+\BOOKMARK [2][-]{subsection.16.2}{Texturing a triangle}{section.16}% 27
+\BOOKMARK [2][-]{subsection.16.3}{Texturing a sphere}{section.16}% 28
+\BOOKMARK [1][-]{section.17}{Transformations}{}% 29
+\BOOKMARK [2][-]{subsection.17.1}{Translation}{section.17}% 30
+\BOOKMARK [2][-]{subsection.17.2}{Scale}{section.17}% 31
+\BOOKMARK [2][-]{subsection.17.3}{Rotation}{section.17}% 32
+\BOOKMARK [1][-]{section.18}{Camera}{}% 33
+\BOOKMARK [1][-]{section.19}{Axis Aligned Bounding Box \(Ray-AABB intersection\)}{}% 34
+\BOOKMARK [2][-]{subsection.19.1}{Analysis of AABB}{section.19}% 35
+\BOOKMARK [3][-]{subsubsection.19.1.1}{Scene 1 - Cube}{subsection.19.1}% 36
+\BOOKMARK [3][-]{subsubsection.19.1.2}{Scene 2 - Stanford Bunny}{subsection.19.1}% 37
+\BOOKMARK [3][-]{subsubsection.19.1.3}{Scene 3 - Utah Teapot}{subsection.19.1}% 38
+\BOOKMARK [1][-]{section.20}{Area lights}{}% 39
+\BOOKMARK [1][-]{section.21}{Final remarks}{}% 40
+\BOOKMARK [1][-]{section.21}{References}{}% 41
