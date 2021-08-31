@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}Objective}{3}{section.1}% 
+\contentsline {subsection}{\numberline {1.1}Milestones}{3}{subsection.1.1}% 
+\contentsline {section}{\numberline {2}Creating an image}{4}{section.2}% 
+\contentsline {subsection}{\numberline {2.1}Concept}{4}{subsection.2.1}% 
+\contentsline {subsection}{\numberline {2.2}Pseudo code}{4}{subsection.2.2}% 
+\contentsline {subsection}{\numberline {2.3}Output}{5}{subsection.2.3}% 
+\contentsline {section}{\numberline {3}Rays}{6}{section.3}% 
+\contentsline {subsection}{\numberline {3.1}Concept}{6}{subsection.3.1}% 
+\contentsline {subsection}{\numberline {3.2}Pseudo code}{6}{subsection.3.2}% 
+\contentsline {subsection}{\numberline {3.3}Output}{7}{subsection.3.3}% 
+\contentsline {section}{\numberline {4}Adding a sphere}{7}{section.4}% 
+\contentsline {subsection}{\numberline {4.1}Concept}{7}{subsection.4.1}% 
+\contentsline {subsection}{\numberline {4.2}Pseudo code}{8}{subsection.4.2}% 
+\contentsline {subsection}{\numberline {4.3}Output}{8}{subsection.4.3}% 
+\contentsline {section}{\numberline {5}Adding a Triangle}{8}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Concept}{8}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Pseudo code}{9}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.3}Output}{9}{subsection.5.3}% 
+\contentsline {section}{\numberline {6}Shading}{11}{section.6}% 
+\contentsline {subsection}{\numberline {6.1}Concept}{11}{subsection.6.1}% 
+\contentsline {subsubsection}{\numberline {6.1.1}Lambert\IeC {\textquoteright }s Cosine Law}{11}{subsubsection.6.1.1}% 
+\contentsline {subsubsection}{\numberline {6.1.2}Phong reflection model }{11}{subsubsection.6.1.2}% 
+\contentsline {section}{\numberline {7}Texture}{13}{section.7}% 
+\contentsline {section}{\numberline {8}Software architecture}{13}{section.8}% 
+\contentsline {subsection}{\numberline {8.1}Concept}{13}{subsection.8.1}% 
