@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  1 SEP 2021 22:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  1 SEP 2021 22:21
 entering extended mode
-**./lab_report_1.tex
-(lab_report_1.tex
+**./master_project.tex
+(master_project.tex
 LaTeX2e <2018-12-01>
 ("C:\Users\alhaj\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls"
 Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
@@ -459,8 +459,8 @@ Package: multirow 2019/01/01 v2.4 Span multiple rows of a table
 \multirow@cntb=\count128
 \multirow@dima=\skip62
 \bigstrutjot=\dimen150
-) (lab_report_1.aux)
-\openout1 = `lab_report_1.aux'.
+) (master_project.aux)
+\openout1 = `master_project.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
 LaTeX Font Info:    ... okay on input line 19.
@@ -530,9 +530,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 19.
 LaTeX Info: Redefining \pageref on input line 19.
 LaTeX Info: Redefining \nameref on input line 19.
- (lab_report_1.out) (lab_report_1.out)
+ (master_project.out) (master_project.out)
 \@outlinefile=\write3
-\openout3 = `lab_report_1.out'.
+\openout3 = `master_project.out'.
 
 \c@maskedRefs=\count136
 
