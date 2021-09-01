@@ -41,38 +41,20 @@
 	
 	Why do we need to simulate light? Adding light into a scene will generate shadows, reflection, and refraction consequently will illuminate the scene, making the scene look like a reality, which can be helpful for some applications. For the internal designers, it is vital to simulate the final result of the lightning inside a room, such as sunlight coming from the windows, the light of lamps, and fireplace, these with react together and create shadows, before constructing the building and payloads of money, simulating the right angle and place of the room is helpful to imagine the final result. Solar engineers use 3D tools to build solar panel farms where the angle between the sunlight and the panel is essential to gather as much light energy as possible. In gaming, different companies compete to design engines that can produce natural scenes; this includes lighting and shadowing.  
 	
+	Figure~\ref{fig:1}, shows an example of rending a scene that can not be distinguished from reality, the details it catches as glossy materials, the reflection of surfaces, and the shadow. Capturing these details requires rendering techniques. Two popular methods are Rasterization and Raytracing. Raytracing outperforms rasterization in capturing more details; however this leads to performance issues, that is why most application uses Raytracing is offline rendering and not real-time rendering like games, where speed is vital to render each frame with compromising details. 
+	
+	
 		\begin{figure}[H]
 		\begin{center}
-		\includegraphics[width=0.7\textwidth]{2.jpg}
+		\includegraphics[width=0.7\textwidth]{1.jpg}
 			
 			\caption{https://www.pcgamer.com/unreal-engine-5-tech-demo-pc-performance/ The raytracing algorithm builds an image by extending rays into a scene and bouncing them off surfaces and towards sources of light to approximate the color value of pixels [Piotr Dubla, "Interactive Global Illumination on the CPU."
 				]}
 			\label{fig:1}
 		\end{center}
 	\end{figure}
-	
-		\begin{figure}[H]
-		\begin{center}
-					\includegraphics[width=0.7\textwidth]{2.jpg}
-			
-			\caption{ https://www.unrealengine.com/en-US/blog/real-time-ray-tracing-in-unreal-engine---part-2-architectural-visualization [Piotr Dubla, "Interactive Global Illumination on the CPU."
-				]}
-			\label{fig:1}
-		\end{center}
-	\end{figure}
 
-		\begin{figure}[H]
-	\begin{center}
-		\includegraphics[width=0.7\textwidth]{1.jpg}
 		
-		\caption{ $ http://www.oyonale.com/modeles.php$ }
-		\label{fig:1}
-	\end{center}
-\end{figure}
-	
-	
-	
-	
 	
 	Raytracing is a rendering technique that may provide extremely lifelike lighting effects. In other words, an algorithm can track the source of light and then mimic how the light interacts with the virtual objects it eventually encounters in the computer-generated environment. Raytracing produces far more lifelike shadows and reflections, as well as significantly enhanced translucence and dispersion. The algorithm considers where the light falls and calculates the interaction and interplay in the same way as the human eye does with actual light, shadows, and reflections. The way light interacts with items in the world has an impact on the colors you perceive.
 	
