@@ -35,8 +35,6 @@
 	
 	\section{What is Raytrcer and how it works}
 	
-	
-	
 	In Computer Graphics, scientists are interested in simulating a real-life phenomenon, such as Gravity Fraction, Rain, Snow, and the exciting part for us, light.  Simulating light is arguably the most challenging part because light has always been difficult to characterize as it can behave as particles and waves, which makes it spread into the whole scene based on probabilities. This makes it difficult to compute as it involves complex computation and infinite simulations to execute to have a perfect result without an error.
 	
 	Why do we need to simulate light? Adding light into a scene will generate shadows, reflection, and refraction consequently will illuminate the scene, making the scene look like a reality, which can be helpful for some applications. For the internal designers, it is vital to simulate the final result of the lightning inside a room, such as sunlight coming from the windows, the light of lamps, and fireplace, these with react together and create shadows, before constructing the building and payloads of money, simulating the right angle and place of the room is helpful to imagine the final result. Solar engineers use 3D tools to build solar panel farms where the angle between the sunlight and the panel is essential to gather as much light energy as possible. In gaming, different companies compete to design engines that can produce natural scenes; this includes lighting and shadowing.  
@@ -55,13 +53,12 @@
 	\end{figure}
 
 		
-	
-	Raytracing is a rendering technique that may provide extremely lifelike lighting effects. In other words, an algorithm can track the source of light and then mimic how the light interacts with the virtual objects it eventually encounters in the computer-generated environment. Raytracing produces far more lifelike shadows and reflections, as well as significantly enhanced translucence and dispersion. The algorithm considers where the light falls and calculates the interaction and interplay in the same way as the human eye does with actual light, shadows, and reflections. The way light interacts with items in the world has an impact on the colors you perceive.
-	
-	\vspace*{5px}
-	Raytracer involves in different industries and applications. The media uses it because Raytracing can be beneficial in theater and television lighting since it allows for visually accurate simulation of light. Engineers also use the technique to forecast light levels, brightness gradients, and visual performance requirements in the following fields: Simulations, Modelling tools, and architectures. 
+	\subsection{Raytracing defention}
+	So what is Raytracing? Raytracing is a rendering technique that provides highly lifelike lighting effects. In other words, an algorithm can track the source of light and then mimic how the light interacts with the virtual objects it eventually encounters in the computer-generated environment. Raytracing produces far more lifelike shadows and reflections, as well as significantly enhanced translucence and dispersion. The algorithm considers where the light falls and calculates the interaction and interplay in the same way as the human eye does with actual light, shadows, and reflections.
 	
 	\vspace*{5px}
+	
+	\subsection{Raytracing mechanism}
 	To render a scene by the Raytracer, three crucial steps must be followed: 
 	\textit{Casting Rays}: cast a ray for each pixel in the image.
 	\textit{Path tracing}: check if a ray crosses any of the scene's objects using the ray-geometry intersection, and trace the ray back to the source.
