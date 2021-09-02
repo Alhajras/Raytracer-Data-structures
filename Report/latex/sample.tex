@@ -53,16 +53,16 @@
 	\end{figure}
 
 		
-	\subsection{Raytracing defention}
+	\subsection{Raytracing definition}
 	So what is Raytracing? Raytracing is a rendering technique that provides highly lifelike lighting effects. In other words, an algorithm can track the source of light and then mimic how the light interacts with the virtual objects it eventually encounters in the computer-generated environment. Raytracing produces far more lifelike shadows and reflections, as well as significantly enhanced translucence and dispersion. The algorithm considers where the light falls and calculates the interaction and interplay in the same way as the human eye does with actual light, shadows, and reflections.
 	
 	\vspace*{5px}
 	
 	\subsection{Raytracing mechanism}
-	To render a scene by the Raytracer, three crucial steps must be followed: 
-	\textit{Casting Rays}: cast a ray for each pixel in the image.
-	\textit{Path tracing}: check if a ray crosses any of the scene's objects using the ray-geometry intersection, and trace the ray back to the source.
-	\textit{Shading}: determine how the object looks (color and brightness) at the point where the ray intersects the object.
+	Raytracing follows three main steps: 
+	\textit{Casting Rays}: This is similar to how the eye works, however rather than eyes works as a sensor, we have a camera, we shoot rays from the camera to the scene, and we calculate which is the closest object it hits, its color and brightness. This is done for each pixel.
+	\textit{Path tracing}: Casting rays can solve the visibility issue; this means which object appears on the camera and at what position and color. However, if we want to simulate the following effects:  soft shadows, depth of field, motion blur, caustics, ambient occlusion, and indirect lighting, then we need to trace the rays from or to the light source, this will accumulate the brightness of an object or model in a scene, also will give the depth of different objects. Note that the more rays and depth we need, the more quality we get but the slow the simulation becomes due to the complexity.
+	\textit{Shading}: In addition to tracing rays, we need a model to simulate different materials like Transparent, Glossy, and Diffuse. This is where the Shading phase is needed.
 	
 	\vspace*{5px}
 	Raytracing has two main methods: 
