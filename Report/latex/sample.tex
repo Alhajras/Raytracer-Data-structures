@@ -140,14 +140,21 @@
 \end{figure}
 
     The \textbf{Sphere} is a class with the next attributes: \textbf{Center}: Position of the sphere, \textbf{MaterialType}: \textit{diffuse}, \textit{glossy}, \textit{reflection} and \textit{refraction} ,\textbf{Radius}: Sphere radius usually 1, \textbf{surfaceColor}: Color of the sphere in \textbf{RGB} format, and \textbf{emissionColor}: This is for the light.   
-	Lights are just vector of spheres where the \textbf{emissionColor} is set to one.
+	Lights are just vector of spheres where the \textbf{emissionColor} is set to one. The light emeission is using the \textbf{inverse-square law}. In science, an inverse-square law is any scientific law stating that a specified physical quantity is inversely proportional to the square of the distance from the source of that physical quantity. In other words, the more significant the distance between the light source and the object, the less light it reaches the object surface.
 	
+		\noindent For point lights, this can be formulated as:
+	\begin{equation}
+		l_{ip} = \frac{l_{i}}{4 * \pi * d^2}
+	\end{equation}
+	where $l_{ip}$ is the actual intensity reaching a point $\boldsymbol{p}$, $l_{i}$ is the intensity value of the light and $d$ is the distance between the light position $\boldsymbol{l}_{p}$ and point $\boldsymbol{p}$.
 	\subsubsection*{Shooting rays}
 		For this, all raytracers use rays as a way to simulate photons. Let us think of a ray as a function; here $\pmb{p} $ is a 3D position along a line in 3D. $\pmb{o} $ is the ray origin and $\pmb{d} $ is the ray direction.
 	\begin{equation}
 		\pmb{p} (t) = \pmb{o} + t\pmb{d} ,  \quad  0 < t < \infty
 	\end{equation}
-		Figure 5, shows how Rays are used and how equations 1 can be used to 
+	
+	Figure 5 shows how Rays are used and how equations 1 can be used to check intersection tests and calculate the distance between the origin ray point, the camera, and the intersection point.  Point distance $\pmb{d} $ is used to compare the points to check which object is closer to the camera. 
+	
 			 \begin{figure}[H]	
 			\begin{center}
 				\includegraphics[width=0.7\textwidth]{6.png}
@@ -156,6 +163,51 @@
 				\label{fig:1}
 			\end{center}
 		\end{figure}
+	
+	\subsubsection*{Rendering Sphere}
+	For testing, spheres are often used in ray tracers because
+	calculating whether a ray hits a sphere is pretty straightforward.
+	
+	The general equation of a sphere with radius = 1 is:
+	\begin{equation}
+		(o_x + td_x )^2 + (o_y + td_y )^2+ (o_z + td_z )^2= 1
+	\end{equation}
+	
+	For solving the equation we need to use the Quadratic equation in $ t $: 
+	
+	\begin{equation}
+		\begin{split}
+			A(t)^2 + Bt+ C= 0 \\
+			A = d^2_x + d^2_y + d^2_z \\	
+			B = 2(d_xo_x + d_yo_y + d_zo_z) \\
+			C = o^2_x + o^2_y + o^2_z - 1 \\
+			t_{1,2} = \frac{-B \pm \sqrt{B^2 - 4AC}}{2A}\\
+		\end{split}		
+	\end{equation}
+	
+	
+	By solving the equation we get three different cases as shown in Figure ~\ref{fig:2}:
+	
+	\begin{itemize}
+		\item No Intersection if: \( B^2 - 4AC < 0 \) 
+		\item Single point of intersection if: \( B^2 - 4AC = 0 \)
+		\item Otherwise we get two points of intersection
+	\end{itemize}
+	
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=250pt]{C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.png}
+			
+			\caption{The three possible line-sphere intersections:
+				1. No intersection.
+				2. Single point intersection.
+				3. Two point intersection.}
+			\label{fig:2}
+		\end{center}
+	\end{figure}
+	
+
 	\section{Object subdivision}
 	\section{Spatial Subdivision}
 	
