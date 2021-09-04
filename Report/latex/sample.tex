@@ -13,6 +13,7 @@
 \usepackage{hyperref}
 \usepackage{apacite}
 \usepackage{multirow}
+\usepackage{subcaption}
 \captionsetup{justification=centering}
 \titleformat*{\section}{\large\bfseries}
 
@@ -96,7 +97,7 @@
 
 
 	\subsubsection*{Scene generation}
-	To create a scene spheres will be used to create meshes, mesh is a collection of objects at a position and orientation to build much more complicated object. For example the Stanford bunny shown in Figure 3, is composed of approximately 35947 sphere. Usually meshes are made of triangles because they are more efficient and easier to build a mesh, however I want to try to use something else and test the result and the quality of spheres. \textbf{createScene()} is implemnted to load .obj files the next modles will be used for testing in this report: 
+	To create a scene, spheres will be used to create meshes; mesh is a collection of objects at a position and orientation to build a much more complex object. For example, the Stanford bunny shown in Figure 3 is composed of approximately 35947 spheres. Usually, meshes are made of triangles because they are more efficient and easier to build a mesh; however, I want to try to use something else and test the result and the quality of spheres. \textbf{createScene()} is implemented to load .obj files the next models will be used for testing in this report: \textbf{Stanford Bunny}, \textbf{Igea} and \textbf{Armadillo}, Figure 4 shows the different complex model that will be used for testing.
 
 	 \begin{figure}[H]
 	\begin{center}
@@ -108,6 +109,38 @@
 	\end{center}
 	\end{figure}
 
+	\begin{figure}[ht]
+	\begin{center}
+		\begin{subfigure}{.3\textwidth}
+			\centering
+			% include first image
+			\includegraphics[width=.8\linewidth]{armadillo.png}  
+			\caption{Armadillo model}
+			\label{fig:sub-first}
+		\end{subfigure}
+		\begin{subfigure}{.3\textwidth}
+			\centering
+			% include second image
+			\includegraphics[width=.8\linewidth]{igea.png}  
+			\caption{Igea model}
+			\label{fig:sub-second}
+		\end{subfigure}
+		\begin{subfigure}{.3\textwidth}
+			\centering
+			% include second image
+			\includegraphics[width=.8\linewidth]{stanford-bunny.png}  
+			\caption{Stanford-bunny model}
+			\label{fig:sub-third}
+		\end{subfigure}
+		
+		\caption{Rendering different shapes in the scene}
+		\label{fig:5}
+		
+	\end{center}
+\end{figure}
+
+    The \textbf{Sphere} is a class with the next attributes: \textbf{Center}: Posiyion of the sphere, \textbf{MaterialType}: \textit{diffuse}, \textit{glossy}, \textit{reflection} and \textit{refraction} ,\textbf{Radius}: Sphere radius usually 1, \textbf{surfaceColor}: Color of the sphere in rgb format, and \textbf{emissionColor}: This is for the light.   
+	Lights are just vector of spheres where the \textbf{emissionColor} is set to one.
 	\section{Object subdivision}
 	\section{Spatial Subdivision}
 	
