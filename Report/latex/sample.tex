@@ -78,19 +78,35 @@
 	
 	The algorithm works as follows, initiating the camera position and the orientation direction or where it looks at. Secondly, we subdivide the scene into pixels; this is based on the settings of the raytracer, usually by setting a height and width, reading a scene from usually an XML file that has a description of the number of objects in the scene, their color, and type. Afterward, generating rays for each pixel, this ray will be shooted toward the scene, and for each ray, we go through all the objects and test intersection tests; if the test returns true, we save its position, and we save the object, we do this for all objects and if more than two objects are intersected we compare between their position to detect which one is closer to the camera. In order to create shadows, we track the intersection point from the camera toward the light; if there is an object between the light source the hitting point, then we detect shadow. The corresponding value of the pixel is saved in a buffer and after the ray tracing is done, the pixels value are saved in a file of PPM extention.
 	
-	This is the basic idea, and to improve it, other topics need to be covered, such as Data structures, Objects Materials, Anti aliasing, Soft shadow. In this chapter, the basic blocks and components that make up the raytracer will be explained; only the methods are used will be explained, because as mentioned before, the performance of the raytracer is the main scope for this project. 
-			\begin{figure}[H]
+	This is the basic idea, and to improve it, other topics need to be covered, such as Data structures, Objects Materials, Anti aliasing, Soft shadow. In this chapter, the basic blocks and components that make up the raytracer will be explained; only the methods are used will be explained, because as mentioned before, the performance of the raytracer is the main scope for this project.
+	 
+	 	 	
+	 \begin{figure}[H]	
+	 	\begin{center}
+	 		\includegraphics[width=0.7\textwidth]{4.png}
+	 		
+	 		\caption{ An image showing how a ray is casted from the camera and how objects are illuminated and shadows are computed in ray tracing	.} %\protect\cite{haines2019ray}%
+	 		\label{fig:1}
+	 	\end{center}
+	 \end{figure}
+ 
+	\subsection{Software architecture}
+	\subsubsection*{Configuration}
+	We start with the configuration of the Raytracer by introducing a \textbf{struct Settings}, here we specify the following properties of the raytracer such as the \textbf{width} of the image, \textbf{height} of the image, the \textbf{background default color} of the scene, \textbf{maximum depth of path tracing},  \textbf{anti-aliasing samples} and \textbf{acceleration data Structure type}. Some of the previous terms will be explained later. 
 
 
-				
-		\begin{center}
-			\includegraphics[width=0.7\textwidth]{4.png}
-			
-					\caption{ An image showing how a ray is casted from the camera and how objects are illuminated and shadows are computed in ray tracing	.} %\protect\cite{haines2019ray}%
-			\label{fig:1}
-		\end{center}
+	\subsubsection*{Scene generation}
+	To create a scene spheres will be used to create meshes, mesh is a collection of objects at a position and orientation to build much more complicated object. For example the Stanford bunny shown in Figure 3, is composed of approximately 35947 sphere. Usually meshes are made of triangles because they are more efficient and easier to build a mesh, however I want to try to use something else and test the result and the quality of spheres. \textbf{createScene()} is implemnted to load .obj files the next modles will be used for testing in this report: 
+
+	 \begin{figure}[H]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{5.PNG}
+	
+	\caption{ Stanford bunny and a crown made of a collection od spheres	.}
+	 %UnrealHaptics: Plugins for Advanced VR Interactions in Modern Game Engines%
+	\label{fig:2}
+	\end{center}
 	\end{figure}
-
 
 	\section{Object subdivision}
 	\section{Spatial Subdivision}

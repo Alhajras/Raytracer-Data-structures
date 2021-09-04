@@ -6889,7 +6889,7 @@ std::vector<SceneObject> createScene() {
 	std::vector<Vec3f> vertices;
 	//Loads OBJ file from path
 	std::ifstream file;
-	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/bunny.obj");
+	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/Igea.obj");
 	if (!file.good())
 	{
 		std::cout << "Can't open texture file " << std::endl;
@@ -6914,10 +6914,12 @@ std::vector<SceneObject> createScene() {
 		SceneObject s;
 		s.objId = id;
 
+
 	//	//Bunny scale
 	//	// Min leaf node = 10
 		s.radius = 0.01 *5;
         s.center = vertex * 20;
+		s.center.y += -3;
 
 	//	// Armadillo
 	//	// Min leaf node = 1000
@@ -6939,56 +6941,56 @@ std::vector<SceneObject> createScene() {
 	}
 
 
-	// The box
-	SceneObject rWall;
-	rWall.objId = id++;
-	rWall.radius = 98;
-	rWall.center = Vec3f(0.0, -100, -20);
-	rWall.position = rWall.center;
-	rWall.shininess = 64;
-	rWall.isSphere = true;
-	rWall.sphere = Sphere(id, Vec3f(33, 0, -20), 30, Vec3f(0, 0, 1), 1, 0.0);
-	scene.push_back(rWall);
+	//// The box
+	//SceneObject rWall;
+	//rWall.objId = id++;
+	//rWall.radius = 98;
+	//rWall.center = Vec3f(0.0, -100, -20);
+	//rWall.position = rWall.center;
+	//rWall.shininess = 64;
+	//rWall.isSphere = true;
+	//rWall.sphere = Sphere(id, Vec3f(33, 0, -20), 30, Vec3f(0, 0, 1), 1, 0.0);
+	//scene.push_back(rWall);
 
-	SceneObject lWall;
-	lWall.objId = id++;
-	lWall.radius = 98;
-	lWall.center = Vec3f(-5, -98, -20);
-	lWall.position = lWall.center;
-	lWall.shininess = 64;
-	lWall.isSphere = true;
-	lWall.sphere = Sphere(id, Vec3f(-33, 0, -20), 30, Vec3f(1, 0, 0), 1, 0.0);
-	scene.push_back(lWall);
+	//SceneObject lWall;
+	//lWall.objId = id++;
+	//lWall.radius = 98;
+	//lWall.center = Vec3f(-5, -98, -20);
+	//lWall.position = lWall.center;
+	//lWall.shininess = 64;
+	//lWall.isSphere = true;
+	//lWall.sphere = Sphere(id, Vec3f(-33, 0, -20), 30, Vec3f(1, 0, 0), 1, 0.0);
+	//scene.push_back(lWall);
 
-	SceneObject bWall;
-	bWall.objId = id++;
-	bWall.radius = 98;
-	bWall.center = Vec3f(-5, -98, -20);
-	bWall.position = bWall.center;
-	bWall.shininess = 64;
-	bWall.isSphere = true;
-	bWall.sphere = Sphere(id, Vec3f(0, 0, -32), 12, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
-	scene.push_back(bWall);
+	//SceneObject bWall;
+	//bWall.objId = id++;
+	//bWall.radius = 98;
+	//bWall.center = Vec3f(-5, -98, -20);
+	//bWall.position = bWall.center;
+	//bWall.shininess = 64;
+	//bWall.isSphere = true;
+	//bWall.sphere = Sphere(id, Vec3f(0, 0, -32), 12, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
+	//scene.push_back(bWall);
 
-	SceneObject cWall;
-	cWall.objId = id++;
-	cWall.radius = 98;
-	cWall.center = Vec3f(-5, -98, -20);
-	cWall.position = cWall.center;
-	cWall.shininess = 64;
-	cWall.isSphere = true;
-	cWall.sphere = Sphere(id, Vec3f(0, 33, -20), 30, Vec3f(0, 0.0, 0), 1, 0.0);
-	scene.push_back(cWall);
+	//SceneObject cWall;
+	//cWall.objId = id++;
+	//cWall.radius = 98;
+	//cWall.center = Vec3f(-5, -98, -20);
+	//cWall.position = cWall.center;
+	//cWall.shininess = 64;
+	//cWall.isSphere = true;
+	//cWall.sphere = Sphere(id, Vec3f(0, 33, -20), 30, Vec3f(0, 0.0, 0), 1, 0.0);
+	//scene.push_back(cWall);
 
-	SceneObject fWall;
-	fWall.objId = id++;
-	fWall.radius = 98;
-	fWall.center = Vec3f(-5, -98, -20);
-	fWall.position = fWall.center;
-	fWall.shininess = 64;
-	fWall.isSphere = true;
-	fWall.sphere = Sphere(id, Vec3f(0, -33, -20), 30, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
-	scene.push_back(fWall);
+	//SceneObject fWall;
+	//fWall.objId = id++;
+	//fWall.radius = 98;
+	//fWall.center = Vec3f(-5, -98, -20);
+	//fWall.position = fWall.center;
+	//fWall.shininess = 64;
+	//fWall.isSphere = true;
+	//fWall.sphere = Sphere(id, Vec3f(0, -33, -20), 30, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
+	//scene.push_back(fWall);
 	return scene;
 
 }

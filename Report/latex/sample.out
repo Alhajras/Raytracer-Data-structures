@@ -3,6 +3,7 @@
 \BOOKMARK [2][-]{subsection.2.1}{Raytracing definition}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Raytracing mechanism}{section.2}% 4
 \BOOKMARK [1][-]{section.3}{Raytracer Implementation}{}% 5
-\BOOKMARK [1][-]{section.4}{Object subdivision}{}% 6
-\BOOKMARK [1][-]{section.5}{Spatial Subdivision}{}% 7
-\BOOKMARK [1][-]{section.5}{References}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Software architecture}{section.3}% 6
+\BOOKMARK [1][-]{section.4}{Object subdivision}{}% 7
+\BOOKMARK [1][-]{section.5}{Spatial Subdivision}{}% 8
+\BOOKMARK [1][-]{section.5}{References}{}% 9
