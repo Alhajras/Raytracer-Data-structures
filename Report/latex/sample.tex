@@ -139,8 +139,23 @@
 	\end{center}
 \end{figure}
 
-    The \textbf{Sphere} is a class with the next attributes: \textbf{Center}: Posiyion of the sphere, \textbf{MaterialType}: \textit{diffuse}, \textit{glossy}, \textit{reflection} and \textit{refraction} ,\textbf{Radius}: Sphere radius usually 1, \textbf{surfaceColor}: Color of the sphere in rgb format, and \textbf{emissionColor}: This is for the light.   
+    The \textbf{Sphere} is a class with the next attributes: \textbf{Center}: Position of the sphere, \textbf{MaterialType}: \textit{diffuse}, \textit{glossy}, \textit{reflection} and \textit{refraction} ,\textbf{Radius}: Sphere radius usually 1, \textbf{surfaceColor}: Color of the sphere in \textbf{RGB} format, and \textbf{emissionColor}: This is for the light.   
 	Lights are just vector of spheres where the \textbf{emissionColor} is set to one.
+	
+	\subsubsection*{Shooting rays}
+		For this, all raytracers use rays as a way to simulate photons. Let us think of a ray as a function; here $\pmb{p} $ is a 3D position along a line in 3D. $\pmb{o} $ is the ray origin and $\pmb{d} $ is the ray direction.
+	\begin{equation}
+		\pmb{p} (t) = \pmb{o} + t\pmb{d} ,  \quad  0 < t < \infty
+	\end{equation}
+		Figure 5, shows how Rays are used and how equations 1 can be used to 
+			 \begin{figure}[H]	
+			\begin{center}
+				\includegraphics[width=0.7\textwidth]{6.png}
+				
+				\caption{ An image showing how a ray is casted from the camera and how objects are illuminated and shadows are computed in ray tracing	.} %\protect\cite{haines2019ray}%
+				\label{fig:1}
+			\end{center}
+		\end{figure}
 	\section{Object subdivision}
 	\section{Spatial Subdivision}
 	

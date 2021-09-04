@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  4 SEP 2021 21:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  4 SEP 2021 22:15
 entering extended mode
 **./sample.tex
 (sample.tex
@@ -469,6 +469,9 @@ Package: subcaption 2018/05/01 v1.1-162 Sub-captions (AR)
 
 LaTeX Warning: Label `fig:1' multiply defined.
 
+
+LaTeX Warning: Label `fig:1' multiply defined.
+
 )
 \openout1 = `sample.aux'.
 
@@ -584,51 +587,56 @@ File: 4.png Graphic file (type png)
 Package pdftex.def Info: 4.png  used on input line 87.
 (pdftex.def)             Requested size: 317.07614pt x 223.1575pt.
  [4 <./4.png>]
-<5.PNG, id=69, 759.58781pt x 392.96812pt>
+<5.PNG, id=70, 759.58781pt x 392.96812pt>
 File: 5.PNG Graphic file (type png)
 <use 5.PNG>
 Package pdftex.def Info: 5.PNG  used on input line 104.
 (pdftex.def)             Requested size: 317.07614pt x 164.03812pt.
-<armadillo.png, id=70, 256.96pt x 160.6pt>
+<armadillo.png, id=71, 256.96pt x 160.6pt>
 File: armadillo.png Graphic file (type png)
 <use armadillo.png>
 Package pdftex.def Info: armadillo.png  used on input line 117.
 (pdftex.def)             Requested size: 108.71379pt x 67.94653pt.
-<igea.png, id=71, 256.96pt x 160.6pt>
+<igea.png, id=72, 256.96pt x 160.6pt>
 File: igea.png Graphic file (type png)
 <use igea.png>
 Package pdftex.def Info: igea.png  used on input line 124.
 (pdftex.def)             Requested size: 108.71379pt x 67.94653pt.
-<stanford-bunny.png, id=72, 256.96pt x 250.9375pt>
+<stanford-bunny.png, id=73, 256.96pt x 250.9375pt>
 File: stanford-bunny.png Graphic file (type png)
 <use stanford-bunny.png>
 Package pdftex.def Info: stanford-bunny.png  used on input line 131.
 (pdftex.def)             Requested size: 108.71379pt x 106.16647pt.
- (sample.bbl
+<6.png, id=74, 729.47531pt x 513.41812pt>
+File: 6.png Graphic file (type png)
+<use 6.png>
+Package pdftex.def Info: 6.png  used on input line 153.
+(pdftex.def)             Requested size: 317.07614pt x 223.16272pt.
+ [5 <./5.PNG> <./armadillo.png> <./igea.png> <./stanford-bunny.png>] (sample.bb
+l
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 152.
- [5 <./5.PNG> <./armadillo.png> <./igea.png> <./stanford-bunny.png>] [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 152.
-
-(sample.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 152.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 152.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 167.
+ [6 <./6.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 167.
+ (sample.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 167.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 167.
 Package rerunfilecheck Info: File `sample.out' has not changed.
 (rerunfilecheck)             Checksum: BFA63AB1E43F638C476212D0D3385EE8;544.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 152.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 167.
  ) 
 Here is how much of TeX's memory you used:
- 8647 strings out of 492942
- 134219 string characters out of 3126214
+ 8654 strings out of 492942
+ 134291 string characters out of 3126214
  231212 words of memory out of 3000000
- 12357 multiletter control sequences out of 15000+200000
+ 12361 multiletter control sequences out of 15000+200000
  11759 words of font info for 44 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,7n,39p,1107b,541s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -636,14 +644,15 @@ Here is how much of TeX's memory you used:
 /cm/cmbx10.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmbx12.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/f
 onts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/alhaj/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alhaj/AppData/
-Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/al
-haj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alhaj/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/a
+lhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb
 ><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmti10.pfb>
-Output written on sample.pdf (6 pages, 949146 bytes).
+cm/cmsy10.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmti10.pfb>
+Output written on sample.pdf (6 pages, 1033754 bytes).
 PDF statistics:
- 116 PDF objects out of 1000 (max. 8388607)
- 19 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 124 PDF objects out of 1000 (max. 8388607)
+ 21 named destinations out of 1000 (max. 500000)
+ 108 words of extra memory for PDF output out of 10000 (max. 10000000)
 
