@@ -6699,18 +6699,29 @@ Vec3f castRay(
 		}		break;
 	}
 	default: {
-		// This is without using any data structures
-		for (unsigned i = 0; i < spheres.size(); ++i) {
-			t0 = INFINITY, t1 = INFINITY;
-			if (spheres[i].raySphereIntersect(rayorig, raydir, t0, t1)) {
-				if (t0 < 0) t0 = t1;
-				if (t0 < tnear) {
-					tnear = t0;
-					sphere = &spheres[i];
-					hitColor = sphere->surfaceColor;
+			for (unsigned i = 0; i < scene.size(); ++i) {
+				t0 = INFINITY, t1 = INFINITY;
+				if (scene[i].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+					if (t0 < 0) t0 = t1;
+					if (t0 < tnear) {
+						tnear = t0;
+						sphere = &scene[i].sphere;
+						hitColor = sphere->surfaceColor;
+					}
 				}
 			}
-		}
+		// This is without using any data structures
+		//for (unsigned i = 0; i < spheres.size(); ++i) {
+		//	t0 = INFINITY, t1 = INFINITY;
+		//	if (spheres[i].raySphereIntersect(rayorig, raydir, t0, t1)) {
+		//		if (t0 < 0) t0 = t1;
+		//		if (t0 < tnear) {
+		//			tnear = t0;
+		//			sphere = &spheres[i];
+		//			hitColor = sphere->surfaceColor;
+		//		}
+		//	}
+		//}
 	}
 	}
 
@@ -6889,7 +6900,7 @@ std::vector<SceneObject> createScene() {
 	std::vector<Vec3f> vertices;
 	//Loads OBJ file from path
 	std::ifstream file;
-	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/Igea.obj");
+	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/lucy.obj");
 	if (!file.good())
 	{
 		std::cout << "Can't open texture file " << std::endl;
@@ -6917,20 +6928,21 @@ std::vector<SceneObject> createScene() {
 
 	//	//Bunny scale
 	//	// Min leaf node = 10
-		s.radius = 0.01 *5;
-        s.center = vertex * 20;
-		s.center.y += -3;
+		s.radius = 0.01 *5; //  hoody = *10
+        s.center = vertex * 50; // igea = *50, bunny = *20, hoody = / 50 
+		s.center.y += -10;
 
 	//	// Armadillo
 	//	// Min leaf node = 1000
 	//	//s.radius = 0.1;
 	//	//s.center = vertex / 20;
-		s.center.z += -20;
+		s.center.z += -30;
 		s.position = s.center;
 		s.shininess = 64;
 		s.isSphere = true;
-		s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0, 0, 0), 0, 0.0);
+		s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0.8, 0.7, 0), 0, 0.0, REFLECTION_AND_REFRACTION);
 		double random = random_double_2();
+
 		scene.push_back(s);
 			//std::cout << vertex.Z << std::endl;
 		}
@@ -7075,7 +7087,7 @@ int main(int argc, char** argv)
 
 
 		//Sphere light = Sphere(0,Vec3f(0, 10, -10), 1, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
-		Sphere light2 = Sphere(0,Vec3f(0, 3, -15), 3, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
+		Sphere light2 = Sphere(0,Vec3f(0, 3, -20), 10, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
 
 		Sphere gray = Sphere(0, Vec3f(-5, 0, -20), 2, Vec3f(0.1, 0.4, 0.6), 1, 0.0);
 		Sphere gray_1 = Sphere(1,Vec3f(-5.5, 0, -23), 0.5, Vec3f(0, 0, 0), 1, 0.0);
@@ -7122,7 +7134,8 @@ int main(int argc, char** argv)
 			break;
 		}
 		default: {
-
+			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			break;
 		}
 		}
 	}
