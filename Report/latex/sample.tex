@@ -208,7 +208,108 @@
 	\end{figure}
 	
 	\subsubsection*{Shading}
+	The second step in rendering a scene is \textit{Shading}, and this deals with the color of the object and its intensity. Shading also includes how object's color affects each other; for example, having light hits, the object will make its color look brighter; on the other hand, regions in which light does not hit or reach will have dark color or shadow. In this chapter, shading concepts will be discussed and implemented, in addition to different materials that have different properties and how they interact with the light. The primary key to Shading is calculating the amount of light that hits a point; let us call it $ P $. 
 	
+	The computed light at a point $ P $ depends on the following: 
+	
+	\begin{itemize}
+		\item Light illuminated by source  $\pmb{L}^{source}$  in real life usually lamp, fire or the sun, it can have any color and intensity but here we will use white color. 
+		\item Surface illumination $\pmb{L}^{surface}$.
+		\item Light reflected from the surface $\pmb{L}^{reflected}$.
+		\item The observation angle / looking at angle / camera. 
+	\end{itemize}
+	
+	
+	
+	
+	\subsubsection{Lambert's Cosine Law}
+	The amount of light energy arriving at a surface is proportional to the cosine of the angle between the light direction and the surface normal, according to \textit{Lambert's cosine law}. Illumination strength at a surface is proportional to the cosine of the angle between $\pmb{l}$ and $\pmb{n}$, the angel will be denoted as $\theta$, the following three cases illustrate the relationship between the  $\pmb{L}^{source}$ and  $\pmb{L}^{surface}$:
+	
+	The  $\pmb{L}^{surface}$,$ \pmb{L}^{source}$ relation is:
+	
+	\begin{equation}
+		\pmb{L}^{surface} = \pmb{L}^{source}.\cos \theta 
+	\end{equation}
+	
+	
+	\begin{itemize}
+		\item $\pmb{L}^{surface} = \pmb{L}^{source}$, if $\theta = 0\degree$.
+		\item $\pmb{L}^{surface} = 0$, if $\theta = 90\degree$.
+		\item $0 < \pmb{L}^{surface} < \pmb{L}^{source}$, if $0\degree < \theta  < 90\degree$.
+	\end{itemize}
+	
+	\subsubsection{Phong reflection model }
+	Phong reflection is a model of local illumination. It defines how light reflects off a surface as a mixture of \textit{diffuse} reflection from rough surfaces and \textit{specular} reflection from polished surfaces. It's based on Phong's intuitive observation that bright surfaces have small, strong specular highlights, and dull surfaces have larger, more gradual specular highlights. The model also includes an ambient term to account for the small amount of light that is scattered about the entire scene.
+	\\
+	
+	\begin{itemize}
+		\item \pmb{Ambient reflection}
+		\begin{equation}
+			\pmb{L}^{amb} = \pmb{\rho}\otimes \pmb{L}^{indirect}
+		\end{equation}
+		
+		\begin{itemize}
+			\item $\pmb{\rho}$, is the surface color
+			\item $\pmb{L}^{indirect}$ , is the light reflected from other surfaces and objects, excluded the direct light ($\pmb{L}^{source}$)
+		\end{itemize}
+		\item \pmb{Diffuse reflection} 
+		
+		\begin{equation}
+			\pmb{L}^{diff} =  \pmb{L}^{source}.(\pmb{n}.\pmb{l}) \otimes \pmb{\rho} 
+		\end{equation}
+		\begin{itemize}
+			\item $\pmb{L}^{source}$, is the light source color and intensity which usually white. 
+			\item $\pmb{n}$ and $\pmb{l}$ , are the representation of the Lambert's cosine law, where $\pmb{n}$ is the normal surface vector  and $\pmb{l}$ is the indecent light coming from the light source.
+		\end{itemize}
+		\item \pmb{Specular reflection} 
+		
+		\begin{equation}
+			\pmb{L}^{spec} =  \pmb{L}^{source}.(\pmb{n}.\pmb{l}).(\pmb{r}.\pmb{v})^m \otimes \pmb{\rho}^{white} 
+		\end{equation}
+		\begin{itemize}
+			\item $\pmb{r}$, which is the direction that a perfectly reflected ray of light would take from this point on the surface. 
+			\item $\pmb{v}$, which is the direction pointing towards the viewer (such as a virtual camera).
+			\item $m$, which is a shininess constant for this material, which is larger for surfaces that are smoother and more mirror-like. When this constant is large the specular highlight is small.
+		\end{itemize}
+	\end{itemize}
+	
+	The overall illumination on the surface can be computed by summing up the three components that make up \textit{Phong model}:
+	
+	\begin{equation}
+		\pmb{L}^{surface}= \pmb{L}^{amb} + \sum_{n=1}^{lights} (\pmb{L}_n^{diff} + \pmb{L}_n^{spec})
+	\end{equation}
+	
+	
+	\begin{figure}[ht]
+		\begin{center}
+			\begin{subfigure}{.3\textwidth}
+				\centering
+				% include first image
+				\includegraphics[width=.8\linewidth]{C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb_reflection.png}  
+				\caption{Ambient $ \pmb{L}^{amb} $}
+				\label{fig:sub-first}
+			\end{subfigure}
+			\begin{subfigure}{.3\textwidth}
+				\centering
+				% include second image
+				\includegraphics[width=.8\linewidth]{C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/diff_reflection_2.png}  
+				\caption{Diffuse $ \pmb{L}^{diff} $}
+				\label{fig:sub-second}
+			\end{subfigure}
+			\begin{subfigure}{.3\textwidth}
+				\centering
+				% include second image
+				\includegraphics[width=.8\linewidth]{C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spec_reflection_2.png}  
+				\caption{ Specular (Glossy)  $ \pmb{L}^{spec} $}
+				\label{fig:sub-third}
+			\end{subfigure}
+			
+			\caption{Visual illustration of the Phong equation}
+			\label{fig:6}
+		\end{center}
+	\end{figure}
+
+
 	\section{Performance}
 	\section{Object subdivision}
 	\section{Spatial Subdivision}

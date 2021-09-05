@@ -4,6 +4,9 @@
 \BOOKMARK [2][-]{subsection.2.2}{Raytracing mechanism}{section.2}% 4
 \BOOKMARK [1][-]{section.3}{Raytracer Implementation}{}% 5
 \BOOKMARK [2][-]{subsection.3.1}{Software architecture}{section.3}% 6
-\BOOKMARK [1][-]{section.4}{Object subdivision}{}% 7
-\BOOKMARK [1][-]{section.5}{Spatial Subdivision}{}% 8
-\BOOKMARK [1][-]{section.5}{References}{}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Lambert's Cosine Law}{subsection.3.1}% 7
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Phong reflection model }{subsection.3.1}% 8
+\BOOKMARK [1][-]{section.4}{Performance}{}% 9
+\BOOKMARK [1][-]{section.5}{Object subdivision}{}% 10
+\BOOKMARK [1][-]{section.6}{Spatial Subdivision}{}% 11
+\BOOKMARK [1][-]{section.6}{References}{}% 12

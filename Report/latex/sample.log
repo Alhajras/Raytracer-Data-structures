@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  4 SEP 2021 23:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  5 SEP 2021 13:43
 entering extended mode
 **./sample.tex
 (sample.tex
@@ -475,6 +475,24 @@ LaTeX Warning: Label `fig:1' multiply defined.
 
 LaTeX Warning: Label `fig:2' multiply defined.
 
+
+LaTeX Warning: Label `fig:sub-first' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub-first' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub-second' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub-second' multiply defined.
+
+
+LaTeX Warning: Label `fig:sub-third' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:sub-third' multiply defined.
+
 )
 \openout1 = `sample.aux'.
 
@@ -569,7 +587,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/alhaj/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<1.jpg, id=49, 803.0pt x 602.25pt>
+<1.jpg, id=65, 803.0pt x 602.25pt>
 File: 1.jpg Graphic file (type jpg)
 <use 1.jpg>
 Package pdftex.def Info: 1.jpg  used on input line 48.
@@ -584,41 +602,41 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 71.
 
 [3]
-<4.png, id=61, 972.63374pt x 684.5575pt>
+<4.png, id=77, 972.63374pt x 684.5575pt>
 File: 4.png Graphic file (type png)
 <use 4.png>
 Package pdftex.def Info: 4.png  used on input line 87.
 (pdftex.def)             Requested size: 317.07614pt x 223.1575pt.
  [4 <./4.png>]
-<5.PNG, id=70, 759.58781pt x 392.96812pt>
+<5.PNG, id=86, 759.58781pt x 392.96812pt>
 File: 5.PNG Graphic file (type png)
 <use 5.PNG>
 Package pdftex.def Info: 5.PNG  used on input line 104.
 (pdftex.def)             Requested size: 317.07614pt x 164.03812pt.
-<armadillo.png, id=71, 256.96pt x 160.6pt>
+<armadillo.png, id=87, 256.96pt x 160.6pt>
 File: armadillo.png Graphic file (type png)
 <use armadillo.png>
 Package pdftex.def Info: armadillo.png  used on input line 117.
 (pdftex.def)             Requested size: 108.71379pt x 67.94653pt.
-<igea.png, id=72, 256.96pt x 160.6pt>
+<igea.png, id=88, 256.96pt x 160.6pt>
 File: igea.png Graphic file (type png)
 <use igea.png>
 Package pdftex.def Info: igea.png  used on input line 124.
 (pdftex.def)             Requested size: 108.71379pt x 67.94653pt.
-<stanford-bunny.png, id=73, 256.96pt x 250.9375pt>
+<stanford-bunny.png, id=89, 256.96pt x 250.9375pt>
 File: stanford-bunny.png Graphic file (type png)
 <use stanford-bunny.png>
 Package pdftex.def Info: stanford-bunny.png  used on input line 131.
 (pdftex.def)             Requested size: 108.71379pt x 106.16647pt.
  [5 <./5.PNG> <./armadillo.png> <./igea.png> <./stanford-bunny.png>]
-<6.png, id=89, 729.47531pt x 513.41812pt>
+<6.png, id=105, 729.47531pt x 513.41812pt>
 File: 6.png Graphic file (type png)
 <use 6.png>
 Package pdftex.def Info: 6.png  used on input line 160.
 (pdftex.def)             Requested size: 317.07614pt x 223.16272pt.
  [6 <./6.png>]
 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.png, i
-d=100, 582.67688pt x 465.99094pt>
+d=116, 582.67688pt x 465.99094pt>
 File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.p
 ng Graphic file (type png)
 <use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.pn
@@ -626,50 +644,140 @@ g>
 Package pdftex.def Info: C:/D/University/Semester_4/Raytracer/lab_report_1/assi
 gnment_2/images/5.png  used on input line 200.
 (pdftex.def)             Requested size: 250.0pt x 199.93134pt.
- (sample.bbl
+ [7 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.pn
+g>]
+! Undefined control sequence.
+l.236 ... \pmb{L}^{source}$, if $\theta = 0\degree
+                                                  $.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.237 ...L}^{surface} = 0$, if $\theta = 90\degree
+                                                  $.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.238 ...urface} < \pmb{L}^{source}$, if $0\degree
+                                                   < \theta  < 90\degree$.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.238 ...rce}$, if $0\degree < \theta  < 90\degree
+                                                  $.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--244
+
+ []
+
+<C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb_refl
+ection.png, id=123, 574.39594pt x 433.62pt>
+File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb
+_reflection.png Graphic file (type png)
+<use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb_
+reflection.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Raytracer/lab_report_1/assi
+gnment_2/images/amb_reflection.png  used on input line 288.
+(pdftex.def)             Requested size: 108.71379pt x 82.06444pt.
+<C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/diff_ref
+lection_2.png, id=124, 719.68875pt x 540.51938pt>
+File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/dif
+f_reflection_2.png Graphic file (type png)
+<use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/diff
+_reflection_2.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Raytracer/lab_report_1/assi
+gnment_2/images/diff_reflection_2.png  used on input line 295.
+(pdftex.def)             Requested size: 108.71379pt x 81.6435pt.
+<C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spec_ref
+lection_2.png, id=125, 502.87875pt x 377.15906pt>
+File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spe
+c_reflection_2.png Graphic file (type png)
+<use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spec
+_reflection_2.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Raytracer/lab_report_1/assi
+gnment_2/images/spec_reflection_2.png  used on input line 302.
+(pdftex.def)             Requested size: 108.71379pt x 81.53075pt.
+[8] (sample.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 219.
- [7 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.pn
-g>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 219.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 322.
+ [9 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb_
+reflection.png> <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2
+/images/diff_reflection_2.png> <C:/D/University/Semester_4/Raytracer/lab_report
+_1/assignment_2/images/spec_reflection_2.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 322.
  (sample.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 219.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 219.
-Package rerunfilecheck Info: File `sample.out' has not changed.
-(rerunfilecheck)             Checksum: BFA63AB1E43F638C476212D0D3385EE8;544.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 322.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 322.
 
+
+Package rerunfilecheck Warning: File `sample.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `sample.out':
+(rerunfilecheck)             Before: B8B90C13E55E36D1E7E36F1E4CAFCDAE;820
+(rerunfilecheck)             After:  9AE96CEF019B42055A03617D51705CCF;757.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 219.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 322.
  ) 
 Here is how much of TeX's memory you used:
- 8681 strings out of 492942
- 134917 string characters out of 3126214
- 231350 words of memory out of 3000000
- 12374 multiletter control sequences out of 15000+200000
- 14221 words of font info for 52 fonts, out of 3000000 for 9000
+ 8727 strings out of 492942
+ 136538 string characters out of 3126214
+ 238412 words of memory out of 3000000
+ 12401 multiletter control sequences out of 15000+200000
+ 15920 words of font info for 60 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,16n,39p,1107b,541s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmbx10.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmbx12.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/alhaj/AppData/Local/Progra
-ms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alhaj/AppData
-/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/a
-lhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmib10.p
-fb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmr10.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmr12.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/alhaj/AppData/Local/Programs/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/alhaj/AppData/Loca
-l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on sample.pdf (7 pages, 1070521 bytes).
+ 41i,16n,39p,1107b,584s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{subsubsection.3.2.2} has been referenced but does
+ not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsubsection.3.2.1} has been referenced but does n
+ot exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.3.2} has been referenced but does not ex
+ist, replaced by a fixed one
+
+<C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmbx10.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/alhaj/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/alhaj/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/al
+haj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
+<C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmmi8.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmmib10.pfb><C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alhaj/AppData/Local/Programs/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/alhaj/AppData/Local
+/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/alhaj/Ap
+pData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/U
+sers/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmt
+i10.pfb>
+Output written on sample.pdf (9 pages, 1177726 bytes).
 PDF statistics:
- 149 PDF objects out of 1000 (max. 8388607)
- 26 named destinations out of 1000 (max. 500000)
- 113 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 199 PDF objects out of 1000 (max. 8388607)
+ 40 named destinations out of 1000 (max. 500000)
+ 160 words of extra memory for PDF output out of 10000 (max. 10000000)
 
