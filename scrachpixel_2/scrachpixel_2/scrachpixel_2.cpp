@@ -50,6 +50,7 @@
 
 const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
+enum SceneModel { IGEA, ARMADILLO,  BUNNY};
 using namespace std;
 float RAY_EPSILON = 0.000000001;
 int rayId = 0;
@@ -6291,6 +6292,7 @@ struct Settings
 	uint32_t aa_samples = 1; // Anti aliasing samples
 	AccType dataStructure = BVH; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
+	SceneModel sceneModel = IGEA;
 };
 
 
@@ -6605,7 +6607,9 @@ Vec3f castRay(
 	switch (settings.dataStructure) {
 	case BVH:
 	{
+		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		std::cout << "bvh Traverse: " << float(clock() - begin_time) / CLOCKS_PER_SEC << "s" << endl;
 		if (boundingBoxes.size() == 0)
 		{
 			return Vec3f(0.6, 0.8, 1);
@@ -6634,7 +6638,9 @@ Vec3f castRay(
 	}
 	case KDTREE:
 	{
+		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		std::cout << "KD-Tree Traverse: " << float(clock() - begin_time) / CLOCKS_PER_SEC << "s" << endl;
 		if (boundingBoxes.size() == 0)
 		{
 			return Vec3f(0.6, 0.8, 1);
@@ -6668,8 +6674,10 @@ Vec3f castRay(
 	}
 	case LBVH:
 	{
-
+		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		std::cout << "Lbvh Traverse: " << float(clock() - begin_time) / CLOCKS_PER_SEC << "s" << endl;
+
 		if (boundingBoxes.size() == 0)
 		{
 			return Vec3f(0.6, 0.8, 1);
@@ -6859,6 +6867,15 @@ void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 
 	delete[] image;
 }
+
+void printProgress(double percentage) {
+	int val = (int)(percentage * 100);
+	int lpad = (int)(percentage * 60);
+	int rpad = 60 - lpad;
+	printf("\r%3d%% [%.*s%*s]", val, lpad, "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", rpad, "");
+	fflush(stdout);
+}
+
 void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::vector<std::shared_ptr<Node>>& tree, const std::unique_ptr<Grid>& accel)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
@@ -6866,6 +6883,7 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 	float fov = 30, aspectratio = settings.width / float(settings.height);
 	float angle = tan(M_PI * 0.5 * fov / 180.);
 	// Trace rays
+	double loadingProgress = 0; 
 	for (unsigned y = 0; y < settings.height; ++y) {
 		for (unsigned x = 0; x < settings.width; ++x, ++pixel) {
 			Vec3f sampled_pixel(0, 0, 0);
@@ -6878,6 +6896,8 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 5, accel, settings);
 			}
 			*pixel = sampled_pixel;
+			loadingProgress++;
+			printProgress(loadingProgress / (settings.width * settings.height));
 		}
 	}
 	write_into_file(settings, frame, image);
@@ -6893,17 +6913,38 @@ inline double random_double_2(double min, double max) {
 	return min + (max - min) * random_double();
 }
 
-std::vector<SceneObject> createScene() {
+std::vector<SceneObject> createScene(Settings settings) {
 	std::vector<SceneObject> scene;
 	int id = 0;
 
 	std::vector<Vec3f> vertices;
 	//Loads OBJ file from path
 	std::ifstream file;
-	file.open("C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/lucy.obj");
+	std::string fileName = "C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/";
+
+	switch (settings.sceneModel) {
+	case IGEA:
+	{
+		fileName.append("igea.obj");
+		break;
+	}
+	case ARMADILLO:
+	{		
+		fileName.append("armadillo.obj");
+		break;
+	}
+	default: {
+		// By default the bunny will be renderd
+		fileName.append("bunny.obj");
+		break;
+	}
+	}
+
+	file.open(fileName);
+	std::cout << "Loading file:  " << fileName << " ... " << std::endl;
 	if (!file.good())
 	{
-		std::cout << "Can't open texture file " << std::endl;
+		std::cout << "Can't open file " << fileName << std::endl;
 		return scene;
 	}
 
@@ -6929,14 +6970,14 @@ std::vector<SceneObject> createScene() {
 	//	//Bunny scale
 	//	// Min leaf node = 10
 		s.radius = 0.01 *5; //  hoody = *10
-        s.center = vertex * 50; // igea = *50, bunny = *20, hoody = / 50 
+        s.center = vertex * 100; // igea = *50, bunny = *20, hoody = / 50 
 		s.center.y += -10;
 
 	//	// Armadillo
 	//	// Min leaf node = 1000
 	//	//s.radius = 0.1;
 	//	//s.center = vertex / 20;
-		s.center.z += -30;
+		s.center.z += -50;
 		s.position = s.center;
 		s.shininess = 64;
 		s.isSphere = true;
@@ -6952,7 +6993,7 @@ std::vector<SceneObject> createScene() {
 		}
 	}
 
-
+	std::cout << "Number of spheres: " << id << std::endl;
 	//// The box
 	//SceneObject rWall;
 	//rWall.objId = id++;
@@ -7009,7 +7050,20 @@ std::vector<SceneObject> createScene() {
 
 int main(int argc, char** argv)
 {
+	const clock_t begin_total_time = clock();
+    const clock_t begin_time = clock();
 	Settings settings;
+
+	// Print settings
+	std::cout << "Start rendering .... \n";
+	std::cout << "Settings are.... \n";
+	std::cout << "Height: " << settings.height << endl;
+	std::cout << "Width: " << settings.width << endl;
+	std::cout << "DataStructure: " << settings.dataStructure << endl;
+	std::cout << "Anti-aliasing samples: " << settings.aa_samples<< endl;
+	std::cout << "\n====================================================================\n";
+
+
 
 	/////////////////////////////////
 	//*****Builds bvh tree*****
@@ -7022,10 +7076,12 @@ int main(int argc, char** argv)
 	root->maxZ = -1 * std::numeric_limits<float>::max();
 	root->minZ = std::numeric_limits<float>::max();;
 
-	std::vector<SceneObject> scene = createScene();
+	std::vector<SceneObject> scene = createScene(settings);
 
 	// Lets bound each object with BBOX
 	// This is same for KD-tree and BVH
+	std::cout << "Wraping BV for each objecy .... \n";
+
 	for (SceneObject obj : scene)
 	{
 		// we calculate the minimum edges of the box
@@ -7070,9 +7126,11 @@ int main(int argc, char** argv)
 			root->midpoint = (root->maxZ + root->minZ) / 2;
 		}
 	}
+	std::cout << "Done .... \n Time: ";
 
+	std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s";
 
-
+	std::cout << "\n====================================================================\n";
 
 
 
@@ -7106,38 +7164,59 @@ int main(int argc, char** argv)
 		switch (settings.dataStructure) {
 		case BVH:
 		{
-			std::cout << "<<<<<<< This is BVH >>>>>>";
+			std::cout << "<<<<<<< This is BVH >>>>>>" << endl;
+			std::cout << "construct BVH Tree .... ";
+			const clock_t begin_time = clock();
 			rootNodeIndex = constructBVHTree(scene, root, nodes);
+			std::cout << "Done .... Time: ";
+			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
+
 			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		case KDTREE:
 		{
 			std::cout << "<<<<<<< This is KDTREE >>>>>>";
-			//root->longestAxis = 0;
+			std::cout << "construct KD-Tree .... ";
+			const clock_t begin_time = clock();
 			rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
+			std::cout << "Done .... Time: ";
+			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
 			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		case UNIFORM_GRID:
 		{
 			std::cout << "<<<<<<< This is UNIFORM_GRID >>>>>>";
+			std::cout << "construct Uniform grid .... ";
+			const clock_t begin_time = clock();
 			std::unique_ptr<Grid> accel(new Grid(scene));
+			std::cout << "Done .... Time: ";
+			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
 			render(settings, spheres, lights, triangles, frame, scene, nodes, accel);
 			break;
 		}
 		case LBVH:
 		{ 
 			std::cout << "<<<<<<< This is LBVH >>>>>>";
+			std::cout << "construct LBVH Tree .... ";
+			const clock_t begin_time = clock();
 			rootNodeIndex = constructLBVHTree(hashMap, scene, root, nodes);
+			std::cout << "Done .... Time: ";
+			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
 			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		default: {
+			std::cout << "<<<<<<< Warning: No data structure is used, this can take long time! >>>>>>";
 			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		}
 	}
+
+	std::cout << "\n Total time spent: ";
+	std::cout << float(clock() - begin_total_time) / CLOCKS_PER_SEC << "s" << endl;
+	std::cout << "\n--------- Rendering Completed ---------\n";
 	return 0;
 }
