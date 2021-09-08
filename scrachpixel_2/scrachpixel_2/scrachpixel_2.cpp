@@ -59,6 +59,11 @@ constexpr float EPS = 1e-6;
 int rootNodeIndex = 0;
 std::map<unsigned int, SceneObject > hashMap; // This is for the LBVH
 
+// Statstics related
+int spheres_intersections_counter = 0;
+int bv_intersections_counter = 0;
+float tree_raverse_time = 0;
+
 //static Vec3f bunny[] = {
 //Vec3f(-0.082395,0.074964,0.004315
 //),Vec3f(-0.082621,0.081614,-0.003345
@@ -6609,7 +6614,8 @@ Vec3f castRay(
 	{
 		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
-		std::cout << "bvh Traverse: " << float(clock() - begin_time) / CLOCKS_PER_SEC << "s" << endl;
+		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
+
 		if (boundingBoxes.size() == 0)
 		{
 			return Vec3f(0.6, 0.8, 1);
@@ -6640,7 +6646,8 @@ Vec3f castRay(
 	{
 		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
-		std::cout << "KD-Tree Traverse: " << float(clock() - begin_time) / CLOCKS_PER_SEC << "s" << endl;
+		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
+
 		if (boundingBoxes.size() == 0)
 		{
 			return Vec3f(0.6, 0.8, 1);
@@ -6676,7 +6683,7 @@ Vec3f castRay(
 	{
 		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
-		std::cout << "Lbvh Traverse: " << float(clock() - begin_time) / CLOCKS_PER_SEC << "s" << endl;
+		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
 
 		if (boundingBoxes.size() == 0)
 		{
@@ -7215,6 +7222,9 @@ int main(int argc, char** argv)
 		}
 	}
 
+	std::cout << "\n tree_raverse_time time spent: " << tree_raverse_time << "s\n" << endl;
+
+	
 	std::cout << "\n Total time spent: ";
 	std::cout << float(clock() - begin_total_time) / CLOCKS_PER_SEC << "s" << endl;
 	std::cout << "\n--------- Rendering Completed ---------\n";
