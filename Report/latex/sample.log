@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  7 SEP 2021 20:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  15 SEP 2021 21:55
 entering extended mode
 **./sample.tex
 (sample.tex
@@ -775,7 +775,7 @@ al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/alhaj/
 AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 /Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti10.pfb>
-Output written on sample.pdf (9 pages, 1178056 bytes).
+Output written on sample.pdf (9 pages, 1178144 bytes).
 PDF statistics:
  194 PDF objects out of 1000 (max. 8388607)
  38 named destinations out of 1000 (max. 500000)
