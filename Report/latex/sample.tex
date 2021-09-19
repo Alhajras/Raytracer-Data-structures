@@ -16,6 +16,19 @@
 \usepackage{subcaption}
 \captionsetup{justification=centering}
 \titleformat*{\section}{\large\bfseries}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{array}
+
+    \makeatletter
+\newcommand{\thickhline}{%
+	\noalign {\ifnum 0=`}\fi \hrule height 1pt
+	\futurelet \reserved@a \@xhline
+}
+\newcolumntype{"}{@{\vrule width 1pt}}
+\makeatother
+
+
 
 \begin{document}
 	
@@ -313,93 +326,52 @@
 	\section{Performance}
 	This is the most exciting part of the project; the previous chapters explained how to set up the current Raytracer and what methods have been used to implement it; however, the result is not shown yet. This chapter will apply different performance tests on the Raytracer to show its average performance without optimizing the datastrcuter. 
 	
+	In the renderer the next setup is used: 
 	
-		\begin{table}[h]
+	\begin{table}[h]
 		\centering
-		\begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
+		\begin{tabular}{ c|c  }
 			\hline
-			\multicolumn{4}{|c|}{Scene 1 - Cube} \\
+			Key   &   Value \\
 			\hline
-			Type   &   Ray-mesh intersection tests  & Ray-triangle intersection tests &   Time taken to render\\
-			\hline
-			Without AABB   & 6, 945, 413    &80, 712, 814&   11.16 seconds\\
-			With AABB&   1, 186, 019  &11, 600, 086   &      4.98 seconds\\
+			Height   &   480 \\
+			
+			
+			Width   & 640 \\
+			
+			
+			DataStructure   & None \\
+			
+			
+			Anti-aliasing samples  & 2 \\
+			
+			
+			PC info  & 	Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz   1.99 GHz  RAM	16.0 GB\\
 			\hline
 		\end{tabular}
+				\caption{The Raytracer settings.}
+	\label{table:2}
+	\end{table}
+ 
+		\begin{table}[h]
+		\centering
+		\begin{tabular}{>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.6\linewidth}}
+			\thickhline%\toprule
+			   Model   &   Spheres  & Sphere intersection tests  &   Time taken to render  & Result \\
+						\thickhline%\toprule
+			     Bunny   &
+			   35947  & 1841.98m &   104.31 minutes  & \includegraphics[width=0.3\textwidth, height=50mm]{stanford-bunny_re.PNG}\\
+			
+			 Armadillo  &   49990    &1822.94m&   45.34 minutes &    \includegraphics[width=0.3\textwidth, height=50mm]{armadillo_re.PNG} \\
+			
+			 Igea   &  134345    &7278.88m&   187.5 minutes & \includegraphics[width=0.3\textwidth, height=50mm]{igea_re.PNG} \\
+						\thickhline%\toprule
+		\end{tabular}
+			\caption{Performance comparison for different scenarios on 480X640.}
+	\label{table:2}
 	\end{table}
 
-None: BUNNY
-Start rendering ....
-Settings are....
-Height: 480
-Width: 640
-DataStructure: 4
-Anti-aliasing samples: 1
 
-====================================================================
-Loading file:  C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/bunny.obj ...
-Number of spheres: 35947
-Wraping BV for each objecy ....
-Done ....
-Time: 0.653s
- Number of the tree nodes: 0 bv node
-
-Tree traverse time spent: 0s
-
-Number of Sphere intersection tests: -1841983488 test
-
-Total time spent: 6259.25s
-
---------- Rendering Completed ---------
-
-None: armadillo
-Start rendering ....
-Settings are....
-Height: 480
-Width: 640
-DataStructure: 4
-Anti-aliasing samples: 1
-
-====================================================================
-Loading file:  C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/armadillo.obj ...
-Number of spheres: 49990
-Wraping BV for each objecy ....
-Done ....
-Time: 3.078s
-====================================================================
- Number of the tree nodes: 0 bv node
-
-Tree traverse time spent: 0s
-
-Number of Sphere intersection tests: -1822941184 test
-
-Total time spent: 2721.79s
-
---------- Rendering Completed ---------
-
-None: igea
-Start rendering ....
-Settings are....
-Height: 480
-Width: 640
-DataStructure: 4
-Anti-aliasing samples: 1
-
-====================================================================
-Loading file:  C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/igea.obj ...
-Number of spheres: 134345
-Wraping BV for each objecy ....
-Done ....
-Time: 1.969s
-====================================================================
-
- Number of the tree nodes: 0 bv node
-
-Tree traverse time spent: 0s
-
-Number of Sphere intersection tests: -1678888960 test
-
-Total time spent: 11251.5s
 	\section{Object subdivision}
 	\section{Spatial Subdivision}
 	
