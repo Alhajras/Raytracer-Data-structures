@@ -260,7 +260,7 @@
 		\begin{equation}
 			\pmb{L}^{amb} = \pmb{\rho}\otimes \pmb{L}^{indirect}
 		\end{equation}
-		
+		\left 
 		\begin{itemize}
 			\item $\pmb{\rho}$, is the surface color
 			\item $\pmb{L}^{indirect}$ , is the light reflected from other surfaces and objects, excluded the direct light ($\pmb{L}^{source}$)
@@ -353,7 +353,20 @@
 	\label{table:2}
 	\end{table}
  
- 	Three different simulations were used to test the performance and took their average for each scenario or model, as shown in Table 2. The more simulations are run, the more accurate results we get; however, three simulations are used to test the performance because each takes approximately one hour. 
+ 	Three different simulations were used to test the performance and took their average for each scenario or model, as shown in Table 2. The more simulations are run, the more accurate results we get; however, three simulations are used to test the performance because each takes approximately one hour.
+ 	As discussed before, performance is the main discussion point in this project rather than the accuracy of the renderer; hence the spent amount of time to render should be discussed and optimized. 
+ 	In order to renderer more than three thousand spheres, as shown in Table 2, this can take up to one hour; this is not optimal. One model only as the Bunny needs one hour to be rendered is not practical in real-life simulation applications.  
+ 	We need to find the most expensive block code the Raytracer spends most of its time optimizing the rendering. The used Raytracer can be divided into the following phases: 
+ 	
+ 	\begin{itemize}
+ 		\item Creating a scene:
+ 		\item  Ray casting:
+ 		\item Intersection tests:
+ 		\item  Evaluate pixel color:
+ 		\item Write pixels values into a file:
+ 		   
+ 	\end{itemize}
+ 
 		\begin{table}[H]
 		\centering
 		\begin{tabular}{>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.6\linewidth}}
