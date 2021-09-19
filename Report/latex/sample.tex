@@ -331,9 +331,9 @@
 	\begin{table}[h]
 		\centering
 		\begin{tabular}{ c|c  }
-			\hline
+			\thickhline%\toprule
 			Key   &   Value \\
-			\hline
+			\thickhline%\toprule
 			Height   &   480 \\
 			
 			
@@ -347,13 +347,14 @@
 			
 			
 			PC info  & 	Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz   1.99 GHz  RAM	16.0 GB\\
-			\hline
+			\thickhline%\toprule
 		\end{tabular}
 				\caption{The Raytracer settings.}
 	\label{table:2}
 	\end{table}
  
-		\begin{table}[h]
+ 	Three different simulations were used to test the performance and took their average for each scenario or model, as shown in Table 2. The more simulations are run, the more accurate results we get; however, three simulations are used to test the performance because each takes approximately one hour. 
+		\begin{table}[H]
 		\centering
 		\begin{tabular}{>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.1\linewidth}|>{\centering\arraybackslash}m{.6\linewidth}}
 			\thickhline%\toprule
@@ -370,6 +371,7 @@
 			\caption{Performance comparison for different scenarios on 480X640.}
 	\label{table:2}
 	\end{table}
+
 
 
 	\section{Object subdivision}
