@@ -360,9 +360,16 @@
  	
  	\begin{itemize}
  		\item \textbf{Creating a scene}: For this part \textbf{\textit{createScene()}} method is responsible for creating the scene, this includes loading primitives from a .obj file, this steps is governed by only the number ob premieres to be created this means it is worth optimizing it, because id depend on how big the scene is.   It takes < 1 minutes from the overall rendering time, which is < 1\% of the total time, hence this step is not so dominant.
- 		\item  \textbf{Ray casting}: This part contains usually two for loops to go over though all the pixels in the screen which depends on the width and hight of the image to be renderd. The smaller the size of the image the faster the rendered become as the for loop gets smaller, however this is not helpful as we wnat to have a high quality image and not to loose pixels. For each pixel 
- 		\item \textbf{Intersection tests}:
- 		\item  \textbf{Evaluate pixel color}:
+ 		\item  \textbf{Ray casting}: This part usually contains two for loops to go over through all the pixels in the screen, which depends on the width and height of the image to be rendered. The smaller the size of the image, the faster the rendered become as the for loop gets smaller; however, this is not helpful as we want to have a high-quality image and not lose pixels.
+ 		The time complexity of the basic algorithm is $ O(w hr) $, where $ w $ and $ h $ are the width and the height of the display screen in pixels; and $ r $ is the complexity of shooting a ray into the scene. (refrence to Accelerating algorithms for Ray Tracing)
+ 		 For each pixel, there is a ray to be cast to the scene, and then the next two sub-steps are applied: 
+ 			\begin{itemize}
+ 			 \item \textbf{Intersection tests}: Most objects in the scene are composed of a combination of basic shaped objects like spheres or triangles; these basic objects are connected in a mesh to build bigger complicated objects, and to render the model, each object has to be tested against the shooted ray, to test if it is visible to this ray or not. For each object, there is \textbf{\textit{isIntersected}} function used to test the intersection. This function itself is not huge, but repeating it n times can be time-consuming.
+ 			\item  \textbf{Evaluate pixel color}: Evaluating the pixel's brightness and if it is transparent or reflects light, all these steps are done after the intersection test returns true, because if the rays intersect the surface object, we want to evaluate it is proper to color, not only the diffuse color. This needs a recursion operation to cast more and more rays into the scene, and this depends on the settings of the raytracer as the parameter usually called depth $ d $.
+ 			\end{itemize}
+ 		
+ 		This concludes that the worst case time complexity for shooting a ray is $ O(nd) $, where $ n $ is the number of spheres and $ d $ is the maximum level of recursion established.
+ 		For a non-stochastic raytracer, $ d $ is constant and given by the user; hence it is not interesting for now; hence with a fixed width, height, and depth, a naive raytracer depends on the number of objects in the scene only $ n $. 
  		\item \textbf{Write pixels values into a file}:
  		   
  	\end{itemize}

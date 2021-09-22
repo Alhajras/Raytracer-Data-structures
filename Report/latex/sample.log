@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  19 SEP 2021 23:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  23 SEP 2021 00:57
 entering extended mode
 **./sample.tex
 (sample.tex
@@ -892,50 +892,51 @@ images/diff_reflection_2.png> <C:/D/University/Semester_4/Raytracer/lab_report_
 <stanford-bunny_re.PNG, id=141, 528.47438pt x 418.56375pt>
 File: stanford-bunny_re.PNG Graphic file (type png)
 <use stanford-bunny_re.PNG>
-Package pdftex.def Info: stanford-bunny_re.PNG  used on input line 377.
+Package pdftex.def Info: stanford-bunny_re.PNG  used on input line 384.
 (pdftex.def)             Requested size: 135.89215pt x 142.25868pt.
 
-Overfull \hbox (2.4851pt too wide) in paragraph at lines 379--379
+Overfull \hbox (2.4851pt too wide) in paragraph at lines 386--386
  []|\OT1/cmr/m/n/10.95 Armadillo| 
  []
 
 <armadillo_re.PNG, id=142, 419.31656pt x 426.84468pt>
 File: armadillo_re.PNG Graphic file (type png)
 <use armadillo_re.PNG>
-Package pdftex.def Info: armadillo_re.PNG  used on input line 379.
+Package pdftex.def Info: armadillo_re.PNG  used on input line 386.
 (pdftex.def)             Requested size: 135.89236pt x 142.266pt.
 <igea_re.PNG, id=143, 461.47406pt x 493.845pt>
 File: igea_re.PNG Graphic file (type png)
 <use igea_re.PNG>
-Package pdftex.def Info: igea_re.PNG  used on input line 381.
+Package pdftex.def Info: igea_re.PNG  used on input line 388.
 (pdftex.def)             Requested size: 135.8872pt x 142.2619pt.
 
-Overfull \hbox (61.61375pt too wide) in paragraph at lines 372--384
+Overfull \hbox (61.61375pt too wide) in paragraph at lines 379--391
  [][] 
  []
 
-[10 <./stanford-bunny_re.PNG> <./armadillo_re.PNG> <./igea_re.PNG>] (sample.bbl
+[10] (sample.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 398.
- [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 398.
- (sample.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 398.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 398.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 405.
+ [11 <./stanford-bunny_re.PNG> <./armadillo_re.PNG> <./igea_re.PNG>] [12]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 405.
+
+(sample.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 405.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 405.
 Package rerunfilecheck Info: File `sample.out' has not changed.
 (rerunfilecheck)             Checksum: 9AE96CEF019B42055A03617D51705CCF;757.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 398.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 405.
  ) 
 Here is how much of TeX's memory you used:
- 9286 strings out of 492942
- 143298 string characters out of 3126214
+ 9287 strings out of 492942
+ 143305 string characters out of 3126214
  250385 words of memory out of 3000000
  12944 multiletter control sequences out of 15000+200000
  15920 words of font info for 60 fonts, out of 3000000 for 9000
@@ -957,9 +958,9 @@ al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/alhaj/
 AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 /Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti10.pfb>
-Output written on sample.pdf (11 pages, 1859841 bytes).
+Output written on sample.pdf (12 pages, 1863192 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 41 named destinations out of 1000 (max. 500000)
+ 213 PDF objects out of 1000 (max. 8388607)
+ 42 named destinations out of 1000 (max. 500000)
  167 words of extra memory for PDF output out of 10000 (max. 10000000)
 
