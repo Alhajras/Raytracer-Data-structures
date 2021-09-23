@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  23 SEP 2021 22:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7000 64-bit) (preloaded format=pdflatex 2019.11.11)  23 SEP 2021 22:26
 entering extended mode
 **./sample.tex
 (sample.tex
@@ -533,6 +533,15 @@ LaTeX Warning: Label `sub@fig:sub-third' multiply defined.
 
 LaTeX Warning: Label `table:2' multiply defined.
 
+
+LaTeX Warning: Label `fig:1' multiply defined.
+
+
+LaTeX Warning: Label `fig:2' multiply defined.
+
+
+LaTeX Warning: Label `fig:5' multiply defined.
+
 )
 \openout1 = `sample.aux'.
 
@@ -627,7 +636,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/alhaj/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<1.jpg, id=61, 803.0pt x 602.25pt>
+<1.jpg, id=113, 803.0pt x 602.25pt>
 File: 1.jpg Graphic file (type jpg)
 <use 1.jpg>
 Package pdftex.def Info: 1.jpg  used on input line 61.
@@ -642,41 +651,41 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
 
 [3]
-<4.png, id=73, 972.63374pt x 684.5575pt>
+<4.png, id=125, 972.63374pt x 684.5575pt>
 File: 4.png Graphic file (type png)
 <use 4.png>
 Package pdftex.def Info: 4.png  used on input line 100.
 (pdftex.def)             Requested size: 317.07614pt x 223.1575pt.
  [4 <./4.png>]
-<5.PNG, id=82, 759.58781pt x 392.96812pt>
+<5.PNG, id=134, 759.58781pt x 392.96812pt>
 File: 5.PNG Graphic file (type png)
 <use 5.PNG>
 Package pdftex.def Info: 5.PNG  used on input line 117.
 (pdftex.def)             Requested size: 317.07614pt x 164.03812pt.
-<armadillo.png, id=83, 256.96pt x 160.6pt>
+<armadillo.png, id=135, 256.96pt x 160.6pt>
 File: armadillo.png Graphic file (type png)
 <use armadillo.png>
 Package pdftex.def Info: armadillo.png  used on input line 130.
 (pdftex.def)             Requested size: 108.71379pt x 67.94653pt.
-<igea.png, id=84, 256.96pt x 160.6pt>
+<igea.png, id=136, 256.96pt x 160.6pt>
 File: igea.png Graphic file (type png)
 <use igea.png>
 Package pdftex.def Info: igea.png  used on input line 137.
 (pdftex.def)             Requested size: 108.71379pt x 67.94653pt.
-<stanford-bunny.png, id=85, 256.96pt x 250.9375pt>
+<stanford-bunny.png, id=137, 256.96pt x 250.9375pt>
 File: stanford-bunny.png Graphic file (type png)
 <use stanford-bunny.png>
 Package pdftex.def Info: stanford-bunny.png  used on input line 144.
 (pdftex.def)             Requested size: 108.71379pt x 106.16647pt.
  [5 <./5.PNG> <./armadillo.png> <./igea.png> <./stanford-bunny.png>]
-<6.png, id=101, 729.47531pt x 513.41812pt>
+<6.png, id=153, 729.47531pt x 513.41812pt>
 File: 6.png Graphic file (type png)
 <use 6.png>
 Package pdftex.def Info: 6.png  used on input line 173.
 (pdftex.def)             Requested size: 317.07614pt x 223.16272pt.
  [6 <./6.png>]
 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.png, i
-d=112, 582.67688pt x 465.99094pt>
+d=165, 582.67688pt x 465.99094pt>
 File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.p
 ng Graphic file (type png)
 <use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/5.pn
@@ -854,7 +863,7 @@ l.287 	\end{itemize}
 Things are pretty mixed up, but I think the worst is over.
 
 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb_refl
-ection.png, id=118, 574.39594pt x 433.62pt>
+ection.png, id=172, 574.39594pt x 433.62pt>
 File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb
 _reflection.png Graphic file (type png)
 <use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/amb_
@@ -863,7 +872,7 @@ Package pdftex.def Info: C:/D/University/Semester_4/Raytracer/lab_report_1/assi
 gnment_2/images/amb_reflection.png  used on input line 301.
 (pdftex.def)             Requested size: 108.71379pt x 82.06444pt.
 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/diff_ref
-lection_2.png, id=119, 719.68875pt x 540.51938pt>
+lection_2.png, id=173, 719.68875pt x 540.51938pt>
 File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/dif
 f_reflection_2.png Graphic file (type png)
 <use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/diff
@@ -872,7 +881,7 @@ Package pdftex.def Info: C:/D/University/Semester_4/Raytracer/lab_report_1/assi
 gnment_2/images/diff_reflection_2.png  used on input line 308.
 (pdftex.def)             Requested size: 108.71379pt x 81.6435pt.
 <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spec_ref
-lection_2.png, id=120, 502.87875pt x 377.15906pt>
+lection_2.png, id=174, 502.87875pt x 377.15906pt>
 File: C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spe
 c_reflection_2.png Graphic file (type png)
 <use C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/images/spec
@@ -889,7 +898,7 @@ Overfull \hbox (15.95692pt too wide) in paragraph at lines 333--352
 eflection.png> <C:/D/University/Semester_4/Raytracer/lab_report_1/assignment_2/
 images/diff_reflection_2.png> <C:/D/University/Semester_4/Raytracer/lab_report_
 1/assignment_2/images/spec_reflection_2.png>]
-<stanford-bunny_re.PNG, id=141, 528.47438pt x 418.56375pt>
+<stanford-bunny_re.PNG, id=195, 528.47438pt x 418.56375pt>
 File: stanford-bunny_re.PNG Graphic file (type png)
 <use stanford-bunny_re.PNG>
 Package pdftex.def Info: stanford-bunny_re.PNG  used on input line 397.
@@ -899,12 +908,12 @@ Overfull \hbox (2.4851pt too wide) in paragraph at lines 399--399
  []|\OT1/cmr/m/n/10.95 Armadillo| 
  []
 
-<armadillo_re.PNG, id=142, 419.31656pt x 426.84468pt>
+<armadillo_re.PNG, id=196, 419.31656pt x 426.84468pt>
 File: armadillo_re.PNG Graphic file (type png)
 <use armadillo_re.PNG>
 Package pdftex.def Info: armadillo_re.PNG  used on input line 399.
 (pdftex.def)             Requested size: 135.89236pt x 142.266pt.
-<igea_re.PNG, id=143, 461.47406pt x 493.845pt>
+<igea_re.PNG, id=197, 461.47406pt x 493.845pt>
 File: igea_re.PNG Graphic file (type png)
 <use igea_re.PNG>
 Package pdftex.def Info: igea_re.PNG  used on input line 401.
@@ -914,7 +923,311 @@ Overfull \hbox (61.61375pt too wide) in paragraph at lines 392--404
  [][] 
  []
 
-[10]
+[10] [11 <./stanford-bunny_re.PNG> <./armadillo_re.PNG> <./igea_re.PNG>]
+[12
+
+]
+<C:/D/University/Semester_4/Seminar/images_seminar/bvs.png, id=214, 500.62032pt
+ x 215.30438pt>
+File: C:/D/University/Semester_4/Seminar/images_seminar/bvs.png Graphic file (t
+ype png)
+<use C:/D/University/Semester_4/Seminar/images_seminar/bvs.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Seminar/images_seminar/bvs.
+png  used on input line 449.
+(pdftex.def)             Requested size: 250.0pt x 107.52051pt.
+<C:/D/University/Semester_4/Seminar/images_seminar/bv_choose.png, id=217, 378.6
+6469pt x 349.305pt>
+File: C:/D/University/Semester_4/Seminar/images_seminar/bv_choose.png Graphic f
+ile (type png)
+<use C:/D/University/Semester_4/Seminar/images_seminar/bv_choose.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Seminar/images_seminar/bv_c
+hoose.png  used on input line 467.
+(pdftex.def)             Requested size: 250.0pt x 230.61662pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[13
+
+ <C:/D/University/Semester_4/Seminar/images_seminar/bvs.png>] [14 <C:/D/Univers
+ity/Semester_4/Seminar/images_seminar/bv_choose.png>]
+<C:/D/University/Semester_4/Seminar/images_seminar/overlap.png, id=231, 498.361
+88pt x 155.07938pt>
+File: C:/D/University/Semester_4/Seminar/images_seminar/overlap.png Graphic fil
+e (type png)
+<use C:/D/University/Semester_4/Seminar/images_seminar/overlap.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Seminar/images_seminar/over
+lap.png  used on input line 514.
+(pdftex.def)             Requested size: 250.0pt x 77.79268pt.
+ [15 <C:/D/University/Semester_4/Seminar/images_seminar/overlap.png>]
+<C:/D/University/Semester_4/Seminar/images_seminar/update.png, id=239, 341.7768
+7pt x 240.14719pt>
+File: C:/D/University/Semester_4/Seminar/images_seminar/update.png Graphic file
+ (type png)
+<use C:/D/University/Semester_4/Seminar/images_seminar/update.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Seminar/images_seminar/upda
+te.png  used on input line 569.
+(pdftex.def)             Requested size: 250.0pt x 175.66507pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[16
+
+]
+
+! LaTeX Error: Environment algorithm undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.582 	\begin{algorithm}
+                        [H]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package caption Error: \caption outside float.
+
+See the caption package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.583 		\caption
+                {Collision detection algorithm}\label{euclid}
+If you do not understand this error, please take a closer look
+at the documentation of the `caption' package, especially the
+section about errors.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Environment algorithmic undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.584 		\begin{algorithmic}
+                           [1]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Undefined control sequence.
+l.585 			\Procedure
+                   {MyProcedure}{}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.586 			\State
+                $\textit{Beginning at the root nodes of two given trees}$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.587 			\If
+             {$ \textit{root nodes do not intersect} $} \Return No collision
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.587 ...t{root nodes do not intersect} $} \Return
+                                                   No collision
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.588 			\Else
+              
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.589 			\State
+                {$ \textit{check all children of one node against all Childr...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.590 			\If
+             {$ \textit{there is intersection between any children} $}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.591 			\If
+             {$ \textit{leaf node} $} \Return  Collision
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.591 			\If {$ \textit{leaf node} $} \Return
+                                               Collision
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.592 			\EndIf
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.593 			\Else
+              		
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.594 			\State
+                \textbf{goto} \emph{4}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.595 			\EndIf
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.596 			\EndIf
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (10.03406pt too wide) in paragraph at lines 582--597
+[]\OT1/cmr/m/n/10.95 [H] [][1] MyPro-ce-dure $[]$ $[]$
+ []
+
+
+Overfull \hbox (128.2907pt too wide) in paragraph at lines 582--597
+\OT1/cmr/m/n/10.95 No col-li-sion $[]$ $[]$
+ []
+
+! Undefined control sequence.
+l.598 			\If
+             {$ \textit{No children left} $} \Return No collision
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.598 ...f {$ \textit{No children left} $} \Return
+                                                   No collision
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.599 			\EndIf
+               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.600 			\EndProcedure
+                      
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: \begin{document} ended by \end{algorithmic}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.601 		\end{algorithmic}
+                         
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: \begin{document} ended by \end{algorithm}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.603 	\end{algorithm}
+                      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[17 <C:/D/University/Semester_4/Seminar/images_seminar/update.png>]
+<C:/D/University/Semester_4/Seminar/images_seminar/performance.png, id=252, 718
+.93594pt x 332.74312pt>
+File: C:/D/University/Semester_4/Seminar/images_seminar/performance.png Graphic
+ file (type png)
+<use C:/D/University/Semester_4/Seminar/images_seminar/performance.png>
+Package pdftex.def Info: C:/D/University/Semester_4/Seminar/images_seminar/perf
+ormance.png  used on input line 611.
+(pdftex.def)             Requested size: 250.0pt x 115.70532pt.
+ [18
+
+ <C:/D/University/Semester_4/Seminar/images_seminar/performance.png>] [19
+
+]
 
 ! Package inputenc Error: Unicode character ´ (U+00B4)
 (inputenc)                not set up for use with LaTeX.
@@ -923,7 +1236,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.416 ...elerating algorithms for Ray Tracing, H´
+l.641 ...elerating algorithms for Ray Tracing, H´
                                                   ector Antonio Villa Mart´...
 
 You may provide a definition with
@@ -937,37 +1250,360 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.416 ...ay Tracing, H´ector Antonio Villa Mart´
+l.641 ...ay Tracing, H´ector Antonio Villa Mart´
                                                   ınez
 You may provide a definition with
 \DeclareUnicodeCharacter 
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.643 					\bibitem{latexcompanion}
+                                   
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 643
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.643 					\bibitem{latexcompanion}
+                                   
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.643 					\bibitem{latexcompanion}
+                                   
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 646
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.646 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.646 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.649 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 649
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.649 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.649 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.652 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 652
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.652 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.652 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.655 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 655
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.655 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.655 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.658 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 658
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.658 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.658 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.661 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 661
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.661 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.661 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.664 	\bibitem{latexcompanion}
+                               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Underfull \hbox (badness 10000) detected at line 664
+[][]
+ []
+
+! Undefined control sequence.
+<argument> \@listctr 
+                     
+l.664 	\bibitem{latexcompanion}
+                               
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! You can't use `\relax' after \the.
+<recently read> \c@ 
+                    
+l.664 	\bibitem{latexcompanion}
+                               
+I'm forgetting what you said and using zero instead.
 
 (sample.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 419.
- [11 <./stanford-bunny_re.PNG> <./armadillo_re.PNG> <./igea_re.PNG>] [12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 419.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 669.
+ [20
 
-(sample.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 419.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 419.
+pdfTeX warning (ext4): destination with the same identifier (name{cite.latexcom
+panion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{cite.latexcompanion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{cite.latexcompanion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{cite.latexcompanion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{cite.latexcompanion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{cite.latexcompanion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{cite.latexcompanion}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.669 \end{document}
+                    ]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 669.
+ (sample.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 669.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 669.
 Package rerunfilecheck Info: File `sample.out' has not changed.
-(rerunfilecheck)             Checksum: 9AE96CEF019B42055A03617D51705CCF;757.
+(rerunfilecheck)             Checksum: EF7B346986A860CD51CD3F582C4BF851;1584.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 419.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 669.
  ) 
 Here is how much of TeX's memory you used:
- 9288 strings out of 492942
- 143310 string characters out of 3126214
- 250385 words of memory out of 3000000
- 12945 multiletter control sequences out of 15000+200000
- 15920 words of font info for 60 fonts, out of 3000000 for 9000
+ 9374 strings out of 492942
+ 145471 string characters out of 3126214
+ 250681 words of memory out of 3000000
+ 12993 multiletter control sequences out of 15000+200000
+ 17507 words of font info for 65 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,16n,39p,1107b,598s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
@@ -986,9 +1622,9 @@ al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/alhaj/
 AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:
 /Users/alhaj/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 mti10.pfb>
-Output written on sample.pdf (12 pages, 1864583 bytes).
+Output written on sample.pdf (20 pages, 2266586 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
- 42 named destinations out of 1000 (max. 500000)
- 167 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 327 PDF objects out of 1000 (max. 8388607)
+ 71 named destinations out of 1000 (max. 500000)
+ 296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

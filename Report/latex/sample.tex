@@ -404,16 +404,266 @@
 			\caption{Performance comparison for different scenarios on 480X640.}
 	\label{table:2}
 	\end{table}
-
-
-
+	\clearpage
+	
+	
 	\section{Object subdivision}
+	
+		\subsection{Introduction}
+	\label{definitions}
+	Bounding Volume Hierarchies, known as "BVH," is simply a data structure representing complex geometric models with specific simple bounding volumes to reduce some of the expensive tests in different computer graphics applications.
+	BVH is object-oriented, unlike other algorithms such as kd-trees which are space subdivisions.
+	
+	
+	
+	
+	\subsection{Motivation}
+	There are two main applications for bounding volume hierarchy, \textit{Retracing} where two main challenges have to be solved: \textit{shading} and \textit{visibility}; usually, the Raytracer has to test each model in the scene in order to render it to the screen, on the other hand, some of the models they are not visible to the camera and testing them make no sense therefore by informing the rays which models to test the intersection this will boost the performance of the Raytracer tremendously, BVH can quickly achieve this.
+	
+	Moreover, the \textit{collision detection} algorithm used in simulation and games can benefit significantly from BVH. In \textit{fluid simulation} for example, one scene can have thousands of particles that act as a fluid; these particle change their position in each frame, hence for each frame, these particles have to go through the collision detection test. However, not all particles are close to each other, and one does not have to test each particle against the others; hence BVH can be used to detect a potential collision. 
+	
+	
+	
+	
+	\clearpage
+	%----------------------------------------------------------------------------------------
+	%	SECTION 2
+	%----------------------------------------------------------------------------------------
+	
+	\section{Bounding volumes BV}
+	\subsection{Concept}
+	Bounding volume is the tightest possible virtual volume that wraps up a model in a scene. It is the primary component that builds the BVH tree.
+	
+	There are four different main types of BV depending on the shape complexity:
+	
+	\begin{itemize}
+		\item Spheres.
+		\item Axis Aligned Bounding Box (AABB).
+		\item Oriented Bounding Box (OBB).
+		\item Discrete Oriented Polytope (k-DOP).
+		
+	\end{itemize}
+	
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=250pt]{C:/D/University/Semester_4/Seminar/images_seminar/bvs.png}
+			
+			\caption{Bounding volumes types [Suaib et al., 2008, Bade et al.,2006]}
+			\label{fig:1}
+		\end{center}
+	\end{figure}
+	
+	
+	In Figure ~\ref{fig:1}, the more right we go, the more complex the shape becomes; on the other hand, the fewer overlap tests required; however, going to the opposite side from right to left, the simpler shape becomes; hence, the faster the overlap test is, hence choosing the right BV is an important parameter in the BVH, this depends on the application and use case as there is no perfect BV that dominates the rest.
+	
+	\subsection{Choosing the right BV}
+	Choosing the right BV can be challenging because it depends on the spread of the primitive.
+	Figure ~\ref{fig:2} shows some different random scenarios that can happen in a scene, looking at the Sphere at the first row, by taking the left column, where the primitives are uniformly distributed in the form of a circle, hence encapsulating them by a sphere BV can be optimal; nevertheless, the right column shows a lousy choice to wrap a collection of primitives that makes a rectangular shape object by a sphere, where the BV is not tight enough. 
+	For AABB, choosing it to encapsulate a model that looks like a square can be a good choice, as shown in the left column; however, if the box is oriented as the right column, then it is a wrong choice to work with AABB. 
+	Turning to OBB bounding volume where it fits perfectly into the oriented box that both Sphere and AABB failed to achieve because it takes the orientation into count, nonetheless, OBB can perform poorly on some cases as the right column illustrates, the same rectangular but with four outliers primitives that change the orientation of the box and makes it not tight. 
+	
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=250pt]{C:/D/University/Semester_4/Seminar/images_seminar/bv_choose.png}
+			
+			\caption{Different Bounding volumes try to fit perfectly to random primitives [Suaib et al., 2008, Bade et al.,2006]}
+			\label{fig:2}
+		\end{center}
+	\end{figure}
+	\begin{verbatim}
+		
+	\end{verbatim}
+	
+	
+	\subsection{OBB fitting}
+	In order to generate and create an OBB box, three main parameters are needed: \textit{Orientation}, \textit{Center}, and \textit{Minimal edge length}.
+	To calculate the orientation we use covariance matrix:
+	
+	\begin{equation}
+		\textbf{C}_ij = \frac{1}{n}\sum_{i=1}^{n} (\textbf{x}_i - m)_j(\textbf{x}_i - m)_k 
+	\end{equation}
+	\begin{equation}
+		m = \frac{1}{n}\sum_{i=1}^{n} (\textbf{x}_i)
+	\end{equation}
+	
+	
+	
+	
+	Choosing the right primitives to use for the covariance matrix is critical; there are three ways to choose the primitives: 	
+	
+	\begin{itemize}
+		\item \textit{Maximal spread of primitives}: This includes the whole primitives into the calculation.
+		\item \textit{Extremal primitives}: this includes only the external primitives. 
+		\item \textit{Convex hull boundary}: Creating a convex hull boundary and trying to fit the OBB to it, this method is arguably more robust than the previous methods, but it has a complexity of $\textbf{\textit{O}}(nlogn)$.
+	\end{itemize} 
+	
+	Fitting an OBB into a square can be tricky because squares have multiple orientations, and the worst case when the BV takes double the size of the actual square, nevertheless, based on [Stefan Gottschalk. "Collision Queries using Bounding Box"] paper, a test has been done for fitting OBB to a square 10,000 times, show its common to have factors of 1.0 and 1.1  but not 2.0; therefore, this case is rare. 
+	
+	\subsection{OBB Overlap test}
+	
+	Assuming we have two OBB boxes and we want to test if they overlap or not, a distance $T$ between their centroids must be calculated, then projected into axis $n$ to calculate $s$ as follow:
+	\[ s = \textbf{T}.\textbf{n}  \]
+	
+	Calculating the half width of both boxes $r_a$ and $r_b$ to execute the overlap test: 
+	\[ s > r_a + r_b  \]
+	
+	If this condition is true, then there is no overlap between the OBB boxes.
+	
+	\begin{figure}[H]
+		\begin{center}
+			\includegraphics[width=250pt]{C:/D/University/Semester_4/Seminar/images_seminar/overlap.png}
+			
+			\caption{OBB Overlap test illustration [Stefan Gottschalk. “Collision Queries using Bounding Box”]}
+			\label{fig:boat1}
+		\end{center}
+	\end{figure}
+	
+	
+	\clearpage
+	
+	%----------------------------------------------------------------------------------------
+	%	SECTION 3
+	%----------------------------------------------------------------------------------------
+	\section{Bounding Volume Hierarchies BVH}
+	\subsection{Tree construction}
+	Nodes in the BVH tree are BV, and leaves are primitives. 
+	
+	Tree characteristic for an optimal tree:
+	\begin{itemize}
+		\item Simple BV.
+		\item Tight BV.
+		\item Depth of the tree.
+		\item Balance tree.
+		\item Minimal overlap. 
+	\end{itemize} 
+	
+	There are three different ways to construct a BVH tree:
+	\begin{itemize}
+		\item \textit{Top Down}:	Arguably the most popular technique in practice. It uses the '\textit{fit and split}' algorithm, where it starts with the whole model and encapsulates it with a BV and fits it, then tries to split it into $ n $ children, usually 2. It keeps recursively splitting and fitting until it reaches the leaves and assigns the primitives to them.
+		
+		\item \textit{Bottom Up}: Slower construction time than Top-Down but usually produces the best tree. It uses the '\textit{knit and fit}' algorithm, where it starts with primitives and tries to encapsulate them with the BV and merge each $ n $ together, usually 2; it keeps recursively doing this process until it reaches the root.
+		
+		
+		\item \textit{Insertion}: It uses '\textit{incremental-insertion}' algorithm, where it starts with a single leaf and merge to it another leaf by using a cost function, then creating a head node and search for the next leaf to merge. The problem with this method is that it can become worst as it depends on the insertion order of the nodes, and it is challenging to find the best tree.
+		
+	\end{itemize} 
+	
+	
+	
+	There are three different partitioning strategies and splitting algorithms:
+	\begin{itemize}
+		\item \textit{Median of the centroid coordinates} (Object median): Resulting in a well-balanced tree.
+		\item \textit{Mean of centroid coordinates} (Object mean): Gives smaller volume trees.
+		\item \textit{Spatial median}: Splitting the volume into two equal parts.
+		
+	\end{itemize} 
+	
+	
+	\subsection{Tree update}
+	Updating is necessary for each time step due to movement/deformation of the simulated object; the naive solution is to recreate the BVH tree for each new frame; however, the more efficient method is to refine the BVH tree from the previous frame. There are different algorithms for updating the tree, and one of them is \textit{Incremental Updates via Tree Rotations}.
+	
+	Figure ~\ref{fig:4} illustrates a scene composed of three primitives, a, b and c. After creating the first BVH tree, the next frame shows that c moves from top to bottom to create a wrong BVH tree, and the algorithm solves this by using rotation were to replace c with a, and this makes a better BVH again. 
+	
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=250pt]{C:/D/University/Semester_4/Seminar/images_seminar/update.png}
+			
+			\caption{Updating BVH tree [Daniel K, Thiago I, Josef S, Erik B, Al D, Andrew K, “Fast, Effective BVH Updates for Animated Scenes.].}
+			\label{fig:4}
+		\end{center}
+	\end{figure}
+	
+	
+	
+	\subsection{Tree traversal: Collision detection algorithm}
+	The collision detection algorithm is one of the common tests in Simulation applications, and enhancing its performance can be done by adding the BVH tree to its models. 
+	Algorithm ~\ref{alg:1} shows the pseudo-code for implementing such a test by using the BVH tree; note that to accelerate the test, one can jump from one layer chosen by the settings to the leaf directly; this is called the "Fast collision detection method."
+	
+	\begin{algorithm}[H]
+		\caption{Collision detection algorithm}\label{euclid}
+		\begin{algorithmic}[1]
+			\Procedure{MyProcedure}{}
+			\State $\textit{Beginning at the root nodes of two given trees}$
+			\If {$ \textit{root nodes do not intersect} $} \Return No collision
+			\Else
+			\State {$ \textit{check all children of one node against all Children of the other node} $}
+			\If {$ \textit{there is intersection between any children} $}
+			\If {$ \textit{leaf node} $} \Return  Collision
+			\EndIf
+			\Else		
+			\State \textbf{goto} \emph{4}.
+			\EndIf
+			\EndIf
+			
+			\If {$ \textit{No children left} $} \Return No collision
+			\EndIf
+			\EndProcedure
+		\end{algorithmic}
+		\label{alg:1}
+	\end{algorithm}
+	
+	\clearpage
+	\section{Performance}
+	Comparing two different data accelerators can be beneficial; it gives a sense of what are these data structures capable of. Figure ~\ref{fig:5} shows the performance of kd-tree and BVH in different scenes, and the x-axis shows how complex the scene is. The left you go, the more complex the scene gets; the y-axis shows the complexity of the time consumed to perform ray intersection. By looking at the graph, we notice that kd-tree outperforms BVH in the complex scenes on the left; however, this is not the case on the simpler scenes on the right. We should notice that this is not always true as it depends on the algorithms that have been used between the different data structures as in the BVH they are three approaches in order to construct and also to update the tree and also to detect the intersection, also changing the BV type could dramatically change the performance of the BVH tree as always depends on the application.
+	
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[width=250pt]{C:/D/University/Semester_4/Seminar/images_seminar/performance.png}
+			
+			\caption{Comparison between BVH and Kd-trees [Marek V, Vlastimil H, Jiri B. Performance comparison of Bounding Volume Hierarchies and Kd-Trees for GPU Ray Tracing]}
+			\label{fig:5}
+		\end{center}
+	\end{figure}
+	
+	\clearpage
+	\section{Summary}
+	\begin{itemize}
+		
+		
+		\item BVH is a great method to boost the raytracing and collision detection operations. 
+		\item BVH depends highly on the BV type.
+		\item BV is a simple geometry that encapsulates a complex one.
+		\item Fitting BV is a challenge.
+		\item BV Overlap tests are a challenge.
+		\item BVH has different construction algorithms and settings. 
+		\item How to update BVH tree: Incremental Updates via Tree Rotations.
+		\item How to detect collision by using BVH tree. 
+		\item BVH is a good alternative to the kd-tree. 
+		
+		
+	\end{itemize} 
+	\clearpage
 	\section{Spatial Subdivision}
 	
 	This lab was a great way to gain practical experience of the concepts we learned in our computer graphics course. I would like to thank \textbf{Prof. Dr.-Ing. Matthias Teschner} again for advising me throughout this lab. As a final remark, I would like to mention that I really enjoyed working on area lights. This includes debugging issues as I was working on them as well as how they were fixed. At the end, the results were worth the effort.
 	
 	\bibliographystyle{apacite}
 	Accelerating algorithms for Ray Tracing, H´ector Antonio Villa Mart´ınez
+	
+					\bibitem{latexcompanion} 
+	Daniel K, Thiago I, Josef S, Erik B, Al D, Andrew K, 	\textit{"Fast, Effective BVH Updates for Animated Scenes"}. University of Utah and Pixar
+	
+	\bibitem{latexcompanion} 
+	Fangkai Y. 	\textit{"Collision Detection in Computer Games"}. KTH Royal Institute of Technology
+	
+	\bibitem{latexcompanion} 
+	Hamzah S, Abdullah B. 	\textit{"Bounding. Volume Hierarchies for Collision Detection"}
+	
+	\bibitem{latexcompanion} 
+	Jacco B. 	\textit{"Advanced Graphics - Acceleration Structures"}. Utrecht University
+	
+	\bibitem{latexcompanion} 
+	Matthias Teschner, 	\textit{“Simulation in Computer Graphics Bounding Volume Hierarchies”}, University of Freiburg
+	
+	\bibitem{latexcompanion} 
+	Marek V, Vlastimil H, Jiri B .	\textit{"Performance Comparison of Bounding Volume Hierarchies and Kd-Trees for GPU Ray Tracing"}. Masaryk University and Czech Technical University in Prague
+	
+	\bibitem{latexcompanion} 
+	Stefan G.	\textit{"Collision queries using bounding box"}. The University of North Carolina
+	
+	\bibitem{latexcompanion} 
+	Yingsong H, Weijian W, Dan L, Qingzhi Z, Yunfei H. \textit{"Parallel BVH Construction Using Locally-Density Clustering"}. School of Computer Science and Technology, Huazhong University of Science and Technology
+	
 	\bibliography{References}
 	
 \end{document}

@@ -8,5 +8,18 @@
 \BOOKMARK [3][-]{subsubsection.3.1.2}{Phong reflection model }{subsection.3.1}% 8
 \BOOKMARK [1][-]{section.4}{Performance}{}% 9
 \BOOKMARK [1][-]{section.5}{Object subdivision}{}% 10
-\BOOKMARK [1][-]{section.6}{Spatial Subdivision}{}% 11
-\BOOKMARK [1][-]{section.6}{References}{}% 12
+\BOOKMARK [2][-]{subsection.5.1}{Introduction}{section.5}% 11
+\BOOKMARK [2][-]{subsection.5.2}{Motivation}{section.5}% 12
+\BOOKMARK [1][-]{section.6}{Bounding volumes BV}{}% 13
+\BOOKMARK [2][-]{subsection.6.1}{Concept}{section.6}% 14
+\BOOKMARK [2][-]{subsection.6.2}{Choosing the right BV}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.3}{OBB fitting}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.4}{OBB Overlap test}{section.6}% 17
+\BOOKMARK [1][-]{section.7}{Bounding Volume Hierarchies BVH}{}% 18
+\BOOKMARK [2][-]{subsection.7.1}{Tree construction}{section.7}% 19
+\BOOKMARK [2][-]{subsection.7.2}{Tree update}{section.7}% 20
+\BOOKMARK [2][-]{subsection.7.3}{Tree traversal: Collision detection algorithm}{section.7}% 21
+\BOOKMARK [1][-]{section.8}{Performance}{}% 22
+\BOOKMARK [1][-]{section.9}{Summary}{}% 23
+\BOOKMARK [1][-]{section.10}{Spatial Subdivision}{}% 24
+\BOOKMARK [1][-]{section.10}{References}{}% 25
