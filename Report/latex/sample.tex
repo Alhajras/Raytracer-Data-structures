@@ -370,9 +370,22 @@
  		
  		This concludes that the worst case time complexity for shooting a ray is $ O(nd) $, where $ n $ is the number of spheres and $ d $ is the maximum level of recursion established.
  		For a non-stochastic raytracer, $ d $ is constant and given by the user; hence it is not interesting for now; hence with a fixed width, height, and depth, a naive raytracer depends on the number of objects in the scene only $ n $. 
- 		\item \textbf{Write pixels values into a file}:
+ 		\item \textbf{Write pixels values into a file}: This step is $ O(wh) $ as it depends only on the number of pixels to be writen into a file, note that PPM format is used in this raytracer.
+ 		 	\end{itemize}
+ 		I hope by now it has been proven that the most expensive part in the raytracer is the number of intersection tests and how many recursion made to evaluate the color of the pixel, for the second part most modern raytracers uses a stochastic method such as Monte Carlo, but to reduce the number of intersection tests a special acceleration methods are used.  
  		   
- 	\end{itemize}
+ 		In this project two different methods are used to reduce the number of intersection tests:
+ 		
+ 		 	\begin{itemize}
+ 			\item 
+ 		\textbf{Bounding hierarchies}. This method is object focused where it uses the Bounding volume to encapsulate each object in the scene with a bounding volume, in addition, to join each neighbor bounding volume to create a parent node that bound both children. This method reduces the complexity from $  O(w h n) $ to$  O(w h m) $, where m < n is the number of BV nodes. In the next chapters, we will discuss the advantages and disadvantages of this method. [Refrence to Accelerating algorithms for Ray Tracing].
+ 		 
+ 		\item  \textbf{Spatial coherence}.
+ 		This method is space-focused, where it divides the space into regions; only the objects inside the region that intersected with the casted ray are tested; this reduces the complexity to $ O(w h \log  n) $ this method also needs a preprocessing step to build a tree. More details are discussed in the following chapters. 
+ 		
+ 		 [Refrence to Accelerating algorithms for Ray Tracing].
+ 		 	\end{itemize}
+
  
 		\begin{table}[H]
 		\centering
@@ -400,6 +413,7 @@
 	This lab was a great way to gain practical experience of the concepts we learned in our computer graphics course. I would like to thank \textbf{Prof. Dr.-Ing. Matthias Teschner} again for advising me throughout this lab. As a final remark, I would like to mention that I really enjoyed working on area lights. This includes debugging issues as I was working on them as well as how they were fixed. At the end, the results were worth the effort.
 	
 	\bibliographystyle{apacite}
+	Accelerating algorithms for Ray Tracing, H´ector Antonio Villa Mart´ınez
 	\bibliography{References}
 	
 \end{document}
