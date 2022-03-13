@@ -139,9 +139,6 @@ public:
 
 	float midpoint;
 	char longestAxis;
-
-	// this is for KDtree
-	std::vector<unsigned int> kdLeafChildren;
 };
 
 
