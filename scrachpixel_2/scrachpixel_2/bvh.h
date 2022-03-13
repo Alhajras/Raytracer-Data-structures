@@ -127,7 +127,7 @@ public:
 	unsigned int right = 0; //right child id
 	bool isleaf = false;
 	std::vector<int> objs; // Each node saves three objects
-	unsigned int objsMorID[3]; // Each node saves three objects
+	std::vector<unsigned int> objsMorID; // Each node saves three objects
 	//some bounding box variables 
 	// here I can create BBOX node is general
 	float minX;
