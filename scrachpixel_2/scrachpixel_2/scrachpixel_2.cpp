@@ -256,7 +256,7 @@ bool trace_more(Settings settings,
 	bool hit = false;
 	for (int box : boundingBoxes)
 	{
-		for (int i = 0; i < tree[box]->numObjs; i++)
+		for (int i = 0; i < tree[box]->objs.size(); i++)
 		{
 			shared_ptr<SceneObject> sob;
 
@@ -387,7 +387,7 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box]->numObjs; i++)
+			for (int i = 0; i < tree[box]->objs.size(); i++)
 			{
 				if (scene[tree[box]->objs[i]]->isSphere)
 				{
@@ -420,7 +420,7 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box]->numObjs; i++)
+			for (int i = 0; i < tree[box]->objs.size(); i++)
 			{
 				if (scene[tree[box]->objs[i]]->isSphere)
 				{
@@ -458,7 +458,7 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box]->numObjs; i++)
+			for (int i = 0; i < tree[box]->objs.size(); i++)
 			{
 				int moreId = tree[box]->objsMorID[i];
 				std::shared_ptr<SceneObject> sob;

@@ -128,7 +128,6 @@ public:
 	bool isleaf = false;
 	std::vector<int> objs; // Each node saves three objects
 	unsigned int objsMorID[3]; // Each node saves three objects
-	unsigned int numObjs;
 	//some bounding box variables 
 	// here I can create BBOX node is general
 	float minX;
@@ -185,7 +184,6 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 		{
 			currentNode->objs.push_back(objects[i]->objId); //we assign the ids of the root node, left and right nodes
 		}
-		currentNode->numObjs = (int)objects.size(); // how many objects node has
 		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
 		return (int)nodes.size() - 1;
@@ -474,7 +472,6 @@ int generateHierarchy(std::vector<SceneObject> objects,
 		{
 			currentNode->objsMorID[i] = sortedMortonCodes[i]; //we assign the ids of the root node, left and right nodes
 		}
-		currentNode->numObjs = (int)sortedMortonCodes.size(); // how many objects node has
 		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
 		return (int)nodes.size() - 1;
@@ -580,7 +577,6 @@ int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> cur
 		{
 			currentNode->objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
 		}
-		currentNode->numObjs = (int)objects.size(); // how many objects node has
 		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
 		return (int)nodes.size() - 1;
