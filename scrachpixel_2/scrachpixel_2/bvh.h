@@ -139,7 +139,7 @@ public:
 	float maxZ;
 
 	float midpoint;
-	float longestAxis;
+	char longestAxis;
 
 	// this is for KDtree
 	std::vector<unsigned int> kdLeafChildren;
@@ -216,48 +216,52 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	std::vector<std::shared_ptr<SceneObject>> rightObjects;
 	for (int i = 0; i < objects.size(); i++)
 	{
+		std::shared_ptr<SceneObject> sceneObject = objects[i];
+		Vec3f position = sceneObject->position;
+		float radius = sceneObject->radius;
+
 		// here I am splitting the objects which are their center is in the left of the 
 		// Middle point of the node to the left, we can change the currentNode.midpoint,
 		// By using splitting average or other ways look at my presentations
-		if (objects[i]->position[currentNode->longestAxis] < currentNode->midpoint)
-		{
+		if (position[currentNode->longestAxis] < currentNode->midpoint)
+		{	
 			// we create the new left bbox parameters
-			if (objects[i]->position[0] - objects[i]->radius < minLeftX)
-				minLeftX = objects[i]->position[0] - objects[i]->radius;
-			if (objects[i]->position[1] - objects[i]->radius < minLeftY)
-				minLeftY = objects[i]->position[1] - objects[i]->radius;
-			if (objects[i]->position[2] - objects[i]->radius < minLeftZ)
-				minLeftZ = objects[i]->position[2] - objects[i]->radius;
+			if (position[0] - radius < minLeftX)
+				minLeftX = position[0] - radius;
+			if (position[1] - radius < minLeftY)
+				minLeftY = position[1] - radius;
+			if (position[2] - radius < minLeftZ)
+				minLeftZ = position[2] - radius;
 
-			if (objects[i]->position[0] + objects[i]->radius > maxLeftX)
-				maxLeftX = objects[i]->position[0] + objects[i]->radius;
-			if (objects[i]->position[1] + objects[i]->radius > maxLeftY)
-				maxLeftY = objects[i]->position[1] + objects[i]->radius;
-			if (objects[i]->position[2] + objects[i]->radius > maxLeftZ)
-				maxLeftZ = objects[i]->position[2] + objects[i]->radius;
+			if (position[0] + radius > maxLeftX)
+				maxLeftX = position[0] + radius;
+			if (position[1] + radius > maxLeftY)
+				maxLeftY = position[1] + radius;
+			if (position[2] + radius > maxLeftZ)
+				maxLeftZ = position[2] + radius;
 
-			midLeft += objects[i]->position; // here we are using the average for middle point 
-			leftObjects.push_back(objects[i]);
+			midLeft += position; // here we are using the average for middle point 
+			leftObjects.push_back(sceneObject);
 		}
 		else
 		{
 			// we create the new right bbox parameters
-			if (objects[i]->position[0] - objects[i]->radius < minRightX)
-				minRightX = objects[i]->position[0] - objects[i]->radius;
-			if (objects[i]->position[1] - objects[i]->radius < minRightY)
-				minRightY = objects[i]->position[1] - objects[i]->radius;
-			if (objects[i]->position[2] - objects[i]->radius < minRightZ)
-				minRightZ = objects[i]->position[2] - objects[i]->radius;
+			if (position[0] - radius < minRightX)
+				minRightX = position[0] - radius;
+			if (position[1] - radius < minRightY)
+				minRightY = position[1] - radius;
+			if (position[2] - radius < minRightZ)
+				minRightZ = position[2] - radius;
 
-			if (objects[i]->position[0] + objects[i]->radius > maxRightX)
-				maxRightX = objects[i]->position[0] + objects[i]->radius;
-			if (objects[i]->position[1] + objects[i]->radius > maxRightY)
-				maxRightY = objects[i]->position[1] + objects[i]->radius;
-			if (objects[i]->position[2] + objects[i]->radius > maxRightZ)
-				maxRightZ = objects[i]->position[2] + objects[i]->radius;
+			if (position[0] + radius > maxRightX)
+				maxRightX = position[0] + radius;
+			if (position[1] + radius > maxRightY)
+				maxRightY = position[1] + radius;
+			if (position[2] + radius > maxRightZ)
+				maxRightZ = position[2] + radius;
 
-			midRight += objects[i]->position; // here we are using the average for middle point 
-			rightObjects.push_back(objects[i]);
+			midRight += position; // here we are using the average for middle point 
+			rightObjects.push_back(sceneObject);
 		}
 	}
 

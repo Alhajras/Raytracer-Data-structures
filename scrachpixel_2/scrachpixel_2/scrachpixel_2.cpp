@@ -878,7 +878,7 @@ int main(int argc, char** argv)
 
 	// Lets bound each object with BBOX
 	// This is same for KD-tree and BVH
-	std::cout << "Wraping BV for each objecy .... \n";
+	std::cout << "Wraping BV for each object .... \n";
 
 	for (std::shared_ptr<SceneObject> obj : scene)
 	{
