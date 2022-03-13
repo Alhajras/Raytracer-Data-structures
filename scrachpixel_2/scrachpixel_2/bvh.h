@@ -214,11 +214,16 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	float maxRightZ = -1 * std::numeric_limits<float>::max();
 	float minRightZ = std::numeric_limits<float>::max();
 	std::vector<std::shared_ptr<SceneObject>> rightObjects;
+
+	std::shared_ptr<SceneObject> sceneObject;
+	Vec3f position;
+	float radius;
+
 	for (int i = 0; i < objects.size(); i++)
 	{
-		std::shared_ptr<SceneObject> sceneObject = objects[i];
-		Vec3f position = sceneObject->position;
-		float radius = sceneObject->radius;
+		 sceneObject = objects[i];
+		 position = sceneObject->position;
+		 radius = sceneObject->radius;
 
 		// here I am splitting the objects which are their center is in the left of the 
 		// Middle point of the node to the left, we can change the currentNode.midpoint,
