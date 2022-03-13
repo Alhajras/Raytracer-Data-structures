@@ -50,7 +50,7 @@
 
 const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
-enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES };
+enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES, TEST };
 using namespace std;
 float RAY_EPSILON = 0.000000001;
 unsigned int rayId = 0;
@@ -82,8 +82,8 @@ float clamp(const float& lo, const float& hi, const float& v)
 // Settings of the raytracer
 struct Settings
 {
-	uint32_t width = 100; // Width of the scene
-	uint32_t height = 100; // Height of the scene
+	uint32_t width = 640; // Width of the scene
+	uint32_t height = 480; // Height of the scene
 	float fov = 90;
 	Vec3f backgroundColor = Vec3f(1, 1, 1); // Standard bg color is white
 	float bias = 0.0001; // Error allowed
@@ -720,15 +720,20 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 		fileName.append("bunnies.obj");
 		break;
 	}
+	case BUNNY:
+	{
+		fileName.append("bunny.obj");
+		break;
+	}
 	default: {
 		// By default the bunny will be renderd
-		fileName.append("bunny.obj");
+		fileName.append("test.obj");
 		break;
 	}
 	}
 	for (int clone = 0; clone < NUMBER_OF_CLONES; clone++)
 	{
-		float shift = clone * 0.3;
+		float shift = clone *20;
 
 	file.open(fileName);
 	std::cout << "Loading file:  " << fileName << " ... " << std::endl;
@@ -753,13 +758,13 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 			file >> vertex.z;
 
 			//vertices.push_back(vertex);
-			std::shared_ptr<SceneObject> s = std::make_shared<SceneObject>();;
+			std::shared_ptr<SceneObject> s = std::make_shared<SceneObject>();
 			s->objId = id;
 
 
 			//	//Bunny scale
 			//	// Min leaf node = 10
-			s->radius = 0.01 * 5; //  hoody = *10
+			s->radius = 0.01 * 5; //  hoody = *10 // Bunny =0.01 * 5
 			s->center = vertex * 100 + shift; // igea = *50, bunny = *20, hoody = / 50 
 			s->center.y += -10;
 

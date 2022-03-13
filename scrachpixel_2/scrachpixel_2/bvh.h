@@ -30,7 +30,7 @@ using Vec3ui = Vec3<uint32_t>;
 using Matrix44f = Matrix44<float>;
 // igea [20:50]
 // bunny [10:15]
-const int MaxLeaves = 10;
+const int MaxLeaves = 2;
 static int bytePrefix[] = {
 		8, 7, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,
 		3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -64,8 +64,6 @@ public:
 	Vec3f surfaceColor, emissionColor;      /// surface color and emission (light)
 	float transparency, reflection;         /// surface transparency and reflectivity
 	MaterialType materialType;
-	Sphere* left_child = NULL;
-	Sphere* right_child = NULL;
 	bool is_bv = false;
 	Sphere(
 		const int& id,
@@ -77,12 +75,6 @@ public:
 		id(id), center(c), radius(r), radius2(r* r), surfaceColor(sc), emissionColor(ec),
 		transparency(transp), reflection(refl), materialType(DIFFUSE_AND_GLOSSY)
 	{ /* empty */
-	}
-
-	void setChildes(Sphere* left, Sphere* right) {
-		left_child = left;
-		right_child = right;
-		is_bv = true;
 	}
 
 	//[comment]
@@ -190,7 +182,6 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
 	newRightNode->left = NULL;
 	newRightNode->right = NULL;
-	std::vector<int> leftPointers;
 	std::vector<std::shared_ptr<SceneObject>> leftObjects;
 	Vec3f midLeft;
 	float maxLeftX = -1 * std::numeric_limits<float>::max();
