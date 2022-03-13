@@ -53,15 +53,16 @@ template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
 enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES };
 using namespace std;
 float RAY_EPSILON = 0.000000001;
-int rayId = 0;
+unsigned int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
-int rootNodeIndex = 0;
+unsigned int  rootNodeIndex = 0;
+char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for testing.
 std::map<unsigned int, shared_ptr<SceneObject> > hashMap; // This is for the LBVH
 
 // Statstics related
-int spheres_intersections_counter = 0;
-int bv_intersections_counter = 0;
+unsigned int spheres_intersections_counter = 0;
+unsigned int bv_intersections_counter = 0;
 float tree_raverse_time = 0;
 
 
@@ -81,8 +82,8 @@ float clamp(const float& lo, const float& hi, const float& v)
 // Settings of the raytracer
 struct Settings
 {
-	uint32_t width = 640; // Width of the scene
-	uint32_t height = 480; // Height of the scene
+	uint32_t width = 100; // Width of the scene
+	uint32_t height = 100; // Height of the scene
 	float fov = 90;
 	Vec3f backgroundColor = Vec3f(1, 1, 1); // Standard bg color is white
 	float bias = 0.0001; // Error allowed
@@ -644,6 +645,9 @@ void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 
 void printProgress(double percentage) {
 	int val = (int)(percentage * 100);
+	if (val == 12) {
+		int X = 5;
+	}
 	int lpad = (int)(percentage * 60);
 	int rpad = 60 - lpad;
 	printf("\r%3d%% [%.*s%*s]", val, lpad, "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||", rpad, "");
@@ -660,6 +664,9 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 	double loadingProgress = 0;
 	for (unsigned y = 0; y < settings.height; ++y) {
 		cout << y << endl;
+		if (y == 6) {
+			int s = 5;
+		}
 		for (unsigned x = 0; x < settings.width; ++x, ++pixel) {
 			Vec3f sampled_pixel(0, 0, 0);
 
@@ -690,7 +697,7 @@ inline double random_double_2(double min, double max) {
 
 std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 	std::vector<std::shared_ptr<SceneObject>> scene;
-	int id = 0;
+	unsigned int id = 0;
 
 	std::vector<Vec3f> vertices;
 	//Loads OBJ file from path
@@ -719,6 +726,9 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 		break;
 	}
 	}
+	for (int clone = 0; clone < NUMBER_OF_CLONES; clone++)
+	{
+		float shift = clone * 0.3;
 
 	file.open(fileName);
 	std::cout << "Loading file:  " << fileName << " ... " << std::endl;
@@ -750,7 +760,7 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 			//	//Bunny scale
 			//	// Min leaf node = 10
 			s->radius = 0.01 * 5; //  hoody = *10
-			s->center = vertex * 100; // igea = *50, bunny = *20, hoody = / 50 
+			s->center = vertex * 100 + shift; // igea = *50, bunny = *20, hoody = / 50 
 			s->center.y += -10;
 
 			//	// Armadillo
@@ -771,8 +781,11 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 		{
 			break;
 		}
+		/*file.close();
+	}*/
 	}
-
+	file.close();
+}
 	std::cout << "Number of spheres: " << id << std::endl;
 	//// The box
 	//SceneObject rWall;

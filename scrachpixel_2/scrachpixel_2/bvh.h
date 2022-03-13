@@ -30,7 +30,7 @@ using Vec3ui = Vec3<uint32_t>;
 using Matrix44f = Matrix44<float>;
 // igea [20:50]
 // bunny [10:15]
-const int MaxLeaves = 15;
+const int MaxLeaves = 10;
 static int bytePrefix[] = {
 		8, 7, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,
 		3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -115,12 +115,12 @@ public:
 class Node
 {
 public:
-	int left; // left child id
-	int right; //right child id
+	unsigned int left = 0; // left child id
+	unsigned int right = 0; //right child id
 	bool isleaf = false;
 	std::vector<int> objs; // Each node saves three objects
-	int objsMorID[3]; // Each node saves three objects
-	int numObjs;
+	unsigned int objsMorID[3]; // Each node saves three objects
+	unsigned int numObjs;
 	//some bounding box variables 
 	// here I can create BBOX node is general
 	double minX;
@@ -134,7 +134,7 @@ public:
 	double longestAxis;
 
 	// this is for KDtree
-	std::vector<int> kdLeafChildren;
+	std::vector<unsigned int> kdLeafChildren;
 };
 
 
@@ -324,11 +324,8 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	newRightNode->minZ = minRightZ;
 	newRightNode->maxZ = maxRightZ;
 
-	int l = constructBVHTree(leftObjects, newLeftNode, nodes);
-	int r = constructBVHTree(rightObjects, newRightNode, nodes);
-
-	currentNode->left = l;
-	currentNode->right = r;
+	currentNode->left = constructBVHTree(leftObjects, newLeftNode, nodes);
+	currentNode->right = constructBVHTree(rightObjects, newRightNode, nodes);
 
 	nodes.push_back(currentNode);
 	return (int)nodes.size() - 1;
@@ -504,6 +501,7 @@ int generateHierarchy(std::vector<SceneObject> objects,
 	newRightNode->minX = currentNode->maxX / 2;
 	newRightNode->maxX = currentNode->maxX;
 	newRightNode->minY = currentNode->maxY / 2;
+	newRightNode->maxY = currentNode->maxY;
 	newRightNode->maxY = currentNode->maxY;
 	newRightNode->minZ = currentNode->maxZ / 2;
 	newRightNode->maxZ = currentNode->maxZ;
@@ -700,7 +698,7 @@ int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> cur
 
 
 bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<Node> box)
-{
+{	
 	float tmin = (box->minX - position[0]) / direction[0];
 	float tmax = (box->maxX - position[0]) / direction[0];
 
