@@ -1,118 +1,82 @@
 ﻿  scrachpixel_2.cpp
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(100,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(101,1): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(101,1): warning C4305:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(101,1): warning C4305:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(101,1): warning C4305:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(101,1): warning C4305:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(155,83): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(155,83): warning C4305:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(155,83): warning C4305:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(155,83): warning C4305:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(155,83): warning C4305:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(202,20): warning C4018: '<': signed/unsigned mismatch
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(207,39): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(340,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(341,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(466,50): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(466,43): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(521,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(523,11): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(525,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(526,34): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(591,20): warning C4018: '<': signed/unsigned mismatch
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(596,38): warning C4244: 'argument': conversion from 'double' to 'uint8_t', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(641,16): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(693,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(694,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(699,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(700,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(714,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(715,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(893,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(893,25): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(893,25): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(893,25): warning C4244:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(893,25): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(894,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(894,25): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(894,25): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(894,25): warning C4244:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(894,25): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(895,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(895,25): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(895,25): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(895,25): warning C4244:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(895,25): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(898,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(898,25): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(898,25): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(898,25): warning C4244:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(898,25): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(899,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(899,25): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(899,25): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(899,25): warning C4244:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(899,25): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(900,25): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(900,25): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(900,25): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(900,25): warning C4244:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(900,25): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(905,85): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(907,29): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(907,29): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(907,29): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(907,29): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(907,29): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(947,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(947,45): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(947,45): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(947,45): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(947,45): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(948,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(948,45): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(948,45): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(948,45): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(948,45): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(949,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(949,45): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(949,45): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(949,45): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(949,45): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(950,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(950,45): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(950,45): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(950,45): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(950,45): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(951,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(951,45): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(951,45): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(951,45): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(951,45): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(952,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(952,45): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(952,45): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(952,45): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(952,45): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(974,37): warning C4305: 'argument': truncation from 'double' to 'T'
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(974,37): warning C4305:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(974,37): warning C4305:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(974,37): warning C4305:             T=float
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(974,37): warning C4305:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(973,8): warning C4101: 't0': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(972,14): warning C4101: 'vhit': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(972,8): warning C4101: 'uhit': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(973,12): warning C4101: 't1': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(985,15): warning C4101: 'v': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(985,9): warning C4101: 't': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(985,12): warning C4101: 'u': unreferenced local variable
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1021,39): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1021,39): warning C4244:         with
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1021,39): warning C4244:         [
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1021,39): warning C4244:             T=uint32_t
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1021,39): warning C4244:         ]
-C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1039,20): warning C4018: '<': signed/unsigned mismatch
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(116,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(117,1): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(117,1): warning C4305:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(117,1): warning C4305:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(117,1): warning C4305:             T=float
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(117,1): warning C4305:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(171,83): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(171,83): warning C4305:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(171,83): warning C4305:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(171,83): warning C4305:             T=float
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(171,83): warning C4305:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(217,20): warning C4018: '<': signed/unsigned mismatch
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(222,39): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(355,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(356,10): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(481,50): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(481,43): warning C4244: 'argument': conversion from 'uint64_t' to 'int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(536,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(538,11): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(540,29): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(541,34): warning C4244: 'argument': conversion from 'uint64_t' to 'const unsigned int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(606,20): warning C4018: '<': signed/unsigned mismatch
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(611,38): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(656,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(920,85): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(922,29): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(922,29): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(922,29): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(922,29): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(922,29): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(962,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(962,45): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(962,45): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(962,45): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(962,45): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(963,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(963,45): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(963,45): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(963,45): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(963,45): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(964,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(964,45): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(964,45): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(964,45): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(964,45): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(965,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(965,45): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(965,45): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(965,45): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(965,45): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(966,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(966,45): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(966,45): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(966,45): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(966,45): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(967,45): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(967,45): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(967,45): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(967,45): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(967,45): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(989,37): warning C4305: 'argument': truncation from 'double' to 'T'
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(989,37): warning C4305:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(989,37): warning C4305:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(989,37): warning C4305:             T=float
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(989,37): warning C4305:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(988,8): warning C4101: 't0': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(987,14): warning C4101: 'vhit': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(987,8): warning C4101: 'uhit': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(988,12): warning C4101: 't1': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1000,15): warning C4101: 'v': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1000,9): warning C4101: 't': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1000,12): warning C4101: 'u': unreferenced local variable
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1036,39): warning C4244: 'argument': conversion from 'float' to 'const T', possible loss of data
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1036,39): warning C4244:         with
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1036,39): warning C4244:         [
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1036,39): warning C4244:             T=uint32_t
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1036,39): warning C4244:         ]
+C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\bvh.h(1054,20): warning C4018: '<': signed/unsigned mismatch
 C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(55,32): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(58,27): warning C4305: 'initializing': truncation from 'double' to 'const float'
 C:\D\University\Semester_5\master project\git\Raytracer-Data-structures\scrachpixel_2\scrachpixel_2\scrachpixel_2.cpp(72,20): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data

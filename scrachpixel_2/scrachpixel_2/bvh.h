@@ -55,6 +55,22 @@ Vec3f mix(const Vec3f& a, const Vec3f& b, const float& mixValue)
 	return a * (1 - mixValue) + b * mixValue;
 }
 
+Vec3f midLeft;
+float maxLeftX = -1 * std::numeric_limits<float>::max();
+float minLeftX = std::numeric_limits<float>::max();
+float maxLeftY = -1 * std::numeric_limits<float>::max();
+float minLeftY = std::numeric_limits<float>::max();
+float maxLeftZ = -1 * std::numeric_limits<float>::max();
+float minLeftZ = std::numeric_limits<float>::max();
+Vec3f midRight;
+float maxRightX = -1 * std::numeric_limits<float>::max();
+float minRightX = std::numeric_limits<float>::max();
+float maxRightY = -1 * std::numeric_limits<float>::max();
+float minRightY = std::numeric_limits<float>::max();
+float maxRightZ = -1 * std::numeric_limits<float>::max();
+float minRightZ = std::numeric_limits<float>::max();
+
+
 class Sphere
 {
 public:
@@ -115,15 +131,15 @@ public:
 	unsigned int numObjs;
 	//some bounding box variables 
 	// here I can create BBOX node is general
-	double minX;
-	double maxX;
-	double minY;
-	double maxY;
-	double minZ;
-	double maxZ;
+	float minX;
+	float maxX;
+	float minY;
+	float maxY;
+	float minZ;
+	float maxZ;
 
-	double midpoint;
-	double longestAxis;
+	float midpoint;
+	float longestAxis;
 
 	// this is for KDtree
 	std::vector<unsigned int> kdLeafChildren;
@@ -197,7 +213,6 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	float minRightY = std::numeric_limits<float>::max();
 	float maxRightZ = -1 * std::numeric_limits<float>::max();
 	float minRightZ = std::numeric_limits<float>::max();
-	std::vector<int> rightPointers;
 	std::vector<std::shared_ptr<SceneObject>> rightObjects;
 	for (int i = 0; i < objects.size(); i++)
 	{
