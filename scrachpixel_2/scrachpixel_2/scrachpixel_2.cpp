@@ -57,7 +57,7 @@ unsigned int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
 unsigned int  rootNodeIndex = 0;
-char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for testing.
+char NUMBER_OF_CLONES = 30; // This is used to generatre clones of the model for testing.
 std::map<unsigned int, shared_ptr<SceneObject> > hashMap; // This is for the LBVH
 
 // Statstics related
@@ -261,8 +261,8 @@ bool trace_more(Settings settings,
 			shared_ptr<SceneObject> sob;
 
 			if (settings.dataStructure == LBVH) {
-				int moreId = tree[box]->objsMorID[i];
-				sob = hashMap[moreId];
+				//int moreId = tree[box]->objsMorID[i];
+				//sob = hashMap[moreId];
 			}
 			else
 			{
@@ -445,7 +445,7 @@ Vec3f castRay(
 		sphere = &hitsphere;
 		break;
 	}
-	case LBVH:
+	/*case LBVH:
 	{
 		const clock_t begin_time = clock();
 		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
@@ -479,7 +479,7 @@ Vec3f castRay(
 				}
 			}
 		}		break;
-	}
+	}*/
 	default: {
 		for (unsigned i = 0; i < scene.size(); ++i) {
 			t0 = INFINITY, t1 = INFINITY;
@@ -776,6 +776,9 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 			s->position = s->center;
 			s->shininess = 64;
 			s->isSphere = true;
+			Vec3f minPoint = s->center - s->radius;
+			Vec3f maxPoint = s->center + s->radius;
+			s->boxBoundries = BoxBoundries(minPoint, maxPoint);
 			s->sphere = Sphere(id++, s->center, s->radius, Vec3f(0.8, 0.7, 0), 0, 0.0, REFLECTION_AND_REFRACTION);
 			double random = random_double_2();
 
@@ -846,6 +849,110 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 
 }
 
+std::vector<SceneObject> createScene_new(Settings settings) {
+	std::vector<SceneObject> scene;
+	unsigned int id = 0;
+
+	std::vector<Vec3f> vertices;
+	//Loads OBJ file from path
+	std::ifstream file;
+	std::string fileName = "C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/";
+
+	switch (settings.sceneModel) {
+	case IGEA:
+	{
+		fileName.append("igea.obj");
+		break;
+	}
+	case ARMADILLO:
+	{
+		fileName.append("armadillo.obj");
+		break;
+	}
+	case BUNNIES:
+	{
+		fileName.append("bunnies.obj");
+		break;
+	}
+	case BUNNY:
+	{
+		fileName.append("bunny.obj");
+		break;
+	}
+	default: {
+		// By default the bunny will be renderd
+		fileName.append("test.obj");
+		break;
+	}
+	}
+	for (int clone = 0; clone < NUMBER_OF_CLONES; clone++)
+	{
+		float shift = clone * 20;
+
+		file.open(fileName);
+		std::cout << "Loading file:  " << fileName << " ... " << std::endl;
+		if (!file.good())
+		{
+			std::cout << "Can't open file " << fileName << std::endl;
+			return scene;
+		}
+
+		std::string line;
+		while (1)
+		{
+			std::string text;
+
+			file >> text;
+			if (text == "v")
+			{
+				Vec3f vertex;
+
+				file >> vertex.x;
+				file >> vertex.y;
+				file >> vertex.z;
+
+				//vertices.push_back(vertex);
+				SceneObject s;
+				s.objId = id;
+
+
+				//	//Bunny scale
+				//	// Min leaf node = 10
+				s.radius = 0.01 * 5; //  hoody = *10 // Bunny =0.01 * 5
+				s.center = vertex * 100 + shift; // igea = *50, bunny = *20, hoody = / 50 
+				s.center.y += -10;
+
+				//	// Armadillo
+				//	// Min leaf node = 1000
+				//	//s.radius = 0.1;
+				//	//s.center = vertex / 20;
+				s.center.z += -50;
+				s.position = s.center;
+				s.shininess = 64;
+				s.isSphere = true;
+				Vec3f minPoint = s.center - s.radius;
+				Vec3f maxPoint = s.center + s.radius;
+				s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+				s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0.8, 0.7, 0), 0, 0.0, REFLECTION_AND_REFRACTION);
+				double random = random_double_2();
+
+				scene.push_back(s);
+				//std::cout << vertex.Z << std::endl;
+			}
+			else
+			{
+				break;
+			}
+			/*file.close();
+		}*/
+		}
+		file.close();
+	}
+	std::cout << "Number of spheres: " << id << std::endl;
+	return scene;
+
+}
+
 int main(int argc, char** argv)
 {
 	const clock_t begin_total_time = clock();
@@ -874,30 +981,30 @@ int main(int argc, char** argv)
 	root->maxZ = -1 * std::numeric_limits<float>::max();
 	root->minZ = std::numeric_limits<float>::max();;
 
-	std::vector<std::shared_ptr<SceneObject>> scene = createScene(settings);
+	std::vector<SceneObject> scene = createScene_new(settings);
 
 	// Lets bound each object with BBOX
 	// This is same for KD-tree and BVH
 	std::cout << "Wraping BV for each object .... \n";
 
-	for (std::shared_ptr<SceneObject> obj : scene)
-	{
-		// we calculate the minimum edges of the box
-		if (obj->position[0] - obj->radius < root->minX)
-			root->minX = obj->position[0] - obj->radius;
-		if (obj->position[1] - obj->radius < root->minY)
-			root->minY = obj->position[1] - obj->radius;
-		if (obj->position[2] - obj->radius < root->minZ)
-			root->minZ = obj->position[2] - obj->radius;
+	//for (std::shared_ptr<SceneObject> obj : scene)
+	//{
+	//	// we calculate the minimum edges of the box
+	//	if (obj->position[0] - obj->radius < root->minX)
+	//		root->minX = obj->position[0] - obj->radius;
+	//	if (obj->position[1] - obj->radius < root->minY)
+	//		root->minY = obj->position[1] - obj->radius;
+	//	if (obj->position[2] - obj->radius < root->minZ)
+	//		root->minZ = obj->position[2] - obj->radius;
 
-		// we calculate the maximum edges of the box
-		if (obj->position[0] + obj->radius > root->maxX)
-			root->maxX = obj->position[0] + obj->radius;
-		if (obj->position[1] + obj->radius > root->maxY)
-			root->maxY = obj->position[1] + obj->radius;
-		if (obj->position[2] + obj->radius > root->maxZ)
-			root->maxZ = obj->position[2] + obj->radius;
-	}
+	//	// we calculate the maximum edges of the box
+	//	if (obj->position[0] + obj->radius > root->maxX)
+	//		root->maxX = obj->position[0] + obj->radius;
+	//	if (obj->position[1] + obj->radius > root->maxY)
+	//		root->maxY = obj->position[1] + obj->radius;
+	//	if (obj->position[2] + obj->radius > root->maxZ)
+	//		root->maxZ = obj->position[2] + obj->radius;
+	//}
 
 	// we try to find the midpoint and longest axis of the root box
 	if (root->maxX - root->minX > root->maxY - root->minY)
@@ -965,11 +1072,15 @@ int main(int argc, char** argv)
 			std::cout << "<<<<<<< This is BVH >>>>>>" << endl;
 			std::cout << "construct BVH Tree .... ";
 			const clock_t begin_time = clock();
-			rootNodeIndex = constructBVHTree(scene, root, nodes);
+			int totalNodes = 0;
+			std::vector<std::shared_ptr<SceneObject>> orderedPrims;
+			orderedPrims.reserve(scene.size());
+			root = constructBVHTreed(scene, 0, scene.size(),
+				&totalNodes, orderedPrims);
 			std::cout << "Done .... Time: ";
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
 
-			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			//render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		//case KDTREE:
@@ -1007,7 +1118,7 @@ int main(int argc, char** argv)
 		//}
 		default: {
 			std::cout << "<<<<<<< Warning: No data structure is used, this can take long time! >>>>>>";
-			render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			//render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
 			break;
 		}
 		}

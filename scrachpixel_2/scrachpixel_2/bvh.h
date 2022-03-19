@@ -19,9 +19,12 @@
 #include <random>
 #include <string>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 enum AccType { BVH, KDTREE, UNIFORM_GRID, LBVH, NONE };
+enum SplitMethod { MIDDLE };
+
 enum MaterialType { DIFFUSE_AND_GLOSSY, REFLECTION_AND_REFRACTION, REFLECTION };
 using Vec3f = Vec3<float>;
 using Vec3b = Vec3<bool>;
@@ -118,14 +121,38 @@ public:
 	}
 };
 
+class BoxBoundries
+{
+public:
+	Vec3f min;
+	Vec3f max;
+
+	BoxBoundries()
+	{ /* empty */
+		min = std::numeric_limits<float>::max();
+		max = -1 * std::numeric_limits<float>::max();
+	}
+	BoxBoundries(
+		const Vec3f& min,
+		const Vec3f& max) :
+		min(min), max(max)
+	{ /* empty */
+	}
+
+};
+
 
 // This is the node BVH uses
 class Node
 {
 public:
+	std::shared_ptr<Node> leftchild; // left child id
+	std::shared_ptr<Node> rightchild; //right child id
+
 	unsigned int left = 0; // left child id
 	unsigned int right = 0; //right child id
 	bool isleaf = false;
+	unsigned int nPrimitives = 0;
 	std::vector<int> objs; // Each node saves three objects
 	std::vector<unsigned int> objsMorID; // Each node saves three objects
 	//some bounding box variables 
@@ -136,7 +163,7 @@ public:
 	float maxY;
 	float minZ;
 	float maxZ;
-
+	BoxBoundries boxBoundries;
 	float midpoint;
 	char longestAxis;
 };
@@ -154,6 +181,7 @@ template<typename T> inline T clamp(const T& v, const T& lo, const T& hi)
 	return std::max(lo, std::min(v, hi));
 }
 
+
 // This can be sphere, Triangle or anything
 class SceneObject
 {
@@ -164,6 +192,7 @@ public:
 	Vec3f center;
 	float shininess;
 	bool isSphere;
+	BoxBoundries boxBoundries;
 	Sphere sphere = Sphere(0, Vec3f(-5, 0, -20), 98, Vec3f(0.20, 0.20, 0.20), 0, 0.0);
 
 	Sphere getSphere() {
@@ -171,7 +200,220 @@ public:
 	}
 };
 
+int GeMaximumAxis(BoxBoundries box)  {
+	Vec3f axises = Vec3f(box.max - box.min);
 
+	if (axises.x > axises.y&& axises.x > axises.z)
+		return 0;
+	else if (axises.y > axises.z)
+		return 1;
+	else
+		return 2;
+}
+
+BoxBoundries JoinBounds(BoxBoundries box1, BoxBoundries box2) {
+	float minX, maxX;
+	float minY, maxY;
+	float minZ, maxZ;
+	minX = std::min(box1.min.x, box2.min.x);
+	minY = std::min(box1.min.y, box2.min.y);
+	minZ = std::min(box1.min.z, box2.min.z);
+
+	maxX = std::max(box1.max.x, box2.max.x);
+	maxY = std::max(box1.max.y, box2.max.y);
+	maxZ = std::max(box1.max.z, box2.max.z);
+
+	return BoxBoundries(Vec3f(minX, minY, minZ), Vec3f(maxX, maxY, maxZ));
+}
+
+BoxBoundries JoinBoxPopintBounds(BoxBoundries box1, Vec3f p2) {
+	float minX, maxX;
+	float minY, maxY;
+	float minZ, maxZ;
+	minX = std::min(box1.min.x, p2.x);
+	minY = std::min(box1.min.y, p2.y);
+	minZ = std::min(box1.min.z, p2.z);
+								
+	maxX = std::max(box1.max.x, p2.x);
+	maxY = std::max(box1.max.y, p2.y);
+	maxZ = std::max(box1.max.z, p2.z);
+
+	return BoxBoundries(Vec3f(minX, minY, minZ), Vec3f(maxX, maxY, maxZ));
+}
+
+std::shared_ptr<Node> constructBVHTreed(
+	std::vector<SceneObject>& primitiveInfo,
+	int start,
+	int end,
+	int*totalNodes,
+	std::vector<std::shared_ptr<SceneObject>>& orderedPrims)
+{
+	std::shared_ptr<Node> node = std::make_shared<Node>();
+	(*totalNodes)++;
+	// Compute bounds of all primitives in BVH node
+	BoxBoundries bounds;
+	for (int i = start; i < end; ++i)
+		bounds = JoinBounds(bounds, primitiveInfo[i].boxBoundries);
+	int nPrimitives = end - start;
+	if (nPrimitives == 1) {
+		// Create leaf _BVHBuildNode_
+		int firstPrimOffset = orderedPrims.size();
+		for (int i = start; i < end; ++i) {
+			int primNum = primitiveInfo[i].objId;
+			orderedPrims.push_back(std::make_shared<SceneObject>(primitiveInfo[i]));
+		}
+		node->isleaf = true; // leaf node has two objects as children
+		node->nPrimitives = nPrimitives;
+		node->boxBoundries = bounds;
+		return node;
+	}
+	else {
+		// Compute bound of primitive centroids, choose split dimension _dim_
+		BoxBoundries centroidBounds;
+		for (int i = start; i < end; ++i)
+			centroidBounds = JoinBoxPopintBounds(centroidBounds, primitiveInfo[i].center);
+		int dim = GeMaximumAxis(centroidBounds);
+
+		// Partition primitives into two sets and build children
+		int mid = (start + end) / 2;
+		if (centroidBounds.max[dim] == centroidBounds.min[dim]) {
+			// Create leaf _BVHBuildNode_
+			int firstPrimOffset = orderedPrims.size();
+			for (int i = start; i < end; ++i) {
+				int primNum = primitiveInfo[i].objId;
+				orderedPrims.push_back(std::make_shared<SceneObject>(primitiveInfo[primNum]));
+			}
+			node->isleaf = true; // leaf node has two objects as children
+			node->nPrimitives = nPrimitives;
+			node->boxBoundries = bounds;
+			return node;
+		}
+		else {
+			// Partition primitives based on _splitMethod_
+			SplitMethod splitMethod = MIDDLE;
+			switch (splitMethod) {
+			case MIDDLE: {
+				// Partition primitives through node's midpoint
+				float pmid =
+					(centroidBounds.min[dim] + centroidBounds.max[dim]) / 2;
+				SceneObject* midPtr = std::partition(
+					&primitiveInfo[start], &primitiveInfo[end - 1] + 1,
+					[dim, pmid](const SceneObject& pi) {
+						return pi.center[dim] < pmid;
+					});
+				mid = midPtr - &primitiveInfo[0];
+				// For lots of prims with large overlapping bounding boxes, this
+				// may fail to partition; in that case don't break and fall
+				// through
+				// to EqualCounts.
+				if (mid != start && mid != end) { break; }
+			}
+			}
+			//default: {
+				// Partition primitives using approximate SAH
+			//	if (nPrimitives <= 2) {
+			//		// Partition primitives into equally-sized subsets
+			//		mid = (start + end) / 2;
+			//		std::nth_element(&primitiveInfo[start], &primitiveInfo[mid],
+			//			&primitiveInfo[end - 1] + 1,
+			//			[dim](const BVHPrimitiveInfo& a,
+			//				const BVHPrimitiveInfo& b) {
+			//					return a.centroid[dim] <
+			//						b.centroid[dim];
+			//			});
+			//	}
+			//	else {
+			//		// Allocate _BucketInfo_ for SAH partition buckets
+			//		PBRT_CONSTEXPR int nBuckets = 12;
+			//		BucketInfo buckets[nBuckets];
+
+			//		// Initialize _BucketInfo_ for SAH partition buckets
+			//		for (int i = start; i < end; ++i) {
+			//			int b = nBuckets *
+			//				centroidBounds.Offset(
+			//					primitiveInfo[i].centroid)[dim];
+			//			if (b == nBuckets) b = nBuckets - 1;
+			//			CHECK_GE(b, 0);
+			//			CHECK_LT(b, nBuckets);
+			//			buckets[b].count++;
+			//			buckets[b].bounds =
+			//				Union(buckets[b].bounds, primitiveInfo[i].bounds);
+			//		}
+
+			//		// Compute costs for splitting after each bucket
+			//		Float cost[nBuckets - 1];
+			//		for (int i = 0; i < nBuckets - 1; ++i) {
+			//			Bounds3f b0, b1;
+			//			int count0 = 0, count1 = 0;
+			//			for (int j = 0; j <= i; ++j) {
+			//				b0 = Union(b0, buckets[j].bounds);
+			//				count0 += buckets[j].count;
+			//			}
+			//			for (int j = i + 1; j < nBuckets; ++j) {
+			//				b1 = Union(b1, buckets[j].bounds);
+			//				count1 += buckets[j].count;
+			//			}
+			//			cost[i] = 1 +
+			//				(count0 * b0.SurfaceArea() +
+			//					count1 * b1.SurfaceArea()) /
+			//				bounds.SurfaceArea();
+			//		}
+
+			//		// Find bucket to split at that minimizes SAH metric
+			//		Float minCost = cost[0];
+			//		int minCostSplitBucket = 0;
+			//		for (int i = 1; i < nBuckets - 1; ++i) {
+			//			if (cost[i] < minCost) {
+			//				minCost = cost[i];
+			//				minCostSplitBucket = i;
+			//			}
+			//		}
+
+			//		// Either create leaf or split primitives at selected SAH
+			//		// bucket
+			//		Float leafCost = nPrimitives;
+			//		if (nPrimitives > maxPrimsInNode || minCost < leafCost) {
+			//			BVHPrimitiveInfo* pmid = std::partition(
+			//				&primitiveInfo[start], &primitiveInfo[end - 1] + 1,
+			//				[=](const BVHPrimitiveInfo& pi) {
+			//					int b = nBuckets *
+			//						centroidBounds.Offset(pi.centroid)[dim];
+			//					if (b == nBuckets) b = nBuckets - 1;
+			//					CHECK_GE(b, 0);
+			//					CHECK_LT(b, nBuckets);
+			//					return b <= minCostSplitBucket;
+			//				});
+			//			mid = pmid - &primitiveInfo[0];
+			//		}
+			//		else {
+			//			// Create leaf _BVHBuildNode_
+			//			int firstPrimOffset = orderedPrims.size();
+			//			for (int i = start; i < end; ++i) {
+			//				int primNum = primitiveInfo[i].primitiveNumber;
+			//				orderedPrims.push_back(primitives[primNum]);
+			//			}
+			//			node->InitLeaf(firstPrimOffset, nPrimitives, bounds);
+			//			return node;
+			//		}
+			//	}
+			//	break;
+			//}
+			//}
+				//std::vector<SceneObject>& primitiveInfo,
+				//	int start,
+				//	int end,
+				//	int* totalNodes,
+				//	std::vector<std::shared_ptr<SceneObject>>& orderedPrims)
+			node->leftchild = constructBVHTreed(primitiveInfo, start, mid, totalNodes, orderedPrims);
+			node->rightchild = constructBVHTreed(primitiveInfo, mid, end, totalNodes, orderedPrims);
+
+			node->longestAxis = dim;
+			node->boxBoundries = JoinBounds(node->leftchild->boxBoundries, node->leftchild->boxBoundries);
+			node-> nPrimitives = 0;
+		}
+	}
+	return node;
+}
 
 int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {   // If this is a leaf node
@@ -214,6 +456,7 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	Vec3f position;
 	float radius;
 
+	//This is my bottle neck
 	for (int i = 0; i < objects.size(); i++)
 	{
 		 sceneObject = objects[i];
@@ -467,6 +710,7 @@ int generateHierarchy(std::vector<SceneObject> objects,
 	{
 		for (int i = 0; i < (int)sortedMortonCodes.size(); i++)
 		{
+			// if it is not working check this commit
 			currentNode->objsMorID[i] = sortedMortonCodes[i]; //we assign the ids of the root node, left and right nodes
 		}
 		currentNode->isleaf = true; // leaf node has two objects as children
