@@ -154,7 +154,7 @@ public:
 	unsigned int firstPrimOffset;
 	bool isleaf = false;
 	unsigned int nPrimitives = 0;
-	std::vector<int> objs; // Each node saves three objects
+	int objs; // Each node saves three objects
 	std::vector<unsigned int> objsMorID; // Each node saves three objects
 	//some bounding box variables 
 	// here I can create BBOX node is general
@@ -242,6 +242,35 @@ BoxBoundries JoinBoxPopintBounds(BoxBoundries box1, Vec3f p2) {
 	return BoxBoundries(Vec3f(minX, minY, minZ), Vec3f(maxX, maxY, maxZ));
 }
 
+struct LinearBVHNode {
+	BoxBoundries boxBoundries;
+	union {
+		int primitivesOffset;   // leaf
+		int secondChildOffset;  // interior
+	};
+	uint16_t nPrimitives;  // 0 -> interior node
+	uint8_t axis;          // interior node: xyz
+	uint8_t pad[1];        // ensure 32 byte total size
+};
+int flattenBVHTree(std::shared_ptr<Node> node, int* offset) {
+	//LinearBVHNode* linearNode = &nodes[*offset];
+	//linearNode->boxBoundries = node->boxBoundries;
+	int myOffset = (*offset)++;
+	//if (node->nPrimitives > 0) {
+	//	linearNode->primitivesOffset = node->firstPrimOffset;
+	//	linearNode->nPrimitives = node->nPrimitives;
+	//}
+	//else {
+	//	// Create interior flattened BVH node
+	//	linearNode->axis = node->longestAxis;
+	//	linearNode->nPrimitives = 0;
+	//	flattenBVHTree(node->leftchild, offset);
+	//	linearNode->secondChildOffset =
+	//		flattenBVHTree(node->rightchild, offset);
+	//}
+	return myOffset;
+}
+
 std::shared_ptr<Node> constructBVHTreed(
 	std::vector<SceneObject>& primitiveInfo,
 	int start,
@@ -267,6 +296,7 @@ std::shared_ptr<Node> constructBVHTreed(
 		node->nPrimitives = nPrimitives;
 		node->boxBoundries = bounds;
 		node->firstPrimOffset = firstPrimOffset;
+		node->objs = primitiveInfo[start].objId;
 		return node;
 	}
 	else {
@@ -329,7 +359,7 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	{
 		for (int i = 0; i < (int)objects.size(); i++)
 		{
-			currentNode->objs.push_back(objects[i]->objId); //we assign the ids of the root node, left and right nodes
+			//currentNode->objs.push_back(objects[i]->objId); //we assign the ids of the root node, left and right nodes
 		}
 		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
@@ -724,7 +754,7 @@ int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> cur
 	{
 		for (int i = 0; i < (int)objects.size(); i++)
 		{
-			currentNode->objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
+			//currentNode->objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
 		}
 		currentNode->isleaf = true; // leaf node has two objects as children
 		nodes.push_back(currentNode);
@@ -858,15 +888,17 @@ int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> cur
 
 
 bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<Node> box)
-{	
-	float tmin = (box->minX - position[0]) / direction[0];
-	float tmax = (box->maxX - position[0]) / direction[0];
+{
+	return true;
+	BoxBoundries bounds = box->boxBoundries;
+	float tmin = (bounds.min[0] - position[0]) / direction[0];
+	float tmax = (bounds.max[0] - position[0]) / direction[0];
 
 	if (tmin > tmax)
 		std::swap(tmin, tmax);
 
-	float tymin = (box->minY - position[1]) / direction[1];
-	float tymax = (box->maxY - position[1]) / direction[1];
+	float tymin = (bounds.min[1] - position[1]) / direction[1];
+	float tymax = (bounds.max[1] - position[1]) / direction[1];
 
 	if (tymin > tymax)
 		std::swap(tymin, tymax);
@@ -880,8 +912,8 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<No
 	if (tymax < tmax)
 		tmax = tymax;
 
-	float tzmin = (box->minZ - position[2]) / direction[2];
-	float tzmax = (box->maxZ - position[2]) / direction[2];
+	float tzmin = (bounds.min[2] - position[2]) / direction[2];
+	float tzmax = (bounds.max[2] - position[2]) / direction[2];
 
 	if (tzmin > tzmax)
 		std::swap(tzmin, tzmax);
@@ -898,7 +930,27 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<No
 	return true;
 }
 
-
+void boxIntersect(Vec3f position, Vec3f direction,
+	std::shared_ptr<Node>& root,
+	std::vector<int>& boxes) {
+	int retValue = -1;
+	return;
+	if (root->isleaf)
+	{
+		if (boundingBoxIntersection(position, direction, root))
+		{
+			//retValue = currentNode;
+			boxes.push_back(root->objs);
+		}
+	}
+	else
+	{
+		if (boundingBoxIntersection(position, direction, root->leftchild))
+			boxIntersect(position, direction, root->leftchild, boxes);
+		if (boundingBoxIntersection(position, direction, root->rightchild))
+			boxIntersect(position, direction, root->rightchild, boxes);
+	}
+}
 
 void bvhTraverse(Vec3f position, Vec3f direction, std::vector<std::shared_ptr<Node>>& tree, int currentNode, std::vector<int>& boxes)
 {

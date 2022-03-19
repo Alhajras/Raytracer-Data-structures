@@ -249,42 +249,42 @@ bool trace_more(Settings settings,
 	const Vec3f& orig, const Vec3f& dir,
 	std::vector<Sphere>& spheres,
 	float& tNear, uint32_t& index, Vec2f& uv, Sphere* hitObject,
-	std::vector<std::shared_ptr<SceneObject>>& scene,
-	std::vector<std::shared_ptr<Node>>& tree, std::vector<int> boundingBoxes)
+	std::vector<SceneObject>& scene,
+	std::shared_ptr<Node>& tree, std::vector<int> boundingBoxes)
 {
 
 	bool hit = false;
-	for (int box : boundingBoxes)
-	{
-		for (int i = 0; i < tree[box]->objs.size(); i++)
-		{
-			shared_ptr<SceneObject> sob;
+	//for (int box : boundingBoxes)
+	//{
+	//	for (int i = 0; i < tree[box]->objs.size(); i++)
+	//	{
+	//		shared_ptr<SceneObject> sob;
 
-			if (settings.dataStructure == LBVH) {
-				//int moreId = tree[box]->objsMorID[i];
-				//sob = hashMap[moreId];
-			}
-			else
-			{
-				sob = scene[tree[box]->objs[i]];
-			}
-			if (sob->isSphere)
-			{
-				float tNearK = INF;
-				uint32_t indexK;
-				Vec2f uvK;
-				float t1;
-				spheres_intersections_counter++;
-				if (sob->sphere.raySphereIntersect(orig, dir, tNearK, t1) && tNearK < tNear) {
-					hitObject = &sob->sphere;
-					hit = true;
-					tNear = tNearK;
-					index = 0;
-					uv = uvK;
-				}
-			}
-		}
-	}
+	//		if (settings.dataStructure == LBVH) {
+	//			//int moreId = tree[box]->objsMorID[i];
+	//			//sob = hashMap[moreId];
+	//		}
+	//		else
+	//		{
+	//			sob = scene[tree[box]->objs[i]];
+	//		}
+	//		if (sob->isSphere)
+	//		{
+	//			float tNearK = INF;
+	//			uint32_t indexK;
+	//			Vec2f uvK;
+	//			float t1;
+	//			spheres_intersections_counter++;
+	//			if (sob->sphere.raySphereIntersect(orig, dir, tNearK, t1) && tNearK < tNear) {
+	//				hitObject = &sob->sphere;
+	//				hit = true;
+	//				tNear = tNearK;
+	//				index = 0;
+	//				uv = uvK;
+	//			}
+	//		}
+	//	}
+	//}
 
 	return hit;
 	//return (*hitObject != nullptr);
@@ -338,8 +338,8 @@ Vec3f castRay(
 	const Vec3f& raydir,
 	std::vector<Sphere>& spheres,
 	std::vector<Sphere>& lights,
-	std::vector<std::shared_ptr<SceneObject>>& scene,
-	std::vector<std::shared_ptr<Node>>& tree,
+	std::vector<SceneObject>& scene,
+	std::shared_ptr<Node>& tree,
 	const int& depth,
 	const std::unique_ptr<Grid>& accel, const Settings& settings)
 {
@@ -377,7 +377,9 @@ Vec3f castRay(
 	case BVH:
 	{
 		const clock_t begin_time = clock();
-		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		//bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		boxIntersect(rayorig, raydir, tree, boundingBoxes);
+
 		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
 
 		if (boundingBoxes.size() == 0)
@@ -387,56 +389,58 @@ Vec3f castRay(
 
 		for (int box : boundingBoxes)
 		{
-			for (int i = 0; i < tree[box]->objs.size(); i++)
-			{
-				if (scene[tree[box]->objs[i]]->isSphere)
+			return Vec3f(0.6, 0.8, 1);
+			/*for (int i = 0; i < tree[box]->objs.size(); i++)
+			{*/
+			/*	if (scene[box].isSphere)
 				{
 					t0 = INFINITY, t1 = INFINITY;
 					spheres_intersections_counter++;
-					if (scene[tree[box]->objs[i]]->sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+					if (scene[box].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 						if (t0 < 0) t0 = t1;
 						if (t0 < tnear) {
 							tnear = t0;
-							sphere = &scene[tree[box]->objs[i]]->sphere;
+							sphere = &scene[box].sphere;
 							hitColor = sphere->surfaceColor;
 						}
 					}
-				}
-			}
+				}*/
+			//}
 		}
 
 		break;
 	}
 	case KDTREE:
 	{
-		const clock_t begin_time = clock();
-		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
-		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
+		//const clock_t begin_time = clock();
+		////bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
+		//tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
 
-		if (boundingBoxes.size() == 0)
-		{
-			return Vec3f(0.6, 0.8, 1);
-		}
+		//if (boundingBoxes.size() == 0)
+		//{
+		//	return Vec3f(0.6, 0.8, 1);
+		//}
 
-		for (int box : boundingBoxes)
-		{
-			for (int i = 0; i < tree[box]->objs.size(); i++)
-			{
-				if (scene[tree[box]->objs[i]]->isSphere)
-				{
-					t0 = INFINITY, t1 = INFINITY;
-					spheres_intersections_counter++;
-					if (scene[tree[box]->objs[i]]->sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
-						if (t0 < 0) t0 = t1;
-						if (t0 < tnear) {
-							tnear = t0;
-							sphere = &scene[tree[box]->objs[i]]->sphere;
-							hitColor = sphere->surfaceColor;
-						}
-					}
-				}
-			}
-		}		break;
+		//for (int box : boundingBoxes)
+		//{
+		//	for (int i = 0; i < tree[box]->objs.size(); i++)
+		//	{
+		//		if (scene[tree[box]->objs[i]].isSphere)
+		//		{
+		//			t0 = INFINITY, t1 = INFINITY;
+		//			spheres_intersections_counter++;
+		//			if (scene[tree[box]->objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+		//				if (t0 < 0) t0 = t1;
+		//				if (t0 < tnear) {
+		//					tnear = t0;
+		//					sphere = &scene[tree[box]->objs[i]].sphere;
+		//					hitColor = sphere->surfaceColor;
+		//				}
+		//			}
+		//		}
+		//	}
+		//}	
+		break;
 	}
 	case UNIFORM_GRID:
 	{
@@ -484,11 +488,11 @@ Vec3f castRay(
 		for (unsigned i = 0; i < scene.size(); ++i) {
 			t0 = INFINITY, t1 = INFINITY;
 			spheres_intersections_counter++;
-			if (scene[i]->sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+			if (scene[i].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 				if (t0 < 0) t0 = t1;
 				if (t0 < tnear) {
 					tnear = t0;
-					sphere = &scene[i]->sphere;
+					sphere = &scene[i].sphere;
 					hitColor = sphere->surfaceColor;
 				}
 			}
@@ -654,7 +658,7 @@ void printProgress(double percentage) {
 	fflush(stdout);
 }
 
-void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<std::shared_ptr<SceneObject>>& scene, std::vector<std::shared_ptr<Node>>& tree, const std::unique_ptr<Grid>& accel)
+void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::shared_ptr<Node>& tree, const std::unique_ptr<Grid>& accel)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
 	float invWidth = 1 / float(settings.width), invHeight = 1 / float(settings.height);
@@ -663,7 +667,6 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 	// Trace rays
 	double loadingProgress = 0;
 	for (unsigned y = 0; y < settings.height; ++y) {
-		cout << y << endl;
 		if (y == 6) {
 			int s = 5;
 		}
@@ -1077,10 +1080,13 @@ int main(int argc, char** argv)
 			orderedPrims.reserve(scene.size());
 			root = constructBVHTreed(scene, 0, scene.size(),
 				&totalNodes, orderedPrims);
+			//int offset = 0;
+			//flattenBVHTree(root, &offset);
+
 			std::cout << "Done .... Time: ";
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
 
-			//render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
 			break;
 		}
 		//case KDTREE:
