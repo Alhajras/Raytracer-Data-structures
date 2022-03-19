@@ -151,6 +151,7 @@ public:
 
 	unsigned int left = 0; // left child id
 	unsigned int right = 0; //right child id
+	unsigned int firstPrimOffset;
 	bool isleaf = false;
 	unsigned int nPrimitives = 0;
 	std::vector<int> objs; // Each node saves three objects
@@ -265,6 +266,7 @@ std::shared_ptr<Node> constructBVHTreed(
 		node->isleaf = true; // leaf node has two objects as children
 		node->nPrimitives = nPrimitives;
 		node->boxBoundries = bounds;
+		node->firstPrimOffset = firstPrimOffset;
 		return node;
 	}
 	else {
@@ -286,6 +288,7 @@ std::shared_ptr<Node> constructBVHTreed(
 			node->isleaf = true; // leaf node has two objects as children
 			node->nPrimitives = nPrimitives;
 			node->boxBoundries = bounds;
+			node->firstPrimOffset = firstPrimOffset;
 			return node;
 		}
 		else {
@@ -309,101 +312,6 @@ std::shared_ptr<Node> constructBVHTreed(
 				if (mid != start && mid != end) { break; }
 			}
 			}
-			//default: {
-				// Partition primitives using approximate SAH
-			//	if (nPrimitives <= 2) {
-			//		// Partition primitives into equally-sized subsets
-			//		mid = (start + end) / 2;
-			//		std::nth_element(&primitiveInfo[start], &primitiveInfo[mid],
-			//			&primitiveInfo[end - 1] + 1,
-			//			[dim](const BVHPrimitiveInfo& a,
-			//				const BVHPrimitiveInfo& b) {
-			//					return a.centroid[dim] <
-			//						b.centroid[dim];
-			//			});
-			//	}
-			//	else {
-			//		// Allocate _BucketInfo_ for SAH partition buckets
-			//		PBRT_CONSTEXPR int nBuckets = 12;
-			//		BucketInfo buckets[nBuckets];
-
-			//		// Initialize _BucketInfo_ for SAH partition buckets
-			//		for (int i = start; i < end; ++i) {
-			//			int b = nBuckets *
-			//				centroidBounds.Offset(
-			//					primitiveInfo[i].centroid)[dim];
-			//			if (b == nBuckets) b = nBuckets - 1;
-			//			CHECK_GE(b, 0);
-			//			CHECK_LT(b, nBuckets);
-			//			buckets[b].count++;
-			//			buckets[b].bounds =
-			//				Union(buckets[b].bounds, primitiveInfo[i].bounds);
-			//		}
-
-			//		// Compute costs for splitting after each bucket
-			//		Float cost[nBuckets - 1];
-			//		for (int i = 0; i < nBuckets - 1; ++i) {
-			//			Bounds3f b0, b1;
-			//			int count0 = 0, count1 = 0;
-			//			for (int j = 0; j <= i; ++j) {
-			//				b0 = Union(b0, buckets[j].bounds);
-			//				count0 += buckets[j].count;
-			//			}
-			//			for (int j = i + 1; j < nBuckets; ++j) {
-			//				b1 = Union(b1, buckets[j].bounds);
-			//				count1 += buckets[j].count;
-			//			}
-			//			cost[i] = 1 +
-			//				(count0 * b0.SurfaceArea() +
-			//					count1 * b1.SurfaceArea()) /
-			//				bounds.SurfaceArea();
-			//		}
-
-			//		// Find bucket to split at that minimizes SAH metric
-			//		Float minCost = cost[0];
-			//		int minCostSplitBucket = 0;
-			//		for (int i = 1; i < nBuckets - 1; ++i) {
-			//			if (cost[i] < minCost) {
-			//				minCost = cost[i];
-			//				minCostSplitBucket = i;
-			//			}
-			//		}
-
-			//		// Either create leaf or split primitives at selected SAH
-			//		// bucket
-			//		Float leafCost = nPrimitives;
-			//		if (nPrimitives > maxPrimsInNode || minCost < leafCost) {
-			//			BVHPrimitiveInfo* pmid = std::partition(
-			//				&primitiveInfo[start], &primitiveInfo[end - 1] + 1,
-			//				[=](const BVHPrimitiveInfo& pi) {
-			//					int b = nBuckets *
-			//						centroidBounds.Offset(pi.centroid)[dim];
-			//					if (b == nBuckets) b = nBuckets - 1;
-			//					CHECK_GE(b, 0);
-			//					CHECK_LT(b, nBuckets);
-			//					return b <= minCostSplitBucket;
-			//				});
-			//			mid = pmid - &primitiveInfo[0];
-			//		}
-			//		else {
-			//			// Create leaf _BVHBuildNode_
-			//			int firstPrimOffset = orderedPrims.size();
-			//			for (int i = start; i < end; ++i) {
-			//				int primNum = primitiveInfo[i].primitiveNumber;
-			//				orderedPrims.push_back(primitives[primNum]);
-			//			}
-			//			node->InitLeaf(firstPrimOffset, nPrimitives, bounds);
-			//			return node;
-			//		}
-			//	}
-			//	break;
-			//}
-			//}
-				//std::vector<SceneObject>& primitiveInfo,
-				//	int start,
-				//	int end,
-				//	int* totalNodes,
-				//	std::vector<std::shared_ptr<SceneObject>>& orderedPrims)
 			node->leftchild = constructBVHTreed(primitiveInfo, start, mid, totalNodes, orderedPrims);
 			node->rightchild = constructBVHTreed(primitiveInfo, mid, end, totalNodes, orderedPrims);
 

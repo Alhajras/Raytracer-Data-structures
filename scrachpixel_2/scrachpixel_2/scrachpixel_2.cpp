@@ -57,7 +57,7 @@ unsigned int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
 unsigned int  rootNodeIndex = 0;
-char NUMBER_OF_CLONES = 30; // This is used to generatre clones of the model for testing.
+char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for testing.
 std::map<unsigned int, shared_ptr<SceneObject> > hashMap; // This is for the LBVH
 
 // Statstics related
@@ -91,7 +91,7 @@ struct Settings
 	uint32_t aa_samples = 1; // Anti aliasing samples
 	AccType dataStructure = BVH; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
-	SceneModel sceneModel = BUNNY;
+	SceneModel sceneModel = TEST;
 };
 
 
