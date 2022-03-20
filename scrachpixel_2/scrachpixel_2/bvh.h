@@ -204,7 +204,7 @@ public:
 int GeMaximumAxis(BoxBoundries box)  {
 	Vec3f axises = Vec3f(box.max - box.min);
 
-	if (axises.x > axises.y&& axises.x > axises.z)
+	if (axises.x > axises.y && axises.x > axises.z)
 		return 0;
 	else if (axises.y > axises.z)
 		return 1;
@@ -271,6 +271,80 @@ int flattenBVHTree(std::shared_ptr<Node> node, int* offset) {
 	return myOffset;
 }
 
+std::shared_ptr<Node> constructBVHNew(
+	std::vector<SceneObject>& allSceneObjects,
+	int startIndex,
+	int endIndex,
+	int* totalNodes)
+{   
+	//We create the node and add the total nodes counter
+	std::shared_ptr<Node> node = std::make_shared<Node>();
+	(*totalNodes)++;
+	
+	//We compute the biggest bounding box that bound the whole scene
+	BoxBoundries bounds;
+	for (int i = startIndex; i < endIndex; ++i)
+		bounds = JoinBounds(bounds, allSceneObjects[i].boxBoundries);
+
+	int objectsNumber = endIndex - startIndex;
+
+	//For now we support only one leaf
+	if (objectsNumber == 1) {
+		// Create leaf
+		node->isleaf = true;
+		node->nPrimitives = 1;
+		node->boxBoundries = bounds;
+		node->objs = allSceneObjects[startIndex].objId;
+		return node;
+	}
+
+	/*Splitting part*/
+
+	BoxBoundries centroidBounds;
+	for (int i = startIndex; i < endIndex; ++i)
+		centroidBounds = JoinBoxPopintBounds(centroidBounds, allSceneObjects[i].center);
+	
+	int dim = GeMaximumAxis(centroidBounds);
+
+	//We start splitting the objects into two equal halfs
+	int midSplitIndex = (startIndex + endIndex) / 2;
+
+	/*This condition happens if more than one object have the save dimentions and position
+	We can either save them all in a list but for now we can just pick the first object and create a leaf*/
+	if (centroidBounds.max[dim] == centroidBounds.min[dim]) {
+		node->isleaf = true;
+		node->nPrimitives = 1;
+		node->boxBoundries = centroidBounds;
+		node->objs = allSceneObjects[startIndex].objId;
+		return node;
+	}
+
+	//We create a node that contains left and right chilren
+	// This is the middle point of the new bounding box with respect to the longest axis
+	//All object on the left will go to the left child and the right will go to the rightchild
+	float pmid = (centroidBounds.min[dim] + centroidBounds.max[dim]) / 2;
+
+	/*Iterator to the first element of the second group, this will splet objects to left and right and return the pointer 
+	to the right group object*/
+	SceneObject* midPtr = std::partition(
+		&allSceneObjects[startIndex], &allSceneObjects[endIndex - 1] + 1,
+		[dim, pmid](const SceneObject& pi) {
+			return pi.center[dim] < pmid;
+		});
+
+	//We subtract one pointer from the midpointer
+	midSplitIndex = midPtr - &allSceneObjects[0];
+
+	node->leftchild = constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes);
+	node->rightchild = constructBVHNew(allSceneObjects, midSplitIndex, endIndex, totalNodes);
+
+	// This is not a leaf node so it does not conatin any object
+	node->longestAxis = dim;
+	node->boxBoundries = bounds;
+	node->nPrimitives = 0;
+
+	return node;
+}
 std::shared_ptr<Node> constructBVHTreed(
 	std::vector<SceneObject>& primitiveInfo,
 	int start,
@@ -299,36 +373,36 @@ std::shared_ptr<Node> constructBVHTreed(
 		node->objs = primitiveInfo[start].objId;
 		return node;
 	}
+
 	else {
 		// Compute bound of primitive centroids, choose split dimension _dim_
-		BoxBoundries centroidBounds;
-		for (int i = start; i < end; ++i)
-			centroidBounds = JoinBoxPopintBounds(centroidBounds, primitiveInfo[i].center);
-		int dim = GeMaximumAxis(centroidBounds);
+		//BoxBoundries centroidBounds;
+		//for (int i = start; i < end; ++i)
+		//	centroidBounds = JoinBoxPopintBounds(centroidBounds, primitiveInfo[i].center);
+		int dim = GeMaximumAxis(bounds);
 
 		// Partition primitives into two sets and build children
 		int mid = (start + end) / 2;
-		if (centroidBounds.max[dim] == centroidBounds.min[dim]) {
-			// Create leaf _BVHBuildNode_
-			int firstPrimOffset = orderedPrims.size();
-			for (int i = start; i < end; ++i) {
-				int primNum = primitiveInfo[i].objId;
-				orderedPrims.push_back(std::make_shared<SceneObject>(primitiveInfo[primNum]));
-			}
-			node->isleaf = true; // leaf node has two objects as children
-			node->nPrimitives = nPrimitives;
-			node->boxBoundries = bounds;
-			node->firstPrimOffset = firstPrimOffset;
-			return node;
-		}
-		else {
+		//if (centroidBounds.max[dim] == centroidBounds.min[dim]) {
+		//	// Create leaf _BVHBuildNode_
+		//	int firstPrimOffset = orderedPrims.size();
+		//	for (int i = start; i < end; ++i) {
+		//		int primNum = primitiveInfo[i].objId;
+		//		orderedPrims.push_back(std::make_shared<SceneObject>(primitiveInfo[primNum]));
+		//	}
+		//	node->isleaf = true; // leaf node has two objects as children
+		//	node->nPrimitives = nPrimitives;
+		//	node->boxBoundries = bounds;
+		//	node->firstPrimOffset = firstPrimOffset;
+		//	return node;
+		//}
+		//else {
 			// Partition primitives based on _splitMethod_
 			SplitMethod splitMethod = MIDDLE;
 			switch (splitMethod) {
 			case MIDDLE: {
 				// Partition primitives through node's midpoint
-				float pmid =
-					(centroidBounds.min[dim] + centroidBounds.max[dim]) / 2;
+				float pmid = (bounds.min[dim] + bounds.max[dim]) / 2;
 				SceneObject* midPtr = std::partition(
 					&primitiveInfo[start], &primitiveInfo[end - 1] + 1,
 					[dim, pmid](const SceneObject& pi) {
@@ -341,27 +415,27 @@ std::shared_ptr<Node> constructBVHTreed(
 				// to EqualCounts.
 				if (mid != start && mid != end) { break; }
 			}
-			}
+			//}
 			node->leftchild = constructBVHTreed(primitiveInfo, start, mid, totalNodes, orderedPrims);
 			node->rightchild = constructBVHTreed(primitiveInfo, mid, end, totalNodes, orderedPrims);
 
 			node->longestAxis = dim;
-			node->boxBoundries = JoinBounds(node->leftchild->boxBoundries, node->leftchild->boxBoundries);
+			node->boxBoundries = JoinBounds(node->leftchild->boxBoundries, node->rightchild->boxBoundries);
 			node-> nPrimitives = 0;
 		}
 	}
 	return node;
 }
 
-int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
+int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& sceneObjects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {   // If this is a leaf node
-	if (objects.size() <= MaxLeaves) // this measn we only have one node and two children
+	if (sceneObjects.size() <= MaxLeaves) // this measn we only have one node and two children
 	{
-		for (int i = 0; i < (int)objects.size(); i++)
+		for (int i = 0; i < (int)sceneObjects.size(); i++)
 		{
-			//currentNode->objs.push_back(objects[i]->objId); //we assign the ids of the root node, left and right nodes
+			//currentNode->objs.push_back(sceneObjects[i]->objId); //we assign the ids of the root node, left and right nodes
 		}
-		currentNode->isleaf = true; // leaf node has two objects as children
+		currentNode->isleaf = true; // leaf node has two sceneObjects as children
 		nodes.push_back(currentNode);
 		return (int)nodes.size() - 1;
 	}
@@ -395,9 +469,9 @@ int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& objects, std::sh
 	float radius;
 
 	//This is my bottle neck
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < sceneObjects.size(); i++)
 	{
-		 sceneObject = objects[i];
+		 sceneObject = sceneObjects[i];
 		 position = sceneObject->position;
 		 radius = sceneObject->radius;
 
@@ -889,19 +963,17 @@ int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> cur
 
 bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<Node> box)
 {
-	return true;
 	BoxBoundries bounds = box->boxBoundries;
-	float tmin = (bounds.min[0] - position[0]) / direction[0];
-	float tmax = (bounds.max[0] - position[0]) / direction[0];
 
-	if (tmin > tmax)
-		std::swap(tmin, tmax);
+	float tmin = (bounds.min.x - position.x) / direction.x;
+	float tmax = (bounds.max.x - position.x) / direction.x;
 
-	float tymin = (bounds.min[1] - position[1]) / direction[1];
-	float tymax = (bounds.max[1] - position[1]) / direction[1];
+	if (tmin > tmax) swap(tmin, tmax);
 
-	if (tymin > tymax)
-		std::swap(tymin, tymax);
+	float tymin = (bounds.min.y - position.y) / direction.y;
+	float tymax = (bounds.max.y - position.y) / direction.y;
+
+	if (tymin > tymax) swap(tymin, tymax);
 
 	if ((tmin > tymax) || (tymin > tmax))
 		return false;
@@ -912,11 +984,10 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<No
 	if (tymax < tmax)
 		tmax = tymax;
 
-	float tzmin = (bounds.min[2] - position[2]) / direction[2];
-	float tzmax = (bounds.max[2] - position[2]) / direction[2];
+	float tzmin = (bounds.min.z - position.z) / direction.z;
+	float tzmax = (bounds.max.z - position.z) / direction.z;
 
-	if (tzmin > tzmax)
-		std::swap(tzmin, tzmax);
+	if (tzmin > tzmax) swap(tzmin, tzmax);
 
 	if ((tmin > tzmax) || (tzmin > tmax))
 		return false;
@@ -933,15 +1004,16 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<No
 void boxIntersect(Vec3f position, Vec3f direction,
 	std::shared_ptr<Node>& root,
 	std::vector<int>& boxes) {
-	int retValue = -1;
-	return;
+
+	if (!boundingBoxIntersection(position, direction, root)) {
+		return;
+	}
+
 	if (root->isleaf)
 	{
-		if (boundingBoxIntersection(position, direction, root))
-		{
 			//retValue = currentNode;
 			boxes.push_back(root->objs);
-		}
+			return;
 	}
 	else
 	{

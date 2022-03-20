@@ -343,6 +343,7 @@ Vec3f castRay(
 	const int& depth,
 	const std::unique_ptr<Grid>& accel, const Settings& settings)
 {
+	
 	float minT = std::numeric_limits<float>::max();
 	//SceneObject intersectObj;
 	Vec3f minTnormal;
@@ -353,7 +354,7 @@ Vec3f castRay(
 
 	std::vector<int> sphereids;
 
-	if (depth > 5) {
+	if (depth > 2) {
 		return Vec3f(0.6, 0.8, 1);
 	}
 
@@ -386,13 +387,12 @@ Vec3f castRay(
 		{
 			return Vec3f(0.6, 0.8, 1);
 		}
-
 		for (int box : boundingBoxes)
 		{
-			return Vec3f(0.6, 0.8, 1);
+
 			/*for (int i = 0; i < tree[box]->objs.size(); i++)
 			{*/
-			/*	if (scene[box].isSphere)
+				if (scene[box].isSphere)
 				{
 					t0 = INFINITY, t1 = INFINITY;
 					spheres_intersections_counter++;
@@ -404,7 +404,7 @@ Vec3f castRay(
 							hitColor = sphere->surfaceColor;
 						}
 					}
-				}*/
+				}
 			//}
 		}
 
@@ -667,9 +667,6 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 	// Trace rays
 	double loadingProgress = 0;
 	for (unsigned y = 0; y < settings.height; ++y) {
-		if (y == 6) {
-			int s = 5;
-		}
 		for (unsigned x = 0; x < settings.width; ++x, ++pixel) {
 			Vec3f sampled_pixel(0, 0, 0);
 
@@ -678,7 +675,7 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 				float yy = (1 - 2 * ((y + random_double()) * invHeight)) * angle;
 				Vec3f raydir(xx, yy, -1);
 				raydir.normalize();
-				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 5, accel, settings);
+				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 1, accel, settings);
 			}
 			*pixel = sampled_pixel;
 			loadingProgress++;
@@ -767,7 +764,7 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 
 			//	//Bunny scale
 			//	// Min leaf node = 10
-			s->radius = 0.01 * 5; //  hoody = *10 // Bunny =0.01 * 5
+			s->radius = 0.01 * 10; //  hoody = *10 // Bunny =0.01 * 5
 			s->center = vertex * 100 + shift; // igea = *50, bunny = *20, hoody = / 50 
 			s->center.y += -10;
 
@@ -798,56 +795,6 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 	file.close();
 }
 	std::cout << "Number of spheres: " << id << std::endl;
-	//// The box
-	//SceneObject rWall;
-	//rWall.objId = id++;
-	//rWall.radius = 98;
-	//rWall.center = Vec3f(0.0, -100, -20);
-	//rWall.position = rWall.center;
-	//rWall.shininess = 64;
-	//rWall.isSphere = true;
-	//rWall.sphere = Sphere(id, Vec3f(33, 0, -20), 30, Vec3f(0, 0, 1), 1, 0.0);
-	//scene.push_back(rWall);
-
-	//SceneObject lWall;
-	//lWall.objId = id++;
-	//lWall.radius = 98;
-	//lWall.center = Vec3f(-5, -98, -20);
-	//lWall.position = lWall.center;
-	//lWall.shininess = 64;
-	//lWall.isSphere = true;
-	//lWall.sphere = Sphere(id, Vec3f(-33, 0, -20), 30, Vec3f(1, 0, 0), 1, 0.0);
-	//scene.push_back(lWall);
-
-	//SceneObject bWall;
-	//bWall.objId = id++;
-	//bWall.radius = 98;
-	//bWall.center = Vec3f(-5, -98, -20);
-	//bWall.position = bWall.center;
-	//bWall.shininess = 64;
-	//bWall.isSphere = true;
-	//bWall.sphere = Sphere(id, Vec3f(0, 0, -32), 12, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
-	//scene.push_back(bWall);
-
-	//SceneObject cWall;
-	//cWall.objId = id++;
-	//cWall.radius = 98;
-	//cWall.center = Vec3f(-5, -98, -20);
-	//cWall.position = cWall.center;
-	//cWall.shininess = 64;
-	//cWall.isSphere = true;
-	//cWall.sphere = Sphere(id, Vec3f(0, 33, -20), 30, Vec3f(0, 0.0, 0), 1, 0.0);
-	//scene.push_back(cWall);
-
-	//SceneObject fWall;
-	//fWall.objId = id++;
-	//fWall.radius = 98;
-	//fWall.center = Vec3f(-5, -98, -20);
-	//fWall.position = fWall.center;
-	//fWall.shininess = 64;
-	//fWall.isSphere = true;
-	//fWall.sphere = Sphere(id, Vec3f(0, -33, -20), 30, Vec3f(0.3, 0.3, 0.3), 1, 0.0);
-	//scene.push_back(fWall);
 	return scene;
 
 }
@@ -984,7 +931,82 @@ int main(int argc, char** argv)
 	root->maxZ = -1 * std::numeric_limits<float>::max();
 	root->minZ = std::numeric_limits<float>::max();;
 
-	std::vector<SceneObject> scene = createScene_new(settings);
+	//std::vector<SceneObject> scene  = createScene_new(settings);
+	std::vector<SceneObject> scene;
+	SceneObject s;
+	int id = 0;
+	for (int i = 0; i < 1000000; i++)
+	{
+		s.objId = id;
+		s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
+		s.center = Vec3f(i, i, -20 + i); // igea = *50, bunny = *20, hoody = / 50 
+		s.position = s.center;
+		s.shininess = 64;
+		s.isSphere = true;
+		s.boxBoundries = BoxBoundries(s.center - s.radius, s.center + s.radius);
+		s.sphere = Sphere(i, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
+		scene.push_back(s);
+		id++;
+	}
+
+	//s.objId = 0;
+	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
+	//s.center = Vec3f(-2, 1, -20); // igea = *50, bunny = *20, hoody = / 50 
+	//s.position = s.center;
+	//s.shininess = 64;
+	//s.isSphere = true;
+	//Vec3f minPoint = s.center - s.radius;
+	//Vec3f maxPoint = s.center + s.radius;
+	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
+	//scene.push_back(s);
+	//s.objId = 1;
+	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
+	//s.center = Vec3f(0, 0, -20); // igea = *50, bunny = *20, hoody = / 50 
+	//s.position = s.center;
+	//s.shininess = 64;
+	//s.isSphere = true;
+	// minPoint = s.center - s.radius;
+	// maxPoint = s.center + s.radius;
+	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
+	//scene.push_back(s);
+
+	//s.objId = 2;
+	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
+	//s.center = Vec3f(2, 0, -22); // igea = *50, bunny = *20, hoody = / 50 
+	//s.position = s.center;
+	//s.shininess = 64;
+	//s.isSphere = true;
+	//minPoint = s.center - s.radius;
+	//maxPoint = s.center + s.radius;
+	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
+	//scene.push_back(s);
+
+	//s.objId = 3;
+	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
+	//s.center = Vec3f(4, 0, -20); // igea = *50, bunny = *20, hoody = / 50 
+	//s.position = s.center;
+	//s.shininess = 64;
+	//s.isSphere = true;
+	//minPoint = s.center - s.radius;
+	//maxPoint = s.center + s.radius;
+	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
+	//scene.push_back(s);
+
+	//s.objId = 4;
+	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
+	//s.center = Vec3f(6, 0, -20); // igea = *50, bunny = *20, hoody = / 50 
+	//s.position = s.center;
+	//s.shininess = 64;
+	//s.isSphere = true;
+	//minPoint = s.center - s.radius;
+	//maxPoint = s.center + s.radius;
+	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
+	//scene.push_back(s);
 
 	// Lets bound each object with BBOX
 	// This is same for KD-tree and BVH
@@ -1078,8 +1100,9 @@ int main(int argc, char** argv)
 			int totalNodes = 0;
 			std::vector<std::shared_ptr<SceneObject>> orderedPrims;
 			orderedPrims.reserve(scene.size());
-			root = constructBVHTreed(scene, 0, scene.size(),
-				&totalNodes, orderedPrims);
+			root = constructBVHNew(scene, 0, scene.size(),
+				&totalNodes);
+			
 			//int offset = 0;
 			//flattenBVHTree(root, &offset);
 
@@ -1124,7 +1147,7 @@ int main(int argc, char** argv)
 		//}
 		default: {
 			std::cout << "<<<<<<< Warning: No data structure is used, this can take long time! >>>>>>";
-			//render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
+			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
 			break;
 		}
 		}
