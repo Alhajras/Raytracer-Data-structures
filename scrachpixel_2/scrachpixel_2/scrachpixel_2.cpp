@@ -57,7 +57,7 @@ unsigned int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
 unsigned int  rootNodeIndex = 0;
-char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for testing.
+char NUMBER_OF_CLONES = 30; // This is used to generatre clones of the model for testing.
 std::map<unsigned int, shared_ptr<SceneObject> > hashMap; // This is for the LBVH
 
 // Statstics related
@@ -78,6 +78,7 @@ float clamp(const float& lo, const float& hi, const float& v)
 	return std::max(lo, std::min(hi, v));
 }
 
+std::vector<SceneObject> sceneFixed;
 
 // Settings of the raytracer
 struct Settings
@@ -91,7 +92,7 @@ struct Settings
 	uint32_t aa_samples = 1; // Anti aliasing samples
 	AccType dataStructure = BVH; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
-	SceneModel sceneModel = TEST;
+	SceneModel sceneModel = BUNNY;
 };
 
 
@@ -392,15 +393,15 @@ Vec3f castRay(
 
 			/*for (int i = 0; i < tree[box]->objs.size(); i++)
 			{*/
-				if (scene[box].isSphere)
+				if (sceneFixed[box].isSphere)
 				{
 					t0 = INFINITY, t1 = INFINITY;
 					spheres_intersections_counter++;
-					if (scene[box].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+					if (sceneFixed[box].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 						if (t0 < 0) t0 = t1;
 						if (t0 < tnear) {
 							tnear = t0;
-							sphere = &scene[box].sphere;
+							sphere = &sceneFixed[box].sphere;
 							hitColor = sphere->surfaceColor;
 						}
 					}
@@ -488,11 +489,11 @@ Vec3f castRay(
 		for (unsigned i = 0; i < scene.size(); ++i) {
 			t0 = INFINITY, t1 = INFINITY;
 			spheres_intersections_counter++;
-			if (scene[i].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
+			if (sceneFixed[i].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 				if (t0 < 0) t0 = t1;
 				if (t0 < tnear) {
 					tnear = t0;
-					sphere = &scene[i].sphere;
+					sphere = &sceneFixed[i].sphere;
 					hitColor = sphere->surfaceColor;
 				}
 			}
@@ -632,6 +633,11 @@ inline double random_double()
 	return distribution(generator);
 }
 
+inline float random_float()
+{
+	return static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+}
+
 //  This will write pixels into a file
 void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 	// Save result to a PPM image (keep these flags if you compile under Windows)
@@ -733,7 +739,7 @@ std::vector<std::shared_ptr<SceneObject>> createScene(Settings settings) {
 	}
 	for (int clone = 0; clone < NUMBER_OF_CLONES; clone++)
 	{
-		float shift = clone *20;
+		float shift = clone *1;
 
 	file.open(fileName);
 	std::cout << "Loading file:  " << fileName << " ... " << std::endl;
@@ -887,6 +893,7 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 				double random = random_double_2();
 
 				scene.push_back(s);
+				sceneFixed.push_back(s);
 				//std::cout << vertex.Z << std::endl;
 			}
 			else
@@ -931,131 +938,10 @@ int main(int argc, char** argv)
 	root->maxZ = -1 * std::numeric_limits<float>::max();
 	root->minZ = std::numeric_limits<float>::max();;
 
-	//std::vector<SceneObject> scene  = createScene_new(settings);
-	std::vector<SceneObject> scene;
-	SceneObject s;
-	int id = 0;
-	for (int i = 0; i < 1000000; i++)
-	{
-		s.objId = id;
-		s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
-		s.center = Vec3f(i, i, -20 + i); // igea = *50, bunny = *20, hoody = / 50 
-		s.position = s.center;
-		s.shininess = 64;
-		s.isSphere = true;
-		s.boxBoundries = BoxBoundries(s.center - s.radius, s.center + s.radius);
-		s.sphere = Sphere(i, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
-		scene.push_back(s);
-		id++;
-	}
+	std::vector<SceneObject> scene  = createScene_new(settings);
 
-	//s.objId = 0;
-	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
-	//s.center = Vec3f(-2, 1, -20); // igea = *50, bunny = *20, hoody = / 50 
-	//s.position = s.center;
-	//s.shininess = 64;
-	//s.isSphere = true;
-	//Vec3f minPoint = s.center - s.radius;
-	//Vec3f maxPoint = s.center + s.radius;
-	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
-	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
-	//scene.push_back(s);
-	//s.objId = 1;
-	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
-	//s.center = Vec3f(0, 0, -20); // igea = *50, bunny = *20, hoody = / 50 
-	//s.position = s.center;
-	//s.shininess = 64;
-	//s.isSphere = true;
-	// minPoint = s.center - s.radius;
-	// maxPoint = s.center + s.radius;
-	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
-	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
-	//scene.push_back(s);
-
-	//s.objId = 2;
-	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
-	//s.center = Vec3f(2, 0, -22); // igea = *50, bunny = *20, hoody = / 50 
-	//s.position = s.center;
-	//s.shininess = 64;
-	//s.isSphere = true;
-	//minPoint = s.center - s.radius;
-	//maxPoint = s.center + s.radius;
-	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
-	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
-	//scene.push_back(s);
-
-	//s.objId = 3;
-	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
-	//s.center = Vec3f(4, 0, -20); // igea = *50, bunny = *20, hoody = / 50 
-	//s.position = s.center;
-	//s.shininess = 64;
-	//s.isSphere = true;
-	//minPoint = s.center - s.radius;
-	//maxPoint = s.center + s.radius;
-	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
-	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
-	//scene.push_back(s);
-
-	//s.objId = 4;
-	//s.radius = 1; //  hoody = *10 // Bunny =0.01 * 5
-	//s.center = Vec3f(6, 0, -20); // igea = *50, bunny = *20, hoody = / 50 
-	//s.position = s.center;
-	//s.shininess = 64;
-	//s.isSphere = true;
-	//minPoint = s.center - s.radius;
-	//maxPoint = s.center + s.radius;
-	//s.boxBoundries = BoxBoundries(minPoint, maxPoint);
-	//s.sphere = Sphere(1, s.center, s.radius, Vec3f(0.1, 0.77, 0.97), 1, 0.0);
-	//scene.push_back(s);
-
-	// Lets bound each object with BBOX
-	// This is same for KD-tree and BVH
 	std::cout << "Wraping BV for each object .... \n";
 
-	//for (std::shared_ptr<SceneObject> obj : scene)
-	//{
-	//	// we calculate the minimum edges of the box
-	//	if (obj->position[0] - obj->radius < root->minX)
-	//		root->minX = obj->position[0] - obj->radius;
-	//	if (obj->position[1] - obj->radius < root->minY)
-	//		root->minY = obj->position[1] - obj->radius;
-	//	if (obj->position[2] - obj->radius < root->minZ)
-	//		root->minZ = obj->position[2] - obj->radius;
-
-	//	// we calculate the maximum edges of the box
-	//	if (obj->position[0] + obj->radius > root->maxX)
-	//		root->maxX = obj->position[0] + obj->radius;
-	//	if (obj->position[1] + obj->radius > root->maxY)
-	//		root->maxY = obj->position[1] + obj->radius;
-	//	if (obj->position[2] + obj->radius > root->maxZ)
-	//		root->maxZ = obj->position[2] + obj->radius;
-	//}
-
-	// we try to find the midpoint and longest axis of the root box
-	if (root->maxX - root->minX > root->maxY - root->minY)
-	{
-		if (root->maxX - root->minX > root->maxZ - root->minZ)
-		{
-			root->longestAxis = 0;
-			root->midpoint = (root->maxX + root->minX) / 2;
-		}
-	}
-	if (root->maxY - root->minY > root->maxX - root->minX)
-	{
-		if (root->maxY - root->minY > root->maxZ - root->minZ)
-		{
-			root->longestAxis = 1;
-			root->midpoint = (root->maxY + root->minY) / 2;
-		}
-	}
-	if (root->maxZ - root->minZ > root->maxX - root->minX)
-	{
-		if (root->maxZ - root->minZ > root->maxY - root->minY)
-		{
-			root->longestAxis = 2;
-			root->midpoint = (root->maxZ + root->minZ) / 2;
-		}
-	}
 	std::cout << "Done .... \n Time: ";
 
 	std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s";
@@ -1102,9 +988,6 @@ int main(int argc, char** argv)
 			orderedPrims.reserve(scene.size());
 			root = constructBVHNew(scene, 0, scene.size(),
 				&totalNodes);
-			
-			//int offset = 0;
-			//flattenBVHTree(root, &offset);
 
 			std::cout << "Done .... Time: ";
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
