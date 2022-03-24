@@ -12,3 +12,4 @@ Probkems:
 - [ ] I have removed the int refrence and I am using a pointer to the children.
 - [ ] BUG found if two objects have the same clone (Position) it seems that I do not return anything.
 - [ ] I am saving the index of the premitive under the leaf.
+- [ ] The bug was I was having one vectore called scene and I wsa sorting it and playing with it but in renderin I am using it as source of the truth for IDS, now I am using two vectores, scene and sceneFixed.
