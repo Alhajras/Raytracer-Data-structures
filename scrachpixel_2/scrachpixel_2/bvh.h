@@ -202,10 +202,10 @@ public:
 	}
 };
 
-int GeMaximumAxis(BoxBoundries box)  {
+int GeMaximumAxis(BoxBoundries box) {
 	Vec3f axises = Vec3f(box.max - box.min);
 
-	if (axises.x > axises.y && axises.x > axises.z)
+	if (axises.x > axises.y&& axises.x > axises.z)
 		return 0;
 	else if (axises.y > axises.z)
 		return 1;
@@ -235,7 +235,7 @@ BoxBoundries JoinBoxPopintBounds(BoxBoundries box1, Vec3f p2) {
 	minX = std::min(box1.min.x, p2.x);
 	minY = std::min(box1.min.y, p2.y);
 	minZ = std::min(box1.min.z, p2.z);
-								
+
 	maxX = std::max(box1.max.x, p2.x);
 	maxY = std::max(box1.max.y, p2.y);
 	maxZ = std::max(box1.max.z, p2.z);
@@ -277,11 +277,11 @@ std::shared_ptr<Node> constructBVHNew(
 	int startIndex,
 	int endIndex,
 	int* totalNodes)
-{   
+{
 	//We create the node and add the total nodes counter
 	std::shared_ptr<Node> node = std::make_shared<Node>();
 	(*totalNodes)++;
-	
+
 	//We compute the biggest bounding box that bound the whole scene
 	BoxBoundries bounds;
 	for (int i = startIndex; i < endIndex; ++i)
@@ -304,7 +304,7 @@ std::shared_ptr<Node> constructBVHNew(
 	BoxBoundries centroidBounds = bounds;
 	for (int i = startIndex; i < endIndex; ++i)
 		centroidBounds = JoinBoxPopintBounds(centroidBounds, allSceneObjects[i].center);
-	
+
 	int dim = GeMaximumAxis(centroidBounds);
 
 	//We start splitting the objects into two equal halfs
@@ -316,8 +316,8 @@ std::shared_ptr<Node> constructBVHNew(
 		node->isleaf = true;
 		node->nPrimitives = 1;
 		node->boxBoundries = bounds;
-		for ( int obj = 0; obj< objectsNumber; obj++)
-		node->objs.push_back(allSceneObjects[obj].objId);
+		for (int obj = 0; obj < objectsNumber; obj++)
+			node->objs.push_back(allSceneObjects[obj].objId);
 		return node;
 	}
 
@@ -326,7 +326,7 @@ std::shared_ptr<Node> constructBVHNew(
 	//All object on the left will go to the left child and the right will go to the rightchild
 	float pmid = (centroidBounds.min[dim] + centroidBounds.max[dim]) / 2;
 
-	/*Iterator to the first element of the second group, this will splet objects to left and right and return the pointer 
+	/*Iterator to the first element of the second group, this will splet objects to left and right and return the pointer
 	to the right group object*/
 	SceneObject* midPtr = std::partition(
 		&allSceneObjects[startIndex], &allSceneObjects[endIndex - 1] + 1,
@@ -337,7 +337,7 @@ std::shared_ptr<Node> constructBVHNew(
 	//We subtract one pointer from the midpointer
 	midSplitIndex = midPtr - &allSceneObjects[0];
 
-	if (midSplitIndex != startIndex && midSplitIndex != endIndex) { 
+	if (midSplitIndex != startIndex && midSplitIndex != endIndex) {
 		midSplitIndex = (startIndex + endIndex) / 2;
 		std::nth_element(&allSceneObjects[startIndex], &allSceneObjects[midSplitIndex],
 			&allSceneObjects[endIndex - 1] + 1,
@@ -345,7 +345,7 @@ std::shared_ptr<Node> constructBVHNew(
 				const SceneObject& b) {
 					return a.center[dim] < b.center[dim];
 			});
-		}
+	}
 
 	node->leftchild = constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes);
 	node->rightchild = constructBVHNew(allSceneObjects, midSplitIndex, endIndex, totalNodes);
@@ -356,258 +356,6 @@ std::shared_ptr<Node> constructBVHNew(
 
 	return node;
 }
-std::shared_ptr<Node> constructBVHTreed(
-	std::vector<SceneObject>& primitiveInfo,
-	int start,
-	int end,
-	int*totalNodes,
-	std::vector<std::shared_ptr<SceneObject>>& orderedPrims)
-{
-	std::shared_ptr<Node> node = std::make_shared<Node>();
-	(*totalNodes)++;
-	// Compute bounds of all primitives in BVH node
-	BoxBoundries bounds;
-	for (int i = start; i < end; ++i)
-		bounds = JoinBounds(bounds, primitiveInfo[i].boxBoundries);
-	int nPrimitives = end - start;
-	if (nPrimitives == 1) {
-		// Create leaf _BVHBuildNode_
-		int firstPrimOffset = orderedPrims.size();
-		for (int i = start; i < end; ++i) {
-			int primNum = primitiveInfo[i].objId;
-			orderedPrims.push_back(std::make_shared<SceneObject>(primitiveInfo[i]));
-		}
-		node->isleaf = true; // leaf node has two objects as children
-		node->nPrimitives = nPrimitives;
-		node->boxBoundries = bounds;
-		node->firstPrimOffset = firstPrimOffset;
-		//node->objs = primitiveInfo[start].objId;
-		return node;
-	}
-
-	else {
-		// Compute bound of primitive centroids, choose split dimension _dim_
-		//BoxBoundries centroidBounds;
-		//for (int i = start; i < end; ++i)
-		//	centroidBounds = JoinBoxPopintBounds(centroidBounds, primitiveInfo[i].center);
-		int dim = GeMaximumAxis(bounds);
-
-		// Partition primitives into two sets and build children
-		int mid = (start + end) / 2;
-		//if (centroidBounds.max[dim] == centroidBounds.min[dim]) {
-		//	// Create leaf _BVHBuildNode_
-		//	int firstPrimOffset = orderedPrims.size();
-		//	for (int i = start; i < end; ++i) {
-		//		int primNum = primitiveInfo[i].objId;
-		//		orderedPrims.push_back(std::make_shared<SceneObject>(primitiveInfo[primNum]));
-		//	}
-		//	node->isleaf = true; // leaf node has two objects as children
-		//	node->nPrimitives = nPrimitives;
-		//	node->boxBoundries = bounds;
-		//	node->firstPrimOffset = firstPrimOffset;
-		//	return node;
-		//}
-		//else {
-			// Partition primitives based on _splitMethod_
-			SplitMethod splitMethod = MIDDLE;
-			switch (splitMethod) {
-			case MIDDLE: {
-				// Partition primitives through node's midpoint
-				float pmid = (bounds.min[dim] + bounds.max[dim]) / 2;
-				SceneObject* midPtr = std::partition(
-					&primitiveInfo[start], &primitiveInfo[end - 1] + 1,
-					[dim, pmid](const SceneObject& pi) {
-						return pi.center[dim] < pmid;
-					});
-				mid = midPtr - &primitiveInfo[0];
-				// For lots of prims with large overlapping bounding boxes, this
-				// may fail to partition; in that case don't break and fall
-				// through
-				// to EqualCounts.
-				if (mid != start && mid != end) { break; }
-			}
-			//}
-			node->leftchild = constructBVHTreed(primitiveInfo, start, mid, totalNodes, orderedPrims);
-			node->rightchild = constructBVHTreed(primitiveInfo, mid, end, totalNodes, orderedPrims);
-
-			node->longestAxis = dim;
-			node->boxBoundries = JoinBounds(node->leftchild->boxBoundries, node->rightchild->boxBoundries);
-			node-> nPrimitives = 0;
-		}
-	}
-	return node;
-}
-
-int constructBVHTree(std::vector<std::shared_ptr<SceneObject>>& sceneObjects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
-{   // If this is a leaf node
-	if (sceneObjects.size() <= MaxLeaves) // this measn we only have one node and two children
-	{
-		for (int i = 0; i < (int)sceneObjects.size(); i++)
-		{
-			//currentNode->objs.push_back(sceneObjects[i]->objId); //we assign the ids of the root node, left and right nodes
-		}
-		currentNode->isleaf = true; // leaf node has two sceneObjects as children
-		nodes.push_back(currentNode);
-		return (int)nodes.size() - 1;
-	}
-
-	// If it is not a leaf node
-	std::shared_ptr<Node> newLeftNode = std::make_shared<Node>();
-	newLeftNode->left = NULL;
-	newLeftNode->right = NULL;
-	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
-	newRightNode->left = NULL;
-	newRightNode->right = NULL;
-	std::vector<std::shared_ptr<SceneObject>> leftObjects;
-	Vec3f midLeft;
-	float maxLeftX = -1 * std::numeric_limits<float>::max();
-	float minLeftX = std::numeric_limits<float>::max();
-	float maxLeftY = -1 * std::numeric_limits<float>::max();
-	float minLeftY = std::numeric_limits<float>::max();
-	float maxLeftZ = -1 * std::numeric_limits<float>::max();
-	float minLeftZ = std::numeric_limits<float>::max();
-	Vec3f midRight;
-	float maxRightX = -1 * std::numeric_limits<float>::max();
-	float minRightX = std::numeric_limits<float>::max();
-	float maxRightY = -1 * std::numeric_limits<float>::max();
-	float minRightY = std::numeric_limits<float>::max();
-	float maxRightZ = -1 * std::numeric_limits<float>::max();
-	float minRightZ = std::numeric_limits<float>::max();
-	std::vector<std::shared_ptr<SceneObject>> rightObjects;
-
-	std::shared_ptr<SceneObject> sceneObject;
-	Vec3f position;
-	float radius;
-
-	//This is my bottle neck
-	for (int i = 0; i < sceneObjects.size(); i++)
-	{
-		 sceneObject = sceneObjects[i];
-		 position = sceneObject->position;
-		 radius = sceneObject->radius;
-
-		// here I am splitting the objects which are their center is in the left of the 
-		// Middle point of the node to the left, we can change the currentNode.midpoint,
-		// By using splitting average or other ways look at my presentations
-		if (position[currentNode->longestAxis] < currentNode->midpoint)
-		{	
-			// we create the new left bbox parameters
-			if (position[0] - radius < minLeftX)
-				minLeftX = position[0] - radius;
-			if (position[1] - radius < minLeftY)
-				minLeftY = position[1] - radius;
-			if (position[2] - radius < minLeftZ)
-				minLeftZ = position[2] - radius;
-
-			if (position[0] + radius > maxLeftX)
-				maxLeftX = position[0] + radius;
-			if (position[1] + radius > maxLeftY)
-				maxLeftY = position[1] + radius;
-			if (position[2] + radius > maxLeftZ)
-				maxLeftZ = position[2] + radius;
-
-			midLeft += position; // here we are using the average for middle point 
-			leftObjects.push_back(sceneObject);
-		}
-		else
-		{
-			// we create the new right bbox parameters
-			if (position[0] - radius < minRightX)
-				minRightX = position[0] - radius;
-			if (position[1] - radius < minRightY)
-				minRightY = position[1] - radius;
-			if (position[2] - radius < minRightZ)
-				minRightZ = position[2] - radius;
-
-			if (position[0] + radius > maxRightX)
-				maxRightX = position[0] + radius;
-			if (position[1] + radius > maxRightY)
-				maxRightY = position[1] + radius;
-			if (position[2] + radius > maxRightZ)
-				maxRightZ = position[2] + radius;
-
-			midRight += position; // here we are using the average for middle point 
-			rightObjects.push_back(sceneObject);
-		}
-	}
-
-	midLeft = Vec3f(midLeft[0] / leftObjects.size(), midLeft[1] / leftObjects.size(), midLeft[2] / leftObjects.size());
-	midRight = Vec3f(midRight[0] / rightObjects.size(), midRight[1] / rightObjects.size(), midRight[2] / rightObjects.size());
-
-	// we try to find the midpoint and longest axis of the left box
-	if (maxLeftX - minLeftX > maxLeftY - minLeftY)
-	{
-		if (maxLeftX - minLeftX > maxLeftZ - minLeftZ)
-		{
-			newLeftNode->longestAxis = 0;
-			newLeftNode->midpoint = midLeft[0];
-		}
-	}
-	if (maxLeftY - minLeftY > maxLeftX - minLeftX)
-	{
-		if (maxLeftY - minLeftY > maxLeftZ - minLeftZ)
-		{
-			newLeftNode->longestAxis = 1;
-			newLeftNode->midpoint = midLeft[1];
-		}
-	}
-	if (maxLeftZ - minLeftZ > maxLeftX - minLeftX)
-	{
-		if (maxLeftZ - minLeftZ > maxLeftY - minLeftY)
-		{
-			newLeftNode->longestAxis = 2;
-			newLeftNode->midpoint = midLeft[2];
-		}
-	}
-
-	// we try to find the midpoint and longest axis of the right box
-	if (maxRightX - minRightX > maxRightY - minRightY)
-	{
-		if (maxRightX - minRightX > maxRightZ - minRightZ)
-		{
-			newRightNode->longestAxis = 0;
-			newRightNode->midpoint = midRight[0];
-		}
-	}
-	if (maxRightY - minRightY > maxRightX - minRightX)
-	{
-		if (maxRightY - minRightY > maxRightZ - minRightZ)
-		{
-			newRightNode->longestAxis = 1;
-			newRightNode->midpoint = midRight[1];
-		}
-	}
-	if (maxRightZ - minRightZ > maxRightX - minRightX)
-	{
-		if (maxRightZ - minRightZ > maxRightY - minRightY)
-		{
-			newRightNode->longestAxis = 2;
-			newRightNode->midpoint = midRight[2];
-		}
-	}
-
-	newLeftNode->minX = minLeftX;
-	newLeftNode->maxX = maxLeftX;
-	newLeftNode->minY = minLeftY;
-	newLeftNode->maxY = maxLeftY;
-	newLeftNode->minZ = minLeftZ;
-	newLeftNode->maxZ = maxLeftZ;
-
-	newRightNode->minX = minRightX;
-	newRightNode->maxX = maxRightX;
-	newRightNode->minY = minRightY;
-	newRightNode->maxY = maxRightY;
-	newRightNode->minZ = minRightZ;
-	newRightNode->maxZ = maxRightZ;
-
-	currentNode->left = constructBVHTree(leftObjects, newLeftNode, nodes);
-	currentNode->right = constructBVHTree(rightObjects, newRightNode, nodes);
-
-	nodes.push_back(currentNode);
-	return (int)nodes.size() - 1;
-}
-
-
 
 ////////////////// LBVH /////////////////////////
 
@@ -722,97 +470,108 @@ int findSplit(std::vector<unsigned int> sortedMortonCodes,
 }
 
 
-int generateHierarchy(std::vector<SceneObject> objects,
+std::shared_ptr<Node> constructLBVHNew(
+	std::vector<SceneObject>& allSceneObjects,
 	std::vector<unsigned int> sortedMortonCodes,
-	std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes,
-	uint64_t           first,
-	uint64_t           last)
+	int startIndex,
+	int endIndex,
+	int* totalNodes)
 {
+	//We create the node and add the total nodes counter
+	std::shared_ptr<Node> node = std::make_shared<Node>();
+	(*totalNodes)++;
 
-	if (first == last) // this measn we only have one node and two children
-	{
-		for (int i = 0; i < (int)sortedMortonCodes.size(); i++)
-		{
-			// if it is not working check this commit
-			currentNode->objsMorID[i] = sortedMortonCodes[i]; //we assign the ids of the root node, left and right nodes
-		}
-		currentNode->isleaf = true; // leaf node has two objects as children
-		nodes.push_back(currentNode);
-		return (int)nodes.size() - 1;
+	//We compute the biggest bounding box that bound the whole scene
+	BoxBoundries bounds;
+	for (int i = startIndex; i < endIndex; ++i)
+		bounds = JoinBounds(bounds, allSceneObjects[i].boxBoundries);
+	node->boxBoundries = bounds;
+
+	int objectsNumber = endIndex - startIndex;
+
+	//For now we support only one leaf
+	if (objectsNumber == 0) {
+		// Create leaf
+		node->isleaf = true;
+		node->nPrimitives = 1;
+		node->objs.push_back(allSceneObjects[startIndex].objId);
+		return node;
 	}
-	//if (first == last)
-	//{
-	//	currentNode.isleaf = true; // leaf node has two objects as children
-	//	nodes.push_back(currentNode);
-	//	return (int)nodes.size() - 1;
 
-	//}
+	/*Splitting part*/
 
-	int split = findSplit(sortedMortonCodes, first, last);
+	BoxBoundries centroidBounds = bounds;
+	for (int i = startIndex; i < endIndex; ++i)
+		centroidBounds = JoinBoxPopintBounds(centroidBounds, allSceneObjects[i].center);
 
-	std::shared_ptr<Node> newLeftNode = std::make_shared<Node>();
-	newLeftNode->left = NULL;
-	newLeftNode->right = NULL;
-	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
-	newRightNode->left = NULL;
-	newRightNode->right = NULL;
+	int dim = GeMaximumAxis(centroidBounds);
 
+	//We start splitting the objects into two equal halfs    
+	int midSplitIndex = findSplit(sortedMortonCodes, startIndex, endIndex);
 
-	/*	for (int i = 0; i < (int)objects.size(); i++)
-		{
-			if (objects[i].objId == first){
+	/*This condition happens if more than one object have the save dimentions and position
+	We can either save them all in a list but for now we can just pick the first object and create a leaf*/
+	if (centroidBounds.max[dim] == centroidBounds.min[dim]) {
+		node->isleaf = true;
+		node->nPrimitives = 1;
+		node->boxBoundries = bounds;
+		for (int obj = 0; obj < objectsNumber; obj++)
+			node->objs.push_back(allSceneObjects[obj].objId);
+		return node;
+	}
 
-			}
-			if (objects[i].objId == last) {
+	//We create a node that contains left and right chilren
+	// This is the middle point of the new bounding box with respect to the longest axis
+	//All object on the left will go to the left child and the right will go to the rightchild
+	float pmid = (centroidBounds.min[dim] + centroidBounds.max[dim]) / 2;
 
-			}
-		}*/
-	newLeftNode->minX = currentNode->minX;
-	newLeftNode->maxX = currentNode->maxX / 2;
-	newLeftNode->minY = currentNode->minY;
-	newLeftNode->maxY = currentNode->maxY / 2;
-	newLeftNode->minZ = currentNode->minZ;
-	newLeftNode->maxZ = currentNode->maxZ / 3;
+	/*Iterator to the first element of the second group, this will splet objects to left and right and return the pointer
+	to the right group object*/
+	SceneObject* midPtr = std::partition(
+		&allSceneObjects[startIndex], &allSceneObjects[endIndex - 1] + 1,
+		[dim, pmid](const SceneObject& pi) {
+			return pi.center[dim] < pmid;
+		});
 
-	newRightNode->minX = currentNode->maxX / 2;
-	newRightNode->maxX = currentNode->maxX;
-	newRightNode->minY = currentNode->maxY / 2;
-	newRightNode->maxY = currentNode->maxY;
-	newRightNode->maxY = currentNode->maxY;
-	newRightNode->minZ = currentNode->maxZ / 2;
-	newRightNode->maxZ = currentNode->maxZ;
-#	/*leftObjects.push_back(objects[i]);
-	leftObjects.push_back(objects[i]);*/
+	//We subtract one pointer from the midpointer
+	midSplitIndex = midPtr - &allSceneObjects[0];
 
+	if (midSplitIndex != startIndex && midSplitIndex != endIndex) {
+		midSplitIndex = (startIndex + endIndex) / 2;
+		std::nth_element(&allSceneObjects[startIndex], &allSceneObjects[midSplitIndex],
+			&allSceneObjects[endIndex - 1] + 1,
+			[dim](const SceneObject& a,
+				const SceneObject& b) {
+					return a.center[dim] < b.center[dim];
+			});
+	}
 
-	int l = generateHierarchy(objects, sortedMortonCodes, newLeftNode, nodes,
-		first, split);
-	int r = generateHierarchy(objects, sortedMortonCodes, newRightNode, nodes,
-		split + 1, last);
+	node->leftchild = constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes);
+	node->rightchild = constructBVHNew(allSceneObjects, midSplitIndex, endIndex, totalNodes);
 
+	// This is not a leaf node so it does not conatin any object
+	node->longestAxis = dim;
+	node->nPrimitives = 0;
 
-	currentNode->left = l;
-	currentNode->right = r;
-
-	nodes.push_back(currentNode);
-	return (int)nodes.size() - 1;
+	return node;
 }
 
-int constructLBVHTree(std::map<unsigned int, SceneObject >& hashMap, std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
+
+
+
+std::shared_ptr<Node> constructLBVHTree(
+	std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {
 	std::vector<unsigned int> sortedMortonCodes;
 	// we map the centrod of spheres
 	for (uint64_t i = 0; i < objects.size(); ++i) {
 		Vec3f centroid = (objects[i].center + 30) / 1000;
 		unsigned int moCode = morton3D(centroid.x, centroid.y, centroid.z);
-		objects[i].objId = moCode;
 		sortedMortonCodes.push_back(moCode);
-		hashMap[moCode] = objects[i];
-		std::cout << sortedMortonCodes[i] << "\n";
 	}
 	radixSort(sortedMortonCodes, sortedMortonCodes.size(), 10);
-
-	return generateHierarchy(objects, sortedMortonCodes, currentNode, nodes, 0, sortedMortonCodes.size() - 1);
+	int totalNodes = 0;
+	return constructLBVHNew(objects, sortedMortonCodes, 0, sortedMortonCodes.size() - 1, &totalNodes);
 }
 
 int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes, int depth)
@@ -1022,10 +781,10 @@ void boxIntersect(Vec3f position, Vec3f direction,
 
 	if (root->isleaf)
 	{
-			//retValue = currentNode;
+		//retValue = currentNode;
 		for (int obj = 0; obj < root->objs.size(); obj++)
 			boxes.push_back(root->objs[obj]);
-			return;
+		return;
 	}
 	else
 	{
