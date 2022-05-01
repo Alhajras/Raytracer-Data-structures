@@ -13,3 +13,4 @@ Probkems:
 - [x] BUG found if two objects have the same clone (Position) it seems that I do not return anything.
 - [x] I am saving the index of the premitive under the leaf.
 - [x] The bug was I was having one vectore called scene and I wsa sorting it and playing with it but in renderin I am using it as source of the truth for IDS, now I am using two vectores, scene and sceneFixed.
+- [x] Add multithreading to LBVH used openMp #pragma omp and also threadiung the construct if only the objects are more than 100. 
