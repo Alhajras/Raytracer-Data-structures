@@ -20,6 +20,7 @@
 #include <string>
 #include <map>
 #include <algorithm>
+#include <thread>
 
 using namespace std;
 enum AccType { BVH, KDTREE, UNIFORM_GRID, LBVH, NONE };
@@ -72,7 +73,6 @@ float maxRightY = -1 * std::numeric_limits<float>::max();
 float minRightY = std::numeric_limits<float>::max();
 float maxRightZ = -1 * std::numeric_limits<float>::max();
 float minRightZ = std::numeric_limits<float>::max();
-
 
 class Sphere
 {
@@ -483,6 +483,7 @@ std::shared_ptr<Node> constructLBVHNew(
 
 	//We compute the biggest bounding box that bound the whole scene
 	BoxBoundries bounds;
+    #pragma omp parallel for default(none) shared(bounds)
 	for (int i = startIndex; i < endIndex; ++i)
 		bounds = JoinBounds(bounds, allSceneObjects[i].boxBoundries);
 	node->boxBoundries = bounds;
@@ -501,6 +502,7 @@ std::shared_ptr<Node> constructLBVHNew(
 	/*Splitting part*/
 
 	BoxBoundries centroidBounds = bounds;
+    #pragma omp parallel for default(none) shared(bounds)
 	for (int i = startIndex; i < endIndex; ++i)
 		centroidBounds = JoinBoxPopintBounds(centroidBounds, allSceneObjects[i].center);
 
@@ -546,8 +548,34 @@ std::shared_ptr<Node> constructLBVHNew(
 			});
 	}
 
-	node->leftchild = constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes);
-	node->rightchild = constructBVHNew(allSceneObjects, midSplitIndex, endIndex, totalNodes);
+	auto fl = [](std::shared_ptr<Node> node, std::vector<SceneObject>& allSceneObjects,
+		int startIndex,
+		int endIndex,
+		int* totalNodes) {
+			node->leftchild = constructBVHNew(allSceneObjects, startIndex, endIndex, totalNodes);
+    	};
+	auto fr = [](std::shared_ptr<Node> node, std::vector<SceneObject>& allSceneObjects,
+		int startIndex,
+		int endIndex,
+		int* totalNodes) {
+			node->rightchild = constructBVHNew(allSceneObjects, startIndex, endIndex, totalNodes);
+	};
+	
+	if (objectsNumber > 500) {
+		thread th3(fl, std::ref(node), std::ref(allSceneObjects), std::ref(startIndex), std::ref(midSplitIndex), std::ref(totalNodes));
+		thread th4(fr, std::ref(node), std::ref(allSceneObjects), std::ref(midSplitIndex), std::ref(endIndex), std::ref(totalNodes));
+		th3.join();
+		th4.join();
+	}
+	else
+	{
+		node->leftchild = constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes);
+		node->rightchild = constructBVHNew(allSceneObjects, midSplitIndex, endIndex, totalNodes);
+
+	}
+	// This thread is launched by using 
+	// lamda expression as callable
+
 
 	// This is not a leaf node so it does not conatin any object
 	node->longestAxis = dim;
@@ -561,13 +589,14 @@ std::shared_ptr<Node> constructLBVHNew(
 
 std::shared_ptr<Node> constructLBVHTree(
 	std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
-{
-	std::vector<unsigned int> sortedMortonCodes;
-	// we map the centrod of spheres
-	for (uint64_t i = 0; i < objects.size(); ++i) {
+{	
+
+	std::vector<unsigned int> sortedMortonCodes(objects.size());
+    #pragma omp parallel for default(none) shared(sortedMortonCodes)
+	for (int i = 0; i < objects.size(); ++i) {
 		Vec3f centroid = (objects[i].center + 30) / 1000;
 		unsigned int moCode = morton3D(centroid.x, centroid.y, centroid.z);
-		sortedMortonCodes.push_back(moCode);
+		sortedMortonCodes[i]= moCode;
 	}
 	radixSort(sortedMortonCodes, sortedMortonCodes.size(), 10);
 	int totalNodes = 0;
