@@ -47,6 +47,7 @@
 #include <typeinfo>
 #include <utility>
 #include <valarray>
+#include <omp.h>
 
 const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
@@ -57,7 +58,7 @@ unsigned int rayId = 0;
 #define M_PI 3.141592653589793
 constexpr float EPS = 1e-6;
 unsigned int  rootNodeIndex = 0;
-char NUMBER_OF_CLONES = 30; // This is used to generatre clones of the model for testing.
+char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for testing.
 
 // Statstics related
 unsigned int spheres_intersections_counter = 0;
@@ -89,7 +90,7 @@ struct Settings
 	float bias = 0.0001; // Error allowed
 	uint32_t maxDepth = 0; // Max number of ray trating into the scene
 	uint32_t aa_samples = 1; // Anti aliasing samples
-	AccType dataStructure = BVH; // 0 bvh, 1 kd tree
+	AccType dataStructure = KDTREE; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
 	SceneModel sceneModel = BUNNY;
 };
@@ -413,9 +414,15 @@ Vec3f castRay(
 	}
 	case KDTREE:
 	{
-		//const clock_t begin_time = clock();
-		////bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
-		//tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
+		const clock_t begin_time = clock();
+		if (!kdtreeIntersect(rayorig, raydir))
+		{
+			return Vec3f(0.6, 0.8, 1);
+		}
+		return Vec3f(0, 0.0, 0);
+
+		;
+		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
 
 		//if (boundingBoxes.size() == 0)
 		//{
@@ -893,28 +900,33 @@ int main(int argc, char** argv)
 			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
 			break;
 		}
-		//case KDTREE:
-		//{
-		//	std::cout << "<<<<<<< This is KDTREE >>>>>>";
-		//	std::cout << "construct KD-Tree .... ";
-		//	const clock_t begin_time = clock();
-		//	rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
-		//	std::cout << "Done .... Time: ";
-		//	std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
-		//	render(settings, spheres, lights, triangles, frame, scene, nodes, NULL);
-		//	break;
-		//}
-		//case UNIFORM_GRID:
-		//{
-		//	std::cout << "<<<<<<< This is UNIFORM_GRID >>>>>>";
-		//	std::cout << "construct Uniform grid .... ";
-		//	const clock_t begin_time = clock();
-		//	std::unique_ptr<Grid> accel(new Grid(scene));
-		//	std::cout << "Done .... Time: ";
-		//	std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
-		//	render(settings, spheres, lights, triangles, frame, scene, nodes, accel);
-		//	break;
-		//}
+		case KDTREE:
+		{
+			std::cout << "<<<<<<< This is KDTREE >>>>>>";
+			std::cout << "construct KD-Tree .... ";
+			const clock_t begin_time = clock();
+			constructKDTreeNew(
+				scene,
+				80, 1, 0.5f,
+				1, -1
+			);
+			//rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
+			std::cout << "Done .... Time: ";
+			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
+			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
+			break;
+		}
+		/*case UNIFORM_GRID:
+		{
+			std::cout << "<<<<<<< This is UNIFORM_GRID >>>>>>";
+			std::cout << "construct Uniform grid .... ";
+			const clock_t begin_time = clock();
+			std::unique_ptr<Grid> accel(new Grid(scene));
+			std::cout << "Done .... Time: ";
+			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
+			render(settings, spheres, lights, triangles, frame, scene, nodes, accel);
+			break;
+		}*/
 		case LBVH:
 		{
 			std::cout << "<<<<<<< This is LBVH >>>>>>";

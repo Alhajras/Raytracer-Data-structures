@@ -21,8 +21,10 @@
 #include <map>
 #include <algorithm>
 #include <thread>
+#include <malloc.h>  // for _alloca, memalign
 
 using namespace std;
+#define PBRT_L1_CACHE_LINE_SIZE 64
 enum AccType { BVH, KDTREE, UNIFORM_GRID, LBVH, NONE };
 enum SplitMethod { MIDDLE };
 
@@ -137,6 +139,13 @@ public:
 		const Vec3f& max) :
 		min(min), max(max)
 	{ /* empty */
+	}
+
+	Vec3f Diagonal() const { return max - min; }
+
+	float SurfaceArea() const {
+		Vec3f d = Diagonal();
+		return 2 * (d.x * d.y + d.x * d.z + d.y * d.z);
 	}
 
 };
@@ -800,6 +809,44 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<No
 	return true;
 }
 
+bool boundingBoxIntersection(Vec3f position, Vec3f direction, BoxBoundries bounds)
+{
+	float tmin = (bounds.min.x - position.x) / direction.x;
+	float tmax = (bounds.max.x - position.x) / direction.x;
+
+	if (tmin > tmax) swap(tmin, tmax);
+
+	float tymin = (bounds.min.y - position.y) / direction.y;
+	float tymax = (bounds.max.y - position.y) / direction.y;
+
+	if (tymin > tymax) swap(tymin, tymax);
+
+	if ((tmin > tymax) || (tymin > tmax))
+		return false;
+
+	if (tymin > tmin)
+		tmin = tymin;
+
+	if (tymax < tmax)
+		tmax = tymax;
+
+	float tzmin = (bounds.min.z - position.z) / direction.z;
+	float tzmax = (bounds.max.z - position.z) / direction.z;
+
+	if (tzmin > tzmax) swap(tzmin, tzmax);
+
+	if ((tmin > tzmax) || (tzmin > tmax))
+		return false;
+
+	if (tzmin > tmin)
+		tmin = tzmin;
+
+	if (tzmax < tmax)
+		tmax = tzmax;
+
+	return true;
+}
+
 void boxIntersect(Vec3f position, Vec3f direction,
 	std::shared_ptr<Node>& root,
 	std::vector<int>& boxes) {
@@ -1092,6 +1139,287 @@ void CellHG::intersect(
 
 	return;
 }
+
+// ----------------- KD-Tree starts ---------------- //
+
+// KdTreeAccel Local Declarations
+struct KdAccelNode {
+	// KdAccelNode Methods
+	void InitLeaf(int* primNums, int np, std::vector<int>* primitiveIndices);
+	void InitInterior(int axis, int ac, float s) {
+		split = s;
+		flags = axis;
+		aboveChild |= (ac << 2);
+	}
+	float SplitPos() const { return split; }
+	int nPrimitives() const { return nPrims >> 2; }
+	int SplitAxis() const { return flags & 3; }
+	bool IsLeaf() const { return (flags & 3) == 3; }
+	int AboveChild() const { return aboveChild >> 2; }
+	union {
+		float split;                 // Interior
+		int onePrimitive;            // Leaf
+		int primitiveIndicesOffset;  // Leaf
+	};
+
+private:
+	union {
+		int flags;       // Both
+		int nPrims;      // Leaf
+		int aboveChild;  // Interior
+	};
+};
+
+void KdAccelNode::InitLeaf(int* primNums, int np,
+	std::vector<int>* primitiveIndices) {
+	flags = 3;
+	nPrims |= (np << 2);
+	// Store primitive ids for leaf node
+	if (np == 0)
+		onePrimitive = 0;
+	else if (np == 1)
+		onePrimitive = primNums[0];
+	else {
+		primitiveIndicesOffset = primitiveIndices->size();
+		for (int i = 0; i < np; ++i)
+{ 
+		int p = primNums[i];
+		primitiveIndices->push_back(p); }
+	}
+}
+
+// Tree global attributes
+int nAllocedNodes = 0;
+int nextFreeNode = 0;
+KdAccelNode* nodes;
+char maxPrims = 1;
+char isectCost = 80;
+char emptyBonus = 0.5f;
+char traversalCost = 1;
+BoxBoundries bounds;
+std::vector<BoxBoundries> primBounds;
+#define Infinity std::numeric_limits<Float>::infinity()
+
+inline int Log2Int(uint32_t val) {
+	if (val == 0) return UINT_MAX;
+	if (val == 1) return 0;
+	unsigned int ret = 0;
+	while (val > 1) {
+		val >>= 1;
+		ret++;
+}
+	return ret;
+}
+
+enum class EdgeType { Start, End };
+struct BoundEdge {
+	// BoundEdge Public Methods
+	BoundEdge() {}
+	BoundEdge(float t, int primNum, bool starting) : t(t), primNum(primNum) {
+		type = starting ? EdgeType::Start : EdgeType::End;
+	}
+	float t;
+	int primNum;
+	EdgeType type;
+};
+
+template <typename T>
+KdAccelNode* AllocAligned(size_t size) {
+	return (KdAccelNode*)malloc(size * sizeof(KdAccelNode));
+}
+
+void FreeAligned(void* ptr) {
+	if (!ptr) return;
+#if defined(PBRT_HAVE__ALIGNED_MALLOC)
+	_aligned_free(ptr);
+#else
+	free(ptr);
+#endif
+}
+
+void buildTree(
+	int nodeNum,
+	const BoxBoundries& nodeBounds,
+	const std::vector<BoxBoundries>& allPrimBounds,
+	int* primNums,
+	int nPrimitives,
+	int depth,
+	const std::unique_ptr<BoundEdge[]> edges[3],
+	int* prims0,
+	int* prims1,
+	int badRefines, 
+	std::vector<int>* primitiveIndices
+	) {
+	
+	// Get next free node from _nodes_ array
+	if (nextFreeNode == nAllocedNodes) {
+		int nNewAllocNodes = std::max(2 * nAllocedNodes, 512);
+		KdAccelNode* n = (KdAccelNode*)malloc(nNewAllocNodes * sizeof(KdAccelNode));
+		if (nAllocedNodes > 0) {
+			memcpy(n, nodes, nAllocedNodes * sizeof(KdAccelNode));
+			FreeAligned(nodes);
+		}
+		nodes = n;
+		nAllocedNodes = nNewAllocNodes;
+	}
+	++nextFreeNode;
+
+	// Initialize leaf node if termination criteria met
+	if (nPrimitives <= maxPrims || depth == 0) {
+		nodes[nodeNum].InitLeaf(primNums, nPrimitives, primitiveIndices);
+		return;
+	}
+	
+	// Initialize interior node and continue recursion
+
+	// Choose split axis position for interior node
+	int bestAxis = -1, bestOffset = -1;
+	float bestCost = INFINITY;
+	float oldCost = isectCost * float(nPrimitives);
+	float totalSA = nodeBounds.SurfaceArea();
+	float invTotalSA = 1 / totalSA;
+	Vec3f d = nodeBounds.max - nodeBounds.min;
+
+	// Choose which axis to split along
+	int axis = GeMaximumAxis(nodeBounds);
+	int retries = 0;
+retrySplit:
+
+	// Initialize edges for _axis_
+	for (int i = 0; i < nPrimitives; ++i) {
+		int pn = primNums[i];
+		const BoxBoundries& bounds = allPrimBounds[pn];
+		edges[axis][2 * i] = BoundEdge(bounds.min[axis], pn, true);
+		edges[axis][2 * i + 1] = BoundEdge(bounds.max[axis], pn, false);
+	}
+
+	// Sort _edges_ for _axis_
+	std::sort(&edges[axis][0], &edges[axis][2 * nPrimitives],
+		[](const BoundEdge& e0, const BoundEdge& e1) -> bool {
+			if (e0.t == e1.t)
+				return (int)e0.type < (int)e1.type;
+			else
+				return e0.t < e1.t;
+		});
+
+	// Compute cost of all splits for _axis_ to find best
+	int nBelow = 0, nAbove = nPrimitives;
+	for (int i = 0; i < 2 * nPrimitives; ++i) {
+		if (edges[axis][i].type == EdgeType::End) --nAbove;
+		float edgeT = edges[axis][i].t;
+		if (edgeT > nodeBounds.min[axis] && edgeT < nodeBounds.max[axis]) {
+			// Compute cost for split at _i_th edge
+
+			// Compute child surface areas for split at _edgeT_
+			int otherAxis0 = (axis + 1) % 3, otherAxis1 = (axis + 2) % 3;
+			float belowSA = 2 * (d[otherAxis0] * d[otherAxis1] +
+				(edgeT - nodeBounds.min[axis]) *
+				(d[otherAxis0] + d[otherAxis1]));
+			float aboveSA = 2 * (d[otherAxis0] * d[otherAxis1] +
+				(nodeBounds.max[axis] - edgeT) *
+				(d[otherAxis0] + d[otherAxis1]));
+			float pBelow = belowSA * invTotalSA;
+			float pAbove = aboveSA * invTotalSA;
+			float eb = (nAbove == 0 || nBelow == 0) ? emptyBonus : 0;
+			float cost =
+				traversalCost +
+				isectCost * (1 - eb) * (pBelow * nBelow + pAbove * nAbove);
+
+			// Update best split if this is lowest cost so far
+			if (cost < bestCost) {
+				bestCost = cost;
+				bestAxis = axis;
+				bestOffset = i;
+			}
+		}
+		if (edges[axis][i].type == EdgeType::Start) ++nBelow;
+	}
+
+	// Create leaf if no good splits were found
+	if (bestAxis == -1 && retries < 2) {
+		++retries;
+		axis = (axis + 1) % 3;
+		goto retrySplit;
+	}
+	if (bestCost > oldCost) ++badRefines;
+	if ((bestCost > 4 * oldCost && nPrimitives < 16) || bestAxis == -1 ||
+		badRefines == 3) {
+		nodes[nodeNum].InitLeaf(primNums, nPrimitives, primitiveIndices);
+		return;
+	}
+
+	// Classify primitives with respect to split
+	int n0 = 0, n1 = 0;
+	for (int i = 0; i < bestOffset; ++i)
+		if (edges[bestAxis][i].type == EdgeType::Start)
+			prims0[n0++] = edges[bestAxis][i].primNum;
+	for (int i = bestOffset + 1; i < 2 * nPrimitives; ++i)
+		if (edges[bestAxis][i].type == EdgeType::End)
+			prims1[n1++] = edges[bestAxis][i].primNum;
+
+	// Recursively initialize children nodes
+	float tSplit = edges[bestAxis][bestOffset].t;
+	BoxBoundries bounds0 = nodeBounds, bounds1 = nodeBounds;
+	bounds0.max[bestAxis] = bounds1.min[bestAxis] = tSplit;
+	buildTree(nodeNum + 1, bounds0, allPrimBounds, prims0, n0, depth - 1, edges,
+		prims0, prims1 + nPrimitives, badRefines, primitiveIndices);
+	int aboveChild = nextFreeNode;
+	nodes[nodeNum].InitInterior(bestAxis, aboveChild, tSplit);
+	buildTree(aboveChild, bounds1, allPrimBounds, prims1, n1, depth - 1, edges,
+		prims0, prims1 + nPrimitives, badRefines, primitiveIndices);
+
+}
+
+// KdTreeAccel Method Definitions
+void constructKDTreeNew(
+	std::vector<SceneObject>& allSceneObjects,
+	int isectCost, int traversalCost, float emptyBonus,
+	int maxPrims, int maxDepth) {
+	// By default the maxDepth is 8 + 1.3log(N)
+	if (maxDepth <= 0)
+		maxDepth = std::round(8 + 1.3f * Log2Int(int64_t(allSceneObjects.size())));
+
+	// Compute bounds for kd-tree construction
+	primBounds.reserve(allSceneObjects.size());
+
+	for (int i = 0; i < allSceneObjects.size(); ++i){
+		BoxBoundries b = allSceneObjects[i].boxBoundries;
+		bounds = JoinBounds(bounds, b);
+		primBounds.push_back(b);
+	}
+
+	// Allocate working memory for kd-tree construction
+	std::unique_ptr<BoundEdge[]> edges[3];
+	for (int i = 0; i < 3; ++i)
+		edges[i].reset(new BoundEdge[2 * allSceneObjects.size()]);
+	std::unique_ptr<int[]> prims0(new int[allSceneObjects.size()]);
+	std::unique_ptr<int[]> prims1(new int[(maxDepth + 1) * allSceneObjects.size()]);
+
+	// Initialize _primNums_ for kd-tree construction
+	std::unique_ptr<int[]> primNums(new int[allSceneObjects.size()]);
+	for (size_t i = 0; i < allSceneObjects.size(); ++i) {
+		primNums[i] = i;
+	}
+
+	// Start recursive construction of kd-tree
+	std::vector<int> primitiveIndices;
+	primitiveIndices.reserve(allSceneObjects.size());
+	buildTree(0, bounds, primBounds, primNums.get(), allSceneObjects.size(), maxDepth, edges, prims0.get(), prims1.get(), 0, &primitiveIndices);
+
+}
+
+
+
+
+bool kdtreeIntersect(Vec3f position, Vec3f direction) {
+	// Compute initial parametric range of ray inside kd-tree extent
+	float tMin, tMax;
+	if (!boundingBoxIntersection(position, direction, bounds)) {
+		return false;
+	}
+}
+
+// ----------------- KD-Tree ends ---------------- //
 
 
 void Grid::intersect(const Vec3f& orig, const Vec3f& dir, const uint32_t& rayId, float& tHit, Sphere& sphere) const
