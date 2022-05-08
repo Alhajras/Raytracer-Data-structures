@@ -16,4 +16,8 @@ Probkems:
 - [x] Add multithreading to LBVH used openMp #pragma omp and also threadiung the construct if only the objects are more than 100. 
 - [x] Issue with the kdtree is not allocating memery corectly this gives acces reading vilotaction, fixed by adding (KdAccelNode*)malloc(size * sizeof(KdAccelNode)); instead of _aligned_maloc.
 - [x] I can test the intersection with just the global bouding box.
+- [ ] Color of bunny is wrong and there are some empty spaces fix them.
+
+![image](https://user-images.githubusercontent.com/36598060/167313778-40630b6f-a5ef-4750-8782-f91e1bc17670.png)
+
 - [ ] One rubbet it done now lets test it for more models!
