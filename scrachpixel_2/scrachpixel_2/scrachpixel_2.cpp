@@ -420,8 +420,6 @@ Vec3f castRay(
 			return Vec3f(0.6, 0.8, 1);
 		}
 		return Vec3f(0, 0.0, 0);
-
-		;
 		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
 
 		//if (boundingBoxes.size() == 0)

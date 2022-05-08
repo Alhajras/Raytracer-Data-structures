@@ -809,11 +809,10 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<No
 	return true;
 }
 
-bool boundingBoxIntersection(Vec3f position, Vec3f direction, BoxBoundries bounds)
+bool boundingBoxIntersection(Vec3f position, Vec3f direction, BoxBoundries bounds, float& tMin, float& tMax)
 {
 	float tmin = (bounds.min.x - position.x) / direction.x;
 	float tmax = (bounds.max.x - position.x) / direction.x;
-
 	if (tmin > tmax) swap(tmin, tmax);
 
 	float tymin = (bounds.min.y - position.y) / direction.y;
@@ -843,6 +842,9 @@ bool boundingBoxIntersection(Vec3f position, Vec3f direction, BoxBoundries bound
 
 	if (tzmax < tmax)
 		tmax = tzmax;
+
+	tMin = tmin;
+	tMax = tmax;
 
 	return true;
 }
@@ -1153,6 +1155,7 @@ struct KdAccelNode {
 	}
 	float SplitPos() const { return split; }
 	int nPrimitives() const { return nPrims >> 2; }
+	int NPrimitivesTest() const { return nPrimitivesTest; }
 	int SplitAxis() const { return flags & 3; }
 	bool IsLeaf() const { return (flags & 3) == 3; }
 	int AboveChild() const { return aboveChild >> 2; }
@@ -1168,12 +1171,14 @@ private:
 		int nPrims;      // Leaf
 		int aboveChild;  // Interior
 	};
+	int nPrimitivesTest = 0;
 };
 
 void KdAccelNode::InitLeaf(int* primNums, int np,
 	std::vector<int>* primitiveIndices) {
 	flags = 3;
 	nPrims |= (np << 2);
+	nPrimitivesTest = np;
 	// Store primitive ids for leaf node
 	if (np == 0)
 		onePrimitive = 0;
@@ -1197,6 +1202,9 @@ char isectCost = 80;
 char emptyBonus = 0.5f;
 char traversalCost = 1;
 BoxBoundries bounds;
+std::vector<SceneObject> kdtreeAllSceneObjects;
+std::vector<int> kdtreePrimitiveIndices;
+
 std::vector<BoxBoundries> primBounds;
 #define Infinity std::numeric_limits<Float>::infinity()
 
@@ -1375,6 +1383,7 @@ void constructKDTreeNew(
 	std::vector<SceneObject>& allSceneObjects,
 	int isectCost, int traversalCost, float emptyBonus,
 	int maxPrims, int maxDepth) {
+	kdtreeAllSceneObjects = allSceneObjects;
 	// By default the maxDepth is 8 + 1.3log(N)
 	if (maxDepth <= 0)
 		maxDepth = std::round(8 + 1.3f * Log2Int(int64_t(allSceneObjects.size())));
@@ -1402,22 +1411,109 @@ void constructKDTreeNew(
 	}
 
 	// Start recursive construction of kd-tree
-	std::vector<int> primitiveIndices;
-	primitiveIndices.reserve(allSceneObjects.size());
-	buildTree(0, bounds, primBounds, primNums.get(), allSceneObjects.size(), maxDepth, edges, prims0.get(), prims1.get(), 0, &primitiveIndices);
+	kdtreePrimitiveIndices.reserve(allSceneObjects.size());
+	buildTree(0, bounds, primBounds, primNums.get(), allSceneObjects.size(), maxDepth, edges, prims0.get(), prims1.get(), 0, &kdtreePrimitiveIndices);
 
 }
 
 
 
+struct KdToDo {
+	const KdAccelNode* node;
+	float tMin, tMax;
+};
 
 bool kdtreeIntersect(Vec3f position, Vec3f direction) {
 	// Compute initial parametric range of ray inside kd-tree extent
 	float tMin, tMax;
-	if (!boundingBoxIntersection(position, direction, bounds)) {
+	if (!boundingBoxIntersection(position, direction, bounds, tMin, tMax)) {
 		return false;
 	}
-}
+
+	Vec3f invDir(1 / direction.x, 1 / direction.y, 1 / direction.z);
+
+	//The array of KdToDo structures is used to record the nodes yet to be processed for the ray;
+	int maxTodo = 64;
+	KdToDo todo[64];
+	int todoPos = 0;
+
+	const KdAccelNode* node = &nodes[0];
+	while (node != nullptr) {
+		if (node->IsLeaf()) {
+			//If the current node is a leaf, intersection tests are performed against the primitives in the leaf.
+			int nPrimitives = node->NPrimitivesTest();
+
+			if (nPrimitives == 1) {
+				SceneObject p =
+					kdtreeAllSceneObjects[node->onePrimitive];
+				if (p.sphere.raySphereIntersect(position, direction, tMin, tMax)) {
+					return true;
+				}
+			}
+			else {
+				for (int i = 0; i < nPrimitives; ++i) {
+					int primitiveIndex =
+						kdtreePrimitiveIndices[node->primitiveIndicesOffset + i];
+					SceneObject prim =
+						kdtreeAllSceneObjects[primitiveIndex];
+					if (prim.sphere.raySphereIntersect(position, direction, tMin, tMax)) {
+						return true;
+					}
+				}
+			}
+
+			// Grab next node to process from todo list
+			if (todoPos > 0) {
+				--todoPos;
+				node = todo[todoPos].node;
+				tMin = todo[todoPos].tMin;
+				tMax = todo[todoPos].tMax;
+			}
+			else
+				break;
+		}
+
+		else {
+			// Process kd-tree interior node
+
+			// Compute parametric distance along ray to split plane
+			int axis = node->SplitAxis();
+			float tPlane = (node->SplitPos() - position[axis]) * invDir[axis];
+
+			// Get node children pointers for ray
+			const KdAccelNode* firstChild, * secondChild;
+			int belowFirst =
+				(position[axis] < node->SplitPos()) ||
+				(position[axis] == node->SplitPos() && direction[axis] <= 0);
+			if (belowFirst) {
+				firstChild = node + 1;
+				secondChild = &nodes[node->AboveChild()];
+			}
+			else {
+				firstChild = &nodes[node->AboveChild()];
+				secondChild = node + 1;
+			}
+
+			// Advance to next child node, possibly enqueue other child
+			if (tPlane > tMax || tPlane <= 0)
+				node = firstChild;
+			else if (tPlane < tMin)
+				node = secondChild;
+			else {
+				// Enqueue _secondChild_ in todo list
+				todo[todoPos].node = secondChild;
+				todo[todoPos].tMin = tPlane;
+				todo[todoPos].tMax = tMax;
+				++todoPos;
+				node = firstChild;
+				tMax = tPlane;
+			}
+		}
+	}
+	return false;
+
+	}
+
 
 // ----------------- KD-Tree ends ---------------- //
 
