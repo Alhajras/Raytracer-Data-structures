@@ -365,48 +365,29 @@ Recustivly we keep doing this until we reach a $maximum\_leafs$ parameter which 
 \\
 \noindent
 
-As discussed, the leaf node can include a list of primitives and not only one by setting a parameter called $max_leaf_premitives$ to 1; this depends on how you configure the BVH building tree method. In this report, I set the list to make it only contain one primitive. It is worth noticing that the bigger $max_leaf_premitives$ is, the smaller the depth of the tree becomes because we do not have to keep splitting until we reach a leaf that only contains primitives less or equal to $max_leaf_premitives$, hence less traversal time and less memory consumption because of the number of nodes saved, on the other having a long list of primitives inside the leaf node is bad for the performance because this will get us to the same challenge we would like to solve by introducing the BVH which is avoiding brute force algorithms.
+As discussed, the leaf node can include a list of primitives and not only one by setting a parameter called $max\_leaf\_premitives$ to 1; this depends on how you configure the BVH building tree method. In this report, I set the list to make it only contain one primitive. It is worth noticing that the bigger $max\_leaf\_premitives$ is, the smaller the depth of the tree becomes because we do not have to keep splitting until we reach a leaf that only contains primitives less or equal to $max\_leaf\_premitives$, hence less traversal time and less memory consumption because of the number of nodes saved, on the other having a long list of primitives inside the leaf node is bad for the performance because this will get us to the same challenge we would like to solve by introducing the BVH which is avoiding brute force algorithms.
 \\
 \noindent
 
-The intersection test is split into two main steps. First, we go through all the nodes in the tree, and if we hit a leaf node, we add all its primitives into a list called $hit\_list$. Afterward, we go through these candidates and find which are intersected and which one is the closest. The following two pseudo-codes explain the intersection test for the BVH. 
-
-\begin{algorithm}[H]
-\caption{Pseudocode of the method $BVH\_intersect$}\label{alg:alg1}
-\begin{algorithmic}
-\Require $ray_p,\, ray_d,\, current\_node,\, hit\_list$
-
-\If{$current\_node \rightarrow boundingBoxIntersection(ray_p,\, ray_d,\, current\_node) = false $}
-\Return $None$
-
-\State $premitives \gets current\_node \rightarrow premitives $ 
-\If{$premitives \rightarrow size \neq 0$}
-    \State $hit\_list \rightarrow push(premitives)$
-\Else
-\State $BVH\_intersect(ray_p,\, ray_d,\, current\_node \rightarrow left\_child,\, hit\_list)$
-\State $BVH\_intersect(ray_p,\, ray_d,\, current\_node \rightarrow right\_child,\, hit\_list)$
-\EndIf
-\end{algorithmic}
-\end{algorithm}
+The intersection test is split into two main steps. First, we go through all the nodes in the tree, and if we hit a leaf node, we add all its primitives into a list called $hitList$. Afterward, we go through these candidates and find which are intersected and which one is the closest. The following two pseudo-codes explain the intersection test for the BVH. 
 
 
 \begin{algorithm}[H]
-\caption{Pseudocode of the method $find\_intersected\_premitive$}\label{alg:alg2}
-\begin{algorithmic}
-\Require $ray_p,\, ray_d,\, hit\_list$
-
-\State $closest\_premitive \gets hit\_list[0]$
- 
-\For{$premitive$ in $hit\_list$}
-	\If{$premitive \rightarrow intersect$}
-		\If{$premitive \rightarrow isClosest$}
-			\State $closest\_premitive \gets premitive$
+	\caption{$BVHIntersect$}\label{alg:alg1}
+	\begin{algorithmic}
+		\Require $ray$, $node$, $hitList$
+		\If{$node$ $\rightarrow$ $boxIntersect(ray) = false $}
+			\State $return\;\;false$
 		\EndIf
-	\EndIf
-\EndFor
-\State \Return $closest\_premitive$
-\end{algorithmic}
+		\If{$root$ $\rightarrow$ $isleaf$}
+		    \State $hitList$ $\rightarrow$ $push(node \rightarrow premitives)$
+		\Else
+			\State $BVHIntersect(ray, node \rightarrow leftChild,\, hitList)$
+			\State $BVHIntersect(ray, node \rightarrow rightChild,\, hitList)$
+		\EndIf
+	\end{algorithmic}
 \end{algorithm}
+
 \clearpage
 
 \section{Linear Bounding Volume Hierarchies (LBVH)}
@@ -421,7 +402,9 @@ One way to solve this is to parallelize this process. This can be done if the su
 
 The first step is to transform the building tree problem into a sorting problem. We map the 3D centroid points for each primitive to one value that can be sorted. Morton codes do this mapping. Morton code map multidimensional data to one dimension while preserving locality of the data points.[WIKIPEDIA]. The transformation is done by interleaving the bits of the premitive centroides in base 2. for example taking a 3D point (x,y,z) the result mortone code will be 
 
-\[ ...z_3y_3x_3z_2y_2x_2z_1y_1x_1z_0y_0x_0 \]
+\begin{equation}
+ ...z_3y_3x_3z_2y_2x_2z_1y_1x_1z_0y_0x_0
+\end{equation}
 
 
 \begin{figure}[h]	
@@ -445,35 +428,40 @@ The first bit will split the y-axis into two regions. The first region with the 
 
 \begin{figure}[H]	
      \centering
-     \captionsetup{justification=centering,margin=2cm}
-     \includegraphics[width=9cm]{images/example_lbvh/scene_2.png}
-     \caption{The values of various bits in the Morton value indicate the region of space that the corresponding coordinate lies in. }
-        \label{fig:dice}
-\end{figure}
-
-\begin{figure}[H]	
-     \centering
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/example_lbvh/01.png}
-         \caption{First split on x-axis}
+         \captionsetup{justification=centering}
+         \includegraphics[width=5cm]{images/example_lbvh/scene_2.png}
+         \caption{Morton value for premitives center}
          \label{fig:pi_4000}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/example_lbvh/02.png}
-         \caption{Second split on y-axis}
+         \captionsetup{justification=centering}
+         \includegraphics[width=5cm]{images/example_lbvh/02.png}
+         \caption{First split on x-axis}
          \label{fig:pi_5000}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \captionsetup{justification=centering,margin=2cm}
-         \includegraphics[width=\textwidth]{images/example_lbvh/03.png}
+         \captionsetup{justification=centering}
+         \includegraphics[width=5cm]{images/example_lbvh/03.png}
+         \caption{Second split on y-axis}
+         \label{fig:pi_18000}
+     \end{subfigure}
+        \captionsetup{justification=centering,margin=2cm}
+             \hfill
+     \begin{subfigure}[b]{0.475\textwidth}
+         \centering
+         \captionsetup{justification=centering}
+         \includegraphics[width=5cm]{images/example_lbvh/03.png}
          \caption{Third split on x-axis}
          \label{fig:pi_18000}
      \end{subfigure}
+        \captionsetup{justification=centering,margin=2cm}
+
         \caption{(a) In 2D, the high bit of the Morton-coded value of a point’s coordinates defines a splitting plane along the middle of the y-axis. If the high bit is set, the point is above the plane. (b) Similarly, the second-highest bit of the Morton value splits the x-axis in the middle. (c) If the high y bit is 1 and the high x bit is 0, the point must lie in the shaded region. (d) The second-from-highest y bit splits the y axis into four areas. }
         \label{fig:three graphs}
 \end{figure}
@@ -619,28 +607,28 @@ We choose the minimum cost. In the previous iterations, it is the 4th and then a
      \centering
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/kdtree/grid_2.png}
+         \includegraphics[width=5cm]{images/kdtree/grid_2.png}
          \caption{$1^{st} $ iteration.}
          \label{fig:pi_4000}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/kdtree/grid_3.png}
+         \includegraphics[width=5cm]{images/kdtree/grid_3.png}
          \caption{$2^{nd} $ iteration.}
          \label{fig:pi_5000}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/kdtree/grid_5.png}
+         \includegraphics[width=5cm]{images/kdtree/grid_5.png}
          \caption{$4^{th} $ iteration.}
          \label{fig:pi_18000}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/kdtree/grid_8.png}
+         \includegraphics[width=5cm]{images/kdtree/grid_8.png}
          \caption{$7^{th} $ iteration.}
          \label{fig:pi_18000}
      \end{subfigure}
