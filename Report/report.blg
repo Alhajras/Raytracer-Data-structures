@@ -1,0 +1,67 @@
+This is BibTeX, Version 0.99d (TeX Live 2020/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: report.aux
+The style file: apacite.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: References.bib
+Warning--entry type for "Kimathi2020" isn't style-file defined
+--line 1 of file References.bib
+Warning--entry type for "Burke2018" isn't style-file defined
+--line 9 of file References.bib
+You're missing a field part---line 115 of file References.bib
+ :     year=
+ :          ,
+I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "pharr2016physically"
+Warning--I didn't find a database entry for "burley2018design"
+apacite.bst [2013/07/21 v6.03 APA bibliography style]
+You've used 4 entries,
+            6951 wiz_defined-function locations,
+            1294 strings with 11146 characters,
+and the built_in function-call counts, 6324 in all, are:
+= -- 860
+> -- 40
+< -- 241
++ -- 212
+- -- 10
+* -- 316
+:= -- 1056
+add.period$ -- 16
+call.type$ -- 4
+change.case$ -- 72
+chr.to.int$ -- 0
+cite$ -- 8
+duplicate$ -- 124
+empty$ -- 279
+format.name$ -- 56
+if$ -- 1302
+int.to.chr$ -- 0
+int.to.str$ -- 12
+missing$ -- 0
+newline$ -- 91
+num.names$ -- 32
+pop$ -- 152
+preamble$ -- 1
+purify$ -- 20
+quote$ -- 0
+skip$ -- 527
+stack$ -- 0
+substring$ -- 232
+swap$ -- 61
+text.length$ -- 13
+text.prefix$ -- 0
+top$ -- 1
+type$ -- 464
+warning$ -- 0
+while$ -- 24
+width$ -- 0
+write$ -- 98
+(There was 1 error message)

@@ -1,0 +1,97 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Burke%
+}{%
+Burke%
+}{%
+{\protect \APACyear {2018}}%
+}]{%
+Burke2018}
+\APACinsertmetastar {%
+Burke2018}%
+\begin{APACrefauthors}%
+Burke, B.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{March}{}.
+\newblock
+\APACrefbtitle {What Is Ray Tracing Technology and How It Works in GPUs.} {What
+  is ray tracing technology and how it works in gpus.}
+\newblock
+\begin{APACrefURL}
+  \url{https://nvidianews.nvidia.com/news/nvidia-rtx-technology-realizes-dream-of-real-time-cinematic-rendering}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Ericson%
+}{%
+Ericson%
+}{%
+{\protect \APACyear {2004}}%
+}]{%
+Ericson2004}
+\APACinsertmetastar {%
+Ericson2004}%
+\begin{APACrefauthors}%
+Ericson, C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2004}.
+\newblock
+\APACrefbtitle {Real-Time Collision Detection} {Real-time collision detection}.
+\newblock
+\APACaddressPublisher{}{Morgan Kaufmann}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Kimathi%
+}{%
+Kimathi%
+}{%
+{\protect \APACyear {2020}}%
+}]{%
+Kimathi2020}
+\APACinsertmetastar {%
+Kimathi2020}%
+\begin{APACrefauthors}%
+Kimathi, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{June}{}.
+\newblock
+\APACrefbtitle {What Is Ray Tracing Technology and How It Works in GPUs.} {What
+  is ray tracing technology and how it works in gpus.}
+\newblock
+\begin{APACrefURL} \url{https://www.dignited.com/62084/how-ray-tracing-works}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Stanford%
+}{%
+Stanford%
+}{%
+{\protect \APACyear {1998}}%
+}]{%
+stanfordlucy}
+\APACinsertmetastar {%
+stanfordlucy}%
+\begin{APACrefauthors}%
+Stanford.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1998}{}{}.
+\newblock
+\APACrefbtitle {Stanford Lucy.} {Stanford lucy.}
+\newblock
+\begin{APACrefURL} \url{http://graphics.stanford.edu/data/3Dscanrep/}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

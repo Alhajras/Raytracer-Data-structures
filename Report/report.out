@@ -1,0 +1,26 @@
+\BOOKMARK [1][-]{section.1}{Introduction to Ray tracing}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Overview}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Motivation of using acceleration data structures}{section.1}% 3
+\BOOKMARK [1][-]{section.2}{Bounding Volume Hierarchies \(BVH\)}{}% 4
+\BOOKMARK [2][-]{subsection.2.1}{Concept}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.2}{Implemntation}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Construction}{subsection.2.2}% 7
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Visual Illustration}{subsection.2.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.2.3}{Traversal}{subsection.2.2}% 9
+\BOOKMARK [1][-]{section.3}{Linear Bounding Volume Hierarchies \(LBVH\)}{}% 10
+\BOOKMARK [2][-]{subsection.3.1}{Concept}{section.3}% 11
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Visual Illustration}{subsection.3.1}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Implemntation}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Construction}{subsection.3.2}% 14
+\BOOKMARK [1][-]{section.4}{K dimensional tree \(Kd-Tree\)}{}% 15
+\BOOKMARK [2][-]{subsection.4.1}{Concept}{section.4}% 16
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Compact tree representation}{subsection.4.1}% 17
+\BOOKMARK [3][-]{subsubsection.4.1.2}{The Surface Area Heuristic}{subsection.4.1}% 18
+\BOOKMARK [2][-]{subsection.4.2}{Implemntation}{section.4}% 19
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Construction}{subsection.4.2}% 20
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Traversal}{subsection.4.2}% 21
+\BOOKMARK [1][-]{section.5}{Performance Analysis}{}% 22
+\BOOKMARK [2][-]{subsection.5.1}{How tweaking the data structure parameters affect performance}{section.5}% 23
+\BOOKMARK [2][-]{subsection.5.2}{Investigating different data structures}{section.5}% 24
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 25
+\BOOKMARK [1][-]{section.6}{References}{}% 26
