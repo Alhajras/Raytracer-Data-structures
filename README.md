@@ -20,4 +20,9 @@ Probkems:
 
 ![image](https://user-images.githubusercontent.com/36598060/167313778-40630b6f-a5ef-4750-8782-f91e1bc17670.png)
 
-- [ ] One rubbet it done now lets test it for more models!
+- [x] One rubbet it done now lets test it for more models!
+- [ ] Fix Pseudo code.
+- [ ] Check on images and captions
+- [ ] Go through each chapter and check grammar.
+- [ ] Update the code and clean it.
+- [ ] Prepare for the presentation.
