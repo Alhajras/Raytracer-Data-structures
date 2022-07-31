@@ -25,4 +25,6 @@ Probkems:
 - [ ] Check on images and captions
 - [ ] Go through each chapter and check grammar.
 - [ ] Update the code and clean it.
+- [ ] Make excutable file for the code.
+- [ ] Clean Latex file format.
 - [ ] Prepare for the presentation.
