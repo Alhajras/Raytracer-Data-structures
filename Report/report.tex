@@ -1008,10 +1008,12 @@ Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \\
 \end{table}
 
 Note that even though the average performance is correlated with the number of primitives in the scene, however, there are some scenarios where the performance is not behaving as expected. For example, looking at the Kd-Tree number of nodes can spike up, this is because not only the number of primitives important to choosing the right data structure but other perspectives related to the scene can affect the performance not only the number of primitives.  The next tests try to cover some of them.
+\\
+\noindent
 
+\subsection{Investigating much more complex scenes}
 
-
-\begin{table}[ht] 
+\begin{table}[H] 
 \centering 
 {\footnotesize
 \begin{tabular}{ P{2.5cm}||P{5cm}P{5cm} }      % centered columns (3 columns) 
@@ -1020,8 +1022,8 @@ Note that even though the average performance is correlated with the number of p
 \hline\hline 
 
 &
-\Includegraphics[height=1in]{images/tree.png}
-& \Includegraphics[height=1in]{images/SCIFI.png}
+\Includegraphics[width=5cm]{images/tree.png}
+& \Includegraphics[width=5cm]{images/SCIFI.png}
 \\
 
 \hline \hline
@@ -1066,6 +1068,22 @@ Kd-Tree \#nodes & 511, 023 & 272, 881\\
     \end{tabular}
 }
 \end{table}
+\subsubsection{Trees}
+Special thanks to \cite{trees} for the Trees 3D model. The inte4rseting thing about this scene is that it has a high discrepancy, where some premitives are creating clusters at regions such as the leaf of the trees where there are compact number of prmeitives but with some empty spaces between them, on the other hand there is the ground the sky which are empty regions. I would like to not here that I am not supporting any textures in my Raytracer. 
+\\
+\noindent
+
+Looking at the result we can note that LBVH and BVH are still delivering almost the same result, even though the building and rendering times differ, the overall performance is relatively close. The number of generated nodes is similar. Kd-Tree consumes more than double the time to construct the tree and it generates almost 4.5 million nodes which are almost 4.5X number of nodes in BVH and LBVH, however, the rendering time is almost half. This is because Kd-Tree allows the same primitives to be in more than one node leading to duplication, more nodes, and a deeper binary tree. 
+\\
+\noindent
+
+We can note that when the Kd-Tree outperformed BVH and LBVH in terms of rendering time even though when it was previously tested on Igea and the Asian Dragon it did not outperform the other data structures. Even though the number of primitives is between 134k and 539K the result we would expect to be in between or at least the Kd-tree still suffering but this was not the result. This scene gives hint on how different data structures can perform differently based on the number of primitives and the distribution of primitives. 
+\subsubsection{Sci-Fi Tropical City}
+Special thanks to \cite{scifi} for the Sci-Fi Tropical City 3D model.
+This scene has more details than the Trees even though the number of primitives is less. The same result for both BVH and LBVH where BVH outperformed LBVH in the building time but LBVH outperformed BVH in rendering time, but the overall time is almost similar. Kd-Tree again outperformed both BVH and LBVH in the rendering time. Interestingly the number of nodes is less than nodes generated in the Stanford bunny which was more than the 3x number of the Sci-fi scene. 
+\\
+\noindent
+
 \clearpage
 
 \section{Conclusion}
