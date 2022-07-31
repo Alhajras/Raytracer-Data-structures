@@ -1009,6 +1009,63 @@ Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \\
 
 Note that even though the average performance is correlated with the number of primitives in the scene, however, there are some scenarios where the performance is not behaving as expected. For example, looking at the Kd-Tree number of nodes can spike up, this is because not only the number of primitives important to choosing the right data structure but other perspectives related to the scene can affect the performance not only the number of primitives.  The next tests try to cover some of them.
 
+
+
+\begin{table}[ht] 
+\centering 
+{\footnotesize
+\begin{tabular}{ P{2.5cm}||P{5cm}P{5cm} }      % centered columns (3 columns) 
+\hline\hline                                      %inserts double horizontal lines
+& Trees & Sci-Fi Tropical City   \\ [0.5ex] % inserts table heading 
+\hline\hline 
+
+&
+\Includegraphics[height=1in]{images/tree.png}
+& \Includegraphics[height=1in]{images/SCIFI.png}
+\\
+
+\hline \hline
+\\
+\#Primitives & 252, 178  & 90, 811\\ [0.5ex] % inserts table heading 
+\\
+\hline \hline
+
+\\
+BVH build(s)& 4.373 s& 1.556 s\\
+\\
+LBVH build(s)& 12.062 s& 5.408 s \\
+\\
+Kd-Tree build(s)& 55.325 s& 14.164 s \\
+\\
+\hline \hline
+\\
+BVH render(s)& 42.028 s& 54.690 s \\
+\\
+LBVH render(s)& 39.330 s& 49.636 s \\
+\\
+Kd-Tree render(s)& 22.822 s& 25.705 s  \\
+\\
+\hline \hline
+\\
+BVH \#int. tests & 907, 969 & 1, 250, 079  \\
+\\
+LBVH \#int. tests & 914, 992 & 1, 031, 416  \\
+\\
+Kd-Tree \#int. tests & 4, 486, 021 & 2, 813, 475  \\
+\\
+\hline \hline
+\\
+BVH \#nodes & 131, 047 & 65, 535 \\
+\\
+LBVH \#nodes & 131, 038 & 65, 530 \\
+\\
+Kd-Tree \#nodes & 511, 023 & 272, 881\\
+\\
+\hline \hline
+
+    \end{tabular}
+}
+\end{table}
 \clearpage
 
 \section{Conclusion}
