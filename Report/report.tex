@@ -373,7 +373,7 @@ The intersection test is split into two main steps. First, we go through all the
 
 
 \begin{algorithm}[H]
-	\caption{$BVHIntersect$}\label{alg:alg1}
+	\caption{$intersectBVH$}\label{alg:alg1}
 	\begin{algorithmic}
 		\Require $ray$, $node$, $hitList$
 		\If{$node$ $\rightarrow$ $boxIntersect(ray) = false $}
@@ -382,8 +382,8 @@ The intersection test is split into two main steps. First, we go through all the
 		\If{$root$ $\rightarrow$ $isleaf$}
 		    \State $hitList$ $\rightarrow$ $push(node \rightarrow premitives)$
 		\Else
-			\State $BVHIntersect(ray, node \rightarrow leftChild,\, hitList)$
-			\State $BVHIntersect(ray, node \rightarrow rightChild,\, hitList)$
+			\State $intersectBVH(ray, node \rightarrow leftChild,\, hitList)$
+			\State $intersectBVH(ray, node \rightarrow rightChild,\, hitList)$
 		\EndIf
 	\end{algorithmic}
 \end{algorithm}
@@ -497,24 +497,24 @@ We start with a random split point. Let us say the last points. Then we start de
 Until this point, we are not gaining much if using LBVH. As we discussed, LBVH special is how easily we can parallelize it. To achieve this, we will use a simple conditional multithreading mechanism. For building the tree we will only create a new thread of the number of premitives in the subtree is more than 100 premiitive. Note that this is a random number chosen, but we do not want to create a new thread for small subtrees because it is not worth it anyway.
 
 \begin{algorithm}[H]
-\caption{Pseudocode of the method $LBVH\_construct$}\label{alg:alg1}
+\caption{$constructLBVH$}\label{alg:alg1}
 \begin{algorithmic}
-\Function {ConstructLBVH}{$allSceneObjects$, $sortedMortonCodes$, $sortedMortonCodes$, $startIndex$, $endIndex$, $totalNodes$ }
-\State $totalNodes++$
-\State $node \gets Node()$
-\State $aabbBoundries \gets findBiggestAABBBoundries(allSceneObjects)$
-\State $objectsNumber \gets  endIndex - startIndex$
-\If{$objectsNumber = 0$}
+		\Require $allPrimitives$, $sortedMortonCodes$, $startI$, $endI$
+\State $node$ $\gets$ $createNewNode()$
+\State $increaseTotalNumberOfNodes()$
+
+\State $aabb$ $\gets$ $getGlobalAABB(primitives)$
+\State $primitives$ $\gets$  $endI$ - $startI$
+\If{$primitives = 0$}
 	\State $node \rightarrow isleaf \gets true$
-	\State $node \rightarrow objs \gets allSceneObjects[startIndex]$
+	\State $node \rightarrow prims \gets allPrimitives[startI]$
 	\State \Return $node$
 \EndIf
 
-\State $midPoint \gets findSplitPoint(sortedMortonCodes, startIndex, endIndex)$
-\State $node \rightarrow leftchild  \gets constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes)$
-\State $node \rightarrow rightchild  \gets constructBVH(allSceneObjects, midSplitIndex, endIndex, totalNodes)$
+\State $split \gets findSplitPoint(sortedMortonCodes, startIndex, endIndex)$
+\State $node \rightarrow leftchild  \gets constructLBVH(allPrimitives, startI, split)$
+\State $node \rightarrow rightchild  \gets constructLBVH(allPrimitives, split, endI)$
 \State \Return $node$
-\EndFunction
 \end{algorithmic}
 \end{algorithm}
 \clearpage
@@ -699,41 +699,6 @@ Some edge cases can occur when the same number of primitives are assigned for bo
 
 The KD-Tree has a variety of implementations, the one used in this project is based on (Physically Based Rendering). The implementation generates a binary tree that focuses on less memory consumption and finds the best split by using the SAH method for splitting. We will be using a top-down approach as we did in BVH. We will split the implementation into two phases: Tree construction and tree traversal.
 
-
-
-\begin{algorithm}[H]
-\caption{Pseudocode of the method $buildTree$}\label{alg:alg1}
-\begin{algorithmic}
-\Function {BuildTree}{$nodeNum$,
-	$nodeBounds$,
-	$allPrimBounds$,
-	$primNums$,
-	$nPrimitives$,
-	$depth$,
-	$edges[3]$,
-	$prims0$,
-	$prims1$,
-	$badRefines$, 
-	$primitiveIndices$
- }
-\State $totalNodes++$
-\If{$nPrimitives  \leq maxPrims || depth == 0$}
-	\State $nodes[nodeNum] \rightarrow push \gets InitLeaf(primNums, nPrimitives, primitiveIndices)$
-	\State \Return
-\EndIf
-
-\State $splitAxis \gets GeMaximumAxis(nodeBounds)$
-\State $splitPoint \gets findBestSplitPointBySAH(splitAxis)$
-\State $setNodeBoundries(node)$
-\State $nodes[nodeNum] \rightarrow push \gets InitInterior(splitAxis, aboveChild, splitPoint)$
-
-\State $buildTree(nodeNum+1, bounds0, allPrimBounds, prims0, n0, depth - 1, edges, prims0, prims1 + nPrimitives, badRefines, primitiveIndices)$
-
-\State $buildTree(aboveChild, bounds1, allPrimBounds, prims1, n1, depth - 1, edges, prims0, prims1 + nPrimitives, badRefines, primitiveIndices)$
-
-\EndFunction
-\end{algorithmic}
-\end{algorithm}
 
 \subsubsection{Traversal}
 The kd tree traversal is different from the BVH traversal we mentioned. BVH was a binary tree traversal where we start with the root node and go to the left or right child. On the other hand, the Kd-tree uses the compact form array. 
@@ -1087,10 +1052,8 @@ This scene has more details than the Trees even though the number of primitives 
 \clearpage
 
 \section{Conclusion}
-\cite{pharr2016physically}
-\cite{burley2018design}
-\cite{stanfordlucy}
-
+The author thanks his supervisor \textbf{Prof.Dr.-Ing. Matthias Teschner} once again for the guidance throughout this project.
+	
 \clearpage
 
 \bibliographystyle{apacite}
