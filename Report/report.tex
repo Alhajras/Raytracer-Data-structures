@@ -230,7 +230,8 @@ The bounding box can have different shapes, as shown in Figure. The simpler the 
         \label{fig:dice}
 \end{figure}
 
-
+\noindent
+\\
 Let us look at the figure as an example; this scene is consistent of 6 objects. Looking at the generated binary tree, we can note that every two objects are bounded by one AABB, then each two AABB are bounded by a bigger AABB. We recursively do this until we reach the root node that covers the limits of the whole objects. 
 
 \noindent
@@ -269,13 +270,16 @@ splitting based on \protect\cite{Ericson2004}}
         \label{fig:dice}
 \end{figure}
 
-
+\noindent
+\\
 To answer the second question, which axis to choose for splitting? One can use any axis, but this is a naive way to split. What happens if all primitives have the same z-axis and y-axis, but only the x is changing, and we randomly choose to split by z-axis! This will usually produce an unbalanced tree. The optimal way is to calculate the longest axis for each node (AABB box). This way, we can try to split by the longest axis, which will produce a better-balanced tree. We can find the longest axis of the AABB box by using its diagonal $d$.  
 
 \begin{equation}
 \textbf{d} = \textbf{AABB}_{max} - \textbf{AABB}_{min}
 \end{equation}
 
+\noindent
+\\
 In the Figure, we have four spheres and an AABB covering all the spheres. If we would like to choose one axis to split from, we can randomly start with the x-axis. As it is illustrated, choosing this axis will not give us a middle point to split point since all spheres have the same x-axis. Same for the y-axis. On the other hand, we can see that the Z-axis will split the AABB box into two AABB boxes, each containing two spheres. 
 
 \begin{figure}[H]	
@@ -334,6 +338,8 @@ For a better illustration of how to build the BVH tree by using the Median of th
         \label{fig:three graphs}
 \end{figure}
 
+\noindent
+\\
 Firstly, we start creating the root node by calculating the $minimum\_edge$ (the smallest bounding point in our AABB) and the $maximumu\_edge$ point (the largest in the AABB box). This can be easily done by iterating through all primitives and assigning the smallest primitive centroid to the  $minimum\_edge$ and the largest primitive centroid to the $maximum\_edge$.
 
 \noindent
@@ -574,12 +580,15 @@ Given a collection of N primitives in a sub-tree that spans the 3D volume V, and
 Cost(V) = C_T + C_I(\frac{SA(V_L)}{SA(V)}N_L \frac{SA(V_R)}{SA(V)}N_R)
 \end{equation}
 
+\noindent
+\\
 Where: $V$: Volume, $C_T$: Cost of traversal, $C_I$: Cost of intersection, $SA$: Surface area, $N$: Number of premitives, $•L$: Left, $R$: Right.
 
 \noindent
 \\
 Let us have an exmaple for betrter vudal illustration on how the SAH works: 
-
+\noindent
+\\
 Giving the next scene consists of 7 primitives, we would like to find the best split by using the SAH method. Because the intersection cost depends on the raytracer implementation and also varies between the different shapes of primitives, for easier calculation, we will set it to 1. In contrast, while the estimated traversal cost was set to $\frac{1}{8}$. We will set the number of buckets to 8.
 
 \noindent
@@ -603,7 +612,8 @@ Cost\_iteration\_4 =  \frac{1}{8} + (\frac{1+1+4}{16}(3) +\frac{4+4+1+1}{16}(4))
 Cost\_iteration\_7 =  \frac{1}{8} + (\frac{1+1+4+4+4+1}{16}(6) +\frac{1}{16}(1)) = 5.81
 \end{equation}
 
-
+\noindent
+\\
 We choose the minimum cost. In the previous iterations, it is the 4th and then assigns the primitives on the left to the left node and the right primitives to the right node. Unlike BVH, some primitives can be set to both left and right if they are between the bucket's splitting point.
 
 
@@ -672,7 +682,8 @@ For building the tree, the maximum allowed depth is needed to be given. However,
 depth = 8 + 1.3log(N)
 \end{equation}
 
-
+\noindent
+\\
 Since we are using memory allocation dynamically for the nodes array, each time the array is full, we will then reallocate more memory duoble the size of the old array.
 
 \noindent
@@ -745,53 +756,45 @@ Otherwise, if it is an interior node, we would like to test its children, and un
 \section{Performance Analysis}
 In this chapter, we will analyze the different data structures used (BVH, LBVH, Kd-Tree) and how they perform against different scenes. We will pick up one data structure and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
 
-
+\noindent
+\\
 The following settings are used in the raytracer:
-\begin{table}[ht] 
+
+\newcommand\T{\rule{0pt}{2.6ex}}       % Top strut
+\newcommand\B{\rule[-1.2ex]{0pt}{0pt}} % Bottom strut
+
+\begin{table}[H] 
 \centering 
 {\footnotesize
-\begin{tabular}{ P{2.5cm}||P{5cm}  P{5cm}}      % centered columns (3 columns) 
+\begin{tabular}{ P{2.5cm} P{5cm}  P{5cm}}      % centered columns (3 columns) 
 \hline \hline
-\\
-Property & Value & Note \\ [0.5ex]
-\\
+Property & Value \T\B  \\
 \hline \hline
-\\
-Machine & Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz, RAM 16GB & -\\ [0.5ex] % inserts table heading 
+Machine & Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz, RAM 16GB \T\B \\
+ \hline
+Resolution & 640x480  \T\B
 \\
  \hline
- \\
-Resolution & 640x480 & - \\
-\\
- \hline
- \\
-Programming language & C++ & - \\
+Programming language & C++  \T\B 
 \\ 
  \hline
- \\
-Shader & Phong illumination & - \\
+Shader & Phong illumination \T\B 
 \\
  \hline
- \\
-\#Cameras & 1 & - \\
+\#Cameras & 1 \T\B 
 \\
-\#Lights & 1 & - \\
+\#Lights & 1  \T\B 
 \\ 
  \hline
- \\
- Models extention& .obj& The extention that the raytracer supports \\
+ Models extention& .obj \T\B 
 \\ 
  \hline
- \\
-Anti-aliasing & 1 & Number of anti aliaising samples\\
+Anti-aliasing samples & 1 \T\B 
 \\ 
- \hline
- \\
-Maximum number of leafs& 1 & The leaf node only containe one or less than one premitive\\
-\\
 \hline \hline
     \end{tabular}
 }
+  \caption{The settings used for the Raytracer}
 \end{table}
 
 \subsection{How tweaking the data structure parameters affect performance}
@@ -898,8 +901,12 @@ depth = 100& 35, 947 & 44, 854 & 683, 669 & 1.871 s & 9.546 s\\
 \hline \hline
     \end{tabular}
 }
+  \captionsetup{justification=centering,margin=2cm}
+  \caption{Changing Kd-Tree parameters and how they affect performance by using \protect\cite{stanfordbunny}}
 \end{table}
 
+\noindent
+\\
 The depth parameter has a different effect on the number of nodes where when the value changed from 5 to 10 the number of nodes increased by almost 24X which reduced the rendering time by almost 3X.  Even small values of the depth reduce the building time the rendering time which is usually the most critical stage in the raytracing pipeline is increased tremendously. Using the formula mentioned to set the depth dynamically depending on the scene, we end up with a value equal to 28 in this scene (Stanford bunny), this value increases the rendering time even more by almost 4X in comparison to depth equals to 5. Nevertheless increasing the depth more to 100 resulted in no performance gain as we reached a saturation point. Although I took the formula from the book PBRT for granted it seems that it delivers a decent result in this scene. 
 
 \noindent
@@ -927,7 +934,7 @@ Looking at the number of nodes and the number of intersections with primitives w
 
 \noindent
 \\
-\begin{table}[ht] 
+\begin{table}[H] 
 \centering 
 {\footnotesize
 \begin{tabular}{ P{2.5cm}||P{2.5cm}P{2.5cm} P{2.5cm} P{2.5cm}  }      % centered columns (3 columns) 
@@ -979,8 +986,12 @@ Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \\
 
     \end{tabular}
 }
+\captionsetup{justification=centering,margin=2cm}
+\caption{Comparison between BVH, LBVH and Kd-Tree by using \protect\cite{stanfordbunny}, \protect\cite{stanfordxyzdragon}, \protect\cite{buddha}}
 \end{table}
 
+\noindent
+\\
 Note that even though the average performance is correlated with the number of primitives in the scene, however, there are some scenarios where the performance is not behaving as expected. For example, looking at the Kd-Tree number of nodes can spike up, this is because not only the number of primitives important to choosing the right data structure but other perspectives related to the scene can affect the performance not only the number of primitives.  The next tests try to cover some of them.
 
 \noindent
