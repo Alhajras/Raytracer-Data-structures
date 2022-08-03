@@ -60,7 +60,7 @@
 	
 	\vspace{0.75\baselineskip} % Whitespace above the title
 	
-	{\LARGE Implementing AND Benchmarking Different \\ Acceleration Data Structures \\ FOR \\Ray Tracing  \\} % Title
+	{\LARGE Implementation and Analysis of Acceleration Data Structures in Ray tracing\\} % Title
 	
 	\vspace{0.75\baselineskip} % Whitespace below the title
 	
@@ -73,7 +73,8 @@
 	%	Subtitle
 	%------------------------------------------------
 	
-	Master Project Rendering Track % Subtitle or further description
+	Master Project Rendering Track \\ 
+	SS 2022 % Subtitle or further description
 	
 	\vspace*{3\baselineskip} % Whitespace under the subtitle
 	
@@ -123,16 +124,15 @@
 \clearpage
 
 \section*{Acknowledgments}
-This project results from hard work and cumulative knowledge gained through seminars, labs, and lectures in the chair of computer graphics at the University of Freiburg under Prof. Dr.-Ing. Matthias Teschner guidness and supervision. Those materials and their resources were the fundamental building blocks to reaching this point with the proper feedback from the professor. 
-\\
-\section*{Previous work}
-This project is based on a simple raytracer that I have been developing in a Lab course at the University of Freiburg. The raytracer provides basic functionality, but it is not a commercial raytracer; it still needs some improvement from different perspectives. This project will focus only on the acceleration data structures and explore different methods, and tests their performance against each other.
+This project results from hard work and cumulative knowledge gained through seminars, labs, and lectures in the chair of computer graphics at the University of Freiburg under \textbf{Prof. Dr.-Ing. Matthias Teschner} guidness and supervision. Those materials and their resources were the fundamental building blocks to reaching this point with the proper feedback from the professor. The resources used in this project are been referenced and acknowledged wherever necessary.
 \\
 \section*{Abstract}
-This report aims to implement and analyze different acceleration data structures integrated into a raytracer. Three types will be discussed: Bounding Volume Hierarchies (BVH), Linear Bounding Volume Hierarchies (LBVH), and Kd-Tree. The report shows the proof of concept and how to implement each data structure. Furthermore, we will explore each method's strengths and weaknesses by using different scenes and models. 
+Improving the rendering time in a ray tracer is a challenging task. One of the improvement levels is to implement an acceleration data structure. There are two classifications of data structures namely, \textbf{spatial subdivision} and \textbf{object subdivision}. Both classifications will be covered in the report. For object subdivision, \textbf{Bounding Volume Hierarchies (BVH)} and \textbf{Linear Bounding Volume Hierarchies (LBVH)} will be implemented. For spatial subdivision, Kd-Tree is chosen. In this report, we will explore each method's strengths and weaknesses by using different scenes and models.
+  
+\noindent
 \\
-\textbf{Keywords:} [ray tracing] [acceleration structure] [BVH] [LBVH] [object subdivision] [spatial
-subdivision] [KD-Tree]
+\textbf{Keywords:} [BVH] [LBVH] [KD-Tree] [ray tracing] [acceleration structure]  [object subdivision] [spatial
+subdivision] 
 \clearpage
 \tableofcontents
 \clearpage
@@ -441,7 +441,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/scene_2_new.png}
+         \includegraphics[width=5cm]{images/example_lbvh/morton.png}
          \caption{Morton value for premitives center}
          \label{fig:pi_4000}
      \end{subfigure}
@@ -449,7 +449,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/1.png}
+         \includegraphics[width=5cm]{images/example_lbvh/01.png}
          \caption{First split on x-axis}
          \label{fig:pi_5000}
      \end{subfigure}
@@ -457,7 +457,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/2.png}
+         \includegraphics[width=5cm]{images/example_lbvh/02.png}
          \caption{Second split on y-axis}
          \label{fig:pi_18000}
      \end{subfigure}
@@ -466,7 +466,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/3.png}
+         \includegraphics[width=5cm]{images/example_lbvh/03.png}
          \caption{Third split on x-axis}
          \label{fig:pi_18000}
      \end{subfigure}
