@@ -141,44 +141,38 @@ subdivision]
 
 \section{Introduction to Ray tracing}
 \subsection{Overview}
-Ray tracing is an algorithm to simulate how light behaves in a 3D scene to generate real-life digital images in a computer. This process is called rendering. Rendering is used in various applications, such as Gaming, Animation, Engineering, and Moviemaking. 
+Ray tracing is an algorithm to simulate how light behaves in a 3D scene to generate real-life digital images in a computer. This process is called rendering. Rendering is used in various applications, such as Gaming, Animation, and Engineering.
 
 \noindent
 \\
-Raytracing has three different implementations: Forward Raytracing, Backward Raytracing, and Hybrid Raytracing; regardless of which implementation is used, the general idea of the algorithm is quite simple but extremely powerful; it is to project the 3D scene into a 2D plane (Image), to do so, a resolution must be chosen beforehand to divide the plane into small squares named (Pixels), then we try to evaluate the color and illumination of each pixel. We cast several rays from the sensor/camera toward the scene for each pixel. We search for any intersection with all primitives, and if we hit one, we save it in a list. Depending on the distance between the sensor and the hit primitive, we can evaluate the nearest one to the sensor and pick it up. We can retrieve the primitive color from its original color property and start shading it. This includes knowing if the primitive is in a dark or bright region in the scene. This expensive process is recursively executed until we hit the light source or reach a predefined depth. For thousands of primitives and more, testing the intersection is a performance challenge.
+Ray tracers have three different implementations namely, Forward Ray tracing, Backward Ray tracing, and Hybrid Ray tracing; regardless of which implementation is used, the general idea of the algorithm is quite simple but extremely powerful; it is to project the 3D scene into a 2D plane (Image), to do so, a resolution must be chosen beforehand to divide the plane into small squares knows as (Pixels), next, we try to evaluate the color and illumination of each pixel. We cast several rays from the sensor (camera) toward the scene for each pixel. We search for any intersection by testing all the primitives, and if we hit one, we save it in a hit list. Depending on the distance between the sensor and the hit primitive, we can evaluate the nearest one to the sensor and pick its color. Shading is the next step, this includes knowing if the primitive is in a dark or bright region in the scene. This expensive process is recursively executed until we hit the light source or reach a predefined depth. For thousands of primitives and more, testing the intersection is a performance challenge as the process is linear in time.
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=8cm]{images/raytracer_2.jpg}
-     \caption{Ray casting illustration, where rays are travelling from the camera/sensor towards the scene. \protect\cite{Kimathi2020}}
-        \label{fig:dice}
+     \caption{A visual representation of ray tracing in which the rays are moving from the camera towards the scene. \protect\cite{Kimathi2020}}
+     \label{fig:raytracer}
 \end{figure}
 
 \noindent
 \\
-Other approaches such as Rasterization can be used to overcome these obstacles; however, Raytracing algorithms can provide more realistic images than Rasterization even though they take more time to render a scene. This is the reason why  Rasterization is used for real-time applications such as gaming more than Raytracing; on the other hand, Raytracing is more often used in offline applications such as simulations and interior design software.
+Although the Rasterization method can be used to overcome these obstacles; Ray tracing algorithms can relatively provide more photo-realistic images than rasterization even though ray tracer consumes more time to render a scene. This is the reason why rasterization is used for real-time applications such as gaming more than raytracing; on the other hand, raytracing is more often used in offline applications such as simulations and interior design software.
 \clearpage
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/marbel_brush.png}
-     \caption{Marbles RTX playable demo using NVIDIA RTX 3080 Technology to Realizes Dream of Real-Time Cinematic Rendering.\protect\cite{Burke2018}}
-        \label{fig:dice}
+     \caption{NVIDIA RTX 3080 demo to realize real-time cinematic rendering.
+\protect\cite{Burke2018}}
+     \label{fig:rtxdemo}
 \end{figure}
 
 \noindent
 \\
-In Game Developers Conference - NVIDIA announced NVIDIA RTX™, a ray-tracing technology that brings real-time, cinematic-quality rendering to content creators and game developers. (Brian Burke, 2018), the results where promising and shows that having a real-time raytracer is possiable with the advancement of GPUs. 
+At Game Developers Conference, NVIDIA announced NVIDIA RTX™, a ray tracing technology that brings real-time gaming. The lighting, shadows, and surface reflection are so detailed in the marble scene that they look like a picture taken from a camera and not generated from a computer. The real challenge in real-time rendering is how to approximately render 60 high-quality frames per second.
 
-\noindent
-\\
-The lighting and the shadows are so detailed in the scene that they look like a picture taken from a camera and not generated from a computer. The real challenge is real-time raytracers, which require rendering approximately 50 high-quality frames per second.
-
-\noindent
-\\
-We should understand how challenging to render one frame that consists of thousands of primitives in less than one second. 
 
 \subsection{Motivation of using acceleration data structures}
 In the Raytracing pipeline, we mentioned that each ray must execute an intersection test with all the primitive contained in the scene.  This means if we have $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $O(N.P)$, this means even if one pixel only contain a premitive we would have to go to all other pxiels and still test them against all premitives. 
