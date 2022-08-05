@@ -175,23 +175,23 @@ At Game Developers Conference, NVIDIA announced NVIDIA RTX™, a ray tracing tec
 
 
 \subsection{Motivation of using acceleration data structures}
-In the Raytracing pipeline, we mentioned that each ray must execute an intersection test with all the primitive contained in the scene.  This means if we have $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $O(N.P)$, this means even if one pixel only contain a premitive we would have to go to all other pxiels and still test them against all premitives. 
+In the ray tracing pipeline, we mentioned that each ray must execute an intersection test against all primitive contained in the scene. With $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $\mathcal{O}(N.P)$. This is equivalent to a two-for-loop complexity $\mathcal{O}(n^2)$. Meaning for each pixel even if it does not intersect with any primitive we will have to perform an intersection test for all the primitives in the scene. The worst-case scenario is when the rays do not intersect with any primitive or model but the ray tracer has to trace the rays in different directions still, resulting in an empty image. 
 
 \noindent
 \\
-Brute forcing complexity is high, increasing linearly with the number of primitives. Moreover, some features such as anti-aliasing require more rays per pixel which increases the complexity to  $O(N.P.S)$ where $S$ is number of samples per pixel. 
+Brute forcing complexity is high, it increases linearly with the increase of the number of primitives. Moreover, some features such as anti-aliasing require more rays per pixel which increases the complexity to  $\mathcal{O}(N.P.S)$ where $S$ is the number of samples per pixel. 
 
 \noindent
 \\
-Using more samples will often produce a higher quality frame; additionally, for better illumination results, more recursion (Shadow rays) must be cast after each intersection. We need more rays but with fewer intersection tests as possible.
+Generally using more samples will often produce a higher quality frame; additionally, for better illumination results, more recursion (Shadow rays) must be cast after each intersection. Hence, more rays are required for better quality but with fewer intersection tests as possible for better performance.
 
 \noindent
 \\
-Let us illustrate this with a simple example, giving a raytracer that uses S: number of samples per pixel = 5, N: number of primitives = 100000, and P: number of pixels =  1280 x 1024, maximum depth = 3. This will give us a number of intersection tests, approximately = 1280 x 1024 x 100000 x 5 x 3 = 1.96608×10¹² intersection test, assuming the machine we are using will spend 0.01ms in each ray. This means for this simple scene the raytracer will render the frame in 220 days. Some scenes contain millions of primitives making, rendering them by brute-forcing imposable. 
+Giving a ray tracer that uses $S = 5$, $P = 100, 000$, and $N =  1, 280 $ x $1, 024$, $depth = 3$. This will give us a number of intersection tests, approximately $= 1, 280 * 1, 024 * 100, 000 * 5 * 3 = 1.96608*10^{12} $ intersection test. Assuming the machine used spends 0.01ms on each ray. This will result in 220 days of rendering one frame. Computers nowadays can handle this easily however the main challenge is scalability, some scenes contain millions of primitives making, rendering them by brute-forcing imposable.
 
 \noindent
 \\ 
-Luckily one can use preprocessing algorithms to reorder and group the primitives to make them quickly tested. Spatial subdivision and object subdivision are the two basic types of data acceleration structures. Spatial subdivision algorithms partition three-dimensional space into areas and keep track of which primitives overlap which regions. On the other hand, object subdivision algorithms gradually subdivide the scene's objects into smaller groups. This way, we can only test the primitives that have a higher probability to intersect with the ray rather than testing all primitives that are not relevant to the region the ray passes through. 
+Preprocessing algorithms to reorder and group the primitives to make them quickly traversed and tested can be used to overcome this challenge. \textbf{Spatial subdivision} and \textbf{object subdivision} are the two basic types of data acceleration structures. Spatial subdivision algorithms partition three-dimensional space into areas and keep track of which primitives overlap which regions. On the other hand, object subdivision algorithms gradually subdivide the scene's objects into smaller groups. This way, we can only test the primitives that have a higher probability to intersect with the ray rather than testing all primitives that are not relevant to the region the ray passes through. 
 
 \clearpage
 
@@ -200,57 +200,57 @@ Luckily one can use preprocessing algorithms to reorder and group the primitives
 The basic idea of the BVH is simple yet powerful. It is to wrap all primitives in a virtual bounding box. This box will act as metadata to show the limits of the primitive and has no idea of how the shape of the primitive inside it. This concept will make it easier to test the primitives because one can wrap a complex model with one bounding box, and if the ray intersects the bounding box of the model, then and only then can we test its primitives.
 
 
-
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/bvs.png}
      \caption{Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull . \protect\cite{Ericson2004}}
-        \label{fig:dice}
+     \label{fig:boundingboxes}
 \end{figure}
 
 
 \noindent
 \\
-The bounding box can have different shapes, as shown in Figure. The simpler the bounding box is, the faster and easier to test the intersection. However, the less tightened it becomes and space between the primitive the bounding box boundaries. A compact bounding volume will assist us have the fewest overlaps with other bounding volumes in our scene, while a quick intersection test will help reduce time complexity. In this report, we will be using AABB, because it is easy to implement and easy to test its intersection, and less memory consumption because it only needs to save two double points the minimum and maximum edges of the bounding box. One can use a combination of all of them but in this report we will only use the AABB. 
-
+The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boundingboxes}. Although simple bounding volumes provide faster intersection tests, they often suffer from fitting to the model, eventually, they produce a large region of space. A compact bounding volume, on the other hand, generates fewer overlaps with other bounding volumes in the scene, producing fewer intersection tests. For example, spheres are probably the easiest bounding volume to generate for each primitive, also its intersection test is trivial and not expensive, however, we can note from the previous figure that it produces more empty regions that will be tested but will miss the model eventually producing redundant tests. Using complex bounding volumes like \textbf{8-DOP} will have a higher probability of hitting the model and not missing it, but they are more difficult to generate and also more difficult to be tested. In this report, we will be using \textbf{AABB}, because it is easy to implement, easy to test its intersection, and has less memory consumption because it only needs to save two 3D variables the minimum and the maximum edges of the bounding box. One can use a combination of all of them but in this report, we will only use the AABB. 
 
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=8cm]{images/bvh_tree.png}
-     \caption{BVH tree result based on a simple scene. \protect\cite{Ericson2004} }
-        \label{fig:dice}
+     \caption{BVH tree result by using AABB on a simple scene
+. \protect\cite{Ericson2004} }
+        \label{fig:boundingvolume}
 \end{figure}
 
 \noindent
 \\
-Let us look at the figure as an example; this scene is consistent of 6 objects. Looking at the generated binary tree, we can note that every two objects are bounded by one AABB, then each two AABB are bounded by a bigger AABB. We recursively do this until we reach the root node that covers the limits of the whole objects. 
+Figure ~\ref{fig:boundingboxes} shows a scene consists of six objects. Looking at the generated binary tree, we can note that every two objects are bounded by one AABB, then each two AABB are joined and bounded by a bigger AABB. We recursively do this until we reach the root node that covers the limits of the whole scene.This will create a hierarchy of AABBs and this is where the \textbf{Bounding Volume Hierarchies} name came from.
 
 \noindent
 \\
-Without the BVH, we will have to go through all the 6 objects for each ray, even for the rays that do not intersect with any object. On the other hand, when we introduced BVH, we can note that for the rays that do not even intersect with the root AABB node, we do not go further to test its children. This means we will only test once rather than six times. Looking at the sphere, if a ray intersects with it, we will only have to go through a path that goes A -> B -> AABB sphere parent -> Sphere. These are four tests instead of 6. 
+Without the BVH tree, we will have to go through all six objects for each ray intersection test, even for the rays that do not intersect with any object. On the other hand, when we introduced BVH, we can note that for the rays that do not even intersect with the root AABB node, we do not go further to test its children. This means we will only test once rather than six times. Looking at the sphere in Figure ~\ref{fig:boundingboxes}, if a ray intersects with it, we will only have to go through a path that goes $A \rightarrow B \rightarrow D \rightarrow Sphere$. These are four tests instead of six and these four tests are the worst-case scenario as the longest path in the tree equals three. 
 
 \noindent
 \\
-We know that for a binary tree, the worse case complexity is O(n), but if it is a balanced tree, it becomes O(logn), this is significant, but the catch is we should try to build a balanced binary tree. This is where splitting criteria come in handy. 
+The worse case complexity for a binary tree is $\mathcal{O}(n)$, but if it is a balanced tree, it becomes $\mathcal{O}(\log{}n)$, this is significant, but the catch is we should try to build a balanced binary tree. This is where splitting criteria come in handy. 
+
 
 
 \subsection{Implemntation}
-BVH has two main implementation pillars, Construction of the BVH tree and Traversal over the tree.  
+BVH is made of two phases, Construction of the tree, and Traversal over the tree.  
 
 \subsubsection{Construction}
-Before going through the construction details, we have to discuss one essential key in building the BVH tree.  BVH tree comes in different flavors depending on its splitting criteria. Since we are building a tree, the critical question is, when do we split the node? and which axis to choose for splitting? Firstly we will answer the first qquestion. There are three popular strategies to split the node:
-
+BVH tree can be constructed based on three different splitting criteria. There are three popular strategies to split the tree node:
 
 \begin{itemize}
-\item \textbf{Median of the centroid coordinates (Object median)}:The median of primitives, meaning if we have the next primitive positions in the x-axis as follows ${1, 3, 3, 6, 7, 8, 9}$ the median will be the primitive in the middle, which is $6$. This strategy will produce a well-balanced tree because it splits the primitives into two equal subtrees. Because this method is intuitive to implement and produces a well-balanced tree, this strategy will be adopted in this report. 
+\item \textbf{Median of the centroid coordinates (Object median)}: The median of primitives, meaning if we have the next primitive positions in the x-axis as follows $\{1, 3, 3, 6, 7, 8, 9\}$ the median will be the primitive in the middle, which is $6$. This strategy will produce a well-balanced tree because it splits the primitives into two equal subtrees. Because this method is intuitive to implement and produces a well-balanced tree, this strategy will be adopted for the BVH tree. 
 
 
-\item  \textbf{Mean of centroid coordinates (Object mean)}: Using the man of the premitives going back the example ${1, 3, 3, 6, 7, 8, 9}$, the mean of this set is $5.2$, where the left child node will contain ${1,3,3}$ and the right child ${6,7,8,9}$
+\item  \textbf{Mean of centroid coordinates (Object mean)}: Using the mean of the primitives going back to the example $\{1, 3, 3, 6, 7, 8, 9\}$, the mean of this set is $5.2$, where the left child node will contain $\{1,3,3\}$ and the right child $\{6,7,8,9\}$
 
-\item  \textbf{Spatial median}: Splitting the premitives volume into two equal parts. For example, if we have four spheres with the next radius ${1,1,1,4}$, this strategy will split it as follow, the left child is ${1,1,1}$ and the right child is ${4}$ because it will split based on the volume/area of the sphere and not the position as the previous strategies. 
+\item  \textbf{Spatial median}: Splitting the primitive's volume into two equal parts. For example, if we have four spheres with the next radius $\{1,1,1,4\}$, this strategy will split it as follow, the left child is $\{1,1,1\}$ and the right child is $\{4\}$ because it will split based on the volume/area of the sphere and not the position as the previous strategies. 
+
 
 \end{itemize}
 
