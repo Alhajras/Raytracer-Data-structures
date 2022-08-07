@@ -18,6 +18,7 @@
 \usepackage[noend]{algpseudocode}
 \usepackage[nothing]{algorithm}
 \usepackage{array}
+\usepackage{xcolor}
 \newcolumntype{T}{>{\tiny}l} % define a new column type for \tiny
 \newcolumntype{H}{>{\Huge}l} % define a new column type for \Huge
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
@@ -412,27 +413,24 @@ While BVH boosts the renderer's performance and makes it possible to render mill
 
 \noindent
 \\
-One way to solve this is to parallelize this process. This can be done if the subtrees are independent of each other. This is what Linear Bounding Volume Hierarchies do.
+One way to solve this is to parallelize this process. This can be done if the subtrees are independent of each other. This is what Linear Bounding Volume Hierarchies do. It creates a subprocess to make them build sub trees and join them at the end of the building of the subtrees to make one node. Naturally, parallelization will boost the performance of the construction time, hence we will not compare it with the normal BVH. However, we will treat the LBVH as different splitting criteria and compare its performance with the BVH.
 
 \noindent
 \\
-The first step is to transform the building tree problem into a sorting problem. We map the 3D centroid points for each primitive to one value that can be sorted. Morton codes do this mapping. Morton code map multidimensional data to one dimension while preserving locality of the data points.[WIKIPEDIA]. The transformation is done by interleaving the bits of the premitive centroides in base 2. for example taking a 3D point (x,y,z) the result mortone code will be 
-
+The first step is to transform the building tree problem into a sorting problem. We map the 3D centroid points for each primitive to one value that can be sorted. Morton codes do this mapping. Morton code map multidimensional data to one dimension while preserving the locality of the data points \protect\cite{wikipedia2022}. The transformation is done by interleaving the bits of the primitive's centroid in base 2. for example taking a 3D point (x,y,z) the result Morton code will be calculated as follows: 
+ 
 \begin{equation}
  ...z_3y_3x_3z_2y_2x_2z_1y_1x_1z_0y_0x_0
 \end{equation}
 
+\begin{align*}
+& p_x = \textcolor{brown}{1010}, \;p_y = \textcolor{red}{0111}, \;p_z = \textcolor{blue}{1100} \\
+&Morton\;code = \textcolor{blue}{1}\textcolor{red}{0}\textcolor{brown}{1} \;\textcolor{blue}{1}\textcolor{red}{1}\textcolor{brown}{0} \;\textcolor{blue}{0}\textcolor{red}{1}\textcolor{brown}{1} \;\textcolor{blue}{0}\textcolor{red}{1}\textcolor{brown}{0}
+\end{align*}
 
-\begin{figure}[h]	
-     \centering
-     \captionsetup{justification=centering,margin=2cm}
-     \includegraphics[width=9cm]{images/z_curve.png}
-     \caption{Example of mapping a 3D point to a morton code.}
-     \label{fig:dice}
-\end{figure}
-
-
-After mapping the 3D point to one 1D Morton code, we can use a sorting algorithm as a Radix sort.
+\noindent
+\\
+After mapping the 3D point to 1D Morton code, we can use a sorting algorithm as a Radix sort \protect\cite{Karras2012}.
 
 \subsubsection{Visual Illustration}
 To better understand how the LBVH constructs the binary tree, we will illustrate this with a scene as shown in Figure. The scene is made out of 16 primitives. The first step is to generate the Morton code for each centroid point. Looking closely into the generated Morton codes of each primitive, we can note that each bit acts as a splitting plane that splits the primitives into more than one region. 
@@ -1060,7 +1058,7 @@ Kd-Tree \#nodes & 511, 023 & 272, 881\\
 }
 \end{table}
 \subsubsection{Trees}
-Special thanks to \cite{trees} for the Trees 3D model. The inte4rseting thing about this scene is that it has a high discrepancy, where some premitives are creating clusters at regions such as the leaf of the trees where there are compact number of prmeitives but with some empty spaces between them, on the other hand there is the ground the sky which are empty regions. I would like to not here that I am not supporting any textures in my Raytracer. 
+Special thanks to \protect\cite{trees} for the Trees 3D model. The inte4rseting thing about this scene is that it has a high discrepancy, where some premitives are creating clusters at regions such as the leaf of the trees where there are compact number of prmeitives but with some empty spaces between them, on the other hand there is the ground the sky which are empty regions. I would like to not here that I am not supporting any textures in my Raytracer. 
 
 \noindent
 \\
@@ -1070,7 +1068,7 @@ Looking at the result we can note that LBVH and BVH are still delivering almost 
 \\
 We can note that when the Kd-Tree outperformed BVH and LBVH in terms of rendering time even though when it was previously tested on Igea and the Asian Dragon it did not outperform the other data structures. Even though the number of primitives is between 134k and 539K the result we would expect to be in between or at least the Kd-tree still suffering but this was not the result. This scene gives hint on how different data structures can perform differently based on the number of primitives and the distribution of primitives. 
 \subsubsection{Sci-Fi Tropical City}
-Special thanks to \cite{scifi} for the Sci-Fi Tropical City 3D model.
+Special thanks to \protect\cite{scifi} for the Sci-Fi Tropical City 3D model.
 This scene has more details than the Trees even though the number of primitives is less. The same result for both BVH and LBVH where BVH outperformed LBVH in the building time but LBVH outperformed BVH in rendering time, but the overall time is almost similar. Kd-Tree again outperformed both BVH and LBVH in the rendering time. Interestingly the number of nodes is less than nodes generated in the Stanford bunny which was more than the 3x number of the Sci-fi scene. 
 
 \noindent
