@@ -241,11 +241,22 @@ The worse case complexity for a binary tree is $\mathcal{O}(n)$, but if it is a 
 BVH is made of two phases, Construction of the tree, and Traversal over the tree.  
 
 \subsubsection{Construction}
-BVH tree can be constructed based on three different splitting criteria. There are three popular strategies to split the tree node:
+There are three methods to build the BVH binary tree: \textbf{Top-down}, \textbf{Bottom-up}, and \textbf{Insertion}. Top-down is arguably the most popular technique in practice, hence this method will be implemented in this report. It uses the \textbf{fit \& split} algorithm, where it starts with the whole model and encapsulates it with a BV and fits it, then tries to split it
+into n children, usually two. It keeps recursively splitting and fitting until it reaches the leaves and assigns the primitives to them.
+
+\noindent
+\\
+Building a BVH tree needs predefined parameters. The depth of the tree, maximum allowed number of primitives in the leaf nodes, splitting axis, and bounding volume for wrapping primitives. The depth of the tree will not be predefined for the BVH tree, this means the tree can go deeper as possible. The maximum allowed primitives for each leaf will be chosen to be one. For bounding volume as previously discussed, we will use only AABB. The splitting criteria and splitting axis will be discussed next.  
+BVH tree can be constructed based on three different splitting criteria. There are four popular strategies to split the tree node:
 
 \begin{itemize}
 \item \textbf{Median of the centroid coordinates (Object median)}: The median of primitives, meaning if we have the next primitive positions in the x-axis as follows $\{1, 3, 3, 6, 7, 8, 9\}$ the median will be the primitive in the middle, which is $6$. This strategy will produce a well-balanced tree because it splits the primitives into two equal subtrees. Because this method is intuitive to implement and produces a well-balanced tree, this strategy will be adopted for the BVH tree. 
 
+\item \textbf{Centroid method:}
+This criteria focus on the bounding volume and not its primitives where it splits the AABB box into two half as follows:
+\begin{equation}
+\boldsymbol{c} = \frac{\boldsymbol{primitive_{AABB_{min}}}+\boldsymbol{primitive_{AABB_{max}}}}{2}
+\end{equation}
 
 \item  \textbf{Mean of centroid coordinates (Object mean)}: Using the mean of the primitives going back to the example $\{1, 3, 3, 6, 7, 8, 9\}$, the mean of this set is $5.2$, where the left child node will contain $\{1,3,3\}$ and the right child $\{6,7,8,9\}$
 
@@ -266,7 +277,8 @@ splitting based on \protect\cite{Ericson2004}}
 
 \noindent
 \\
-To answer the second question, which axis to choose for splitting? One can use any axis, but this is a naive way to split. What happens if all primitives have the same z-axis and y-axis, but only the x is changing, and we randomly choose to split by z-axis! This will usually produce an unbalanced tree. The optimal way is to calculate the longest axis for each node (AABB box). This way, we can try to split by the longest axis, which will produce a better-balanced tree. We can find the longest axis of the AABB box by using its diagonal $d$.  
+For choosing the splitting axis, one can use any axis, but this is a naive way to split. What happens if all primitives have the same z-axis and y-axis, but only the x-axis is changing, and we randomly choose to split by z-axis? This will usually produce an unbalanced tree. The optimal way is to calculate the longest axis for each node (AABB box). This way, we can try to split by the longest axis, which will produce a better-balanced tree. We can find the longest axis of the AABB box by using its diagonal $d$. 
+
 
 \begin{equation}
 \textbf{d} = \textbf{AABB}_{max} - \textbf{AABB}_{min}
@@ -274,107 +286,107 @@ To answer the second question, which axis to choose for splitting? One can use a
 
 \noindent
 \\
-In the Figure, we have four spheres and an AABB covering all the spheres. If we would like to choose one axis to split from, we can randomly start with the x-axis. As it is illustrated, choosing this axis will not give us a middle point to split point since all spheres have the same x-axis. Same for the y-axis. On the other hand, we can see that the Z-axis will split the AABB box into two AABB boxes, each containing two spheres. 
+In Figure ~\ref{fig:aabbexample}, we have four spheres wrapped up by AABB. If we would like to choose one axis to split from, we can randomly start with the x-axis. As it is illustrated, choosing this axis will not give us a middle point to split point since all spheres have the same x-axis. Same for the y-axis. On the other hand, we can see that the Z-axis will split the AABB box into two AABB boxes, each containing two spheres. Again we can rechoose the z-axis to split those two AABB boxes. Finding the longest diagonal will indicate the largest spreading direction of the primitives in the scene. After finding $d$ we find the maximum axis of the diagonal as the next splitting axis.
 
 \begin{figure}[H]	
      \centering
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[t]{0.3\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/longaxis.png}
-         \caption{AABB covers four spheres and its diagonal in green.}
+         \caption{}
          \label{fig:pi_4000}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[t]{0.3\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/LONGAXIS_Y.png}
-         \caption{Finding a split point for x and y axis is not useful for bueling a blaanced tree.}
+         \caption{}
          \label{fig:pi_5000}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[t]{0.3\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/LONGAXIS_Z.png}
-         \caption{Z-axis has the best premitives spread that build a balanced tree.}
+         \caption{}
          \label{fig:pi_18000}
      \end{subfigure}
         \captionsetup{justification=centering,margin=2cm}
-        \caption{The scene contains four spheres with the same x-axis and y-axis but different z-axis. }
-        \label{fig:three graphs}
+        \caption{(a) Finding the diagonal of the AABB box is shown in green. (b) Vertical view of the scene where choosing either x-axis or y-axis will not make difference. (c) Horizontal view of the scene where the z-axis makes the perfect splitting axis due to its wide distribution.}
+        \label{fig:aabbexample}
 \end{figure}
 
 \subsubsection{Visual Illustration}
-For a better illustration of how to build the BVH tree by using the Median of the centroid coordinates splitting criteria and also by choosing the longest axis to split from, we will look at the next scene as an example: 
+For a better illustration of how to build the BVH tree by using the centroid coordinates splitting criteria and also by choosing the longest axis to split from, we will look at the next scene as an example: 
 
 \begin{figure}[h]	
      \centering
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[t]{0.3\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/example_bvh/2.png}
-         \caption{Root node AABB covers all premitives}
+         \captionsetup{justification=centering,margin=0.1cm}
+         \caption{Root node and its AABB (Black) that covers all primitives and it's diagonal (Gray).}
          \label{fig:pi_4000}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[t]{0.3\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/example_bvh/3.png}
-         \caption{Second level in the tree splites the prmitives to two groups.}
+         \captionsetup{justification=centering,margin=0.1cm}
+         \caption{The second level in the tree splits the primitives into two groups by creating two internal nodes.}
          \label{fig:pi_5000}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
+     \begin{subfigure}[t]{0.3\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/example_bvh/4.png}
-         \caption{Last level of the split}
+         \captionsetup{justification=centering,margin=0.1cm}
+         \caption{The third level in the tree splits the primitives into four groups, creating three internal nodes and a leaf node.}
          \label{fig:pi_18000}
      \end{subfigure}
-        \caption{Creating AABBs boxes}
+        \captionsetup{justification=centering,margin=2cm}
+        \caption{Building a BVH tree from top to bottom (root to leaves). Wrapping AABBs and splitting them into two halves recursively until reaching leaves.}
         \label{fig:three graphs}
 \end{figure}
 
 \noindent
 \\
-Firstly, we start creating the root node by calculating the $minimum\_edge$ (the smallest bounding point in our AABB) and the $maximumu\_edge$ point (the largest in the AABB box). This can be easily done by iterating through all primitives and assigning the smallest primitive centroid to the  $minimum\_edge$ and the largest primitive centroid to the $maximum\_edge$.
+Since the Top-down approach is chosen, we will start creating the nodes from the top to the bottom. Firstly, we start creating the root node. Each node needs to save the AABB bounds ($minimum\_edge$, $maximum\_edge$), the splitting point, and the splitting axis. If the node is a leaf node we will save the assigned primitives ids.  We can calculate the $minimum\_edge$ (the minimum 3D point in our root AABB) and the $maximum\_edge$ point (the maximum 3D point in the AABB box) by easily iterating through all primitives in the scene and assigning the minimum primitive centroid to the  $minimum\_edge$ and the maximum primitive centroid to the $maximum\_edge$. The final result is $maximum\_edge = (6.6, 5.5)$ and  $minimum\_edge = (0.8,0.8)$.
 
 \noindent
 \\
-The second step is to split the primitives in the node by using the AABB boundaries. As we mentioned, we will find the longest axis.
-To find the longest axis, we subtract the $minimum\_edge$ from $maximum\_edge $ and find the maximum of both axes $max(maximum\_edge - minimum\_edge)$. This will give us $max((6.6-0.8) - (5.5-0.8)) = max(5.8,4.7) = 5.8$, which is the x-axis. 
+After creating the root AABB, the second step is to find the splitting point by using the AABB boundaries. As we mentioned, we will find the longest axis first. To find the longest axis, we have to calculate the diagonal $d$ by subtracting the $minimum\_edge$ from $maximum\_edge $ and finding the maximum of both axes $max(maximum\_edge - minimum\_edge)$. This will give us $max((6.6-0.8) , (5.5-0.8)) = max(5.8,4.7) = 5.8$, which corresponds to the x-axis. 
 
 \noindent
 \\
-Now we calculate the splitting point by just halfing the distance between $maximum\_edge $ and the $minimum\_edge$, $split\_point\_x = (0.8+6.6) / 2 = 3.6$.
+Now we calculate the splitting point by just halfing the distance between $maximum\_edge $ and the $minimum\_edge$, $split\_point = \frac{0.8+6.6}{2} = 3.6$.
 
 \noindent
 \\
-We then create a left node that contains the primitives less than 3.6 and a right node that contains the primitives with a centroid $ > 3.6$. 
+Then we pass all primitives that have a centroid $ < 3.6$ to the left child node and we pass the rest to the right child node.  
 
 \noindent
 \\
-Recustivly we keep doing this until we reach a $maximum\_leafs$ parameter which is predefined, and in this report, it is $1$. This means the leaf node will only hold one primitive. 
+Recustivly we keep doing this until the number of primitives in the node is less than the maximum allowed number of primitives parameter, which in this implementation we decided to set to $1$. Then we create a leaf node that holds this primitive id. 
 
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=9cm]{images/example_bvh/tree.png}
-     \caption{BVH Tree example by using the median split criteria}
+     \caption{The generated BVH tree by using centroid splitting criteria and AABB as BV.}
      \label{fig:dice}
 \end{figure}
-\clearpage
-
 
 \subsubsection{Traversal}
- The traversal phase of BVH is quite intuitive if you are familiar with how binary tree traversal works. After building the BVH tree, we start with its root node, which has the maximum and minimum boundaries of the biggest AABB that bounds the whole scene. We test if the ray intersects the AABB of the root node. If it is true, we go to its left and right children and do the same process; otherwise, we terminate. Recursively keep doing this until we reach the leaf node; the leaf node is the node that has no children, and it is the only node that contains a primitive inside it. Then we go through the list of primitives and test each one if it is intersected with the ray or not. 
+ The traversal phase of BVH is quite intuitive if you are familiar with how binary tree traversal works. After building the BVH tree, we start with its root node, we get its AABB boundaries and we test its intersection with the ray. If the ray intersects with the AABB, we go to its left and right children and do the same process; otherwise, we terminate. Recursively keep doing this until we reach a leaf node; the leaf node is the node that has no node children, and it is the only node that contains a primitive inside it. Then we go through the list of primitives and test each one if it intersected with the ray or not. Remember that since we are using one primitive for each leaf node the primitive's list will only contain one primitive and this will not create a linear performance burden. 
 
 \noindent
 \\
-As discussed, the leaf node can include a list of primitives and not only one by setting a parameter called $max\_leaf\_premitives$ to 1; this depends on how you configure the BVH building tree method. In this report, I set the list to make it only contain one primitive. It is worth noticing that the bigger $max\_leaf\_premitives$ is, the smaller the depth of the tree becomes because we do not have to keep splitting until we reach a leaf that only contains primitives less or equal to $max\_leaf\_premitives$, hence less traversal time and less memory consumption because of the number of nodes saved, on the other having a long list of primitives inside the leaf node is bad for the performance because this will get us to the same challenge we would like to solve by introducing the BVH which is avoiding brute force algorithms.
+As discussed, the leaf node can include a list of primitives and not only one by setting a parameter called $max\_leaf\_premitives$ to 1; this depends on how you configure the BVH building tree method. In this report, I set the list to make it only contain one primitive. It is worth noticing that the bigger $max\_leaf\_premitives$ is, the smaller the depth of the tree becomes because we do not have to keep splitting until we reach a leaf that only contains primitives less or equal to $max\_leaf\_premitives$. Therefore, less traversal time and less memory consumption because of the number of nodes saved, on the other hand, this will lead to a long list of primitives inside the leaf node, adding a linear time complexity for iterating through all the lists which kills the purpose of using the hierarchy of the BVH to make the complexity logarithmic.
 
 \noindent
 \\
-The intersection test is split into two main steps. First, we go through all the nodes in the tree, and if we hit a leaf node, we add all its primitives into a list called $hitList$. Afterward, we go through these candidates and find which are intersected and which one is the closest. The following two pseudo-codes explain the intersection test for the BVH. 
-
+The intersection test is split into two main steps. First, we go through all the nodes in the tree, and if we hit a leaf node, we add all its primitives into a list called $hitList$. The $hitList$ list is acting as a candidate list of the primitives that might intersect with the ray.  Afterward, we go through these candidates and find which are intersected and which one is the nearest to the camera by comparing the intersecting point distance to the camera center position.
 
 \begin{algorithm}[H]
 	\caption{$intersectBVH$}\label{alg:alg1}
@@ -383,7 +395,7 @@ The intersection test is split into two main steps. First, we go through all the
 		\If{$node$ $\rightarrow$ $boxIntersect(ray) = false $}
 			\State $return\;\;false$
 		\EndIf
-		\If{$root$ $\rightarrow$ $isleaf$}
+		\If{$node$ $\rightarrow$ $isleaf$}
 		    \State $hitList$ $\rightarrow$ $push(node \rightarrow premitives)$
 		\Else
 			\State $intersectBVH(ray, node \rightarrow leftChild,\, hitList)$
