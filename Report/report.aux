@@ -20,140 +20,159 @@
 \citation{Kimathi2020}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction to Ray tracing}{3}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Overview}{3}{subsection.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Ray casting illustration, where rays are travelling from the camera/sensor towards the scene. \cite {Kimathi2020}\relax }}{3}{figure.caption.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A visual representation of ray tracing in which the rays are moving from the camera towards the scene. \cite {Kimathi2020}\relax }}{3}{figure.caption.2}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:dice}{{1}{3}{Ray casting illustration, where rays are travelling from the camera/sensor towards the scene. \protect \cite {Kimathi2020}\relax }{figure.caption.2}{}}
+\newlabel{fig:raytracer}{{1}{3}{A visual representation of ray tracing in which the rays are moving from the camera towards the scene. \protect \cite {Kimathi2020}\relax }{figure.caption.2}{}}
 \citation{Burke2018}
 \citation{Burke2018}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces NVIDIA RTX Technology Realizes Dream of Real-Time Cinematic Rendering.\cite {Burke2018}\relax }}{4}{figure.caption.3}\protected@file@percent }
-\newlabel{fig:dice}{{2}{4}{NVIDIA RTX Technology Realizes Dream of Real-Time Cinematic Rendering.\protect \cite {Burke2018}\relax }{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces NVIDIA RTX 3080 demo to realize real-time cinematic rendering. \cite {Burke2018}\relax }}{4}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:rtxdemo}{{2}{4}{NVIDIA RTX 3080 demo to realize real-time cinematic rendering. \protect \cite {Burke2018}\relax }{figure.caption.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Motivation of using acceleration data structures}{4}{subsection.1.2}\protected@file@percent }
 \citation{Ericson2004}
 \citation{Ericson2004}
 \citation{Ericson2004}
 \citation{Ericson2004}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Bounding Volume Hierarchies (BVH)}{5}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Concept}{5}{subsection.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull . \cite {Ericson2004}\relax }}{5}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:dice}{{3}{5}{Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull . \protect \cite {Ericson2004}\relax }{figure.caption.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces BVH tree result based on a simple scene. \cite {Ericson2004} \relax }}{5}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:dice}{{4}{5}{BVH tree result based on a simple scene. \protect \cite {Ericson2004} \relax }{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Bounding Volume Hierarchies (BVH)}{6}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Concept}{6}{subsection.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull . \cite {Ericson2004}\relax }}{6}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:boundingboxes}{{3}{6}{Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull . \protect \cite {Ericson2004}\relax }{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces BVH tree result by using AABB on a simple scene . \cite {Ericson2004} \relax }}{7}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:boundingvolume}{{4}{7}{BVH tree result by using AABB on a simple scene . \protect \cite {Ericson2004} \relax }{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Implemntation}{7}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Construction}{7}{subsubsection.2.2.1}\protected@file@percent }
 \citation{Ericson2004}
 \citation{Ericson2004}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Implemntation}{6}{subsection.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Construction}{6}{subsubsection.2.2.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces An example of (a) Object median splitting (b) Object mean splitting (c) Spatial median splitting based on \cite {Ericson2004}\relax }}{7}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:dice}{{5}{7}{An example of (a) Object median splitting (b) Object mean splitting (c) Spatial median splitting based on \protect \cite {Ericson2004}\relax }{figure.caption.6}{}}
-\newlabel{fig:pi_4000}{{6a}{7}{AABB covers four spheres and its diagonal in green.\relax }{figure.caption.7}{}}
-\newlabel{sub@fig:pi_4000}{{a}{7}{AABB covers four spheres and its diagonal in green.\relax }{figure.caption.7}{}}
-\newlabel{fig:pi_5000}{{6b}{7}{Finding a split point for x and y axis is not useful for bueling a blaanced tree.\relax }{figure.caption.7}{}}
-\newlabel{sub@fig:pi_5000}{{b}{7}{Finding a split point for x and y axis is not useful for bueling a blaanced tree.\relax }{figure.caption.7}{}}
-\newlabel{fig:pi_18000}{{6c}{7}{Z-axis has the best premitives spread that build a balanced tree.\relax }{figure.caption.7}{}}
-\newlabel{sub@fig:pi_18000}{{c}{7}{Z-axis has the best premitives spread that build a balanced tree.\relax }{figure.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces The scene contains four spheres with the same x-axis and y-axis but different z-axis. \relax }}{7}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:three graphs}{{6}{7}{The scene contains four spheres with the same x-axis and y-axis but different z-axis. \relax }{figure.caption.7}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Visual Illustration}{7}{subsubsection.2.2.2}\protected@file@percent }
-\newlabel{fig:pi_4000}{{7a}{8}{Root node AABB covers all premitives\relax }{figure.caption.8}{}}
-\newlabel{sub@fig:pi_4000}{{a}{8}{Root node AABB covers all premitives\relax }{figure.caption.8}{}}
-\newlabel{fig:pi_5000}{{7b}{8}{Second level in the tree splites the prmitives to two groups.\relax }{figure.caption.8}{}}
-\newlabel{sub@fig:pi_5000}{{b}{8}{Second level in the tree splites the prmitives to two groups.\relax }{figure.caption.8}{}}
-\newlabel{fig:pi_18000}{{7c}{8}{Last level of the split\relax }{figure.caption.8}{}}
-\newlabel{sub@fig:pi_18000}{{c}{8}{Last level of the split\relax }{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Creating AABBs boxes\relax }}{8}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:three graphs}{{7}{8}{Creating AABBs boxes\relax }{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces BVH Tree example by using the median split criteria\relax }}{8}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:dice}{{8}{8}{BVH Tree example by using the median split criteria\relax }{figure.caption.9}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Traversal}{9}{subsubsection.2.2.3}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Pseudocode of the method $BVH\_intersect$\relax }}{9}{algorithm.1}\protected@file@percent }
-\newlabel{alg:alg1}{{1}{9}{Pseudocode of the method $BVH\_intersect$\relax }{algorithm.1}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Pseudocode of the method $find\_intersected\_premitive$\relax }}{9}{algorithm.2}\protected@file@percent }
-\newlabel{alg:alg2}{{2}{9}{Pseudocode of the method $find\_intersected\_premitive$\relax }{algorithm.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Linear Bounding Volume Hierarchies (LBVH)}{10}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Concept}{10}{subsection.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Example of mapping a 3D point to a morton code.\relax }}{10}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:dice}{{9}{10}{Example of mapping a 3D point to a morton code.\relax }{figure.caption.10}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Visual Illustration}{10}{subsubsection.3.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces The values of various bits in the Morton value indicate the region of space that the corresponding coordinate lies in. \relax }}{11}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:dice}{{10}{11}{The values of various bits in the Morton value indicate the region of space that the corresponding coordinate lies in. \relax }{figure.caption.11}{}}
-\newlabel{fig:pi_4000}{{11a}{11}{First split on x-axis\relax }{figure.caption.12}{}}
-\newlabel{sub@fig:pi_4000}{{a}{11}{First split on x-axis\relax }{figure.caption.12}{}}
-\newlabel{fig:pi_5000}{{11b}{11}{Second split on y-axis\relax }{figure.caption.12}{}}
-\newlabel{sub@fig:pi_5000}{{b}{11}{Second split on y-axis\relax }{figure.caption.12}{}}
-\newlabel{fig:pi_18000}{{11c}{11}{Third split on x-axis\relax }{figure.caption.12}{}}
-\newlabel{sub@fig:pi_18000}{{c}{11}{Third split on x-axis\relax }{figure.caption.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces (a) In 2D, the high bit of the Morton-coded value of a point’s coordinates defines a splitting plane along the middle of the y-axis. If the high bit is set, the point is above the plane. (b) Similarly, the second-highest bit of the Morton value splits the x-axis in the middle. (c) If the high y bit is 1 and the high x bit is 0, the point must lie in the shaded region. (d) The second-from-highest y bit splits the y axis into four areas. \relax }}{11}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:three graphs}{{11}{11}{(a) In 2D, the high bit of the Morton-coded value of a point’s coordinates defines a splitting plane along the middle of the y-axis. If the high bit is set, the point is above the plane. (b) Similarly, the second-highest bit of the Morton value splits the x-axis in the middle. (c) If the high y bit is 1 and the high x bit is 0, the point must lie in the shaded region. (d) The second-from-highest y bit splits the y axis into four areas. \relax }{figure.caption.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Implemntation}{11}{subsection.3.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Generated tree by LBVH.\relax }}{12}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:dice}{{12}{12}{Generated tree by LBVH.\relax }{figure.caption.13}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Construction}{12}{subsubsection.3.2.1}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Pseudocode of the method $LBVH\_construct$\relax }}{13}{algorithm.3}\protected@file@percent }
-\newlabel{alg:alg1}{{3}{13}{Pseudocode of the method $LBVH\_construct$\relax }{algorithm.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces An example of (a) Object median splitting (b) Object mean splitting (c) Spatial median splitting based on \cite {Ericson2004}\relax }}{8}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:dice}{{5}{8}{An example of (a) Object median splitting (b) Object mean splitting (c) Spatial median splitting based on \protect \cite {Ericson2004}\relax }{figure.caption.6}{}}
+\newlabel{fig:pi_4000}{{6a}{9}{\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:pi_4000}{{a}{9}{\relax }{figure.caption.7}{}}
+\newlabel{fig:pi_5000}{{6b}{9}{\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:pi_5000}{{b}{9}{\relax }{figure.caption.7}{}}
+\newlabel{fig:pi_18000}{{6c}{9}{\relax }{figure.caption.7}{}}
+\newlabel{sub@fig:pi_18000}{{c}{9}{\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces (a) Finding the diagonal of the AABB box is shown in green. (b) Vertical view of the scene where choosing either x-axis or y-axis will not make difference. (c) Horizontal view of the scene where the z-axis makes the perfect splitting axis due to its wide distribution.\relax }}{9}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:aabbexample}{{6}{9}{(a) Finding the diagonal of the AABB box is shown in green. (b) Vertical view of the scene where choosing either x-axis or y-axis will not make difference. (c) Horizontal view of the scene where the z-axis makes the perfect splitting axis due to its wide distribution.\relax }{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Visual Illustration}{9}{subsubsection.2.2.2}\protected@file@percent }
+\newlabel{fig:pi_4000}{{7a}{9}{Root node and its AABB (Black) that covers all primitives and it's diagonal (Gray).\relax }{figure.caption.8}{}}
+\newlabel{sub@fig:pi_4000}{{a}{9}{Root node and its AABB (Black) that covers all primitives and it's diagonal (Gray).\relax }{figure.caption.8}{}}
+\newlabel{fig:pi_5000}{{7b}{9}{The second level in the tree splits the primitives into two groups by creating two internal nodes.\relax }{figure.caption.8}{}}
+\newlabel{sub@fig:pi_5000}{{b}{9}{The second level in the tree splits the primitives into two groups by creating two internal nodes.\relax }{figure.caption.8}{}}
+\newlabel{fig:pi_18000}{{7c}{9}{The third level in the tree splits the primitives into four groups, creating three internal nodes and a leaf node.\relax }{figure.caption.8}{}}
+\newlabel{sub@fig:pi_18000}{{c}{9}{The third level in the tree splits the primitives into four groups, creating three internal nodes and a leaf node.\relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Building a BVH tree from top to bottom (root to leaves). Wrapping AABBs and splitting them into two halves recursively until reaching leaves.\relax }}{9}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:three graphs}{{7}{9}{Building a BVH tree from top to bottom (root to leaves). Wrapping AABBs and splitting them into two halves recursively until reaching leaves.\relax }{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The generated BVH tree by using centroid splitting criteria and AABB as BV.\relax }}{10}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:dice}{{8}{10}{The generated BVH tree by using centroid splitting criteria and AABB as BV.\relax }{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Traversal}{10}{subsubsection.2.2.3}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces $intersectBVH$\relax }}{11}{algorithm.1}\protected@file@percent }
+\newlabel{alg:alg1}{{1}{11}{$intersectBVH$\relax }{algorithm.1}{}}
+\citation{wikipedia2022}
+\citation{Karras2012}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Linear Bounding Volume Hierarchies (LBVH)}{12}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Concept}{12}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Visual Illustration}{12}{subsubsection.3.1.1}\protected@file@percent }
+\newlabel{fig:pi_4000}{{9a}{13}{Morton value for premitives center\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:pi_4000}{{a}{13}{Morton value for premitives center\relax }{figure.caption.10}{}}
+\newlabel{fig:pi_5000}{{9b}{13}{First split on x-axis\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:pi_5000}{{b}{13}{First split on x-axis\relax }{figure.caption.10}{}}
+\newlabel{fig:pi_18000}{{9c}{13}{Second split on y-axis\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:pi_18000}{{c}{13}{Second split on y-axis\relax }{figure.caption.10}{}}
+\newlabel{fig:pi_18000}{{9d}{13}{Third split on x-axis\relax }{figure.caption.10}{}}
+\newlabel{sub@fig:pi_18000}{{d}{13}{Third split on x-axis\relax }{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces (a) In 2D, the high bit of the Morton-coded value of a point’s coordinates defines a splitting plane along the middle of the y-axis. If the high bit is set, the point is above the plane. (b) Similarly, the second-highest bit of the Morton value splits the x-axis in the middle. (c) If the high y bit is 1 and the high x bit is 0, the point must lie in the shaded region. (d) The second-from-highest y bit splits the y axis into four areas. \relax }}{13}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:three graphs}{{9}{13}{(a) In 2D, the high bit of the Morton-coded value of a point’s coordinates defines a splitting plane along the middle of the y-axis. If the high bit is set, the point is above the plane. (b) Similarly, the second-highest bit of the Morton value splits the x-axis in the middle. (c) If the high y bit is 1 and the high x bit is 0, the point must lie in the shaded region. (d) The second-from-highest y bit splits the y axis into four areas. \relax }{figure.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Implemntation}{13}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Construction}{13}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Generated tree by LBVH.\relax }}{14}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:dice}{{10}{14}{Generated tree by LBVH.\relax }{figure.caption.11}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces $constructLBVH$\relax }}{14}{algorithm.2}\protected@file@percent }
+\newlabel{alg:alg1}{{2}{14}{$constructLBVH$\relax }{algorithm.2}{}}
 \citation{Pharr2016}
 \citation{Pharr2016}
+\@writefile{toc}{\contentsline {section}{\numberline {4}K dimensional tree (Kd-Tree)}{15}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Concept}{15}{subsection.4.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces The Kd-tree is built by splitting the scene into four regions where in each node one axis is chosen with a splitting point. The first split is done on the x-axis then y and the last split is on the x-axis again. The refinement criteria's specifics, such as which axis is used to partition space at each stage, where the plane is positioned along the axis, and when refinement ends, can have a significant impact on how well the tree performs in actual use. \cite {Pharr2016}\relax }}{15}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:dice}{{11}{15}{The Kd-tree is built by splitting the scene into four regions where in each node one axis is chosen with a splitting point. The first split is done on the x-axis then y and the last split is on the x-axis again. The refinement criteria's specifics, such as which axis is used to partition space at each stage, where the plane is positioned along the axis, and when refinement ends, can have a significant impact on how well the tree performs in actual use. \protect \cite {Pharr2016}\relax }{figure.caption.12}{}}
 \citation{Pharr2016}
 \citation{Pharr2016}
-\@writefile{toc}{\contentsline {section}{\numberline {4}K dimensional tree (Kd-Tree)}{14}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Concept}{14}{subsection.4.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces The Kd-tree is built by splitting the scene into four regions where in each node one axis is chosen with a splitting point. The first split is done on the x-axis then y and the last split is on the x-axis again. The refinement criteria's specifics, such as which axis is used to partition space at each stage, where the plane is positioned along the axis, and when refinement ends, can have a significant impact on how well the tree performs in actual use. \cite {Pharr2016}\relax }}{14}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:dice}{{13}{14}{The Kd-tree is built by splitting the scene into four regions where in each node one axis is chosen with a splitting point. The first split is done on the x-axis then y and the last split is on the x-axis again. The refinement criteria's specifics, such as which axis is used to partition space at each stage, where the plane is positioned along the axis, and when refinement ends, can have a significant impact on how well the tree performs in actual use. \protect \cite {Pharr2016}\relax }{figure.caption.14}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Compact tree representation}{14}{subsubsection.4.1.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Linear Layout of a KD-Tree in Memory. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children.\cite {Pharr2016}\relax }}{15}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:dice}{{14}{15}{Linear Layout of a KD-Tree in Memory. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children.\protect \cite {Pharr2016}\relax }{figure.caption.15}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}The Surface Area Heuristic}{15}{subsubsection.4.1.2}\protected@file@percent }
-\newlabel{fig:pi_4000}{{15a}{16}{$1^{st} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:pi_4000}{{a}{16}{$1^{st} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{fig:pi_5000}{{15b}{16}{$2^{nd} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:pi_5000}{{b}{16}{$2^{nd} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{fig:pi_18000}{{15c}{16}{$4^{th} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:pi_18000}{{c}{16}{$4^{th} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{fig:pi_18000}{{15d}{16}{$7^{th} $ iteration.\relax }{figure.caption.16}{}}
-\newlabel{sub@fig:pi_18000}{{d}{16}{$7^{th} $ iteration.\relax }{figure.caption.16}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Visual illustration of the different left (green) and right (red) regions for calculating the SAH cost to find the best splitting point. \relax }}{16}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:three graphs}{{15}{16}{Visual illustration of the different left (green) and right (red) regions for calculating the SAH cost to find the best splitting point. \relax }{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Implemntation}{16}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Construction}{17}{subsubsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Compact tree representation}{16}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Linear Layout of a KD-Tree in Memory. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children.\cite {Pharr2016}\relax }}{16}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:dice}{{12}{16}{Linear Layout of a KD-Tree in Memory. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children.\protect \cite {Pharr2016}\relax }{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}The Surface Area Heuristic}{16}{subsubsection.4.1.2}\protected@file@percent }
+\newlabel{fig:pi_4000}{{13a}{17}{$1^{st} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:pi_4000}{{a}{17}{$1^{st} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{fig:pi_5000}{{13b}{17}{$2^{nd} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:pi_5000}{{b}{17}{$2^{nd} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{fig:pi_18000}{{13c}{17}{$4^{th} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:pi_18000}{{c}{17}{$4^{th} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{fig:pi_18000}{{13d}{17}{$7^{th} $ iteration.\relax }{figure.caption.14}{}}
+\newlabel{sub@fig:pi_18000}{{d}{17}{$7^{th} $ iteration.\relax }{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Visual illustration of the different left (green) and right (red) regions for calculating the SAH cost to find the best splitting point. \relax }}{17}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:three graphs}{{13}{17}{Visual illustration of the different left (green) and right (red) regions for calculating the SAH cost to find the best splitting point. \relax }{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Implemntation}{17}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Construction}{18}{subsubsection.4.2.1}\protected@file@percent }
 \citation{Pharr2016}
 \citation{Pharr2016}
-\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Only six splitting points are considered. Taking $a_1$ as the splitting point will leave a bounding box under it, B overlapping it, and C above it. \cite {Pharr2016}\relax }}{18}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:dice}{{16}{18}{Only six splitting points are considered. Taking $a_1$ as the splitting point will leave a bounding box under it, B overlapping it, and C above it. \protect \cite {Pharr2016}\relax }{figure.caption.17}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Only six splitting points are considered. Taking $a_1$ as the splitting point will leave a bounding box under it, B overlapping it, and C above it. \cite {Pharr2016}\relax }}{19}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:dice}{{14}{19}{Only six splitting points are considered. Taking $a_1$ as the splitting point will leave a bounding box under it, B overlapping it, and C above it. \protect \cite {Pharr2016}\relax }{figure.caption.15}{}}
 \citation{Pharr2016}
 \citation{Pharr2016}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Pseudocode of the method $buildTree$\relax }}{19}{algorithm.4}\protected@file@percent }
-\newlabel{alg:alg1}{{4}{19}{Pseudocode of the method $buildTree$\relax }{algorithm.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Traversal}{19}{subsubsection.4.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces (a) The ray is intersected with the bounds of the tree, giving an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, it is necessary to consider the two children of the root node here. The ray first enters the child on the right, labeled “near,” where it has a parametric range $[t_{min}, t_{split}]$. If the near node is a leaf with primitives in it, ray–primitive intersection tests are performed; otherwise, its children nodes are processed. (c) If no hit is found in the node, or if a hit is found beyond $[t_{min}, t_{split}]$, then the far node, on the left, is processed. (d) This sequence continues—processing tree nodes in a depth-first, front-to-back traversal—until the closest intersection is found or the ray exits the tree. \cite {Pharr2016}\relax }}{19}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:dice}{{17}{19}{(a) The ray is intersected with the bounds of the tree, giving an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, it is necessary to consider the two children of the root node here. The ray first enters the child on the right, labeled “near,” where it has a parametric range $[t_{min}, t_{split}]$. If the near node is a leaf with primitives in it, ray–primitive intersection tests are performed; otherwise, its children nodes are processed. (c) If no hit is found in the node, or if a hit is found beyond $[t_{min}, t_{split}]$, then the far node, on the left, is processed. (d) This sequence continues—processing tree nodes in a depth-first, front-to-back traversal—until the closest intersection is found or the ray exits the tree. \protect \cite {Pharr2016}\relax }{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Traversal}{20}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces (a) The ray is intersected with the bounds of the tree, giving an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, it is necessary to consider the two children of the root node here. The ray first enters the child on the right, labeled “near,” where it has a parametric range $[t_{min}, t_{split}]$. If the near node is a leaf with primitives in it, ray–primitive intersection tests are performed; otherwise, its children nodes are processed. (c) If no hit is found in the node, or if a hit is found beyond $[t_{min}, t_{split}]$, then the far node, on the left, is processed. (d) This sequence continues—processing tree nodes in a depth-first, front-to-back traversal—until the closest intersection is found or the ray exits the tree. \cite {Pharr2016}\relax }}{20}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:dice}{{15}{20}{(a) The ray is intersected with the bounds of the tree, giving an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, it is necessary to consider the two children of the root node here. The ray first enters the child on the right, labeled “near,” where it has a parametric range $[t_{min}, t_{split}]$. If the near node is a leaf with primitives in it, ray–primitive intersection tests are performed; otherwise, its children nodes are processed. (c) If no hit is found in the node, or if a hit is found beyond $[t_{min}, t_{split}]$, then the far node, on the left, is processed. (d) This sequence continues—processing tree nodes in a depth-first, front-to-back traversal—until the closest intersection is found or the ray exits the tree. \protect \cite {Pharr2016}\relax }{figure.caption.16}{}}
 \citation{Pharr2016}
 \citation{Pharr2016}
-\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Different scenarios prove the ray should not intersect both children.(a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) In this case, the ray intersects the box at a point after the splitting plane, indicating that the near child is avoided. \cite {Pharr2016}\relax }}{20}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:dice}{{18}{20}{Different scenarios prove the ray should not intersect both children.(a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) In this case, the ray intersects the box at a point after the splitting plane, indicating that the near child is avoided. \protect \cite {Pharr2016}\relax }{figure.caption.19}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Performance Analysis}{21}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}How tweaking the data structure parameters affect performance}{21}{subsection.5.1}\protected@file@percent }
-\newlabel{fig:pi_4000}{{19a}{22}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:pi_4000}{{a}{22}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.21}{}}
-\newlabel{fig:pi_5000}{{19b}{22}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 1.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:pi_5000}{{b}{22}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 1.\relax }{figure.caption.21}{}}
-\newlabel{fig:pi_5000}{{19c}{22}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.21}{}}
-\newlabel{sub@fig:pi_5000}{{c}{22}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.21}{}}
-\newlabel{fig:pi_5000}{{19d}{22}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 2. \relax }{figure.caption.21}{}}
-\newlabel{sub@fig:pi_5000}{{d}{22}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 2. \relax }{figure.caption.21}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Two different constructed kd-trees with the same implementation and scene but with different parameter.\relax }}{22}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:three graphs}{{19}{22}{Two different constructed kd-trees with the same implementation and scene but with different parameter.\relax }{figure.caption.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Investigating different data structures}{24}{subsection.5.2}\protected@file@percent }
-\citation{pharr2016physically}
-\citation{burley2018design}
-\citation{stanfordlucy}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{27}{section.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Different scenarios prove the ray should not intersect both children.(a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) In this case, the ray intersects the box at a point after the splitting plane, indicating that the near child is avoided. \cite {Pharr2016}\relax }}{21}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:dice}{{16}{21}{Different scenarios prove the ray should not intersect both children.(a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) In this case, the ray intersects the box at a point after the splitting plane, indicating that the near child is avoided. \protect \cite {Pharr2016}\relax }{figure.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Performance Analysis}{22}{section.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces The settings used for the Raytracer\relax }}{22}{table.caption.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}How tweaking the data structure parameters affect performance}{22}{subsection.5.1}\protected@file@percent }
+\newlabel{fig:pi_4000}{{17a}{23}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:pi_4000}{{a}{23}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.19}{}}
+\newlabel{fig:pi_5000}{{17b}{23}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 1.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:pi_5000}{{b}{23}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 1.\relax }{figure.caption.19}{}}
+\newlabel{fig:pi_5000}{{17c}{23}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.19}{}}
+\newlabel{sub@fig:pi_5000}{{c}{23}{Kd-Tree generates regions (AABB) in a simple scene.\relax }{figure.caption.19}{}}
+\newlabel{fig:pi_5000}{{17d}{23}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 2. \relax }{figure.caption.19}{}}
+\newlabel{sub@fig:pi_5000}{{d}{23}{The resulting binary tree is based on the Kd-Tree algorithm with setting the maximum number of primitives in the leaf node parameter to 2. \relax }{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Two different constructed kd-trees with the same implementation and scene but with different parameter.\relax }}{23}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:three graphs}{{17}{23}{Two different constructed kd-trees with the same implementation and scene but with different parameter.\relax }{figure.caption.19}{}}
+\citation{stanfordbunny}
+\citation{stanfordbunny}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Changing Kd-Tree parameters and how they affect performance by using \cite {stanfordbunny}\relax }}{24}{table.caption.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Investigating different data structures}{25}{subsection.5.2}\protected@file@percent }
+\citation{stanfordbunny}
+\citation{stanfordxyzdragon}
+\citation{buddha}
+\citation{stanfordbunny}
+\citation{stanfordxyzdragon}
+\citation{buddha}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Comparison between BVH, LBVH and Kd-Tree by using \cite {stanfordbunny}, \cite {stanfordxyzdragon}, \cite {buddha}\relax }}{27}{table.caption.22}\protected@file@percent }
+\citation{trees}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Investigating much more complex scenes}{28}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}Trees}{28}{subsubsection.5.3.1}\protected@file@percent }
+\citation{scifi}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}Sci-Fi Tropical City}{29}{subsubsection.5.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{30}{section.6}\protected@file@percent }
 \bibstyle{apacite}
 \bibdata{References}
-\bibcite{Burke2018}{\citeauthoryear {Burke}{Burke}{{\APACyear {2018}}}}
-\APACbibcite{Burke2018}{\citeauthoryear {Burke}{Burke}{{\APACyear {2018}}}}
+\bibcite{buddha}{\citeauthoryear {Brian\nobreakspace  {}Curless}{Brian\nobreakspace  {}Curless}{{\APACyear {1996}}}}
+\APACbibcite{buddha}{\citeauthoryear {Brian\nobreakspace  {}Curless}{Brian\nobreakspace  {}Curless}{{\APACyear {1996}}}}
 \bibcite{Ericson2004}{\citeauthoryear {Ericson}{Ericson}{{\APACyear {2004}}}}
 \APACbibcite{Ericson2004}{\citeauthoryear {Ericson}{Ericson}{{\APACyear {2004}}}}
+\bibcite{scifi}{\citeauthoryear {Herminio}{Herminio}{{\APACyear {2019}}}}
+\APACbibcite{scifi}{\citeauthoryear {Herminio}{Herminio}{{\APACyear {2019}}}}
+\bibcite{trees}{\citeauthoryear {Kim}{Kim}{{\APACyear {2020}}}}
+\APACbibcite{trees}{\citeauthoryear {Kim}{Kim}{{\APACyear {2020}}}}
 \bibcite{Kimathi2020}{\citeauthoryear {Kimathi}{Kimathi}{{\APACyear {2020}}}}
 \APACbibcite{Kimathi2020}{\citeauthoryear {Kimathi}{Kimathi}{{\APACyear {2020}}}}
-\bibcite{stanfordlucy}{\citeauthoryear {Stanford}{Stanford}{{\APACyear {1998}}}}
-\APACbibcite{stanfordlucy}{\citeauthoryear {Stanford}{Stanford}{{\APACyear {1998}}}}
-\@writefile{toc}{\contentsline {section}{References}{28}{section.6}\protected@file@percent }
-\gdef \@abspage@last{29}
+\bibcite{Pharr2016}{\citeauthoryear {Pharr, Jakob,{}\ \BBA{} Humphreys}{Pharr\ \BOthers {.}}{{\APACyear {2016}}}}
+\APACbibcite{Pharr2016}{\citeauthoryear {Pharr, Jakob,{}\ \BBA{} Humphreys}{Pharr\ \BOthers {.}}{{\APACyear {2016}}}}
+\bibcite{Burke2018}{\citeauthoryear {Shipkov}{Shipkov}{{\APACyear {2021}}}}
+\APACbibcite{Burke2018}{\citeauthoryear {Shipkov}{Shipkov}{{\APACyear {2021}}}}
+\bibcite{stanfordxyzdragon}{\citeauthoryear {Stanford}{Stanford}{{\APACyear {{\bibnodate {}}}}}}
+\APACbibcite{stanfordxyzdragon}{\citeauthoryear {Stanford}{Stanford}{{\APACyear {{\bibnodate {}}}}}}
+\bibcite{stanfordbunny}{\citeauthoryear {Stanford}{Stanford}{{\APACyear {1994}}}}
+\APACbibcite{stanfordbunny}{\citeauthoryear {Stanford}{Stanford}{{\APACyear {1994}}}}
+\@writefile{toc}{\contentsline {section}{References}{31}{section.6}\protected@file@percent }
+\gdef \@abspage@last{32}

@@ -20,48 +20,46 @@ You're missing a field part---line 115 of file References.bib
  :     year=
  :          ,
 I'm skipping whatever remains of this entry
-Warning--I didn't find a database entry for "pharr2016physically"
-Warning--I didn't find a database entry for "burley2018design"
 apacite.bst [2013/07/21 v6.03 APA bibliography style]
-You've used 4 entries,
+You've used 9 entries,
             6951 wiz_defined-function locations,
-            1294 strings with 11146 characters,
-and the built_in function-call counts, 6324 in all, are:
-= -- 860
-> -- 40
-< -- 241
-+ -- 212
-- -- 10
-* -- 316
-:= -- 1056
-add.period$ -- 16
-call.type$ -- 4
-change.case$ -- 72
+            1314 strings with 11605 characters,
+and the built_in function-call counts, 12923 in all, are:
+= -- 1685
+> -- 99
+< -- 472
++ -- 414
+- -- 26
+* -- 656
+:= -- 2122
+add.period$ -- 36
+call.type$ -- 9
+change.case$ -- 144
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 124
-empty$ -- 279
-format.name$ -- 56
-if$ -- 1302
+cite$ -- 18
+duplicate$ -- 291
+empty$ -- 624
+format.name$ -- 144
+if$ -- 2694
 int.to.chr$ -- 0
-int.to.str$ -- 12
+int.to.str$ -- 27
 missing$ -- 0
-newline$ -- 91
-num.names$ -- 32
-pop$ -- 152
+newline$ -- 203
+num.names$ -- 72
+pop$ -- 479
 preamble$ -- 1
-purify$ -- 20
+purify$ -- 39
 quote$ -- 0
-skip$ -- 527
+skip$ -- 895
 stack$ -- 0
-substring$ -- 232
-swap$ -- 61
-text.length$ -- 13
+substring$ -- 458
+swap$ -- 143
+text.length$ -- 25
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 464
+type$ -- 864
 warning$ -- 0
-while$ -- 24
+while$ -- 55
 width$ -- 0
-write$ -- 98
+write$ -- 227
 (There was 1 error message)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2022.2.26)  29 JUL 2022 19:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2022.2.26)  7 AUG 2022 21:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -468,6 +468,23 @@ nment
 \@float@every@algorithm=\toks27
 \c@algorithm=\count303
 )
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+)
 (/usr/share/texlive/texmf-dist/tex/latex/stackengine/stackengine.sty
 Package: stackengine 2017/02/13 v4.01\ Stacking text and objects in convenient 
 ways
@@ -504,18 +521,6 @@ File: l3backend-pdftex.def 2020-01-29 L3 backend support: PDF output (pdfTeX)
 )
 (./report.aux
 
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
 LaTeX Warning: Label `fig:pi_4000' multiply defined.
 
 
@@ -532,48 +537,6 @@ LaTeX Warning: Label `fig:pi_18000' multiply defined.
 
 
 LaTeX Warning: Label `sub@fig:pi_18000' multiply defined.
-
-
-LaTeX Warning: Label `fig:three graphs' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `fig:pi_4000' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:pi_4000' multiply defined.
-
-
-LaTeX Warning: Label `fig:pi_5000' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:pi_5000' multiply defined.
-
-
-LaTeX Warning: Label `fig:pi_18000' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:pi_18000' multiply defined.
-
-
-LaTeX Warning: Label `fig:three graphs' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
-
-
-LaTeX Warning: Label `alg:alg1' multiply defined.
-
-
-LaTeX Warning: Label `fig:dice' multiply defined.
 
 
 LaTeX Warning: Label `fig:dice' multiply defined.
@@ -610,6 +573,42 @@ LaTeX Warning: Label `fig:dice' multiply defined.
 
 
 LaTeX Warning: Label `alg:alg1' multiply defined.
+
+
+LaTeX Warning: Label `fig:dice' multiply defined.
+
+
+LaTeX Warning: Label `fig:dice' multiply defined.
+
+
+LaTeX Warning: Label `fig:pi_4000' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:pi_4000' multiply defined.
+
+
+LaTeX Warning: Label `fig:pi_5000' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:pi_5000' multiply defined.
+
+
+LaTeX Warning: Label `fig:pi_18000' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:pi_18000' multiply defined.
+
+
+LaTeX Warning: Label `fig:pi_18000' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:pi_18000' multiply defined.
+
+
+LaTeX Warning: Label `fig:three graphs' multiply defined.
+
+
+LaTeX Warning: Label `fig:dice' multiply defined.
 
 
 LaTeX Warning: Label `fig:dice' multiply defined.
@@ -647,22 +646,22 @@ LaTeX Warning: Label `fig:three graphs' multiply defined.
 )
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
-LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count310
@@ -688,7 +687,7 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 45.
+Package hyperref Info: Link coloring OFF on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
@@ -701,9 +700,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count316
 )
-LaTeX Info: Redefining \ref on input line 45.
-LaTeX Info: Redefining \pageref on input line 45.
-LaTeX Info: Redefining \nameref on input line 45.
+LaTeX Info: Redefining \ref on input line 44.
+LaTeX Info: Redefining \pageref on input line 44.
+LaTeX Info: Redefining \nameref on input line 44.
 
 (./report.out) (./report.out)
 \@outlinefile=\write3
@@ -720,7 +719,7 @@ LaTeX Info: Redefining \BHBI on input line 130.
 LaTeX Font Warning: Font shape `OT1/cmr/m/scit' undefined
 (Font)              using `OT1/cmr/m/it' instead on input line 102.
 
-<images/freiburg.png, id=107, 2007.5pt x 2346.7675pt>
+<images/freiburg.png, id=116, 2007.5pt x 2346.7675pt>
 File: images/freiburg.png Graphic file (type png)
 <use images/freiburg.png>
 Package pdftex.def Info: images/freiburg.png  used on input line 107.
@@ -732,16 +731,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 131--133
-
- []
-
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.138 \clearpage
+l.137 \clearpage
                  [1
 
 ] (./report.toc
@@ -761,519 +755,409 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  [2
 
 ]
-<images/raytracer_2.jpg, id=154, 308.352pt x 176.45924pt>
+<images/raytracer_2.jpg, id=165, 289.08pt x 174.6525pt>
 File: images/raytracer_2.jpg Graphic file (type jpg)
 <use images/raytracer_2.jpg>
-Package pdftex.def Info: images/raytracer_2.jpg  used on input line 152.
-(pdftex.def)             Requested size: 227.62204pt x 130.26276pt.
- [3
+Package pdftex.def Info: images/raytracer_2.jpg  used on input line 154.
+(pdftex.def)             Requested size: 227.62204pt x 137.5209pt.
+
+
+LaTeX Warning: Citation `Kimathi2020' undefined on input line 155.
+
+
+LaTeX Warning: Citation `Kimathi2020' undefined on input line 155.
+
+[3
 
  <./images/raytracer_2.jpg>]
-<images/star_wars.png, id=165, 1445.4pt x 790.955pt>
-File: images/star_wars.png Graphic file (type png)
-<use images/star_wars.png>
-Package pdftex.def Info: images/star_wars.png  used on input line 163.
-(pdftex.def)             Requested size: 227.62204pt x 124.55193pt.
- [4
+<images/marbel_brush.png, id=177, 1388.18625pt x 897.3525pt>
+File: images/marbel_brush.png Graphic file (type png)
+<use images/marbel_brush.png>
+Package pdftex.def Info: images/marbel_brush.png  used on input line 167.
+(pdftex.def)             Requested size: 284.52756pt x 183.91737pt.
 
- <./images/star_wars.png>]
-<images/bvs.png, id=180, 853.1875pt x 324.21124pt>
+
+LaTeX Warning: Citation `Burke2018' undefined on input line 169.
+
+
+LaTeX Warning: Citation `Burke2018' undefined on input line 169.
+
+[4
+
+ <./images/marbel_brush.png>] [5]
+<images/bvs.png, id=197, 853.1875pt x 324.21124pt>
 File: images/bvs.png Graphic file (type png)
 <use images/bvs.png>
-Package pdftex.def Info: images/bvs.png  used on input line 195.
+Package pdftex.def Info: images/bvs.png  used on input line 207.
 (pdftex.def)             Requested size: 284.52756pt x 108.12291pt.
-<images/bvh_tree.png, id=185, 502.87875pt x 500.87125pt>
+
+
+LaTeX Warning: Citation `Ericson2004' undefined on input line 208.
+
+
+LaTeX Warning: Citation `Ericson2004' undefined on input line 208.
+
+<images/bvh_tree.png, id=203, 502.87875pt x 500.87125pt>
 File: images/bvh_tree.png Graphic file (type png)
 <use images/bvh_tree.png>
-Package pdftex.def Info: images/bvh_tree.png  used on input line 206.
+Package pdftex.def Info: images/bvh_tree.png  used on input line 221.
 (pdftex.def)             Requested size: 227.62204pt x 226.71214pt.
- [5
 
- <./images/bvs.png> <./images/bvh_tree.png>]
-<images/bvh_split.png, id=199, 970.62625pt x 312.16624pt>
+LaTeX Warning: Citation `Ericson2004' undefined on input line 223.
+
+
+LaTeX Warning: Citation `Ericson2004' undefined on input line 223.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6
+
+ <./images/bvs.png>] [7 <./images/bvh_tree.png>]
+<images/bvh_split.png, id=224, 970.62625pt x 312.16624pt>
 File: images/bvh_split.png Graphic file (type png)
 <use images/bvh_split.png>
-Package pdftex.def Info: images/bvh_split.png  used on input line 239.
-(pdftex.def)             Requested size: 256.0748pt x 82.35689pt.
- [6]
-<images/longaxis.png, id=209, 843.15pt x 558.085pt>
+Package pdftex.def Info: images/bvh_split.png  used on input line 273.
+(pdftex.def)             Requested size: 284.52756pt x 91.50713pt.
+
+
+LaTeX Warning: Citation `Ericson2004' undefined on input line 275.
+
+
+LaTeX Warning: Citation `Ericson2004' undefined on input line 275.
+
+<images/longaxis.png, id=230, 702.625pt x 702.625pt>
 File: images/longaxis.png Graphic file (type png)
 <use images/longaxis.png>
-Package pdftex.def Info: images/longaxis.png  used on input line 258.
-(pdftex.def)             Requested size: 135.89174pt x 89.94261pt.
-<images/LONGAXIS_Y.png, id=210, 730.73pt x 696.6025pt>
+Package pdftex.def Info: images/longaxis.png  used on input line 296.
+(pdftex.def)             Requested size: 135.89174pt x 135.89096pt.
+<images/LONGAXIS_Y.png, id=231, 702.625pt x 702.625pt>
 File: images/LONGAXIS_Y.png Graphic file (type png)
 <use images/LONGAXIS_Y.png>
-Package pdftex.def Info: images/LONGAXIS_Y.png  used on input line 265.
-(pdftex.def)             Requested size: 135.89174pt x 129.53908pt.
-<images/LONGAXIS_Z.png, id=211, 934.49126pt x 276.03125pt>
+Package pdftex.def Info: images/LONGAXIS_Y.png  used on input line 303.
+(pdftex.def)             Requested size: 135.89174pt x 135.89096pt.
+<images/LONGAXIS_Z.png, id=232, 702.625pt x 702.625pt>
 File: images/LONGAXIS_Z.png Graphic file (type png)
 <use images/LONGAXIS_Z.png>
-Package pdftex.def Info: images/LONGAXIS_Z.png  used on input line 272.
-(pdftex.def)             Requested size: 135.89174pt x 40.13933pt.
-<images/example_bvh/2.png, id=212, 451.6875pt x 412.54124pt>
-File: images/example_bvh/2.png Graphic file (type png)
-<use images/example_bvh/2.png>
-Package pdftex.def Info: images/example_bvh/2.png  used on input line 287.
+Package pdftex.def Info: images/LONGAXIS_Z.png  used on input line 310.
+(pdftex.def)             Requested size: 135.89174pt x 135.89096pt.
+[8 <./images/bvh_split.png>]
+<images/example_bvh/2_g.png, id=246, 451.6875pt x 412.54124pt>
+File: images/example_bvh/2_g.png Graphic file (type png)
+<use images/example_bvh/2_g.png>
+Package pdftex.def Info: images/example_bvh/2_g.png  used on input line 326.
 (pdftex.def)             Requested size: 135.89174pt x 124.11583pt.
-<images/example_bvh/3.png, id=213, 451.6875pt x 412.54124pt>
-File: images/example_bvh/3.png Graphic file (type png)
-<use images/example_bvh/3.png>
-Package pdftex.def Info: images/example_bvh/3.png  used on input line 294.
+<images/example_bvh/3_g.png, id=247, 451.6875pt x 412.54124pt>
+File: images/example_bvh/3_g.png Graphic file (type png)
+<use images/example_bvh/3_g.png>
+Package pdftex.def Info: images/example_bvh/3_g.png  used on input line 334.
 (pdftex.def)             Requested size: 135.89174pt x 124.11583pt.
-
-Underfull \hbox (badness 1448) in paragraph at lines 295--295
-\OT1/cmr/m/n/10 splites the pr-mi-tives to two
- []
-
-<images/example_bvh/4.png, id=214, 451.6875pt x 412.54124pt>
-File: images/example_bvh/4.png Graphic file (type png)
-<use images/example_bvh/4.png>
-Package pdftex.def Info: images/example_bvh/4.png  used on input line 301.
+<images/example_bvh/4_g.png, id=248, 451.6875pt x 412.54124pt>
+File: images/example_bvh/4_g.png Graphic file (type png)
+<use images/example_bvh/4_g.png>
+Package pdftex.def Info: images/example_bvh/4_g.png  used on input line 342.
 (pdftex.def)             Requested size: 135.89174pt x 124.11583pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Overfull \hbox (10.36832pt too wide) in paragraph at lines 311--313
-\OT1/cmr/m/n/10.95 from $\OML/cmm/m/it/10.95 maximum[]edge$ \OT1/cmr/m/n/10.95 
-and find the max-i-mum of both axes $\OML/cmm/m/it/10.95 max\OT1/cmr/m/n/10.95 
-(\OML/cmm/m/it/10.95 maximum[]edge \OMS/cmsy/m/n/10.95 ^^@ \OML/cmm/m/it/10.95 
-minimum[]edge\OT1/cmr/m/n/10.95 )$.
- []
-
-[7 <./images/bvh_split.png> <./images/longaxis.png> <./images/LONGAXIS_Y.png> <
-./images/LONGAXIS_Z.png>]
-<images/example_bvh/tree.png, id=228, 1156.32pt x 793.96625pt>
+ [9 <./images/longaxis.png> <./images/LONGAXIS_Y.png> <./images/LONGAXIS_Z.png>
+ <./images/example_bvh/2_g.png> <./images/example_bvh/3_g.png> <./images/exampl
+e_bvh/4_g.png>]
+<images/example_bvh/tree.png, id=260, 1156.32pt x 793.96625pt>
 File: images/example_bvh/tree.png Graphic file (type png)
 <use images/example_bvh/tree.png>
-Package pdftex.def Info: images/example_bvh/tree.png  used on input line 323.
+Package pdftex.def Info: images/example_bvh/tree.png  used on input line 376.
 (pdftex.def)             Requested size: 256.0748pt x 175.82404pt.
- [8 <./images/example_bvh/2.png> <./images/example_bvh/3.png> <./images/example
-_bvh/4.png> <./images/example_bvh/tree.png (PNG copy)>]
+ [10 <./images/example_bvh/tree.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 338.
+put line 393.
+ [11]
+
+LaTeX Warning: Citation `wikipedia2022' undefined on input line 420.
 
 
-! Package algorithmicx Error: Some blocks are not closed!!!.
+LaTeX Warning: Citation `Karras2012' undefined on input line 433.
 
-See the algorithmicx package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.352 \end{algorithmic}
-                       
-This error message was generated by an \errmessage
-command, so I can't give any explicit help.
-Pretend that you're Hercule Poirot: Examine all clues,
-and deduce the truth by order and method.
-
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.361 \State
-             $closest\_premitive \gets hit\_list[0]$
-The control sequence marked <to be read again> should
-not appear between \csname and \endcsname.
-
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.361 \State
-             $closest\_premitive \gets hit\_list[0]$
-I'm ignoring this, since I wasn't doing a \csname.
-
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.363 \For
-          {$premitive$ in $hit\_list$}
-The control sequence marked <to be read again> should
-not appear between \csname and \endcsname.
-
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.363 \For
-          {$premitive$ in $hit\_list$}
-I'm ignoring this, since I wasn't doing a \csname.
-
-! Missing \endcsname inserted.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.370 \State
-             \Return $closest\_premitive$
-The control sequence marked <to be read again> should
-not appear between \csname and \endcsname.
-
-! Extra \endcsname.
-\ALG@makebeginrepeat ...\ALG@thisblock \endcsname 
-                                                  \relax \def \ALG@thisblock...
-l.370 \State
-             \Return $closest\_premitive$
-I'm ignoring this, since I wasn't doing a \csname.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.371 \end{algorithmic}
-                       
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-! Missing = inserted for \ifnum.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.371 \end{algorithmic}
-                       
-I was expecting to see `<', `=', or `>'. Didn't.
-
-! Missing number, treated as zero.
-<to be read again> 
-                   \ALG@currentblock@0 
-l.371 \end{algorithmic}
-                       
-A number should have been here; I inserted `0'.
-(If you can't figure out why I needed to see a number,
-look up `weird error' in the index to The TeXbook.)
-
-[9
+<images/example_lbvh/morton_g.png, id=276, 416.55624pt x 401.5pt>
+File: images/example_lbvh/morton_g.png Graphic file (type png)
+<use images/example_lbvh/morton_g.png>
+Package pdftex.def Info: images/example_lbvh/morton_g.png  used on input line 4
+48.
+(pdftex.def)             Requested size: 142.26378pt x 137.12082pt.
+<images/example_lbvh/01_g.png, id=277, 427.5975pt x 397.485pt>
+File: images/example_lbvh/01_g.png Graphic file (type png)
+<use images/example_lbvh/01_g.png>
+Package pdftex.def Info: images/example_lbvh/01_g.png  used on input line 456.
+(pdftex.def)             Requested size: 142.26378pt x 132.24397pt.
+<images/example_lbvh/02_g.png, id=278, 394.47375pt x 395.4775pt>
+File: images/example_lbvh/02_g.png Graphic file (type png)
+<use images/example_lbvh/02_g.png>
+Package pdftex.def Info: images/example_lbvh/02_g.png  used on input line 464.
+(pdftex.def)             Requested size: 142.26378pt x 142.62523pt.
+<images/example_lbvh/03_g.png, id=279, 394.47375pt x 396.48125pt>
+File: images/example_lbvh/03_g.png Graphic file (type png)
+<use images/example_lbvh/03_g.png>
+Package pdftex.def Info: images/example_lbvh/03_g.png  used on input line 473.
+(pdftex.def)             Requested size: 142.26378pt x 142.98723pt.
+[12
 
 ]
-<images/z_curve.png, id=244, 1057.9525pt x 459.7175pt>
-File: images/z_curve.png Graphic file (type png)
-<use images/z_curve.png>
-Package pdftex.def Info: images/z_curve.png  used on input line 388.
-(pdftex.def)             Requested size: 256.0748pt x 111.27441pt.
-<images/example_lbvh/scene_2.png, id=245, 416.55624pt x 401.5pt>
-File: images/example_lbvh/scene_2.png Graphic file (type png)
-<use images/example_lbvh/scene_2.png>
-Package pdftex.def Info: images/example_lbvh/scene_2.png  used on input line 40
-4.
-(pdftex.def)             Requested size: 256.0748pt x 246.8322pt.
- [10
-
- <./images/z_curve.png>]
-<images/example_lbvh/01.png, id=253, 427.5975pt x 397.485pt>
-File: images/example_lbvh/01.png Graphic file (type png)
-<use images/example_lbvh/01.png>
-Package pdftex.def Info: images/example_lbvh/01.png  used on input line 413.
-(pdftex.def)             Requested size: 135.89174pt x 126.31834pt.
-<images/example_lbvh/02.png, id=254, 394.47375pt x 395.4775pt>
-File: images/example_lbvh/02.png Graphic file (type png)
-<use images/example_lbvh/02.png>
-Package pdftex.def Info: images/example_lbvh/02.png  used on input line 420.
-(pdftex.def)             Requested size: 135.89174pt x 136.23471pt.
-<images/example_lbvh/03.png, id=255, 394.47375pt x 396.48125pt>
-File: images/example_lbvh/03.png Graphic file (type png)
-<use images/example_lbvh/03.png>
-Package pdftex.def Info: images/example_lbvh/03.png  used on input line 427.
-(pdftex.def)             Requested size: 135.89174pt x 136.58047pt.
-<images/example_lbvh/tree.png, id=256, 1156.32pt x 793.96625pt>
+<images/example_lbvh/tree.png, id=288, 1156.32pt x 793.96625pt>
 File: images/example_lbvh/tree.png Graphic file (type png)
 <use images/example_lbvh/tree.png>
-Package pdftex.def Info: images/example_lbvh/tree.png  used on input line 439.
-(pdftex.def)             Requested size: 284.52756pt x 195.36542pt.
+Package pdftex.def Info: images/example_lbvh/tree.png  used on input line 488.
+(pdftex.def)             Requested size: 341.43306pt x 234.43608pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[11 <./images/example_lbvh/scene_2.png> <./images/example_lbvh/01.png> <./image
-s/example_lbvh/02.png> <./images/example_lbvh/03.png>]
-Overfull \hbox (52.71683pt too wide) in paragraph at lines 473--474
-[] $\OML/cmm/m/it/10.95 node \OMS/cmsy/m/n/10.95 ! \OML/cmm/m/it/10.95 leftchil
-d \OMS/cmsy/m/n/10.95   \OML/cmm/m/it/10.95 constructBVHNew\OT1/cmr/m/n/10.95 (
-\OML/cmm/m/it/10.95 allSceneObjects; startIndex; midSplitIndex; totalNodes\OT1/
-cmr/m/n/10.95 )$ 
- []
-
-
-Overfull \hbox (28.60979pt too wide) in paragraph at lines 474--475
-[] $\OML/cmm/m/it/10.95 node \OMS/cmsy/m/n/10.95 ! \OML/cmm/m/it/10.95 rightchi
-ld \OMS/cmsy/m/n/10.95   \OML/cmm/m/it/10.95 constructBVH\OT1/cmr/m/n/10.95 (\O
-ML/cmm/m/it/10.95 allSceneObjects; midSplitIndex; endIndex; totalNodes\OT1/cmr/
-m/n/10.95 )$ 
- []
-
-[12 <./images/example_lbvh/tree.png (PNG copy)>] [13]
-<images/kdtree/example_demo.png, id=278, 469.755pt x 398.48875pt>
+[13 <./images/example_lbvh/morton_g.png> <./images/example_lbvh/01_g.png> <./im
+ages/example_lbvh/02_g.png> <./images/example_lbvh/03_g.png>] [14 <./images/exa
+mple_lbvh/tree.png>]
+<images/kdtree/example_demo.png, id=305, 469.755pt x 398.48875pt>
 File: images/kdtree/example_demo.png Graphic file (type png)
 <use images/kdtree/example_demo.png>
-Package pdftex.def Info: images/kdtree/example_demo.png  used on input line 497
+Package pdftex.def Info: images/kdtree/example_demo.png  used on input line 556
 .
 (pdftex.def)             Requested size: 284.52756pt x 241.3631pt.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 498.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 557.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 498.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 557.
 
-<images/kdtree/compact.png, id=283, 791.95876pt x 387.4475pt>
-File: images/kdtree/compact.png Graphic file (type png)
-<use images/kdtree/compact.png>
-Package pdftex.def Info: images/kdtree/compact.png  used on input line 510.
-(pdftex.def)             Requested size: 227.62204pt x 111.35777pt.
-
-LaTeX Warning: Citation `Pharr2016' undefined on input line 511.
-
-
-LaTeX Warning: Citation `Pharr2016' undefined on input line 511.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[14
+[15
 
  <./images/kdtree/example_demo.png>]
+<images/kdtree/compact.png, id=317, 791.95876pt x 387.4475pt>
+File: images/kdtree/compact.png Graphic file (type png)
+<use images/kdtree/compact.png>
+Package pdftex.def Info: images/kdtree/compact.png  used on input line 570.
+(pdftex.def)             Requested size: 227.62204pt x 111.35777pt.
 
-LaTeX Warning: Command \textbullet invalid in math mode on input line 525.
+
+LaTeX Warning: Citation `Pharr2016' undefined on input line 571.
 
 
-LaTeX Warning: Command \textbullet invalid in math mode on input line 525.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 571.
+
+
+LaTeX Warning: Command \textbullet invalid in math mode on input line 589.
+
+
+LaTeX Warning: Command \textbullet invalid in math mode on input line 589.
 
 Missing character: There is no ˆ in font cmr10!
-[15 <./images/kdtree/compact.png>]
-<images/kdtree/grid_2.png, id=306, 723.70375pt x 731.73375pt>
+[16 <./images/kdtree/compact.png>]
+<images/kdtree/grid_2.png, id=329, 723.70375pt x 731.73375pt>
 File: images/kdtree/grid_2.png Graphic file (type png)
 <use images/kdtree/grid_2.png>
-Package pdftex.def Info: images/kdtree/grid_2.png  used on input line 559.
-(pdftex.def)             Requested size: 215.1625pt x 217.54555pt.
-<images/kdtree/grid_3.png, id=307, 723.70375pt x 731.73375pt>
+Package pdftex.def Info: images/kdtree/grid_2.png  used on input line 628.
+(pdftex.def)             Requested size: 142.26378pt x 143.84311pt.
+<images/kdtree/grid_3.png, id=330, 723.70375pt x 731.73375pt>
 File: images/kdtree/grid_3.png Graphic file (type png)
 <use images/kdtree/grid_3.png>
-Package pdftex.def Info: images/kdtree/grid_3.png  used on input line 566.
-(pdftex.def)             Requested size: 215.1625pt x 217.54555pt.
-<images/kdtree/grid_5.png, id=308, 723.70375pt x 731.73375pt>
+Package pdftex.def Info: images/kdtree/grid_3.png  used on input line 635.
+(pdftex.def)             Requested size: 142.26378pt x 143.84311pt.
+<images/kdtree/grid_5.png, id=331, 723.70375pt x 731.73375pt>
 File: images/kdtree/grid_5.png Graphic file (type png)
 <use images/kdtree/grid_5.png>
-Package pdftex.def Info: images/kdtree/grid_5.png  used on input line 573.
-(pdftex.def)             Requested size: 215.1625pt x 217.54555pt.
-<images/kdtree/grid_8.png, id=309, 723.70375pt x 731.73375pt>
+Package pdftex.def Info: images/kdtree/grid_5.png  used on input line 642.
+(pdftex.def)             Requested size: 142.26378pt x 143.84311pt.
+<images/kdtree/grid_8.png, id=332, 723.70375pt x 731.73375pt>
 File: images/kdtree/grid_8.png Graphic file (type png)
 <use images/kdtree/grid_8.png>
-Package pdftex.def Info: images/kdtree/grid_8.png  used on input line 580.
-(pdftex.def)             Requested size: 215.1625pt x 217.54555pt.
- [16 <./images/kdtree/grid_2.png> <./images/kdtree/grid_3.png> <./images/kdtree
+Package pdftex.def Info: images/kdtree/grid_8.png  used on input line 649.
+(pdftex.def)             Requested size: 142.26378pt x 143.84311pt.
+ [17 <./images/kdtree/grid_2.png> <./images/kdtree/grid_3.png> <./images/kdtree
 /grid_5.png> <./images/kdtree/grid_8.png>]
-[17]
-<images/kdtree/projected_bboxes.png, id=326, 846.16125pt x 403.5075pt>
+[18]
+<images/kdtree/projected_bboxes.png, id=355, 846.16125pt x 403.5075pt>
 File: images/kdtree/projected_bboxes.png Graphic file (type png)
 <use images/kdtree/projected_bboxes.png>
 Package pdftex.def Info: images/kdtree/projected_bboxes.png  used on input line
- 627.
+ 712.
 (pdftex.def)             Requested size: 284.52756pt x 135.68227pt.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 628.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 713.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 628.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 713.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 666--667
-[] $\OML/cmm/m/it/10.95 buildTree\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 nodeNu
-m \OT1/cmr/m/n/10.95 + 1\OML/cmm/m/it/10.95 ; bounds\OT1/cmr/m/n/10.95 0\OML/cm
-m/m/it/10.95 ; allPrimBounds; prims\OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; n\
-OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 ; depth \OMS/cmsy/m/n/10.95 ^^@
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 668--669
-[] $\OML/cmm/m/it/10.95 buildTree\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 aboveC
-hild; bounds\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; allPrimBounds; prims\OT1/
-cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ; n\OT1/cmr/m/n/10.95 1\OML/cmm/m/it/10.95 ;
- depth \OMS/cmsy/m/n/10.95 ^^@
- []
-
-[18 <./images/kdtree/projected_bboxes.png>]
-<images/kdtree/traversal.png, id=340, 703.62875pt x 609.27625pt>
+[19 <./images/kdtree/projected_bboxes.png>]
+<images/kdtree/traversal.png, id=367, 703.62875pt x 609.27625pt>
 File: images/kdtree/traversal.png Graphic file (type png)
 <use images/kdtree/traversal.png>
-Package pdftex.def Info: images/kdtree/traversal.png  used on input line 680.
+Package pdftex.def Info: images/kdtree/traversal.png  used on input line 733.
 (pdftex.def)             Requested size: 284.52756pt x 246.37436pt.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 681.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 734.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 681.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 734.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 686--689
-
- []
-
-[19 <./images/kdtree/traversal.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 690--693
-
- []
-
-<images/kdtree/traversal_case.png, id=352, 906.38625pt x 511.9125pt>
+[20 <./images/kdtree/traversal.png>]
+<images/kdtree/traversal_case.png, id=378, 906.38625pt x 511.9125pt>
 File: images/kdtree/traversal_case.png Graphic file (type png)
 <use images/kdtree/traversal_case.png>
-Package pdftex.def Info: images/kdtree/traversal_case.png  used on input line 6
-99.
+Package pdftex.def Info: images/kdtree/traversal_case.png  used on input line 7
+53.
 (pdftex.def)             Requested size: 284.52756pt x 160.69089pt.
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 700.
+
+LaTeX Warning: Citation `Pharr2016' undefined on input line 754.
 
 
-LaTeX Warning: Citation `Pharr2016' undefined on input line 700.
+LaTeX Warning: Citation `Pharr2016' undefined on input line 754.
 
-[20 <./images/kdtree/traversal_case.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 760--763
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 764--767
-
- []
-
-[21
-
-]
-<images/kdtree/visaul_scene_1.png, id=369, 683.55376pt x 685.56125pt>
-File: images/kdtree/visaul_scene_1.png Graphic file (type png)
-<use images/kdtree/visaul_scene_1.png>
-Package pdftex.def Info: images/kdtree/visaul_scene_1.png  used on input line 7
-75.
+[21 <./images/kdtree/traversal_case.png>]
+<images/kdtree/visaul_scene_1_new.png, id=389, 683.55376pt x 685.56125pt>
+File: images/kdtree/visaul_scene_1_new.png Graphic file (type png)
+<use images/kdtree/visaul_scene_1_new.png>
+Package pdftex.def Info: images/kdtree/visaul_scene_1_new.png  used on input li
+ne 821.
 (pdftex.def)             Requested size: 135.89174pt x 136.28342pt.
-<images/kdtree/visaul_tree_11_green.png, id=370, 890.32625pt x 610.28pt>
-File: images/kdtree/visaul_tree_11_green.png Graphic file (type png)
-<use images/kdtree/visaul_tree_11_green.png>
-Package pdftex.def Info: images/kdtree/visaul_tree_11_green.png  used on input 
-line 782.
+<images/kdtree/visaul_tree_11_new.png, id=390, 890.32625pt x 610.28pt>
+File: images/kdtree/visaul_tree_11_new.png Graphic file (type png)
+<use images/kdtree/visaul_tree_11_new.png>
+Package pdftex.def Info: images/kdtree/visaul_tree_11_new.png  used on input li
+ne 829.
 (pdftex.def)             Requested size: 271.7835pt x 186.29808pt.
-<images/kdtree/visaul_scene_2.png, id=371, 683.55376pt x 685.56125pt>
-File: images/kdtree/visaul_scene_2.png Graphic file (type png)
-<use images/kdtree/visaul_scene_2.png>
-Package pdftex.def Info: images/kdtree/visaul_scene_2.png  used on input line 7
-89.
+<images/kdtree/visaul_scene_2_new.png, id=391, 683.55376pt x 685.56125pt>
+File: images/kdtree/visaul_scene_2_new.png Graphic file (type png)
+<use images/kdtree/visaul_scene_2_new.png>
+Package pdftex.def Info: images/kdtree/visaul_scene_2_new.png  used on input li
+ne 837.
 (pdftex.def)             Requested size: 135.89174pt x 136.28342pt.
-<images/kdtree/visual_tree_2_green.png, id=372, 880.28876pt x 548.0475pt>
-File: images/kdtree/visual_tree_2_green.png Graphic file (type png)
-<use images/kdtree/visual_tree_2_green.png>
-Package pdftex.def Info: images/kdtree/visual_tree_2_green.png  used on input l
-ine 796.
+<images/kdtree/visual_tree_2_new.png, id=392, 880.28876pt x 548.0475pt>
+File: images/kdtree/visual_tree_2_new.png Graphic file (type png)
+<use images/kdtree/visual_tree_2_new.png>
+Package pdftex.def Info: images/kdtree/visual_tree_2_new.png  used on input lin
+e 845.
 (pdftex.def)             Requested size: 271.7835pt x 169.19887pt.
+ [22
 
-Underfull \hbox (badness 10000) in paragraph at lines 805--808
-
- []
-
-[22 <./images/kdtree/visaul_scene_1.png> <./images/kdtree/visaul_tree_11_green.
-png> <./images/kdtree/visaul_scene_2.png> <./images/kdtree/visual_tree_2_green.
-png>]
-Underfull \hbox (badness 10000) in paragraph at lines 809--812
-
- []
-
-<images/stanford-bunny-black.png, id=382, 256.96pt x 250.9375pt>
+] [23 <./images/kdtree/visaul_scene_1_new.png> <./images/kdtree/visaul_tree_11_
+new.png> <./images/kdtree/visaul_scene_2_new.png> <./images/kdtree/visual_tree_
+2_new.png>]
+<images/stanford-bunny-black.png, id=408, 256.96pt x 250.9375pt>
 File: images/stanford-bunny-black.png Graphic file (type png)
 <use images/stanford-bunny-black.png>
-Package pdftex.def Info: images/stanford-bunny-black.png  used on input line 82
-4.
+Package pdftex.def Info: images/stanford-bunny-black.png  used on input line 87
+6.
 (pdftex.def)             Requested size: 74.00285pt x 72.26999pt.
 
-Overfull \hbox (2.87097pt too wide) in paragraph at lines 824--825
+Overfull \hbox (2.87097pt too wide) in paragraph at lines 876--877
  []|[]| 
  []
 
 
-Overfull \hbox (20.17108pt too wide) in paragraph at lines 822--829
+Overfull \hbox (20.17108pt too wide) in paragraph at lines 874--881
  [][] 
  []
 
 
-Overfull \hbox (20.17108pt too wide) in paragraph at lines 834--856
+Overfull \hbox (20.17108pt too wide) in paragraph at lines 886--909
  [][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 858--861
-
- []
-
-[23 <./images/stanford-bunny-black.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 865--868
-
- []
+LaTeX Warning: Citation `stanfordbunny' undefined on input line 909.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 869--872
+LaTeX Warning: Citation `stanfordbunny' undefined on input line 909.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 873--876
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 877--880
-
- []
-
-[24]
-Underfull \hbox (badness 10000) in paragraph at lines 881--884
-
- []
-
+[24 <./images/stanford-bunny-black.png>] [25]
 File: images/stanford-bunny-black.png Graphic file (type png)
 <use images/stanford-bunny-black.png>
-Package pdftex.def Info: images/stanford-bunny-black.png  used on input line 89
-4.
+Package pdftex.def Info: images/stanford-bunny-black.png  used on input line 95
+0.
 (pdftex.def)             Requested size: 74.00285pt x 72.26999pt.
 
-Overfull \hbox (2.87097pt too wide) in paragraph at lines 894--894
+Overfull \hbox (2.87097pt too wide) in paragraph at lines 950--950
  []|[]| 
  []
 
-<images/igea-black.png, id=395, 192.72pt x 188.20313pt>
+<images/igea-black.png, id=426, 192.72pt x 188.20313pt>
 File: images/igea-black.png Graphic file (type png)
 <use images/igea-black.png>
-Package pdftex.def Info: images/igea-black.png  used on input line 894.
+Package pdftex.def Info: images/igea-black.png  used on input line 950.
 (pdftex.def)             Requested size: 74.0048pt x 72.26999pt.
 
-Overfull \hbox (2.87292pt too wide) in paragraph at lines 894--894
+Overfull \hbox (2.87292pt too wide) in paragraph at lines 950--950
  []|[]| 
  []
 
-<images/xyzrgb_dragon.png, id=396, 192.72pt x 188.20313pt>
+<images/xyzrgb_dragon.png, id=427, 192.72pt x 188.20313pt>
 File: images/xyzrgb_dragon.png Graphic file (type png)
 <use images/xyzrgb_dragon.png>
-Package pdftex.def Info: images/xyzrgb_dragon.png  used on input line 894.
+Package pdftex.def Info: images/xyzrgb_dragon.png  used on input line 950.
 (pdftex.def)             Requested size: 74.0048pt x 72.26999pt.
 
-Overfull \hbox (2.87292pt too wide) in paragraph at lines 894--894
+Overfull \hbox (2.87292pt too wide) in paragraph at lines 950--950
  []|[]| 
  []
 
-<images/happy-black.png, id=397, 182.18062pt x 187.45032pt>
+<images/happy-black.png, id=428, 182.18062pt x 187.45032pt>
 File: images/happy-black.png Graphic file (type png)
 <use images/happy-black.png>
-Package pdftex.def Info: images/happy-black.png  used on input line 894.
+Package pdftex.def Info: images/happy-black.png  used on input line 950.
 (pdftex.def)             Requested size: 70.23843pt x 72.26999pt.
-[25 <./images/igea-black.png> <./images/xyzrgb_dragon.png> <./images/happy-blac
-k.png>] [26]
 
-LaTeX Warning: Citation `pharr2016physically' undefined on input line 944.
+LaTeX Warning: Citation `stanfordbunny' undefined on input line 994.
 
 
-LaTeX Warning: Citation `burley2018design' undefined on input line 945.
+LaTeX Warning: Citation `stanfordxyzdragon' undefined on input line 994.
 
-[27
 
-] (./report.bbl
-Underfull \hbox (badness 1924) in paragraph at lines 14--27
-[]\OT1/cmr/m/n/10.95 Burke, B.  (2018, March).  \OT1/cmr/m/it/10.95 What is ray
- trac-ing tech-nol-ogy and how it works in
+LaTeX Warning: Citation `buddha' undefined on input line 994.
+
+
+LaTeX Warning: Citation `stanfordbunny' undefined on input line 994.
+
+
+LaTeX Warning: Citation `stanfordxyzdragon' undefined on input line 994.
+
+
+LaTeX Warning: Citation `buddha' undefined on input line 994.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 939--995
+
  []
 
-) [28
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 1001--1003
+
+ []
+
+<images/tree.png, id=445, 225.84375pt x 225.84375pt>
+File: images/tree.png Graphic file (type png)
+<use images/tree.png>
+Package pdftex.def Info: images/tree.png  used on input line 1014.
+(pdftex.def)             Requested size: 142.26378pt x 142.27196pt.
+<images/SCIFI.png, id=446, 225.84375pt x 225.84375pt>
+File: images/SCIFI.png Graphic file (type png)
+<use images/SCIFI.png>
+Package pdftex.def Info: images/SCIFI.png  used on input line 1015.
+(pdftex.def)             Requested size: 142.26378pt x 142.27196pt.
+[27 <./images/igea-black.png> <./images/xyzrgb_dragon.png> <./images/happy-blac
+k.png>]
+
+LaTeX Warning: Citation `trees' undefined on input line 1061.
+
+[28 <./images/tree.PNG> <./images/SCIFI.PNG>]
+
+LaTeX Warning: Citation `scifi' undefined on input line 1071.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1074--1076
+
+ []
+
+[29] [30
+
+] (./report.bbl) [31
 
 ] (./report.aux)
 
@@ -1282,25 +1166,28 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 00776D19AC009DC538BFA4F15D5D2A7F;1819.
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: 14532A8592E10A4B8E984363922AE94D;2006
+(rerunfilecheck)             After:  60A2B43AED32414FA6A958846C86572F;2052.
  ) 
 Here is how much of TeX's memory you used:
- 10870 strings out of 479304
- 168096 string characters out of 5869779
- 505202 words of memory out of 5000000
- 27724 multiletter control sequences out of 15000+600000
- 415219 words of font info for 72 fonts, out of 8000000 for 9000
+ 11332 strings out of 479304
+ 173467 string characters out of 5869779
+ 525140 words of memory out of 5000000
+ 28165 multiletter control sequences out of 15000+600000
+ 417060 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 71i,14n,74p,1322b,541s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{cite.burley2018design} has been referenced but do
-es not exist, replaced by a fixed one
+ 71i,16n,74p,1322b,555s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{cite.Karras2012} has been referenced but does not
+ exist, replaced by a fixed one
 
-pdfTeX warning (dest): name{cite.pharr2016physically} has been referenced but d
-oes not exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.Pharr2016} has been referenced but does not ex
-ist, replaced by a fixed one
+pdfTeX warning (dest): name{cite.wikipedia2022} has been referenced but does no
+t exist, replaced by a fixed one
 
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf
@@ -1310,16 +1197,19 @@ fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts
 /public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
 /amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/t
-ype1/public/cm-super/sfrm1095.pfb>
-Output written on report.pdf (29 pages, 4585091 bytes).
+mmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/c
+mmib6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cm
+mib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/pu
+blic/cm-super/sfrm1095.pfb>
+Output written on report.pdf (32 pages, 4326462 bytes).
 PDF statistics:
- 502 PDF objects out of 1000 (max. 8388607)
- 365 compressed objects within 4 object streams
- 97 named destinations out of 1000 (max. 500000)
- 389 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 575 PDF objects out of 1000 (max. 8388607)
+ 419 compressed objects within 5 object streams
+ 106 named destinations out of 1000 (max. 500000)
+ 410 words of extra memory for PDF output out of 10000 (max. 10000000)
 

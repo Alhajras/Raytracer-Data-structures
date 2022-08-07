@@ -323,7 +323,7 @@ For a better illustration of how to build the BVH tree by using the centroid coo
      \centering
      \begin{subfigure}[t]{0.3\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/example_bvh/2.png}
+         \includegraphics[width=\textwidth]{images/example_bvh/2_g.png}
          \captionsetup{justification=centering,margin=0.1cm}
          \caption{Root node and its AABB (Black) that covers all primitives and it's diagonal (Gray).}
          \label{fig:pi_4000}
@@ -331,7 +331,7 @@ For a better illustration of how to build the BVH tree by using the centroid coo
      \hfill
      \begin{subfigure}[t]{0.3\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/example_bvh/3.png}
+         \includegraphics[width=\textwidth]{images/example_bvh/3_g.png}
          \captionsetup{justification=centering,margin=0.1cm}
          \caption{The second level in the tree splits the primitives into two groups by creating two internal nodes.}
          \label{fig:pi_5000}
@@ -339,7 +339,7 @@ For a better illustration of how to build the BVH tree by using the centroid coo
      \hfill
      \begin{subfigure}[t]{0.3\textwidth}
          \centering
-         \includegraphics[width=\textwidth]{images/example_bvh/4.png}
+         \includegraphics[width=\textwidth]{images/example_bvh/4_g.png}
          \captionsetup{justification=centering,margin=0.1cm}
          \caption{The third level in the tree splits the primitives into four groups, creating three internal nodes and a leaf node.}
          \label{fig:pi_18000}
@@ -445,7 +445,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/morton.png}
+         \includegraphics[width=5cm]{images/example_lbvh/morton_g.png}
          \caption{Morton value for premitives center}
          \label{fig:pi_4000}
      \end{subfigure}
@@ -453,7 +453,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/01.png}
+         \includegraphics[width=5cm]{images/example_lbvh/01_g.png}
          \caption{First split on x-axis}
          \label{fig:pi_5000}
      \end{subfigure}
@@ -461,7 +461,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/02.png}
+         \includegraphics[width=5cm]{images/example_lbvh/02_g.png}
          \caption{Second split on y-axis}
          \label{fig:pi_18000}
      \end{subfigure}
@@ -470,7 +470,7 @@ The first bit will split the y-axis into two regions. The first region with the 
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \captionsetup{justification=centering}
-         \includegraphics[width=5cm]{images/example_lbvh/03.png}
+         \includegraphics[width=5cm]{images/example_lbvh/03_g.png}
          \caption{Third split on x-axis}
          \label{fig:pi_18000}
      \end{subfigure}
@@ -485,7 +485,7 @@ The first bit will split the y-axis into two regions. The first region with the 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
-     \includegraphics[width=12cm]{images/example_lbvh/trees.png}
+     \includegraphics[width=12cm]{images/example_lbvh/tree.png}
      \caption{Generated tree by LBVH.}
      \label{fig:dice}
 \end{figure}

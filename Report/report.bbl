@@ -1,27 +1,26 @@
 \begin{thebibliography}{}
 
 \bibitem [\protect \citeauthoryear {%
-Burke%
+Brian~Curless%
 }{%
-Burke%
+Brian~Curless%
 }{%
-{\protect \APACyear {2018}}%
+{\protect \APACyear {1996}}%
 }]{%
-Burke2018}
+buddha}
 \APACinsertmetastar {%
-Burke2018}%
+buddha}%
 \begin{APACrefauthors}%
-Burke, B.%
+Brian~Curless, M\BPBI L.%
 \end{APACrefauthors}%
 \unskip\
 \newblock
-\APACrefYearMonthDay{2018}{March}{}.
+\APACrefYearMonthDay{1996}{}{}.
 \newblock
-\APACrefbtitle {What Is Ray Tracing Technology and How It Works in GPUs.} {What
-  is ray tracing technology and how it works in gpus.}
+\APACrefbtitle {Happy Buddha.} {Happy buddha.}
 \newblock
 \begin{APACrefURL}
-  \url{https://nvidianews.nvidia.com/news/nvidia-rtx-technology-realizes-dream-of-real-time-cinematic-rendering}
+  \url{https://graphics.stanford.edu/software/scanview/models/happybuddha.html}
   \end{APACrefURL}
 \PrintBackRefs{\CurrentBib}
 
@@ -45,6 +44,54 @@ Ericson, C.%
 \APACrefbtitle {Real-Time Collision Detection} {Real-time collision detection}.
 \newblock
 \APACaddressPublisher{}{Morgan Kaufmann}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Herminio%
+}{%
+Herminio%
+}{%
+{\protect \APACyear {2019}}%
+}]{%
+scifi}
+\APACinsertmetastar {%
+scifi}%
+\begin{APACrefauthors}%
+Herminio.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{}{}.
+\newblock
+\APACrefbtitle {Sci-Fi Tropical City 3D Model.} {Sci-fi tropical city 3d
+  model.}
+\newblock
+\begin{APACrefURL}
+  \url{https://free3d.com/3d-model/sci-fi-tropical-city-25746.html}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Kim%
+}{%
+Kim%
+}{%
+{\protect \APACyear {2020}}%
+}]{%
+trees}
+\APACinsertmetastar {%
+trees}%
+\begin{APACrefauthors}%
+Kim.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{}{}.
+\newblock
+\APACrefbtitle {Trees 9 3D Model.} {Trees 9 3d model.}
+\newblock
+\begin{APACrefURL} \url{https://free3d.com/3d-model/trees-9-53338.html}
+  \end{APACrefURL}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -72,23 +119,95 @@ Kimathi, G.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
-Stanford%
+Pharr%
+, Jakob%
+\BCBL {}\ \BBA {} Humphreys%
 }{%
-Stanford%
-}{%
-{\protect \APACyear {1998}}%
+Pharr%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2016}}%
 }]{%
-stanfordlucy}
+Pharr2016}
 \APACinsertmetastar {%
-stanfordlucy}%
+Pharr2016}%
+\begin{APACrefauthors}%
+Pharr, M.%
+, Jakob, W.%
+\BCBL {}\ \BBA {} Humphreys, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2016}.
+\newblock
+\APACrefbtitle {Physically based rendering: From theory to implementation}
+  {Physically based rendering: From theory to implementation}.
+\newblock
+\APACaddressPublisher{}{Morgan Kaufmann}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Shipkov%
+}{%
+Shipkov%
+}{%
+{\protect \APACyear {2021}}%
+}]{%
+Burke2018}
+\APACinsertmetastar {%
+Burke2018}%
+\begin{APACrefauthors}%
+Shipkov, P.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{May}{}.
+\newblock
+\APACrefbtitle {Marbles RTX Playable Sample Now Available in NVIDIA Omniverse.}
+  {Marbles rtx playable sample now available in nvidia omniverse.}
+\newblock
+\begin{APACrefURL}
+  \url{https://blogs.nvidia.com/blog/2021/05/27/omniverse-marbles-rtx-playable-sample}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Stanford%
+}{%
+Stanford%
+}{%
+{\protect \APACyear {{\protect \bibnodate {}}}}%
+}]{%
+stanfordxyzdragon}
+\APACinsertmetastar {%
+stanfordxyzdragon}%
 \begin{APACrefauthors}%
 Stanford.%
 \end{APACrefauthors}%
 \unskip\
 \newblock
-\APACrefYearMonthDay{1998}{}{}.
+\APACrefYearMonthDay{{\protect \bibnodate {}}}{}{}.
 \newblock
-\APACrefbtitle {Stanford Lucy.} {Stanford lucy.}
+\APACrefbtitle {Stanford XYZ Dragon.} {Stanford xyz dragon.}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Stanford%
+}{%
+Stanford%
+}{%
+{\protect \APACyear {1994}}%
+}]{%
+stanfordbunny}
+\APACinsertmetastar {%
+stanfordbunny}%
+\begin{APACrefauthors}%
+Stanford.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{1994}{}{}.
+\newblock
+\APACrefbtitle {Stanford Bunny.} {Stanford bunny.}
 \newblock
 \begin{APACrefURL} \url{http://graphics.stanford.edu/data/3Dscanrep/}
   \end{APACrefURL}

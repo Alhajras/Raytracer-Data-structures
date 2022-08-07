@@ -22,5 +22,8 @@
 \BOOKMARK [1][-]{section.5}{Performance Analysis}{}% 22
 \BOOKMARK [2][-]{subsection.5.1}{How tweaking the data structure parameters affect performance}{section.5}% 23
 \BOOKMARK [2][-]{subsection.5.2}{Investigating different data structures}{section.5}% 24
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 25
-\BOOKMARK [1][-]{section.6}{References}{}% 26
+\BOOKMARK [2][-]{subsection.5.3}{Investigating much more complex scenes}{section.5}% 25
+\BOOKMARK [3][-]{subsubsection.5.3.1}{Trees}{subsection.5.3}% 26
+\BOOKMARK [3][-]{subsubsection.5.3.2}{Sci-Fi Tropical City}{subsection.5.3}% 27
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 28
+\BOOKMARK [1][-]{section.6}{References}{}% 29
