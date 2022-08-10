@@ -534,48 +534,46 @@ Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, 
 
 \section{K dimensional tree (Kd-Tree)}
 \subsection{Concept}
-We have already covered two data structures accelerators, the BVH and LBVH. Both methods are under the category of object subdivision. This chapter will discuss and implement a different accelerator called KD-Tree.
-KD-tree is a traditional data structure that organizes K-dimensional points into a binary tree for easy retrieval. The KD tree can have several dimensions at each level, unlike a typical binary tree. It has been frequently utilized in multidimensional crucial data search because of its effective performance in resolving multidimensional searching issues.
+We have already covered two data structures accelerators, the BVH and LBVH. Both methods are under the category of object subdivision. This chapter will discuss and implement a different accelerator called KD-Tree which is a spatial subdivision type. Kd-Tree is a traditional data structure that organizes K-dimensional points into a binary tree for easy retrieval. The Kd-Tree can have several dimensions at each level, unlike a typical binary tree. It has been frequently utilized in multidimensional crucial data search because of its effective performance in resolving multidimensional searching issues.
 
 \noindent
 \\
-Unlike the previous techniques, KD-Tree is a method categorized as a space subdivision.
-Space subdivision algorithms split the space into areas and assign the primitives that fall in those areas.
+Unlike the previous techniques, Kd-Tree is a method categorized as a spatial (space) subdivision. Spatial subdivision algorithms split the space into areas and assign the primitives that fall in those areas.
 
 \noindent
 \\
 The main idea is to divide the scene into regions. Each region will have a list of primitives that intersect it. When we start rendering and start the intersection tests, we start looking for areas that intersect with the ray, and if we find an intersection, we only test the primitives that fall in it.
-The following figure gives an overview of how the spaces are divided: 
+The following Figure ~\ref{fig:kdtreedemo} gives an overview of how the spaces are divided: 
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/example_demo.png}
-     \caption{The Kd-tree is built by splitting the scene into four regions where in each node one axis is chosen with a splitting point.  The first split is done on the x-axis then y and the last split is on the x-axis again. The refinement criteria's specifics, such as which axis is used to partition space at each stage, where the plane is positioned along the axis, and when refinement ends, can have a significant impact on how well the tree performs in actual use. \protect\cite{Pharr2016}}
-        \label{fig:dice}
+     \caption{The Kd-Tree is built by splitting the scene into four regions where for each split one axis is chosen with a splitting point.  The first split is done on the x-axis then the y-axis and the last split is on the x-axis again. \protect\cite{Pharr2016}}
+        \label{fig:kdtreedemo}
 \end{figure}
 
 
 
 \subsubsection{Compact tree representation}
-Unlike what we did in the BVH, the representation of the tree will be compact. This means rather than saving two children pointers left and right, we will save all nodes in an array, where the left child lives right after the parent node in the array, and the right child can be reached by saving the offset. Doing so improves cache, memory, and thus overall system performance.
+Unlike what we did in the BVH, the representation of the Kd-Tree will be compact. This means rather than saving two children pointers left and right, we will save all nodes in an array, where the left child lives right after the parent node in the array, and the right child can be reached by saving the offset. Doing so improves cache, memory, and thus overall system performance.
 
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=8cm]{images/kdtree/compact.png}
-     \caption{Linear Layout of a KD-Tree in Memory. The  first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children.\protect\cite{Pharr2016}}
+     \caption{The linear layout of a Kd-Tree in Memory representation. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children. \protect\cite{Pharr2016}}
         \label{fig:dice}
 \end{figure}
 
 
-\subsubsection{The Surface Area Heuristic}
-Though there are several methods for creating BVHs and kd-trees, the most well-known method for increasing traversal efficiency for both data structures is to use a top-down, greedy surface area heuristics (SAH) build, in which the original scene is recursively partitioned using a greedy strategy for minimizing expected traversal cost. 
+\subsubsection{The Surface Area Heuristic (SAH)}
+Building a binary tree from top to bottom can be done by using greedy \textbf{Surface Area Heuristics (SAH)}. The original scene is recursively partitioned using a greedy strategy for minimizing expected traversal cost. As the name suggested this method of splitting nodes considers the area/volume of the primitives to find the splitting point.
 
 \noindent
 \\
-Given a collection of N primitives in a sub-tree that spans the 3D volume V, and assuming that the sub-tree is partitioned into two halves L and R with number of triangles NL and NR, and corresponding volumes VL and VR, respectively, the projected traversal cost may be approximated as
+Given a collection of $N$ primitives in a node tree with total 3D volume $V$, and assuming that the split point chosen will partition the space into two halves $L$ and $R$ with a number of triangles $N_L$ and $N_R$, and corresponding volumes $V_L$ and $V_R$, respectively. With the previous configuration, the projected traversal cost can be approximated as
 
 \begin{equation}
 Cost(V) = C_T + C_I(\frac{SA(V_L)}{SA(V)}N_L \frac{SA(V_R)}{SA(V)}N_R)
@@ -583,39 +581,28 @@ Cost(V) = C_T + C_I(\frac{SA(V_L)}{SA(V)}N_L \frac{SA(V_R)}{SA(V)}N_R)
 
 \noindent
 \\
-Where: $V$: Volume, $C_T$: Cost of traversal, $C_I$: Cost of intersection, $SA$: Surface area, $N$: Number of premitives, $•L$: Left, $R$: Right.
+Where: $V$: Total volume, $C_T$: Cost of traversal, $C_I$: Cost of intersection, $SA$: Surface area, $N$: Number of premitives, $•L$: Left, $R$: Right.
 
 \noindent
 \\
-Let us have an exmaple for betrter vudal illustration on how the SAH works: 
-\noindent
-\\
-Giving the next scene consists of 7 primitives, we would like to find the best split by using the SAH method. Because the intersection cost depends on the raytracer implementation and also varies between the different shapes of primitives, for easier calculation, we will set it to 1. In contrast, while the estimated traversal cost was set to $\frac{1}{8}$. We will set the number of buckets to 8.
+The following example visualizes and illustrates how the SAH works. Given a scene consisting of 7 primitives, we would like to find the best split by using the SAH method. Because the intersection cost depends on the ray tracer implementation we will set it to 1. In contrast, the estimated traversal cost was set to $\frac{1}{8}$. We will set the number of buckets to 8. The previous numbers are chosen for easier calculation only.
 
 \noindent
 \\
-Starting with the first iteration, the green is the left area, and the red area is the right. Since the example is in 2D, the SA equals the width x height of the square. Each pixel has an area of 1. The SA of each square is illustrated in the figure. The overall surface area SA equals to the summation of all the 7 prmitives $1+1+4+4+4+1+1 = 16$ We can now substitute all the given information into the equation we get: 
+Starting with the first iteration, the green colour represents the left space $L$, and the red colour represents the right space $R$. Since the example is in 2D, the $SA $ equals the width multiplied by the height of the rectangle. Each pixel has an area of 1. The SA of each rectangle is illustrated in Figure ~\ref{fig:sahdemo}. The overall surface area $SA(V)$ equals the summation of all the 7 primitives $1+1+4+4+4+1+1 = 16$. We can now substitute all the given information into the equation we get: 
 
 
-\begin{equation}
-Cost\_iteration\_1 =  \frac{1}{8} + (\frac{1}{16}(1) +\frac{1+4+4+4+1+1}{16}(6)) = 5.81
-\end{equation}
+\begin{align*}
+& Cost\_iteration\_1 =  \frac{1}{8} + (\frac{1}{16}(1) +\frac{1+4+4+4+1+1}{16}(6)) = 5.81 \\
+&Cost\_iteration\_2 =  \frac{1}{8} + (\frac{1+1}{16}(2) +\frac{4+4+4+1+1}{16}(5)) = 4.75 \\
+&Cost\_iteration\_4 =  \frac{1}{8} + (\frac{1+1+4}{16}(3) +\frac{4+4+1+1}{16}(4)) = 3.75 \\
+&Cost\_iteration\_7 =  \frac{1}{8} + (\frac{1+1+4+4+4+1}{16}(6) +\frac{1}{16}(1)) = 5.81 \\
+\end{align*}
 
-\begin{equation}
-Cost\_iteration\_2 =  \frac{1}{8} + (\frac{1+1}{16}(2) +\frac{4+4+4+1+1}{16}(5)) = 4.75
-\end{equation}
-
-\begin{equation}
-Cost\_iteration\_4 =  \frac{1}{8} + (\frac{1+1+4}{16}(3) +\frac{4+4+1+1}{16}(4)) = 3.75
-\end{equation}
-
-\begin{equation}
-Cost\_iteration\_7 =  \frac{1}{8} + (\frac{1+1+4+4+4+1}{16}(6) +\frac{1}{16}(1)) = 5.81
-\end{equation}
 
 \noindent
 \\
-We choose the minimum cost. In the previous iterations, it is the 4th and then assigns the primitives on the left to the left node and the right primitives to the right node. Unlike BVH, some primitives can be set to both left and right if they are between the bucket's splitting point.
+We choose the minimum cost. In the previous iterations, it is the 4th and then assigns the primitives on the left to the left node and the right primitives to the right node. Note that for simplicity I sis not use primitives that intersect with each other. Unlike BVH, some primitives can be set to both left and right if they are between the bucket's splitting point.
 
 
 \begin{figure}[H]	
@@ -648,8 +635,8 @@ We choose the minimum cost. In the previous iterations, it is the 4th and then a
          \label{fig:pi_18000}
      \end{subfigure}
         \captionsetup{justification=centering,margin=2cm}
-        \caption{Visual illustration of the different left (green) and right (red) regions for calculating the SAH cost to find the best splitting point. }
-        \label{fig:three graphs}
+        \caption{Finding the best splitting point by using SAH. The left region is represented by green and the right region is represented by red.}
+        \label{fig:sahdemo}
 \end{figure}
 
 
@@ -1055,7 +1042,8 @@ Kd-Tree \#nodes & 511, 023 & 272, 881\\
 }
 \end{table}
 \subsubsection{Trees}
-Special thanks to \protect\cite{trees} for the Trees 3D model. The inte4rseting thing about this scene is that it has a high discrepancy, where some premitives are creating clusters at regions such as the leaf of the trees where there are compact number of prmeitives but with some empty spaces between them, on the other hand there is the ground the sky which are empty regions. I would like to not here that I am not supporting any textures in my Raytracer. 
+Special thanks to \protect\cite{trees} for the Trees 3D model. The interesting thing about this scene is that it has a high discrepancy, where some primitives are creating clusters at regions such as the leaf of the trees where there is a compact number of primitives but with some empty spaces between them, on the other hand, there is the ground the sky which is empty regions. I would like to note here that I am not supporting any textures in my Raytracer. 
+
 
 \noindent
 \\
