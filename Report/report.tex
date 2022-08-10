@@ -432,12 +432,13 @@ The first step is to transform the building tree problem into a sorting problem.
 \\
 After mapping the 3D point to 1D Morton code, we can use a sorting algorithm as a Radix sort \protect\cite{Karras2012}.
 
-\subsubsection{Visual Illustration}
-To better understand how the LBVH constructs the binary tree, we will illustrate this with a scene as shown in Figure. The scene is made out of 16 primitives. The first step is to generate the Morton code for each centroid point. Looking closely into the generated Morton codes of each primitive, we can note that each bit acts as a splitting plane that splits the primitives into more than one region. 
+\subsubsection{Morton Code as a Splitting Criteria}
+After mapping all primitives centroid to a Morton code and sorting them, the next step is to know how to use the sorted list for building the tree. To better understand how the LBVH constructs the binary tree, we will illustrate this with a scene as shown in Figure ~\ref{fig:mortonexample}
+. The scene is made out of 16 primitives distributed as shown. The first step is to generate the Morton code for each centroid point. Looking closely into the generated Morton codes of each primitive, we can note that each bit acts as a splitting plane that splits the primitives into more than one region. 
 
 \noindent
 \\
-The first bit will split the y-axis into two regions. The first region with the first bit equals 1, and the second region with the first bit equals 0. The second bit will split the scene into two areas by an x-axis plane. The third bit will split the y-axis into four regions.
+The first bit will split the y-axis into two regions. The first region with the first bit equals $1$, and the second region with the first bit equals $0$. For the binary tree, we can assign primitives with the zeros $0$xxx on the left child and the primitives with ones $1$xxx on the right. The second bit will split the scene into two areas by an x-axis plane. The third bit will split the y-axis into four regions.
 
 
 \begin{figure}[H]	
@@ -446,7 +447,7 @@ The first bit will split the y-axis into two regions. The first region with the 
          \centering
          \captionsetup{justification=centering}
          \includegraphics[width=5cm]{images/example_lbvh/morton_g.png}
-         \caption{Morton value for premitives center}
+         \caption{}
          \label{fig:pi_4000}
      \end{subfigure}
      \hfill
@@ -454,7 +455,7 @@ The first bit will split the y-axis into two regions. The first region with the 
          \centering
          \captionsetup{justification=centering}
          \includegraphics[width=5cm]{images/example_lbvh/01_g.png}
-         \caption{First split on x-axis}
+         \caption{}
          \label{fig:pi_5000}
      \end{subfigure}
      \hfill
@@ -462,7 +463,7 @@ The first bit will split the y-axis into two regions. The first region with the 
          \centering
          \captionsetup{justification=centering}
          \includegraphics[width=5cm]{images/example_lbvh/02_g.png}
-         \caption{Second split on y-axis}
+         \caption{}
          \label{fig:pi_18000}
      \end{subfigure}
         \captionsetup{justification=centering,margin=2cm}
@@ -471,13 +472,13 @@ The first bit will split the y-axis into two regions. The first region with the 
          \centering
          \captionsetup{justification=centering}
          \includegraphics[width=5cm]{images/example_lbvh/03_g.png}
-         \caption{Third split on x-axis}
+         \caption{}
          \label{fig:pi_18000}
      \end{subfigure}
         \captionsetup{justification=centering,margin=2cm}
 
-        \caption{(a) In 2D, the high bit of the Morton-coded value of a point’s coordinates defines a splitting plane along the middle of the y-axis. If the high bit is set, the point is above the plane. (b) Similarly, the second-highest bit of the Morton value splits the x-axis in the middle. (c) If the high y bit is 1 and the high x bit is 0, the point must lie in the shaded region. (d) The second-from-highest y bit splits the y axis into four areas. }
-        \label{fig:three graphs}
+        \caption{(a) The generated Morton code for 2D primitive's centroids. (b) The first splitting plane splits on the y-axis. (c) Second-highest bit of the Morton code splits the x-axis in the middle. (d) The third bit splits the primitives into four regions. }
+        \label{fig:mortonexample}
 \end{figure}
 
 
@@ -492,23 +493,19 @@ The first bit will split the y-axis into two regions. The first region with the 
 
 
 \subsection{Implemntation}
-The implementation can be done in two main steps, building the tree and tree traversal. Traversal will not be repeated since the produced tree is a binary tree similar to the BVH. Hence the same traversal algorithm used in the BVH will be utilized for LBVH. But the main focus of the LBVH is building the tree.
+The implementation includes two essential stages, Constructing the tree and tree Traversal. Traversal will not be repeated since the produced tree is a binary tree similar to the BVH. Hence the same traversal algorithm used in the BVH will be utilized for LBVH. But the main focus of the LBVH is building the tree.
 
 
 \subsubsection{Construction}
- Building the tree needs to calculate the Morton code for each primitive. There are two methods for generating Morton code, magic bits, and a lookup table. We will use the magic bits method. After generating the Morton code for each primitive, we will use the Radix sort.
+The first step is to generate the Morton code for each primitive and to save time one can generate the Morton code for each primitive and start sorting them while reading the primitives from the scene. It is better than reading the whole scene than going through all primitive in linear time and then sorting them by Radix sort. 
 
 \noindent
 \\
-Next step to building the tree, we would like to find the splitting point. As we discussed before, LBVH splits the space into two regions based on the first-bit difference. This means the leftChild will contain all primitives with a Morton code with a first bit equal to 0, and the rightChild will contain the primitives with Morton codes with a first bit equal to 1. Since the Radix sort already sorts the primitives, we can do the splitting by simply using an Exponential search. 
+Next, we start creating the nodes and split them based on the leading bits. We start with the sorted Morton code and we start searching for the first leading bit change. Once the bit flips we assign the zeros to the left child node and the rest to the right child node. We calculate the global bounding box for the current primitives and create the current node since we have all we need, an AABB box and a splitting point. We recursively keep doing this until we reach leaves and we assign the primitives indexes or ids to the leaves. Again for the LBVH, I made the depth unlimited. Also, the maximum number of primitives in a leaf was set to one.
 
 \noindent
 \\
-We start with a random split point. Let us say the last points. Then we start decreasing exponentially to search for the first bit differing from 0 to 1. One way to check this is to use some bit operations; however, another approach is to count the number of leading zeros and compare them with the previous one. If they differ, then we can split. 
-
-\noindent
-\\
-Until this point, we are not gaining much if using LBVH. As we discussed, LBVH special is how easily we can parallelize it. To achieve this, we will use a simple conditional multithreading mechanism. For building the tree we will only create a new thread of the number of premitives in the subtree is more than 100 premiitive. Note that this is a random number chosen, but we do not want to create a new thread for small subtrees because it is not worth it anyway.
+Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, LBVH makes it trivial to parallelize the construction stage. To achieve this, we will use a simple conditional multithreading mechanism. Building the tree will only create a new thread if the number of primitives in the subtree is more than 100 primitives. Note that this is a random number chosen, but we do not want to create a new thread for small subtrees because it is not worth it anyway. Note that for a fair comparison between the data structures we will not parallelize LBVH and we will only run it on one thread. 
 
 \begin{algorithm}[H]
 \caption{$constructLBVH$}\label{alg:alg1}
