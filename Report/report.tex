@@ -847,13 +847,13 @@ After understanding the concept of the effect of the parameters on building the 
 
 \noindent
 \\
-By changing the maxPrims parameter and fixing the other parameters we can note that the larger the value the less it takes to build the tree, for example when increasing maxPrims from  1 to 100, the build time increased by almost 2X. This is predictable as we discussed before, when the maxPrims parameter is big we stop the recursion of building the tree hence we stop creating more interior nodes as shown in the table the total number of nodes decreases by almost 418X consequently the tree depth becomes smaller. On the other hand, we note that rendering time increased by 1.2X. This is because some leaf contains 100 primitives that the ray has to go through them linearly and test them until it finds the right primitive or even worse not find an intersection after going through 100 primitive intersections. This explains why the number of intersection tests shown in the table has increased by almost  61X. When the value is set up to 10, this gave the best of both worlds, as the building and the rendering time are acceptable.  This is the trade-off when choosing the right parameter for the right scene.
+By changing the \textit{maxPrims} parameter and fixing the other parameters we can note that the larger the value the less it takes to build the tree, for example when increasing maxPrims from  1 to 100, the build time increased by almost 2X. This is predictable as we discussed before, when the maxPrims parameter is big we stop the recursion of building the tree hence we stop creating more interior nodes as shown in the table the total number of nodes decreases by almost 418X consequently the tree depth becomes smaller. On the other hand, we note that rendering time increased by 1.2X. This is because some leaf contains 100 primitives that the ray has to go through them linearly and test them until it finds the right primitive or even worse not find an intersection after going through 100 primitive intersections. This explains why the number of intersection tests shown in the table has increased by almost  61X. When the value is set up to 10, this gave the best of both worlds, as the building and the rendering time are acceptable.  This is the trade-off when choosing the right parameter for the right scene.
 
 
 \begin{table}[ht] 
 \centering 
 {\footnotesize
-\begin{tabular}{ P{2.5cm} ||P{2.3cm}  P{2.3cm}  P{2.3cm} P{2.3cm}  P{2.3cm}}      % centered columns (3 columns) 
+\begin{tabular}{ P{2.5cm} ||P{2.1cm}  P{2.1cm}  P{2.1cm} P{2.1cm}  P{2.1cm}}      % centered columns (3 columns) 
 \hline\hline                                      %inserts double horizontal lines
 \Includegraphics[height=1in]{images/stanford-bunny-black.png}
 & \#Primitives  & \#Nodes & \#Primitives intersection tests & Build(s) & Render(s) \\ [0.5ex] % inserts table heading 
@@ -865,25 +865,24 @@ By changing the maxPrims parameter and fixing the other parameters we can note t
 \begin{table}[ht] 
 \centering 
 {\footnotesize
-\begin{tabular}{ P{2.5cm} ||P{2.3cm}  P{2.3cm}  P{2.3cm} P{2.3cm}  P{2.3cm} }      % centered columns (3 columns) 
+\begin{tabular}{ P{2.5cm} ||P{2.1cm}  P{2.1cm}  P{2.1cm} P{2.1cm}  P{2.1cm} }      % centered columns (3 columns) 
  \hline
-\\
-maxPrims = 1& 35, 947 & 418, 548 & 192, 171 &  5.214 s & 20.845 s\\
-\\
-maxPrims = 10& 35, 947 & 19, 229 & 1, 381, 296 & 2.033 s & 20.211 s\\
-\\
-maxPrims = 100& 35, 947 & 1, 461 & 11, 761, 329 & 2.865 s & 24.062 s\\
-\\
+maxPrims = 1& 35, 947 & 418, 548 & 192, 171 &  5.214 s & 20.845 s\T\B 
+\\ 
+maxPrims = 10& 35, 947 & 19, 229 & 1, 381, 296 & 2.033 s & 20.211 s
+\T\B 
+\\ 
+maxPrims = 100& 35, 947 & 1, 461 & 11, 761, 329 & 2.865 s & 24.062 s\T\B 
+\\ 
 \hline \hline
-\\
-depth = 5 & 35, 947 & 61 & 140, 964, 745 &  0.7 s & 37.762 s \\
-\\
-depth = 10& 35, 947 & 1, 435 & 10, 571, 611 & 1.239 s & 11.566 s\\
-\\
-depth = 28& 35, 947 & 44, 852 & 683, 669 & 1.757 s & 9.606 s\\
-\\
-depth = 100& 35, 947 & 44, 854 & 683, 669 & 1.871 s & 9.546 s\\
-\\
+depth = 5 & 35, 947 & 61 & 140, 964, 745 &  0.7 s & 37.762 s \T\B 
+\\ 
+depth = 10& 35, 947 & 1, 435 & 10, 571, 611 & 1.239 s & 11.566 s\T\B 
+\\ 
+depth = 28& 35, 947 & 44, 852 & 683, 669 & 1.757 s & 9.606 s\T\B 
+\\ 
+depth = 100& 35, 947 & 44, 854 & 683, 669 & 1.871 s & 9.546 s\T\B 
+\\ 
 \hline \hline
     \end{tabular}
 }
@@ -925,48 +924,42 @@ Looking at the number of nodes and the number of intersections with primitives w
 {\footnotesize
 \begin{tabular}{ P{2.5cm}||P{2.5cm}P{2.5cm} P{2.5cm} P{2.5cm}  }      % centered columns (3 columns) 
 \hline\hline                                      %inserts double horizontal lines
-& Bunny  & Igea & Asian Dragon & Happy Buddha \\ [0.5ex] % inserts table heading 
+Model name& Stanford-bunny  & Igea & Asian Dragon & Happy Buddha \\ [0.5ex] % inserts table heading 
 \hline\hline 
-
+Model image
 &
 \Includegraphics[height=1in]{images/stanford-bunny-black.png}& \Includegraphics[height=1in]{images/igea-black.png} & \Includegraphics[height=1in]{images/xyzrgb_dragon.png} & \Includegraphics[height=1in]{images/happy-black.png} \\
 
 \hline \hline
-\\
-\#Primitives & 35, 947  & 134, 345 & 539, 205 & 1, 078, 410 \\ [0.5ex] % inserts table heading 
-\\
-\hline \hline
-
-\\
-BVH build(s)& 0.849 s& 2.739 s & 21.105 s & 34.687 s \\
-\\
-LBVH build(s)& 1.272 s& 4.401 s & 45.98 s & 58.234 s \\
-\\
-Kd-Tree build(s)& 2.346 s& 30.075 s & 120.078 s & 211.078 s \\
+\#Primitives & 35, 947  & 134, 345 & 539, 205 & 1, 078, 410 \T\B
 \\
 \hline \hline
+BVH build(s)& 0.849 s& 2.739 s & 21.105 s & 34.687 s \T\B 
+\\ 
+LBVH build(s)& 1.272 s& 4.401 s & 45.98 s & 58.234 s \T\B 
 \\
-BVH render(s)& 17.707 s& 13.986 s & 41.588 s & 51.516 s \\
-\\
-LBVH render(s)& 11.512 s& 13.796 s & 40.744 s & 51.14 s \\
-\\
-Kd-Tree render(s)& 9.405 s& 12.111 s & 45.292 s & 34.292 s \\
-\\
-\hline \hline
-\\
-BVH \#int. tests & 139, 926 & 365, 715  & 2, 429, 951  & 3, 279, 593  \\
-\\
-LBVH \#int. tests & 93, 641 & 365, 712  & 2, 429, 942  & 3, 279, 593  \\
-\\
-Kd-Tree \#int. tests & 128, 943 & 74, 516  & 483, 710  & 943, 201  \\
+Kd-Tree build(s)& 2.346 s& 30.075 s & 120.078 s & 211.078 s \T\B 
 \\
 \hline \hline
+BVH render(s)& 17.707 s& 13.986 s & 41.588 s & 51.516 s \T\B 
 \\
-BVH \#nodes & 71, 893 & 268, 689  & 1, 078, 409  & 2, 156, 819  \\
+LBVH render(s)& 11.512 s& 13.796 s & 40.744 s & 51.14 s \T\B 
 \\
-LBVH \#nodes & 71, 889 & 268, 669  & 1, 077, 768  & 2, 156, 352  \\
+Kd-Tree render(s)& 9.405 s& 12.111 s & 45.292 s & 34.292 s \T\B 
 \\
-Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \\
+\hline \hline
+BVH \#int. tests & 139, 926 & 365, 715  & 2, 429, 951  & 3, 279, 593  \T\B 
+\\
+LBVH \#int. tests & 93, 641 & 365, 712  & 2, 429, 942  & 3, 279, 593  \T\B 
+\\
+Kd-Tree \#int. tests & 128, 943 & 74, 516  & 483, 710  & 943, 201  \T\B 
+\\
+\hline \hline
+BVH \#nodes & 71, 893 & 268, 689  & 1, 078, 409  & 2, 156, 819  \T\B 
+\\
+LBVH \#nodes & 71, 889 & 268, 669  & 1, 077, 768  & 2, 156, 352  \T\B 
+\\
+Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \T\B 
 \\
 \hline \hline
 
@@ -989,10 +982,11 @@ Note that even though the average performance is correlated with the number of p
 {\footnotesize
 \begin{tabular}{ P{2.5cm}||P{5cm}P{5cm} }      % centered columns (3 columns) 
 \hline\hline                                      %inserts double horizontal lines
-& Trees & Sci-Fi Tropical City   \\ [0.5ex] % inserts table heading 
+Model name& Trees & Sci-Fi Tropical City   \T\B 
+\\
 \hline\hline 
 
-&
+Model image&
 \Includegraphics[width=5cm]{images/tree.png}
 & \Includegraphics[width=5cm]{images/SCIFI.png}
 \\
@@ -1002,37 +996,32 @@ Note that even though the average performance is correlated with the number of p
 \#Primitives & 252, 178  & 90, 811\\ [0.5ex] % inserts table heading 
 \\
 \hline \hline
-
+BVH build(s)& 4.373 s& 1.556 s\T\B
 \\
-BVH build(s)& 4.373 s& 1.556 s\\
+LBVH build(s)& 12.062 s& 5.408 s \T\B
 \\
-LBVH build(s)& 12.062 s& 5.408 s \\
-\\
-Kd-Tree build(s)& 55.325 s& 14.164 s \\
+Kd-Tree build(s)& 55.325 s& 14.164 s \T\B
 \\
 \hline \hline
+BVH render(s)& 42.028 s& 54.690 s \T\B
 \\
-BVH render(s)& 42.028 s& 54.690 s \\
+LBVH render(s)& 39.330 s& 49.636 s \T\B
 \\
-LBVH render(s)& 39.330 s& 49.636 s \\
-\\
-Kd-Tree render(s)& 22.822 s& 25.705 s  \\
-\\
-\hline \hline
-\\
-BVH \#int. tests & 907, 969 & 1, 250, 079  \\
-\\
-LBVH \#int. tests & 914, 992 & 1, 031, 416  \\
-\\
-Kd-Tree \#int. tests & 4, 486, 021 & 2, 813, 475  \\
+Kd-Tree render(s)& 22.822 s& 25.705 s  \T\B
 \\
 \hline \hline
+BVH \#int. tests & 907, 969 & 1, 250, 079  \T\B
 \\
-BVH \#nodes & 131, 047 & 65, 535 \\
+LBVH \#int. tests & 914, 992 & 1, 031, 416  \T\B
 \\
-LBVH \#nodes & 131, 038 & 65, 530 \\
+Kd-Tree \#int. tests & 4, 486, 021 & 2, 813, 475  \T\B
 \\
-Kd-Tree \#nodes & 511, 023 & 272, 881\\
+\hline \hline
+BVH \#nodes & 131, 047 & 65, 535 \T\B
+\\
+LBVH \#nodes & 131, 038 & 65, 530 \T\B
+\\
+Kd-Tree \#nodes & 511, 023 & 272, 881 \T\B
 \\
 \hline \hline
 
