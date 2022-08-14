@@ -1086,6 +1086,10 @@ BVH outperformed LBVH and Kd-Tree in terms of building the tree time in most of 
 \\
 Kd-Tree invests much more time to build the tree the reason is it uses the SAH algorithm. Moreover, since Kd-Tree allows duplicated primitives in more than one node, resulting in deeper trees than BVH and LBVH this is noticeable by looking at the number of nodes generated. However, Kd-Tree spend less time on rendering than other methods, this is important for complex scenes such as Trees and Sci-Fi. For small models, we note that it is acceptable to use BVH and LBVH. 
 
+\noindent
+\\
+To sum up, data structures produce different results depending on the scene, implementation and the parameters chosen. Some implementation uses more than one data structure on different models in the scene. Moreover, different bounding volumes can be chosen and not only fix it to AABB. There is no clear winner each implementation raises some pros and cons, however, one can tweak the parameters to optimize the performance depending on the scene.
+
 
 \noindent
 \\
