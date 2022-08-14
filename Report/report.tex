@@ -900,26 +900,47 @@ Increasing the number of the depth parameter increases the building time however
 Tweaking both parameters to find the optimal result is different from tweaking one parameter and fixing one. In order to find the best combination of parameters for a random scene one can use one of the well-known parameter optimization techniques such as  Grid Search, we will not cover this part in this report as I have used a simple manual method. 
 
 \subsection{Investigating different data structures}
-I have used different models with a diverse range of primitives for proper comparison. The models Stanford-bunny \protect\cite{stanfordbunny}, Igea \protect\cite{igea}, Asian Dragon \protect\cite{stanfordxyzdragon}, and Happy Buddha \protect\cite{buddha} used are taken from the following repository \protect\cite{Jacobson2021}.
+Different models with a diverse range of primitives are used for proper comparison. The models Stanford-bunny \protect\cite{stanfordbunny}, Igea \protect\cite{igea}, Asian Dragon \protect\cite{stanfordxyzdragon}, and Happy Buddha \protect\cite{buddha} used are taken from the following repository \protect\cite{Jacobson2021}.
 
 \noindent
 \\
-For all the three used data structures I have calculated a collection of useful mercies.  Since each data structure needs a pre-processing time to be constructed and built, build time in seconds corresponds to how many seconds each data structure took to be ready to be used for the rendering stage. Rendering time render is also important to be measured, as it indicates how long the overall rays took to travel through the scene. The number of intersection tests done for the primitives is also important as it explains how many intersection tests are done in the rendering phase, usually less number of intersection tests indicates better performance. The total number of nodes metric indicates the complexity of the constructed tree and how deep is it. 
+Useful metrics have been calculated for the three mentioned data structures against different models. Since each data structure needs a pre-processing time to be constructed and built, \textit{(build)} time in seconds corresponds to how many seconds each data structure took to be ready to be used for the rendering stage. Rendering time \textit{(render)} is also important to be measured, as it indicates how long the overall rays took to travel through the scene and it includes the traversal phase. The number of intersection tests \textit{(\#int. tests)} done for the primitives is also important as it explains how many intersection tests are done in the rendering phase, usually less number of intersection tests indicates better performance. The total number of nodes  metric \textit{(\#nodes)} indicates the complexity of the constructed tree and how deep is it. 
 
 \noindent
 \\
-The first metric to investigate is the building time. We can note that BVH is the fastest to build the tree and Kd-Tree takes 3X for the Stanford bunny and 6X for the Happy buddha, nonetheless, LBVH stays in between! BVH is the fastest because it uses simple splitting criteria which is the median of the AABB box, this is a cheap performance execution, moreover, it uses a simple tree representation and does not use a compact form. LBVH is almost 2X of the BVH, even though both are using the same binary tree the splitting criteria are different. LBVH has to map the center point of the 3D primitive to a Morton code, sort it by radix sort and then find a splitting point. These extra three stages add extra complexity to the building phase, hence LBVH takes more time than BVH for this implementation. Kd-Tree consumes so much time in the building phase since it uses the SAH algorithm for splitting nodes. As we explained already with an example the SAH method can be expensive to compute, especially for some edge cases where the splitting point can not be found and the algorithm tries the whole three different axes until it either find the best split or just split the AABB into halves. 
+Since each data structure is built by using different parameters, we will fix the parameters and only change scenes. The following table shows the settings for each data structure. 
+
+\begin{table}[H] 
+\centering 
+{\footnotesize
+\begin{tabular}{ P{7cm} P{7cm} }      % centered columns (3 columns) 
+\hline \hline
+Data structure & Parameters \T\B  \\
+\hline \hline
+BVH & $depth=50,\; maxPrims=1,\; splitting=median$\T\B
+\\    
+\hline
+LBVH & $depth=50,\; maxPrims=1,\; splitting=morton code$ \T\B
+\\
+ \hline
+Kd-Tree & $depth = 8 + 1.3\log(N),\; maxPrims=1,\; splitting=SAH$ \T\B 
+\\ 
+\hline \hline
+    \end{tabular}
+}
+  \caption{Parameters used for each data structure}
+\end{table}
 
 \noindent
 \\
-The second metric is the rendering time.  The first note is that both BVH and LBVH have similar performance at rendering, the reason is that both are using the same rendering algorithm. By adding both building and rendering time we can note that BVH spends less time than LBVH. So why are we using LBVH? LBVH is mostly beneficial on the construction time as the tree can be built on multi threads, however, I did not include this as it is intuitive multithreading will increase any algorithm performance. Kd-Tree on the other hand spends less time on the smaller models with few primitives as well as the ones with 1 million primitives. Adding both buildings the rendering time we note that Kd-Tree consumes much more time than the other data structures. 
+Starting with the building time metric. We can note that BVH is the fastest to build the tree and Kd-Tree is the slowest, nonetheless, LBVH stays in between! BVH is the fastest because it uses simple splitting criteria which is the median of the primitives, this is a cheap performance execution, moreover, it uses a simple tree representation and does not use a compact form as Kd-Tree. LBVH is almost 2X of the BVH, even though both are using the same binary tree the splitting criteria are different. LBVH has to map the centre point of the 3D primitive to a Morton code, sort it by radix sort and then find a splitting point. These extra three stages add extra complexity to the building phase, hence LBVH takes more time than BVH for this implementation. Kd-Tree consumes so much time in the building phase since it uses the SAH algorithm for splitting nodes. As we explained already with an example the SAH method can be expensive to compute, especially for some edge cases where the splitting point can not be found and the algorithm tries the three different axes until it either finds the best split or just split the AABB into halves. 
 
 \noindent
 \\
-Looking at the number of nodes and the number of intersections with primitives we can see that kd-Tree is a clear winner, and this explains why Kd-Tree spends less time on rendering than BVH and LBVH. Note that number of nodes in the Kd-Tree is less due to two reasons. The first reason is that we are using the equation mentioned to calculate the maximum depth for the tree which will restrict its recursions and the nuumber of splitting, unlike BVH and LBVH where both do not care about depth in my implementation.  The second reason is that we used SAH for splitting which looks for the tradeoff between the cost of splitting or just creating a leaf node and stopping. 
+The second metric is the rendering time.  Both BVH and LBVH have similar performance at rendering, the reason is that both are using the same tree traversal algorithm (Pre-order Traversal). By adding both building and rendering time we can note that BVH spends less time than LBVH. We conclude that in my implementation BVH outperforms LBVH. LBVH is mostly beneficial on the construction time as the tree can be built on multi threads, however, I did not include this as it is intuitive multithreading will increase any algorithm performance. Multithreading LBVH can construct the tree faster than BVH and since both are similar in rendering time, in that scenario LBVH can outperform BVH. Kd-Tree on the other hand spends less time on the smaller models with few primitives as well as the ones with 1 million primitives. Adding both buildings to the rendering time we note that Kd-Tree consumes much more time than the other data structures due to its expensive building time. 
 
-\noindent
-\\
+
+
 \begin{table}[H] 
 \centering 
 {\footnotesize
@@ -967,12 +988,16 @@ Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \T\B
     \end{tabular}
 }
 \captionsetup{justification=centering,margin=2cm}
-\caption{Comparison between BVH, LBVH and Kd-Tree by using \protect\cite{stanfordbunny}, \protect\cite{stanfordxyzdragon}, \protect\cite{buddha}}
+\caption{Comparison between BVH, LBVH and Kd-Tree by using different models \protect\cite{stanfordbunny}, \protect\cite{igea}, \protect\cite{stanfordxyzdragon}, \protect\cite{buddha}}
 \end{table}
+\noindent
+\\
+Looking at the number of nodes and the number of intersections with primitives we can note that BVH and LBVH in general deliver approximately similar output. This can give a hint as the built tree for both methods are similar, this is maybe due to some similarity in the splitting criteria as the median method is similar to the Morton code, this is only a conclusion I made.  Kd-Tree shows a more complex tree representation for the smaller model and a simple tree for the larger models. This is because the SAH algorithm can produce duplicated primitives in different nodes leading to deep long trees and more nodes. On the other hand for bigger models, the number of nodes and intersections is reduced significantly.  Spending more time to construct and optimise the tree will lead to longer building time however it acts as an investment to produce a better tree to boost the rendering (traversal) time.
+
 
 \noindent
 \\
-Note that even though the average performance is correlated with the number of primitives in the scene, however, there are some scenarios where the performance is not behaving as expected. For example, looking at the Kd-Tree number of nodes can spike up, this is because not only the number of primitives important to choosing the right data structure but other perspectives related to the scene can affect the performance not only the number of primitives.  The next tests try to cover some of them.
+Note that even though the average performance is correlated with the number of primitives in the scene, however, there are some scenarios where the performance is not behaving as expected. For example, looking at the Kd-Tree number of nodes can spike up, this is because not only is the number of primitives important to choosing the right data structure but other perspectives related to the scene can affect the performance not only the number of primitives. The next scenes try to cover some of them.
 
 \noindent
 \\
@@ -1030,7 +1055,7 @@ Kd-Tree \#nodes & 511, 023 & 272, 881 \T\B
 }
 \end{table}
 \subsubsection{Trees}
-Special thanks to \protect\cite{trees} for the Trees 3D model. The interesting thing about this scene is that it has a high discrepancy, where some primitives are creating clusters at regions such as the leaf of the trees where there is a compact number of primitives but with some empty spaces between them, on the other hand, there is the ground the sky which is empty regions. I would like to note here that I am not supporting any textures in my Raytracer. 
+Special thanks to \protect\cite{trees} for the Trees 3D model. This scene has a high discrepancy, where some primitives are creating clusters at regions such as the leaf of the trees where there is a compact number of primitives but with some empty spaces between them, on the other hand, there is the ground the sky which is empty regions. I would like to note here that I am not supporting any textures in my ray tracer. 
 
 
 \noindent
@@ -1039,16 +1064,31 @@ Looking at the result we can note that LBVH and BVH are still delivering almost 
 
 \noindent
 \\
-We can note that when the Kd-Tree outperformed BVH and LBVH in terms of rendering time even though when it was previously tested on Igea and the Asian Dragon it did not outperform the other data structures. Even though the number of primitives is between 134k and 539K the result we would expect to be in between or at least the Kd-tree still suffering but this was not the result. This scene gives hint on how different data structures can perform differently based on the number of primitives and the distribution of primitives. 
+The Kd-Tree outperformed BVH and LBVH in terms of rendering time by more than 2X. Even though when it was previously tested on Igea and the Asian Dragon models, it did not outperform the other data structures. Although the number of Trees scene 252K primitives is between 134k and 539K the result we would expect to be in between or at least the Kd-Tree still suffering but this was not the result. This scene gives hint on how different data structures can perform differently based on the number of primitives and the distribution of primitives. The difference between the Trees scene and other models tested is that the Trees scene consists of a dense cluster of primitives the Trees leaves and other regions where no primitives exist (Sky and Floor). We can note that kd-Tree in combination with SAH performs better with sich scenes. 
+
 \subsubsection{Sci-Fi Tropical City}
 Special thanks to \protect\cite{scifi} for the Sci-Fi Tropical City 3D model.
-This scene has more details than the Trees even though the number of primitives is less. The same result for both BVH and LBVH where BVH outperformed LBVH in the building time but LBVH outperformed BVH in rendering time, but the overall time is almost similar. Kd-Tree again outperformed both BVH and LBVH in the rendering time. Interestingly the number of nodes is less than nodes generated in the Stanford bunny which was more than the 3x number of the Sci-fi scene. 
+This scene has more details than the Trees even though the number of primitives is less. The same result for both BVH and LBVH where BVH outperformed LBVH in the building time but LBVH outperformed BVH in rendering time, but the overall time is almost similar. Both of them did not perform well. We note that both rendering time is more than the rendering time for rendering Igea model which was 134k. For Igea model, both took 13s to render but for the Sci-Fi it took around 50s. This is because this scene is more detailed and covers most of the projected plane. Kd-Tree again outperformed both BVH and LBVH in the rendering time. Interestingly the number of nodes is less than nodes generated in the Stanford bunny which was more than the 3x number of the Sci-fi scene. We note that even though the number of intersections is 21X of the intersections test in the Stanford-bunny, we would expect the rendering time would be significantly higher however it increased only by 2.6X. 
+
 
 \noindent
 \\
 \clearpage
 
 \section{Conclusion}
+In this report, we started the discussion of how significant the impact of acceleration structures is on ray tracing. We explained two types of data structures, object subdivision types such as BVH and LBVH and spacial subdivision such as Kd-Tree. Each method consists of two major phases Construction tree and the Traversal tree. Each technique uses different parameters that can be tweaked resulting in different trees that lead to different building and rendering times. Splitting criteria play an essential role in how to produce a decent tree. A decent tree means a tradeoff between the depth of the tree and the number of primitives assigned to each leaf node.  
+
+\noindent
+\\
+BVH outperformed LBVH and Kd-Tree in terms of building the tree time in most of the scenes, this is due to its simple splitting criteria where it is dividing the primitives into two halves only. LBVH on the other hand took more time to build the tree due to its Morton code generation and radix sorting algorithm. Although LBVH makes it easier to build sub trees independently from each other the rendering time for both LBVH and BVH was quite similar in most scenes. This is because both methods use pre-order traversal methods and both methods generate a similar number of nodes.
+
+\noindent
+\\
+Kd-Tree invests much more time to build the tree the reason is it uses the SAH algorithm. Moreover, since Kd-Tree allows duplicated primitives in more than one node, resulting in deeper trees than BVH and LBVH this is noticeable by looking at the number of nodes generated. However, Kd-Tree spend less time on rendering than other methods, this is important for complex scenes such as Trees and Sci-Fi. For small models, we note that it is acceptable to use BVH and LBVH. 
+
+
+\noindent
+\\
 The author thanks his supervisor \textbf{Prof.Dr.-Ing. Matthias Teschner} once again for the guidance throughout this project.
 	
 \clearpage
