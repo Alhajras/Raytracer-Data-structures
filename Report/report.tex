@@ -83,7 +83,7 @@
 	%	Editor(s)
 	%------------------------------------------------
 	
-	Author
+	Written by
 	
 	\vspace{0.5\baselineskip} % Whitespace before the editors
 	
@@ -91,7 +91,7 @@
 	
 			\vspace{0.5\baselineskip} % Whitespace before the editors
 
-		Advisor
+	Supervised by
 	
 	\vspace{0.5\baselineskip} % Whitespace before the editors
 	
@@ -124,7 +124,7 @@
 
 \clearpage
 
-\section*{Acknowledgments}
+\section*{Acknowledgements}
 This project results from hard work and cumulative knowledge gained through seminars, labs, and lectures in the chair of computer graphics at the University of Freiburg under \textbf{Prof. Dr.-Ing. Matthias Teschner} guidness and supervision. Those materials and their resources were the fundamental building blocks to reaching this point with the proper feedback from the professor. The resources used in this project are been referenced and acknowledged wherever necessary.
 \\
 \section*{Abstract}
@@ -667,6 +667,7 @@ For building the tree, the maximum allowed depth is needed to be given. However,
 
 \begin{equation}
 depth = 8 + 1.3\log(N)
+\label{eq:depth}
 \end{equation}
 
 \noindent
@@ -711,7 +712,7 @@ The kd-Tree traversal is different from the BVH traversal we mentioned. BVH was 
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/traversal.png}
-     \caption{(a) The ray is intersected with the bounds of the tree, giving an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, it is necessary to consider the two children of the root node here. The ray first enters the child on the right, labeled “near,” where it has a parametric range $[t_{min}, t_{split}]$. If the near node is a leaf with primitives in it, ray–primitive intersection tests are performed; otherwise, its children nodes are processed. (c) If no hit is found in the node, or if a hit is found beyond $[t_{min}, t_{split}]$, then the far node, on the left, is processed. (d) This sequence continues—processing tree nodes in a depth-first, front-to-back traversal—until the closest intersection is found or the ray exits the tree. \protect\cite{Pharr2016}}
+     \caption{(a) The initial intersection with the parent node, gives an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, both children will be tested. The “near” node will be tested first where it has a parametric range $[t_{min}, t_{split}]$. If it is a leaf, its primitives will be tesrted; otherwise, its children will be tested recursively. (c) If the near node intersection test returns false, the far node will be tested. (d) Continuously keep visiting the tree nodes by using depth-first, front-to-back traversal until the closest intersection is found or the ray exits the tree. \protect\cite{Pharr2016}}
         \label{fig:dice}
 \end{figure}
 
@@ -892,14 +893,14 @@ depth = 100& 35, 947 & 44, 854 & 683, 669 & 1.871 s & 9.546 s\T\B
 
 \noindent
 \\
-The depth parameter has a different effect on the number of nodes where when the value changed from 5 to 10 the number of nodes increased by almost 24X which reduced the rendering time by almost 3X.  Even small values of the depth reduce the building time the rendering time which is usually the most critical stage in the raytracing pipeline is increased tremendously. Using the formula mentioned to set the depth dynamically depending on the scene, we end up with a value equal to 28 in this scene (Stanford bunny), this value increases the rendering time even more by almost 4X in comparison to depth equals to 5. Nevertheless increasing the depth more to 100 resulted in no performance gain as we reached a saturation point. Although I took the formula from the book PBRT for granted it seems that it delivers a decent result in this scene. 
+Increasing the number of the depth parameter increases the building time however it reduces the rendering time significantly. For example, by changing the depth from 5 to 10, the total building and rendering time combined is reduced by almost 3X, although the building time is increased we notice the massive gain in the rendering time which is very often the bottleneck in ray tracing. By changing the value from 10 to 28, which is the value suggested by the Equation \eqref{eq:depth} we mentioned earlier, we note that the overall performance increased by almost 1.2X. Increasing the depth to 100 reaches a saturation point where the depth does not play any role in performance. The reason is for each scene there is a maximum value depth that the tree can produce and regardless of increasing the depth parameter if the parameter is bigger than the maximum depth of the tree then it is useless to constrain the tree with the value bigger than its maximum reachable depth.  We can conclude that the formula used in the PBR book looks promising and deliver the best result out of the values used in the table. 
 
 \noindent
 \\
-What about tweaking both parameters to find the best result? In order to find the best combination of parameters for a random scene one can use one of the well known parameter optimization techniques such as  Grid Search, we will not cover this part in this report as I have used a simple manual method. 
+Tweaking both parameters to find the optimal result is different from tweaking one parameter and fixing one. In order to find the best combination of parameters for a random scene one can use one of the well-known parameter optimization techniques such as  Grid Search, we will not cover this part in this report as I have used a simple manual method. 
 
 \subsection{Investigating different data structures}
-I have used different models with a diverse range of primitives for proper comparison. The models Stanford-bunny, Igea, Asian Dragon, and Happy Buddha used are taken from the following repository [commontest].
+I have used different models with a diverse range of primitives for proper comparison. The models Stanford-bunny \protect\cite{stanfordbunny}, Igea \protect\cite{igea}, Asian Dragon \protect\cite{stanfordxyzdragon}, and Happy Buddha \protect\cite{buddha} used are taken from the following repository \protect\cite{Jacobson2021}.
 
 \noindent
 \\
