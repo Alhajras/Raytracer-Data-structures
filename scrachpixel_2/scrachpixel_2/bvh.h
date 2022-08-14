@@ -34,6 +34,7 @@ using Vec3b = Vec3<bool>;
 using Vec3i = Vec3<int32_t>;
 using Vec3ui = Vec3<uint32_t>;
 using Matrix44f = Matrix44<float>;
+int spheres_intersections_counter = 0;
 // igea [20:50]
 // bunny [10:15]
 const int MaxLeaves = 2;
@@ -103,6 +104,7 @@ public:
 	//[/comment]
 	bool raySphereIntersect(const Vec3f& rayorig, const Vec3f& raydir, float& t0, float& t1) const
 	{
+		spheres_intersections_counter++;
 		Vec3f l = center - rayorig;
 		float tca = l.dotProduct(raydir);
 		if (tca < 0) return false;
@@ -300,7 +302,7 @@ std::shared_ptr<Node> constructBVHNew(
 	int objectsNumber = endIndex - startIndex;
 
 	//For now we support only one leaf
-	if (objectsNumber == 1) {
+	if (objectsNumber <= 4) {
 		// Create leaf
 		node->isleaf = true;
 		node->nPrimitives = 1;
@@ -354,6 +356,14 @@ std::shared_ptr<Node> constructBVHNew(
 				const SceneObject& b) {
 					return a.center[dim] < b.center[dim];
 			});
+	}
+
+	if (startIndex == midSplitIndex) {
+		// Create leaf
+		node->isleaf = true;
+		node->nPrimitives = 1;
+		node->objs.push_back(allSceneObjects[startIndex].objId);
+		return node;
 	}
 
 	node->leftchild = constructBVHNew(allSceneObjects, startIndex, midSplitIndex, totalNodes);
@@ -500,7 +510,7 @@ std::shared_ptr<Node> constructLBVHNew(
 	int objectsNumber = endIndex - startIndex;
 
 	//For now we support only one leaf
-	if (objectsNumber == 0) {
+	if (objectsNumber <= 4) {
 		// Create leaf
 		node->isleaf = true;
 		node->nPrimitives = 1;
@@ -609,7 +619,9 @@ std::shared_ptr<Node> constructLBVHTree(
 	}
 	radixSort(sortedMortonCodes, sortedMortonCodes.size(), 10);
 	int totalNodes = 0;
-	return constructLBVHNew(objects, sortedMortonCodes, 0, sortedMortonCodes.size() - 1, &totalNodes);
+	std::shared_ptr<Node> root = constructLBVHNew(objects, sortedMortonCodes, 0, sortedMortonCodes.size() - 1, &totalNodes);
+	std::cout << "Total number of nodes: " << totalNodes << "\n";
+	return root;
 }
 
 int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes, int depth)
@@ -1197,7 +1209,7 @@ void KdAccelNode::InitLeaf(int* primNums, int np,
 int nAllocedNodes = 0;
 int nextFreeNode = 0;
 KdAccelNode* nodes;
-char maxPrims = 1;
+int maxPrims = 5;
 char isectCost = 80;
 char emptyBonus = 0.5f;
 char traversalCost = 1;
@@ -1244,7 +1256,7 @@ void FreeAligned(void* ptr) {
 	free(ptr);
 #endif
 }
-
+int totalKdNodes = 0;
 void buildTree(
 	int nodeNum,
 	const BoxBoundries& nodeBounds,
@@ -1275,6 +1287,7 @@ void buildTree(
 	// Initialize leaf node if termination criteria met
 	if (nPrimitives <= maxPrims || depth == 0) {
 		nodes[nodeNum].InitLeaf(primNums, nPrimitives, primitiveIndices);
+		++totalKdNodes;
 		return;
 	}
 	
@@ -1373,9 +1386,10 @@ retrySplit:
 		prims0, prims1 + nPrimitives, badRefines, primitiveIndices);
 	int aboveChild = nextFreeNode;
 	nodes[nodeNum].InitInterior(bestAxis, aboveChild, tSplit);
+	++totalKdNodes;
+
 	buildTree(aboveChild, bounds1, allPrimBounds, prims1, n1, depth - 1, edges,
 		prims0, prims1 + nPrimitives, badRefines, primitiveIndices);
-
 }
 
 // KdTreeAccel Method Definitions
@@ -1387,6 +1401,8 @@ void constructKDTreeNew(
 	// By default the maxDepth is 8 + 1.3log(N)
 	if (maxDepth <= 0)
 		maxDepth = std::round(8 + 1.3f * Log2Int(int64_t(allSceneObjects.size())));
+
+	std::cout << "Depth is: " << maxDepth<< "\n";
 
 	// Compute bounds for kd-tree construction
 	primBounds.reserve(allSceneObjects.size());

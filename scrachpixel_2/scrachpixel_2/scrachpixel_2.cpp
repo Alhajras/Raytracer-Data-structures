@@ -51,7 +51,7 @@
 
 const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
-enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES, TEST };
+enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES, TEST, GRASS,  BUDDHA, CITY };
 using namespace std;
 float RAY_EPSILON = 0.000000001;
 unsigned int rayId = 0;
@@ -61,7 +61,6 @@ unsigned int  rootNodeIndex = 0;
 char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for testing.
 
 // Statstics related
-unsigned int spheres_intersections_counter = 0;
 unsigned int bv_intersections_counter = 0;
 float tree_raverse_time = 0;
 
@@ -90,9 +89,9 @@ struct Settings
 	float bias = 0.0001; // Error allowed
 	uint32_t maxDepth = 0; // Max number of ray trating into the scene
 	uint32_t aa_samples = 1; // Anti aliasing samples
-	AccType dataStructure = KDTREE; // 0 bvh, 1 kd tree
+	AccType dataStructure = LBVH; // 0 bvh, 1 kd tree
 	int kdtreeDepth = 3;
-	SceneModel sceneModel = BUNNY;
+	SceneModel sceneModel = CITY;
 };
 
 
@@ -397,7 +396,6 @@ Vec3f castRay(
 			if (sceneFixed[box].isSphere)
 			{
 				t0 = INFINITY, t1 = INFINITY;
-				spheres_intersections_counter++;
 				if (sceneFixed[box].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 					if (t0 < 0) t0 = t1;
 					if (t0 < tnear) {
@@ -493,7 +491,6 @@ Vec3f castRay(
 	default: {
 		for (unsigned i = 0; i < scene.size(); ++i) {
 			t0 = INFINITY, t1 = INFINITY;
-			spheres_intersections_counter++;
 			if (sceneFixed[i].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
 				if (t0 < 0) t0 = t1;
 				if (t0 < tnear) {
@@ -706,6 +703,26 @@ inline double random_double_2(double min, double max) {
 	return min + (max - min) * random_double();
 }
 
+Vec3f RotationPoints(Vec3f Coordenate, Vec3f AngleCoordenate)
+{
+	Vec3f RotatedPoint;
+
+	//First we rotate the Z:
+	RotatedPoint.x = Coordenate.x * cos(AngleCoordenate.z) - Coordenate.y * sin(AngleCoordenate.z);
+	RotatedPoint.y = Coordenate.x * sin(AngleCoordenate.z) + Coordenate.y * cos(AngleCoordenate.z);
+	RotatedPoint.z = Coordenate.z;
+
+	//Second we rotate the Y:
+	RotatedPoint.x = RotatedPoint.x * cos(AngleCoordenate.y) + RotatedPoint.z * sin(AngleCoordenate.y);
+	RotatedPoint.y = RotatedPoint.y;
+	RotatedPoint.z = RotatedPoint.y * sin(AngleCoordenate.y) + RotatedPoint.z * cos(AngleCoordenate.y);
+
+	//Third we rotate the X:
+	RotatedPoint.x = RotatedPoint.x;
+	RotatedPoint.y = RotatedPoint.y * cos(AngleCoordenate.x) - RotatedPoint.z * sin(AngleCoordenate.x);
+	RotatedPoint.z = RotatedPoint.y * sin(AngleCoordenate.x) + RotatedPoint.z * cos(AngleCoordenate.x);
+	return RotatedPoint;
+}
 
 std::vector<SceneObject> createScene_new(Settings settings) {
 	std::vector<SceneObject> scene;
@@ -732,9 +749,24 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 		fileName.append("bunnies.obj");
 		break;
 	}
+	case CITY:
+	{
+		fileName.append("city.obj");
+		break;
+	}
+	case GRASS:
+	{
+		fileName.append("grass.obj");
+		break;
+	}
 	case BUNNY:
 	{
 		fileName.append("bunny.obj");
+		break;
+	}
+	case BUDDHA:
+	{
+		fileName.append("buddha.obj");
 		break;
 	}
 	default: {
@@ -745,7 +777,7 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 	}
 	for (int clone = 0; clone < NUMBER_OF_CLONES; clone++)
 	{
-		float shift = clone * 20;
+		float shift = clone * 0.5;
 
 		file.open(fileName);
 		std::cout << "Loading file:  " << fileName << " ... " << std::endl;
@@ -768,23 +800,22 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 				file >> vertex.x;
 				file >> vertex.y;
 				file >> vertex.z;
-
+				//vertex = RotationPoints(vertex, Vec3f(20*3.24 / 180));
 				//vertices.push_back(vertex);
 					SceneObject s;
 					s.objId = id;
 
-
 					//	//Bunny scale
 					//	// Min leaf node = 10
-					s.radius = 0.01 * 5; //  hoody = *10 // Bunny =0.01 * 5
-					s.center = vertex * 100 + shift; // igea = *50, bunny = *20, hoody = / 50 
+					s.radius = 0.02 * 5; //  hoody = *10 // Bunny =0.01 * 5
+					s.center = vertex / 10 + shift; // igea = *50, bunny = *20, hoody = / 50 
 					s.center.y += -10;
 
 					//	// Armadillo
 					//	// Min leaf node = 1000
 					//	//s.radius = 0.1;
 					//	//s.center = vertex / 20;
-					s.center.z += -50;
+					s.center.z += -70;
 					s.position = s.center;
 					s.shininess = 64;
 					s.isSphere = true;
@@ -806,7 +837,24 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 		}*/
 		}
 		file.close();
+
 	}
+	SceneObject s;
+	Sphere ground = Sphere(id, Vec3f(0.93591022, -105.47120094, -43.2363205), 100, Vec3f(0, 0, 0), 0, 0.0);
+	s.objId = id;
+	s.radius = ground.radius; //  hoody = *10 // Bunny =0.01 * 5
+	s.center = ground.center; // igea = *50, bunny = *20, hoody = / 50 
+	s.position = s.center;
+	s.shininess = 64;
+	s.isSphere = true;
+	Vec3f minPoint = s.center - s.radius;
+	Vec3f maxPoint = s.center + s.radius;
+	s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+	s.sphere = ground;
+	double random = random_double_2();
+
+	scene.push_back(s);
+	sceneFixed.push_back(s);
 	std::cout << "Number of spheres: " << id << std::endl;
 	return scene;
 
@@ -864,7 +912,7 @@ int main(int argc, char** argv)
 
 
 		//Sphere light = Sphere(0,Vec3f(0, 10, -10), 1, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
-		Sphere light2 = Sphere(0, Vec3f(0, 3, -20), 10, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
+		Sphere light2 = Sphere(0, Vec3f(0, 3, 30), 10, Vec3f(1, 1, 1), 0, 0.0, Vec3f(1));
 
 		Sphere gray = Sphere(0, Vec3f(-5, 0, -20), 2, Vec3f(0.1, 0.4, 0.6), 1, 0.0);
 		Sphere gray_1 = Sphere(1, Vec3f(-5.5, 0, -23), 0.5, Vec3f(0, 0, 0), 1, 0.0);
@@ -884,16 +932,18 @@ int main(int argc, char** argv)
 		case BVH:
 		{
 			std::cout << "<<<<<<< This is BVH >>>>>>" << endl;
-			std::cout << "construct BVH Tree .... ";
+			std::cout << "construct BVH Tree .... \n";
 			const clock_t begin_time = clock();
 			int totalNodes = 0;
 			std::vector<std::shared_ptr<SceneObject>> orderedPrims;
 			orderedPrims.reserve(scene.size());
 			root = constructBVHNew(scene, 0, scene.size(),
 				&totalNodes);
-
 			std::cout << "Done .... Time: ";
+
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
+
+			std::cout << "Total number of nodes: " << totalNodes << "\n";
 
 			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
 			break;
@@ -908,9 +958,9 @@ int main(int argc, char** argv)
 				80, 1, 0.5f,
 				1, -1
 			);
-			//rootNodeIndex = constructKDTree(scene, root, nodes, settings.kdtreeDepth);
 			std::cout << "Done .... Time: ";
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
+			std::cout << "Number of nodes: " << totalKdNodes << "\n";
 			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
 			break;
 		}
