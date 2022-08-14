@@ -1,26 +1,22 @@
-// Author Alhajras Algdairy, 1.7.2021, Uni-Freiburg
-// A simple Raytracer that render triangles and spheres
+// Author Alhajras Algdairy, 14.8.2022, Uni-Freiburg
+// A simple Ray tracer that render primitves by using different data structures
 // The following resources are being used in the code and edited accordingly: 
 //		www.scratchapixel.com
 //      www.realtimerendering.com
 //      cg.informatik.uni-freiburg.de/teaching.htm
 //      stackoverflow.com
 //      www.tutorialspoint.com/binary-search-tree-iterator-in-cplusplus
+//      https://blogs.nvidia.com/blog/2021/05/27/omniverse-marbles-rtx-playable-sample
+//      https://github.com/alecjacobson/common-3d-test-models
 
 #include "bvh.h"
-#include <cstdio>
-#include <utility>
-#include <limits>
-#include <cstdlib>
-#include <memory>
-#include <cmath>
-#include <sstream>
-#include <chrono>
-//#include "uniform_grid.h"
-//#include "geometry.h"
 #include <algorithm>
 #include <bitset>
+#include <chrono>
+#include <cmath>
 #include <complex>
+#include <cstdio>
+#include <cstdlib>
 #include <deque>
 #include <exception>
 #include <fstream>
@@ -31,25 +27,28 @@
 #include <istream>
 #include <iterator>
 #include <limits>
+#include <limits>
 #include <list>
 #include <locale>
 #include <map>
 #include <memory>
+#include <memory>
 #include <new>
 #include <numeric>
+#include <omp.h>
 #include <ostream>
 #include <queue>
 #include <set>
+#include <sstream>
 #include <sstream>
 #include <stack>
 #include <stdexcept>
 #include <streambuf>
 #include <typeinfo>
 #include <utility>
+#include <utility>
 #include <valarray>
-#include <omp.h>
 
-const float INF = std::numeric_limits<float>::max();
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
 enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES, TEST, GRASS,  BUDDHA, CITY };
 using namespace std;
@@ -87,11 +86,9 @@ struct Settings
 	float fov = 90;
 	Vec3f backgroundColor = Vec3f(1, 1, 1); // Standard bg color is white
 	float bias = 0.0001; // Error allowed
-	uint32_t maxDepth = 0; // Max number of ray trating into the scene
 	uint32_t aa_samples = 1; // Anti aliasing samples
-	AccType dataStructure = LBVH; // 0 bvh, 1 kd tree
-	int kdtreeDepth = 3;
-	SceneModel sceneModel = CITY;
+	AccType dataStructure = BVH; // 0 bvh, 1 kd tree
+	SceneModel sceneModel = BUNNY;
 };
 
 
@@ -113,8 +110,6 @@ void fresnel(const Vec3f& I, const Vec3f& N, const float& ior, float& kr)
 		float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
 		kr = (Rs * Rs + Rp * Rp) / 2;
 	}
-	// As a consequence of the conservation of energy, transmittance is given by:
-	// kt = 1 - kr;
 }
 
 class Triangle
@@ -254,40 +249,7 @@ bool trace_more(Settings settings,
 {
 
 	bool hit = false;
-	//for (int box : boundingBoxes)
-	//{
-	//	for (int i = 0; i < tree[box]->objs.size(); i++)
-	//	{
-	//		shared_ptr<SceneObject> sob;
-
-	//		if (settings.dataStructure == LBVH) {
-	//			//int moreId = tree[box]->objsMorID[i];
-	//			//sob = hashMap[moreId];
-	//		}
-	//		else
-	//		{
-	//			sob = scene[tree[box]->objs[i]];
-	//		}
-	//		if (sob->isSphere)
-	//		{
-	//			float tNearK = INF;
-	//			uint32_t indexK;
-	//			Vec2f uvK;
-	//			float t1;
-	//			spheres_intersections_counter++;
-	//			if (sob->sphere.raySphereIntersect(orig, dir, tNearK, t1) && tNearK < tNear) {
-	//				hitObject = &sob->sphere;
-	//				hit = true;
-	//				tNear = tNearK;
-	//				index = 0;
-	//				uv = uvK;
-	//			}
-	//		}
-	//	}
-	//}
-
 	return hit;
-	//return (*hitObject != nullptr);
 }
 
 inline float modulo(const float& f)
@@ -340,8 +302,7 @@ Vec3f castRay(
 	std::vector<Sphere>& lights,
 	std::vector<SceneObject>& scene,
 	std::shared_ptr<Node>& tree,
-	const int& depth,
-	const std::unique_ptr<Grid>& accel, const Settings& settings)
+	const int& depth, const Settings& settings)
 {
 
 	float minT = std::numeric_limits<float>::max();
@@ -364,7 +325,6 @@ Vec3f castRay(
 	Vec3f  hitColor = Vec3f(0.6, 0.8, 1);
 
 	Vec3f color(0, 0, 0);
-	//if (raydir.length() != 1) std::cerr << "Error " << raydir << std::endl;
 	float tnear = INFINITY;
 	Sphere* sphere = NULL;
 	float t0, t1;
@@ -379,7 +339,6 @@ Vec3f castRay(
 	case BVH:
 	{
 		const clock_t begin_time = clock();
-		//bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
 		boxIntersect(rayorig, raydir, tree, boundingBoxes);
 
 		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
@@ -391,8 +350,6 @@ Vec3f castRay(
 		for (int box : boundingBoxes)
 		{
 
-			/*for (int i = 0; i < tree[box]->objs.size(); i++)
-			{*/
 			if (sceneFixed[box].isSphere)
 			{
 				t0 = INFINITY, t1 = INFINITY;
@@ -405,7 +362,6 @@ Vec3f castRay(
 					}
 				}
 			}
-			//}
 		}
 
 		break;
@@ -419,76 +375,11 @@ Vec3f castRay(
 		}
 		return Vec3f(0, 0.0, 0);
 		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
-
-		//if (boundingBoxes.size() == 0)
-		//{
-		//	return Vec3f(0.6, 0.8, 1);
-		//}
-
-		//for (int box : boundingBoxes)
-		//{
-		//	for (int i = 0; i < tree[box]->objs.size(); i++)
-		//	{
-		//		if (scene[tree[box]->objs[i]].isSphere)
-		//		{
-		//			t0 = INFINITY, t1 = INFINITY;
-		//			spheres_intersections_counter++;
-		//			if (scene[tree[box]->objs[i]].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
-		//				if (t0 < 0) t0 = t1;
-		//				if (t0 < tnear) {
-		//					tnear = t0;
-		//					sphere = &scene[tree[box]->objs[i]].sphere;
-		//					hitColor = sphere->surfaceColor;
-		//				}
-		//			}
-		//		}
-		//	}
-		//}	
 		break;
 	}
-	case UNIFORM_GRID:
-	{
-		Sphere hitsphere = Sphere(-1, Vec3f(0), 0, Vec3f(0, 0, 0), 0, 0.0);
-		accel->intersect(rayorig, raydir, rayId++, tnear, hitsphere);
-		sphere = &hitsphere;
-		break;
-	}
-	/*case LBVH:
-	{
-		const clock_t begin_time = clock();
-		bvhTraverse(rayorig, raydir, tree, rootNodeIndex, boundingBoxes);
-		tree_raverse_time += float(clock() - begin_time) / CLOCKS_PER_SEC;
-
-		if (boundingBoxes.size() == 0)
-		{
-			return Vec3f(0.6, 0.8, 1);
-		}
-
-		for (int box : boundingBoxes)
-		{
-			for (int i = 0; i < tree[box]->objs.size(); i++)
-			{
-				int moreId = tree[box]->objsMorID[i];
-				std::shared_ptr<SceneObject> sob;
-				sob = hashMap[moreId];
-
-				if (sob->isSphere)
-				{
-					t0 = INFINITY, t1 = INFINITY;
-					spheres_intersections_counter++;
-					if (sob->sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
-						if (t0 < 0) t0 = t1;
-						if (t0 < tnear) {
-							tnear = t0;
-							sphere = &sob->sphere;
-							hitColor = sphere->surfaceColor;
-						}
-					}
-				}
-			}
-		}		break;
-	}*/
 	default: {
+		// This is without using any data structures
+
 		for (unsigned i = 0; i < scene.size(); ++i) {
 			t0 = INFINITY, t1 = INFINITY;
 			if (sceneFixed[i].sphere.raySphereIntersect(rayorig, raydir, t0, t1)) {
@@ -500,18 +391,6 @@ Vec3f castRay(
 				}
 			}
 		}
-		// This is without using any data structures
-		//for (unsigned i = 0; i < spheres.size(); ++i) {
-		//	t0 = INFINITY, t1 = INFINITY;
-		//	if (spheres[i].raySphereIntersect(rayorig, raydir, t0, t1)) {
-		//		if (t0 < 0) t0 = t1;
-		//		if (t0 < tnear) {
-		//			tnear = t0;
-		//			sphere = &spheres[i];
-		//			hitColor = sphere->surfaceColor;
-		//		}
-		//	}
-		//}
 	}
 	}
 
@@ -553,8 +432,8 @@ Vec3f castRay(
 			Vec3f refractionRayOrig = (refractionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, accel, settings);
-			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, scene, tree, depth + 1, accel, settings);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, settings);
+			Vec3f refractionColor = castRay(refractionRayOrig, refractionDirection, spheres, lights, scene, tree, depth + 1, settings);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = refractionColor * (1 - kr);
@@ -567,7 +446,7 @@ Vec3f castRay(
 			Vec3f reflectionRayOrig = (reflectionDirection.dotProduct(N) < 0) ?
 				hitPoint - N * bias :
 				hitPoint + N * bias;
-			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, accel, settings);
+			Vec3f reflectionColor = castRay(reflectionRayOrig, reflectionDirection, spheres, lights, scene, tree, depth + 1, settings);
 			float kr;
 			fresnel(raydir, N, 2, kr);
 			hitColor = (1 - kr);
@@ -594,7 +473,7 @@ Vec3f castRay(
 				lightDir = lightDir.normalize();
 				float LdotN = std::max(0.f, lightDir.dotProduct(N));
 				Sphere* shadowHitObject = nullptr;
-				float tNearShadow = INF;
+				float tNearShadow = INFINITY;
 				// is the point in shadow, and is the nearest occluding object closer to the object than the light itself?
 				bool inShadow = trace_more(settings, shadowPointOrig, lightDir, spheres, tNearShadow, index, uv, shadowHitObject, scene, tree, boundingBoxes) &&
 					tNearShadow * tNearShadow < lightDistance2;
@@ -666,7 +545,7 @@ void printProgress(double percentage) {
 	fflush(stdout);
 }
 
-void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::shared_ptr<Node>& tree, const std::unique_ptr<Grid>& accel)
+void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<Sphere>& lights, std::vector<Triangle> triangles, int frame, std::vector<SceneObject>& scene, std::shared_ptr<Node>& tree)
 {
 	Vec3f* image = new Vec3f[settings.width * settings.height], * pixel = image;
 	float invWidth = 1 / float(settings.width), invHeight = 1 / float(settings.height);
@@ -683,7 +562,7 @@ void render(const Settings& settings, std::vector<Sphere>& spheres, std::vector<
 				float yy = (1 - 2 * ((y + random_double()) * invHeight)) * angle;
 				Vec3f raydir(xx, yy, -1);
 				raydir.normalize();
-				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 1, accel, settings);
+				sampled_pixel += castRay(Vec3f(0), raydir, spheres, lights, scene, tree, 1, settings);
 			}
 			*pixel = sampled_pixel;
 			loadingProgress++;
@@ -777,7 +656,7 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 	}
 	for (int clone = 0; clone < NUMBER_OF_CLONES; clone++)
 	{
-		float shift = clone * 0.5;
+		float shift = clone * 20;
 
 		file.open(fileName);
 		std::cout << "Loading file:  " << fileName << " ... " << std::endl;
@@ -800,41 +679,29 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 				file >> vertex.x;
 				file >> vertex.y;
 				file >> vertex.z;
-				//vertex = RotationPoints(vertex, Vec3f(20*3.24 / 180));
-				//vertices.push_back(vertex);
-					SceneObject s;
-					s.objId = id;
 
-					//	//Bunny scale
-					//	// Min leaf node = 10
-					s.radius = 0.02 * 5; //  hoody = *10 // Bunny =0.01 * 5
-					s.center = vertex / 10 + shift; // igea = *50, bunny = *20, hoody = / 50 
-					s.center.y += -10;
 
-					//	// Armadillo
-					//	// Min leaf node = 1000
-					//	//s.radius = 0.1;
-					//	//s.center = vertex / 20;
-					s.center.z += -70;
-					s.position = s.center;
-					s.shininess = 64;
-					s.isSphere = true;
-					Vec3f minPoint = s.center - s.radius;
-					Vec3f maxPoint = s.center + s.radius;
-					s.boxBoundries = BoxBoundries(minPoint, maxPoint);
-					s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0.8, 0.7, 0), 0, 0.0, REFLECTION_AND_REFRACTION);
-					double random = random_double_2();
-
-					scene.push_back(s);
-					sceneFixed.push_back(s);
-				//std::cout << vertex.Z << std::endl;
+				SceneObject s;
+				s.objId = id;
+				s.radius = 0.01 * 5;
+				s.center = vertex * 100 + shift;
+				s.center.y += -10;
+				s.center.z += -50;
+				s.position = s.center;
+				s.shininess = 64;
+				s.isSphere = true;
+				Vec3f minPoint = s.center - s.radius;
+				Vec3f maxPoint = s.center + s.radius;
+				s.boxBoundries = BoxBoundries(minPoint, maxPoint);
+				s.sphere = Sphere(id++, s.center, s.radius, Vec3f(0.8, 0.7, 0), 0, 0.0, REFLECTION_AND_REFRACTION);
+				double random = random_double_2();
+				scene.push_back(s);
+				sceneFixed.push_back(s);
 			}
 			else
 			{
 				break;
 			}
-			/*file.close();
-		}*/
 		}
 		file.close();
 
@@ -945,7 +812,7 @@ int main(int argc, char** argv)
 
 			std::cout << "Total number of nodes: " << totalNodes << "\n";
 
-			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
+			render(settings, spheres, lights, triangles, frame, scene, root);
 			break;
 		}
 		case KDTREE:
@@ -961,20 +828,9 @@ int main(int argc, char** argv)
 			std::cout << "Done .... Time: ";
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
 			std::cout << "Number of nodes: " << totalKdNodes << "\n";
-			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
+			render(settings, spheres, lights, triangles, frame, scene, root);
 			break;
 		}
-		/*case UNIFORM_GRID:
-		{
-			std::cout << "<<<<<<< This is UNIFORM_GRID >>>>>>";
-			std::cout << "construct Uniform grid .... ";
-			const clock_t begin_time = clock();
-			std::unique_ptr<Grid> accel(new Grid(scene));
-			std::cout << "Done .... Time: ";
-			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
-			render(settings, spheres, lights, triangles, frame, scene, nodes, accel);
-			break;
-		}*/
 		case LBVH:
 		{
 			std::cout << "<<<<<<< This is LBVH >>>>>>";
@@ -983,12 +839,12 @@ int main(int argc, char** argv)
 			root = constructLBVHTree( scene, root, nodes);
 			std::cout << "Done .... Time: ";
 			std::cout << float(clock() - begin_time) / CLOCKS_PER_SEC << "s\n";
-			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
+			render(settings, spheres, lights, triangles, frame, scene, root);
 			break;
 		}
 		default: {
 			std::cout << "<<<<<<< Warning: No data structure is used, this can take long time! >>>>>>";
-			render(settings, spheres, lights, triangles, frame, scene, root, NULL);
+			render(settings, spheres, lights, triangles, frame, scene, root);
 			break;
 		}
 		}
