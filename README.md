@@ -15,11 +15,11 @@ Next are some of the renderd results:
 
 | nature_scene() | textured_spheres() | benchmark_scene() | showcase_scene_1(true) |
 | --------  | ------------------- | --------------------- |---------------------|
-| ![nature scene](/example%20renders/nature_scene.png)| ![textured spheres](/example%20renders/textured_spheres.png)      | ![benchmark scene](/example%20renders/benchmark_scene.png) | ![showcase scene](/example%20renders/showcase_scene_area_light.png) |
+| ![nature scene](/project/raytracer/images/texture_2.PNG)| ![textured spheres](/project/raytracer/images/texture_1.PNG)      | ![benchmark scene](/project/raytracer/images/texture_3.PNG) | ![showcase scene](/project/raytracer/images/spec_reflection.PNG) |
 
 | showcase_scene_1(false) | showcase_scene_2(true) | showcase_scene_2(false) | showcase_scene_3() |
 | --------  | ------------------- | --------------------- |---------------------|
-| ![showcase scene](/example%20renders/showcase_scene_point_light.png)| ![showcase scene 2](/example%20renders/showcase_scene_2_area_light.png) | ![showcase scene 2](/example%20renders/showcase_scene_2_point_light.png) | ![showcase scene 3](/example%20renders/showcase_scene_3.png) |
+| ![showcase scene](/project/raytracer/images/refraction__0_5.PNG)| ![showcase scene 2](/example%20renders/showcase_scene_2_area_light.png) | ![showcase scene 2](/example%20renders/showcase_scene_2_point_light.png) | ![showcase scene 3](/project/raytracer/images/multi_shadow_multi_spec.PNG) |
 
 | analysis_scene_1() | analysis_scene_2() | analysis_scene_3() | analysis_scene_4() |
 | --------  | ------------------- | --------------------- |---------------------|
