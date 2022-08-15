@@ -1,7 +1,59 @@
-# Raytracer-Data-structures
+# Rendering-Lab
 
-This commit works for all data but not for big scenes: 
-2b0f013647b32f5b4ec168ff56159a657383c837
+This is a ray tracer implemented as part of the master project at the University of Freiburg. The report of the work done can be found <a href="/Report/report.pdf">here</a>. The ray tracer was tested on a machine with Ubuntu 20.04.2 LTS. In order to run the code, run this command in the root directory:
+
+```
+g++ -o output main.cpp
+```
+and then run the output file as
+```
+./output
+```
+This will start rendering a scene a sanford bunny.
+
+Next are some of the renderd results:
+
+| nature_scene() | textured_spheres() | benchmark_scene() | showcase_scene_1(true) |
+| --------  | ------------------- | --------------------- |---------------------|
+| ![nature scene](/example%20renders/nature_scene.png)| ![textured spheres](/example%20renders/textured_spheres.png)      | ![benchmark scene](/example%20renders/benchmark_scene.png) | ![showcase scene](/example%20renders/showcase_scene_area_light.png) |
+
+| showcase_scene_1(false) | showcase_scene_2(true) | showcase_scene_2(false) | showcase_scene_3() |
+| --------  | ------------------- | --------------------- |---------------------|
+| ![showcase scene](/example%20renders/showcase_scene_point_light.png)| ![showcase scene 2](/example%20renders/showcase_scene_2_area_light.png) | ![showcase scene 2](/example%20renders/showcase_scene_2_point_light.png) | ![showcase scene 3](/example%20renders/showcase_scene_3.png) |
+
+| analysis_scene_1() | analysis_scene_2() | analysis_scene_3() | analysis_scene_4() |
+| --------  | ------------------- | --------------------- |---------------------|
+| ![analysis scene 1](/example%20renders/analysis_scene_1.png)| ![analysis scene 2](/example%20renders/analysis_scene_2.png) | ![analysis scene 3](/example%20renders/analysis_scene_3.png) | ![analysis scene 4](/example%20renders/analysis_scene_4.png) |
+
+
+| analysis_scene_5() | analysis_scene_6() | analysis_scene_7()  | analysis_scene_8() |
+| --------  | ------------------- | --------------------- |---------------------|
+| ![analysis scene 5](/example%20renders/analysis_scene_5.png)| ![analysis scene 6](/example%20renders/analysis_scene_6.png) | ![analysis scene 7](/example%20renders/analysis_scene_7.png) | ![analysis scene 8](/example%20renders/analysis_scene_8.png) |
+
+
+There are some other constants that can be set in the file `constants.h`. Set `USE_UNIFORM_GRIDS = true` if you want to use compact grid. Likewise, set `BVH_CENTROID_SPLIT = true` and `USE_BVH = true` if you want to use BVH. Remember to set the other structure to `false` if using another structure. So, set `USE_UNIFORM_GRIDS = false` if using BVH and vice versa. By default, `USE_UNIFORM_GRIDS = false` and `USE_BVH = true` for centroid split method (`BVH_CENTROID_SPLIT = true`). Note, that there is an SAH split implementation in `bvh.h` but it was not possible to complete it in the given time so it is commented out. To use compact grid:
+
+```
+USE_UNIFORM_GRIDS = true;
+USE_BVH = false;
+BVH_RANDOM_SPLIT = false;
+BVH_CENTROID_SPLIT = false;
+```
+
+There is one small issue when using BVH. You may notice noise for coplanar triangles if they are quite large. This happens very occasionally but might be visible for some cases. It can be fixed by adding a small epsilon value (`0.00001`) to make the triangle non-coplanar. This is being done for some demo scenes. Unfortunately, the bug itself was not possible to fix in the given time.
+
+One thing to remember is the arguments passed to scene object. If nothing is passed, the scene renders with ambient, diffuse as well as specular material properties and AABBs are used. The arguments can be passed as:
+```
+Scene scene()
+
+Scene scene(1, 1, 1, 1) // ambient, diffuse, specular, aabb, in that order
+
+Scene scene(1, 1, 1, 1, color(0, 0, 0)) // this extra argument will change the background color to black or any other color of user's choice
+
+Scene scene(1, 1, 1, 1, texture("textures/stars.ppm")) // this extra argument will change the background to a texture
+```
+
+The external libraries are saved in the folder `libraries` and some parts taken from [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html) in the folder `RTIOW`. `aabb.h` is also placed in `Scratchapixel` as I'm using the same implementation explained there. There are some other places which are quite similar to how they were explained in [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html) but it's rather difficult to separate everything as I also did a lot of changes.
 
 ## Thanks to
 1. [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
