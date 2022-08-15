@@ -14,7 +14,8 @@
 #include <algorithm>
 #include <thread>
 #include <malloc.h>  // for _alloca, memalign
-
+#include <cstring>
+#include <climits>
 using namespace std;
 #define PBRT_L1_CACHE_LINE_SIZE 64
 enum AccType { BVH, KDTREE, UNIFORM_GRID, LBVH, NONE };

@@ -610,7 +610,7 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 	std::vector<Vec3f> vertices;
 	//Loads OBJ file from path
 	std::ifstream file;
-	std::string fileName = "C:/Users/alhaj/source/repos/scrachpixel_2/scrachpixel_2/models/";
+	std::string fileName = "models/";
 
 	switch (settings.sceneModel) {
 	case IGEA:
