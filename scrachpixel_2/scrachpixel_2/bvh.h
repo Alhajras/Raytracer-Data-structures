@@ -258,21 +258,7 @@ struct LinearBVHNode {
 	uint8_t pad[1];        // ensure 32 byte total size
 };
 int flattenBVHTree(std::shared_ptr<Node> node, int* offset) {
-	//LinearBVHNode* linearNode = &nodes[*offset];
-	//linearNode->boxBoundries = node->boxBoundries;
 	int myOffset = (*offset)++;
-	//if (node->nPrimitives > 0) {
-	//	linearNode->primitivesOffset = node->firstPrimOffset;
-	//	linearNode->nPrimitives = node->nPrimitives;
-	//}
-	//else {
-	//	// Create interior flattened BVH node
-	//	linearNode->axis = node->longestAxis;
-	//	linearNode->nPrimitives = 0;
-	//	flattenBVHTree(node->leftchild, offset);
-	//	linearNode->secondChildOffset =
-	//		flattenBVHTree(node->rightchild, offset);
-	//}
 	return myOffset;
 }
 
@@ -619,23 +605,6 @@ std::shared_ptr<Node> constructLBVHTree(
 
 int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes, int depth)
 {
-	//bool shouldSplit;
-	//int count = objects.size();
-
-	//// If this is a leaf node
-	//if(count <= 3 || (depth >= 20 && count <= 2))
-	//{
-	//	for (int i = 0; i < (int)objects.size(); i++)
-	//	{
-	//		currentNode.objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
-	//	}
-	//	currentNode.numObjs = (int)objects.size(); // how many objects node has
-	//	currentNode.isleaf = true; // leaf node has two objects as children
-	//	nodes.push_back(currentNode);
-	//	return (int)nodes.size() - 1;
-	//}
-
-
 	   // If this is a leaf node
 	if (objects.size() <= 15) // this measn we only have one node and two children
 	{
@@ -1136,7 +1105,7 @@ retrySplit:
 		prims0, prims1 + nPrimitives, badRefines, primitiveIndices);
 }
 
-// KdTreeAccel Method Definitions
+// PBR BOOK KdTreeAccel Method Definitions
 void constructKDTreeNew(
 	std::vector<SceneObject>& allSceneObjects,
 	int isectCost, int traversalCost, float emptyBonus,
@@ -1177,7 +1146,7 @@ void constructKDTreeNew(
 }
 
 
-
+// PBR BOOK
 struct KdToDo {
 	const KdAccelNode* node;
 	float tMin, tMax;
