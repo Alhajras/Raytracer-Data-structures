@@ -125,7 +125,7 @@
 \clearpage
 
 \section*{Acknowledgements}
-This project results from hard work and cumulative knowledge gained through seminars, labs, and lectures in the chair of computer graphics at the University of Freiburg under \textbf{Prof. Dr.-Ing. Matthias Teschner} guidness and supervision. Those materials and their resources were the fundamental building blocks to reaching this point with the proper feedback from the professor. The resources used in this project are been referenced and acknowledged wherever necessary.
+This project results from hard work and cumulative knowledge gained through seminars, labs, and lectures in the chair of computer graphics at the University of Freiburg under \textbf{Prof. Dr.-Ing. Matthias Teschner} guidness and supervision. Those materials and their resources were the fundamental building blocks to reaching this point with the proper feedback from the professor. The resources used in this project have been referenced and acknowledged wherever necessary.
 \\
 \section*{Abstract}
 Improving the rendering time in a ray tracer is a challenging task. One of the improvement levels is to implement an acceleration data structure. There are two classifications of data structures namely, \textbf{spatial subdivision} and \textbf{object subdivision}. Both classifications will be covered in the report. For object subdivision, \textbf{Bounding Volume Hierarchies (BVH)} and \textbf{Linear Bounding Volume Hierarchies (LBVH)} will be implemented. For spatial subdivision, Kd-Tree is chosen. In this report, we will explore each method's strengths and weaknesses by using different scenes and models.
@@ -146,7 +146,7 @@ Ray tracing is an algorithm to simulate how light behaves in a 3D scene to gener
 
 \noindent
 \\
-Ray tracers have three different implementations namely, Forward Ray tracing, Backward Ray tracing, and Hybrid Ray tracing; regardless of which implementation is used, the general idea of the algorithm is quite simple but extremely powerful; it is to project the 3D scene into a 2D plane (Image), to do so, a resolution must be chosen beforehand to divide the plane into small squares knows as (Pixels), next, we try to evaluate the color and illumination of each pixel. We cast several rays from the sensor (camera) toward the scene for each pixel. We search for any intersection by testing all the primitives, and if we hit one, we save it in a hit list. Depending on the distance between the sensor and the hit primitive, we can evaluate the nearest one to the sensor and pick its color. Shading is the next step, this includes knowing if the primitive is in a dark or bright region in the scene. This expensive process is recursively executed until we hit the light source or reach a predefined depth. For thousands of primitives and more, testing the intersection is a performance challenge as the process is linear in time.
+Ray tracers have three different implementations; namely, Forward Ray tracing, Backward Ray tracing, and Hybrid Ray tracing; regardless of which implementation is used, the general idea of the algorithm is quite simple but extremely powerful; it is to project the 3D scene into a 2D plane (Image), to do so, a resolution must be chosen beforehand to divide the plane into small squares knows as (Pixels). Next, we try to evaluate the colour and illumination of each pixel. We cast several rays from the sensor (camera) toward the scene for each pixel. We search for any intersection by testing all the primitives, and if we hit one, we save it in a hit list. Depending on the distance between the sensor and the hit primitive, we can evaluate the nearest one to the sensor and pick its colour. Shading is the next step; this includes knowing if the primitive is in a dark or bright region in the scene. This expensive process is recursively executed until we hit the light source or reach a predefined depth. For thousands of primitives and more, testing the intersection is a performance challenge as the process is linear in time.
 
 \begin{figure}[h]	
      \centering
@@ -158,7 +158,7 @@ Ray tracers have three different implementations namely, Forward Ray tracing, Ba
 
 \noindent
 \\
-Although the Rasterization method can be used to overcome these obstacles; Ray tracing algorithms can relatively provide more photo-realistic images than rasterization even though ray tracer consumes more time to render a scene. This is the reason why rasterization is used for real-time applications such as gaming more than raytracing; on the other hand, raytracing is more often used in offline applications such as simulations and interior design software.
+Although the Rasterization method can be used to overcome these obstacles, Ray tracing algorithms can relatively provide more photo-realistic images than rasterization, even though ray tracer consumes more time to render a scene. This is the reason why rasterization is used for real-time applications such as gaming more than raytracing; on the other hand, raytracing is more often used in offline applications such as simulations and interior design software.
 \clearpage
 
 \begin{figure}[h]	
@@ -176,23 +176,23 @@ At Game Developers Conference, NVIDIA announced NVIDIA RTX™, a ray tracing tec
 
 
 \subsection{Motivation of using acceleration data structures}
-In the ray tracing pipeline, we mentioned that each ray must execute an intersection test against all primitive contained in the scene. With $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $\mathcal{O}(N.P)$. This is equivalent to a two-for-loop complexity $\mathcal{O}(n^2)$. Meaning for each pixel even if it does not intersect with any primitive we will have to perform an intersection test for all the primitives in the scene. The worst-case scenario is when the rays do not intersect with any primitive or model but the ray tracer has to trace the rays in different directions still, resulting in an empty image. 
+In the ray tracing pipeline, we mentioned that each ray must execute an intersection test against all primitive contained in the scene. With $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $\mathcal{O}(N.P)$. This is equivalent to a two-for-loop complexity $\mathcal{O}(n^2)$. Meaning for each pixel, even if it does not intersect with any primitive, we will have to perform an intersection test for all the primitives in the scene. The worst-case scenario is when the rays do not intersect with any primitive or model, but the ray tracer has to trace the rays in different directions still, resulting in an empty image. 
 
 \noindent
 \\
-Brute forcing complexity is high, it increases linearly with the increase of the number of primitives. Moreover, some features such as anti-aliasing require more rays per pixel which increases the complexity to  $\mathcal{O}(N.P.S)$ where $S$ is the number of samples per pixel. 
+Brute forcing complexity is high; it increases linearly with the increase of the number of primitives. Moreover, some features such as anti-aliasing require more rays per pixel which increases the complexity to  $\mathcal{O}(N.P.S)$ where $S$ is the number of samples per pixel. 
 
 \noindent
 \\
-Generally using more samples will often produce a higher quality frame; additionally, for better illumination results, more recursion (Shadow rays) must be cast after each intersection. Hence, more rays are required for better quality but with fewer intersection tests as possible for better performance.
+Generally, using more samples will often produce a higher quality frame; additionally, for better illumination results, more recursion (Shadow rays) must be cast after each intersection. Hence, more rays are required for better quality but with fewer intersection tests as possible for better performance.
 
 \noindent
 \\
-Giving a ray tracer that uses $S = 5$, $P = 100, 000$, and $N =  1, 280 $ x $1, 024$, $depth = 3$. This will give us a number of intersection tests, approximately $= 1, 280 * 1, 024 * 100, 000 * 5 * 3 = 1.96608*10^{12} $ intersection test. Assuming the machine used spends 0.01ms on each ray. This will result in 220 days of rendering one frame. Computers nowadays can handle this easily however the main challenge is scalability, some scenes contain millions of primitives making, rendering them by brute-forcing imposable.
+Giving a ray tracer that uses $S = 5$, $P = 100, 000$, and $N =  1, 280 $ x $1, 024$, $depth = 3$. This will give us a number of intersection tests, approximately $= 1, 280 * 1, 024 * 100, 000 * 5 * 3 = 1.96608*10^{12} $ intersection test. Assuming the machine used spends 0.01ms on each ray. This will result in 220 days of rendering one frame. Computers nowadays can handle this easily. However, the main challenge is scalability; some scenes contain millions of primitives making, rendering them by brute-forcing imposable.
 
 \noindent
 \\ 
-Preprocessing algorithms to reorder and group the primitives to make them quickly traversed and tested can be used to overcome this challenge. \textbf{Spatial subdivision} and \textbf{object subdivision} are the two basic types of data acceleration structures. Spatial subdivision algorithms partition three-dimensional space into areas and keep track of which primitives overlap which regions. On the other hand, object subdivision algorithms gradually subdivide the scene's objects into smaller groups. This way, we can only test the primitives that have a higher probability to intersect with the ray rather than testing all primitives that are not relevant to the region the ray passes through. 
+Preprocessing algorithms to reorder and group the primitives to make them quickly traversed and tested can be used to overcome this challenge. \textbf{Spatial subdivision} and \textbf{object subdivision} are the two basic types of data acceleration structures. Spatial subdivision algorithms partition three-dimensional space into areas and keep track of which primitives overlap which regions. On the other hand, object subdivision algorithms gradually subdivide the scene's objects into smaller groups. This way, we can only test the primitives that have a higher probability of intersecting with the ray rather than testing all primitives that are not relevant to the region the ray passes through. 
 
 \clearpage
 
@@ -205,15 +205,14 @@ The basic idea of the BVH is simple yet powerful. It is to wrap all primitives i
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/bvs.png}
-     \caption{Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull . \protect\cite{Ericson2004}}
+     \caption{Bounding volumes: sphere, axis-aligned bounding box (AABB), oriented bounding box (OBB), eight-direction discrete orientation polytope (8-DOP), convex hull. \protect\cite{Ericson2004}}
      \label{fig:boundingboxes}
 \end{figure}
 
 
 \noindent
 \\
-The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boundingboxes}. Although simple bounding volumes provide faster intersection tests, they often suffer from fitting to the model, eventually, they produce a large region of space. A compact bounding volume, on the other hand, generates fewer overlaps with other bounding volumes in the scene, producing fewer intersection tests. For example, spheres are probably the easiest bounding volume to generate for each primitive, also its intersection test is trivial and not expensive, however, we can note from the previous figure that it produces more empty regions that will be tested but will miss the model eventually producing redundant tests. Using complex bounding volumes like \textbf{8-DOP} will have a higher probability of hitting the model and not missing it, but they are more difficult to generate and also more difficult to be tested. In this report, we will be using \textbf{AABB}, because it is easy to implement, easy to test its intersection, and has less memory consumption because it only needs to save two 3D variables the minimum and the maximum edges of the bounding box. One can use a combination of all of them but in this report, we will only use the AABB. 
-
+The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boundingboxes}. Although simple bounding volumes provide faster intersection tests, they often suffer from fitting to the model; eventually, they produce a large region of space. A compact bounding volume, on the other hand, generates fewer overlaps with other bounding volumes in the scene, producing fewer intersection tests. For example, spheres are probably the easiest bounding volume to generate for each primitive. Additionally, its intersection test is trivial and not expensive. However, we can note from the previous figure that it produces more empty regions that will be tested but will miss the model, eventually producing redundant tests. Using complex bounding volumes like \textbf{8-DOP} will have a higher probability of hitting the model and not missing it, but they are more difficult to generate and also more difficult to be tested. In this report, we will be using \textbf{AABB} because it is easy to implement, easy to test its intersection, and has less memory consumption because it only needs to save two 3D variables, the minimum and the maximum edges of the bounding box. One can use a combination of all of them, but in this report, we will only use the AABB.
 
 \begin{figure}[h]	
      \centering
@@ -226,11 +225,11 @@ The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boun
 
 \noindent
 \\
-Figure ~\ref{fig:boundingboxes} shows a scene consists of six objects. Looking at the generated binary tree, we can note that every two objects are bounded by one AABB, then each two AABB are joined and bounded by a bigger AABB. We recursively do this until we reach the root node that covers the limits of the whole scene.This will create a hierarchy of AABBs and this is where the \textbf{Bounding Volume Hierarchies} name came from.
+Figure ~\ref{fig:boundingboxes} shows a scene consists of six objects. Looking at the generated binary tree, we can note that every two objects are bounded by one AABB, and then each two AABB are joined and bounded by a bigger AABB. We recursively do this until we reach the root node that covers the limits of the whole scene. This will create a hierarchy of AABBs, and this is where the \textbf{Bounding Volume Hierarchies} name came from.
 
 \noindent
 \\
-Without the BVH tree, we will have to go through all six objects for each ray intersection test, even for the rays that do not intersect with any object. On the other hand, when we introduced BVH, we can note that for the rays that do not even intersect with the root AABB node, we do not go further to test its children. This means we will only test once rather than six times. Looking at the sphere in Figure ~\ref{fig:boundingboxes}, if a ray intersects with it, we will only have to go through a path that goes $A \rightarrow B \rightarrow D \rightarrow Sphere$. These are four tests instead of six and these four tests are the worst-case scenario as the longest path in the tree equals three. 
+Without the BVH tree, we will have to go through all six objects for each ray intersection test, even for the rays that do not intersect with any object. On the other hand, when we introduced BVH, we can note that for the rays that do not even intersect with the root AABB node, we do not go further to test its children. This means we will only test once rather than six times. Looking at the sphere in Figure ~\ref{fig:boundingboxes}, if a ray intersects with it, we will only have to go through a path that goes $A \rightarrow B \rightarrow D \rightarrow Sphere$. These are four tests instead of six, and these four tests are the worst-case scenario as the longest path in the tree equals three. 
 
 \noindent
 \\
@@ -239,15 +238,16 @@ The worse case complexity for a binary tree is $\mathcal{O}(n)$, but if it is a 
 
 
 \subsection{Implemntation}
-BVH is made of two phases, Construction of the tree, and Traversal over the tree.  
+BVH is made of two phases, Construction of the tree and Traversal over the tree.  
 
 \subsubsection{Construction}
-There are three methods to build the BVH binary tree: \textbf{Top-down}, \textbf{Bottom-up}, and \textbf{Insertion}. Top-down is arguably the most popular technique in practice, hence this method will be implemented in this report. It uses the \textbf{fit \& split} algorithm, where it starts with the whole model and encapsulates it with a BV and fits it, then tries to split it
+There are three methods to build the BVH binary tree: \textbf{Top-down}, \textbf{Bottom-up}, and \textbf{Insertion}. Top-down is arguably the most popular technique in practice. Hence this method will be implemented in this report. It uses the \textbf{fit \& split} algorithm, where it starts with the whole model and encapsulates it with a BV and fits it, then tries to split it
 into n children, usually two. It keeps recursively splitting and fitting until it reaches the leaves and assigns the primitives to them.
+
 
 \noindent
 \\
-Building a BVH tree needs predefined parameters. The depth of the tree, maximum allowed number of primitives in the leaf nodes, splitting axis, and bounding volume for wrapping primitives. The depth of the tree will not be predefined for the BVH tree, this means the tree can go deeper as possible. The maximum allowed primitives for each leaf will be chosen to be one. For bounding volume as previously discussed, we will use only AABB. The splitting criteria and splitting axis will be discussed next.  
+Building a BVH tree needs predefined parameters. The depth of the tree, maximum allowed number of primitives in the leaf nodes, splitting axis, and bounding volume for wrapping primitives. The depth of the tree will not be predefined for the BVH tree. This means the tree can go deeper as possible. The maximum allowed primitives for each leaf will be chosen to be one. For bounding volume, as previously discussed, we will use only AABB. The splitting criteria and splitting axis will be discussed next.  
 BVH tree can be constructed based on three different splitting criteria. There are four popular strategies to split the tree node:
 
 \begin{itemize}
@@ -287,7 +287,7 @@ For choosing the splitting axis, one can use any axis, but this is a naive way t
 
 \noindent
 \\
-In Figure ~\ref{fig:aabbexample}, we have four spheres wrapped up by AABB. If we would like to choose one axis to split from, we can randomly start with the x-axis. As it is illustrated, choosing this axis will not give us a middle point to split point since all spheres have the same x-axis. Same for the y-axis. On the other hand, we can see that the Z-axis will split the AABB box into two AABB boxes, each containing two spheres. Again we can rechoose the z-axis to split those two AABB boxes. Finding the longest diagonal will indicate the largest spreading direction of the primitives in the scene. After finding $d$ we find the maximum axis of the diagonal as the next splitting axis.
+In Figure ~\ref{fig:aabbexample}, we have four spheres wrapped up by AABB. If we would like to choose one axis to split from, we can randomly start with the x-axis. As it is illustrated, choosing this axis will not give us a middle point to split point since all spheres have the same x-axis. Same for the y-axis. On the other hand, we can see that the Z-axis will split the AABB box into two AABB boxes, each containing two spheres. Again we can rechoose the z-axis to split those two AABB boxes. Finding the longest diagonal will indicate the largest spreading direction of the primitives in the scene. After finding $d$, we find the maximum axis of the diagonal as the next splitting axis.
 
 \begin{figure}[H]	
      \centering
@@ -312,7 +312,7 @@ In Figure ~\ref{fig:aabbexample}, we have four spheres wrapped up by AABB. If we
          \label{fig:pi_18000}
      \end{subfigure}
         \captionsetup{justification=centering,margin=2cm}
-        \caption{(a) Finding the diagonal of the AABB box is shown in green. (b) Vertical view of the scene where choosing either x-axis or y-axis will not make difference. (c) Horizontal view of the scene where the z-axis makes the perfect splitting axis due to its wide distribution.}
+        \caption{(a) Finding the diagonal of the AABB box is shown in green. (b) Vertical view of the scene where choosing either x-axis or y-axis will not make a difference. (c) Horizontal view of the scene where the z-axis makes the perfect splitting axis due to its wide distribution.}
         \label{fig:aabbexample}
 \end{figure}
 
@@ -351,7 +351,7 @@ For a better illustration of how to build the BVH tree by using the centroid coo
 
 \noindent
 \\
-Since the Top-down approach is chosen, we will start creating the nodes from the top to the bottom. Firstly, we start creating the root node. Each node needs to save the AABB bounds ($minimum\_edge$, $maximum\_edge$), the splitting point, and the splitting axis. If the node is a leaf node we will save the assigned primitives ids.  We can calculate the $minimum\_edge$ (the minimum 3D point in our root AABB) and the $maximum\_edge$ point (the maximum 3D point in the AABB box) by easily iterating through all primitives in the scene and assigning the minimum primitive centroid to the  $minimum\_edge$ and the maximum primitive centroid to the $maximum\_edge$. The final result is $maximum\_edge = (6.6, 5.5)$ and  $minimum\_edge = (0.8,0.8)$.
+Since the Top-down approach is chosen, we will start creating the nodes from top to bottom. Firstly, we start creating the root node. Each node needs to save the AABB bounds ($minimum\_edge$, $maximum\_edge$), the splitting point, and the splitting axis. If the node is a leaf node, we will save the assigned primitives ids. We can calculate the $minimum\_edge$ (the minimum 3D point in our root AABB) and the $maximum\_edge$ point (the maximum 3D point in the AABB box) by easily iterating through all primitives in the scene and assigning the minimum primitive centroid to the  $minimum\_edge$ and the maximum primitive centroid to the $maximum\_edge$. The final result is $maximum\_edge = (6.6, 5.5)$ and  $minimum\_edge = (0.8,0.8)$.
 
 \noindent
 \\
@@ -363,11 +363,11 @@ Now we calculate the splitting point by just halfing the distance between $maxim
 
 \noindent
 \\
-Then we pass all primitives that have a centroid $ < 3.6$ to the left child node and we pass the rest to the right child node.  
+Then we pass all primitives that have a centroid $ < 3.6$ to the left child node, and we pass the rest to the right child node.  
 
 \noindent
 \\
-Recustivly we keep doing this until the number of primitives in the node is less than the maximum allowed number of primitives parameter, which in this implementation we decided to set to $1$. Then we create a leaf node that holds this primitive id. 
+Recustivly we keep doing this until the number of primitives in the node is less than the maximum allowed number of primitives parameter, which in this implementation, we decided to set to $1$. Then we create a leaf node that holds this primitive id. 
 
 
 \begin{figure}[h]	
@@ -379,15 +379,16 @@ Recustivly we keep doing this until the number of primitives in the node is less
 \end{figure}
 
 \subsubsection{Traversal}
- The traversal phase of BVH is quite intuitive if you are familiar with how binary tree traversal works. After building the BVH tree, we start with its root node, we get its AABB boundaries and we test its intersection with the ray. If the ray intersects with the AABB, we go to its left and right children and do the same process; otherwise, we terminate. Recursively keep doing this until we reach a leaf node; the leaf node is the node that has no node children, and it is the only node that contains a primitive inside it. Then we go through the list of primitives and test each one if it intersected with the ray or not. Remember that since we are using one primitive for each leaf node the primitive's list will only contain one primitive and this will not create a linear performance burden. 
+The traversal phase of BVH is quite intuitive if you are familiar with how binary tree traversal works. After building the BVH tree, we start with its root node, we get its AABB boundaries, and we test its intersection with the ray. If the ray intersects with the AABB, we go to its left and right children and do the same process; otherwise, we terminate. Recursively keep doing this until we reach a leaf node; the leaf node is the node that has no node children, and it is the only node that contains a primitive inside it. Then we go through the list of primitives and test each one if it intersected with the ray or not. Remember that since we are using one primitive for each leaf node, the primitive's list will only contain one primitive, and this will not create a linear performance burden. 
 
 \noindent
 \\
-As discussed, the leaf node can include a list of primitives and not only one by setting a parameter called $max\_leaf\_premitives$ to 1; this depends on how you configure the BVH building tree method. In this report, I set the list to make it only contain one primitive. It is worth noticing that the bigger $max\_leaf\_premitives$ is, the smaller the depth of the tree becomes because we do not have to keep splitting until we reach a leaf that only contains primitives less or equal to $max\_leaf\_premitives$. Therefore, less traversal time and less memory consumption because of the number of nodes saved, on the other hand, this will lead to a long list of primitives inside the leaf node, adding a linear time complexity for iterating through all the lists which kills the purpose of using the hierarchy of the BVH to make the complexity logarithmic.
+As discussed, the leaf node can include a list of primitives and not only one by setting a parameter called $max\_leaf\_premitives$ to 1; this depends on how you configure the BVH building tree method. In this report, I set the list to make it only contain one primitive. It is worth noticing that the bigger $max\_leaf\_premitives$ is, the smaller the depth of the tree becomes because we do not have to keep splitting until we reach a leaf that only contains primitives less or equal to $max\_leaf\_premitives$. Therefore, less traversal time and less memory consumption because of the number of nodes saved. On the other hand, this will lead to a long list of primitives inside the leaf node, adding a linear time complexity for iterating through all the lists, which kills the purpose of using the hierarchy of the BVH to make the complexity logarithmic.
+
 
 \noindent
 \\
-The intersection test is split into two main steps. First, we go through all the nodes in the tree, and if we hit a leaf node, we add all its primitives into a list called $hitList$. The $hitList$ list is acting as a candidate list of the primitives that might intersect with the ray.  Afterward, we go through these candidates and find which are intersected and which one is the nearest to the camera by comparing the intersecting point distance to the camera center position.
+The intersection test is split into two main steps. First, we go through all the nodes in the tree, and if we hit a leaf node, we add all its primitives into a list called $hitList$. The $hitList$ list acts as a candidate list of the primitives that might intersect with the ray. Afterwards, we go through these candidates and find which are intersected and which one is the nearest to the camera by comparing the intersecting point distance to the camera centre position.
 
 \begin{algorithm}[H]
 	\caption{$intersectBVH$}\label{alg:alg1}
@@ -413,11 +414,11 @@ While BVH boosts the renderer's performance and makes it possible to render mill
 
 \noindent
 \\
-One way to solve this is to parallelize this process. This can be done if the subtrees are independent of each other. This is what Linear Bounding Volume Hierarchies do. It creates a subprocess to make them build sub trees and join them at the end of the building of the subtrees to make one node. Naturally, parallelization will boost the performance of the construction time, hence we will not compare it with the normal BVH. However, we will treat the LBVH as different splitting criteria and compare its performance with the BVH.
+One way to solve this is to parallelize the building process. The parallelization can be done if the subtrees are independent of each other. This is what Linear Bounding Volume Hierarchies do. It creates a subprocess to make them build sub trees and join them at the end of the building of the subtrees to make one node. Naturally, parallelization will boost the performance of the construction time. Hence we will not compare it with the normal BVH. However, we will treat the LBVH as different splitting criteria and compare its performance with the BVH.
 
 \noindent
 \\
-The first step is to transform the building tree problem into a sorting problem. We map the 3D centroid points for each primitive to one value that can be sorted. Morton codes do this mapping. Morton code map multidimensional data to one dimension while preserving the locality of the data points \protect\cite{wikipedia2022}. The transformation is done by interleaving the bits of the primitive's centroid in base 2. for example taking a 3D point (x,y,z) the result Morton code will be calculated as follows: 
+The first step is transforming the building tree problem into a sorting problem. We map the 3D centroid points for each primitive to one value that can be sorted. Morton codes do this mapping. Morton code map multidimensional data to one dimension while preserving the locality of the data points \protect\cite{wikipedia2022}. The transformation is done by interleaving the bits of the primitive's centroid in base 2. for example, taking a 3D point (x,y,z), the result Morton code will be calculated as follows: 
  
 \begin{equation}
  ...z_3y_3x_3z_2y_2x_2z_1y_1x_1z_0y_0x_0
@@ -433,7 +434,7 @@ The first step is to transform the building tree problem into a sorting problem.
 After mapping the 3D point to 1D Morton code, we can use a sorting algorithm as a Radix sort \protect\cite{Karras2012}.
 
 \subsubsection{Morton Code as a Splitting Criteria}
-After mapping all primitives centroid to a Morton code and sorting them, the next step is to know how to use the sorted list for building the tree. To better understand how the LBVH constructs the binary tree, we will illustrate this with a scene as shown in Figure ~\ref{fig:mortonexample}
+After mapping all primitives centroid to a Morton code and sorting them, the next step is knowing how to use the sorted list to build the tree. To better understand how the LBVH constructs the binary tree, we will illustrate this with a scene as shown in Figure ~\ref{fig:mortonexample}
 . The scene is made out of 16 primitives distributed as shown. The first step is to generate the Morton code for each centroid point. Looking closely into the generated Morton codes of each primitive, we can note that each bit acts as a splitting plane that splits the primitives into more than one region. 
 
 \noindent
@@ -493,19 +494,20 @@ The first bit will split the y-axis into two regions. The first region with the 
 
 
 \subsection{Implemntation}
-The implementation includes two essential stages, Constructing the tree and tree Traversal. Traversal will not be repeated since the produced tree is a binary tree similar to the BVH. Hence the same traversal algorithm used in the BVH will be utilized for LBVH. But the main focus of the LBVH is building the tree.
+The implementation includes two essential stages, Constructing the tree and tree Traversal. Traversal will not be repeated since the produced tree is a binary tree similar to the BVH. Hence the same traversal algorithm used in the BVH will be utilized for LBVH. Nevertheless, the main focus of the LBVH is building the tree.
 
 
 \subsubsection{Construction}
-The first step is to generate the Morton code for each primitive and to save time one can generate the Morton code for each primitive and start sorting them while reading the primitives from the scene. It is better than reading the whole scene than going through all primitive in linear time and then sorting them by Radix sort. 
+The first step is to generate the Morton code for each primitive and to save time. One can generate the Morton code for each primitive and start sorting them while reading the primitives from the scene. It is better than reading the whole scene than going through all primitive in linear time and then sorting them by Radix sort.
 
 \noindent
 \\
-Next, we start creating the nodes and split them based on the leading bits. We start with the sorted Morton code and we start searching for the first leading bit change. Once the bit flips we assign the zeros to the left child node and the rest to the right child node. We calculate the global bounding box for the current primitives and create the current node since we have all we need, an AABB box and a splitting point. We recursively keep doing this until we reach leaves and we assign the primitives indexes or ids to the leaves. Again for the LBVH, I made the depth unlimited. Also, the maximum number of primitives in a leaf was set to one.
+Next, we create the nodes and split them based on the leading bits. We start with the sorted Morton code and search for the first leading bit change. Once the bit flips, we assign the zeros to the left child node and the rest to the right child node. We calculate the global bounding box for the current primitives and create the current node since we have all we need, an AABB box and a splitting point. We recursively keep doing this until we reach leaves and assign the primitives indexes or ids to the leaves. Remember, we use an unlimited depth for the LBVH. Also, the maximum number of primitives in a leaf was set to one.
 
 \noindent
 \\
-Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, LBVH makes it trivial to parallelize the construction stage. To achieve this, we will use a simple conditional multithreading mechanism. Building the tree will only create a new thread if the number of primitives in the subtree is more than 100 primitives. Note that this is a random number chosen, but we do not want to create a new thread for small subtrees because it is not worth it anyway. Note that for a fair comparison between the data structures we will not parallelize LBVH and we will only run it on one thread. 
+Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, LBVH makes it trivial to parallelize the construction stage. To achieve this, we will use a simple conditional multithreading mechanism. Building the tree will only create a new thread if the number of primitives in the subtree is more than 100 primitives. Note that this is a random number chosen, but we do not want to create a new thread for small subtrees because it is not worth it. Note that for a fair comparison between the data structures, we will not parallelize LBVH and will only run it on one thread. 
+
 
 \begin{algorithm}[H]
 \caption{$constructLBVH$}\label{alg:alg1}
@@ -532,9 +534,9 @@ Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, 
 
 
 
-\section{K dimensional tree (Kd-Tree)}
+\section{K Dimensional Tree (Kd-Tree)}
 \subsection{Concept}
-Two accelerator data structures the BVH and LBVH are already covered. Both methods are of type object subdivision. This chapter will discuss and implement a different accelerator called Kd-Tree which is a spatial subdivision type. Kd-Tree is a traditional data structure that organizes K-dimensional points into a binary tree for easy retrieval. The Kd-Tree can have several dimensions at each level, unlike a typical binary tree. It has been frequently utilized in multidimensional crucial data search because of its effective performance in resolving multidimensional searching issues. In the rendering applications, 3D dimension is used and Kd-Tree can be used as well.
+Two accelerator data structures, the BVH and LBVH, are already covered. Both methods are of type object subdivision. This chapter will discuss and implement a different accelerator called Kd-Tree, a spatial subdivision type. Kd-Tree is a traditional data structure that organizes K-dimensional points into a binary tree for easy retrieval. Unlike a typical binary tree, the Kd-Tree can have several dimensions at each level. It has been frequently utilized in multidimensional crucial data search because it effectively resolves multidimensional searching issues such as performance. In rendering applications, 3D dimension is used, and Kd-Tree can also be used.
 
 \noindent
 \\
@@ -545,31 +547,32 @@ The main idea is to divide the scene into regions. Each region will contain a li
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/example_demo.png}
-     \caption{The Kd-Tree is built by splitting the scene into four regions where for each split one axis is chosen with a splitting point.  The first split is done on the x-axis then the y-axis and the last split is on the x-axis again. \protect\cite{Pharr2016}}
+     \caption{The Kd-Tree is built by splitting the scene into four regions where one axis is chosen with a splitting point for each split.  The first split is done on the x-axis, then the y-axis and the last split is on the x-axis again. \protect\cite{Pharr2016}}
         \label{fig:kdtreedemo}
 \end{figure}
 
 
 
 \subsubsection{Compact tree representation}
-Unlike what we did in the BVH, the representation of the Kd-Tree will be compact. This means rather than saving two children pointers left and right to the node, we will save all nodes in an array, where the left child lives right after the parent node in the array, and the right child can be reached by saving the offset. Doing so improves cache, memory, and thus overall system performance.
+Unlike what we did in the BVH, the representation of the Kd-Tree will be compact. This means that rather than saving two children pointers left and right to the node, we will save all nodes in an array, where the left child lives right after the parent node in the array, and the right child node can be reached by saving the offset. Doing so improves cache, memory, and thus overall system performance.
 
 
 \begin{figure}[h]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=8cm]{images/kdtree/compact.png}
-     \caption{The linear layout of a Kd-Tree in Memory representation. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children. \protect\cite{Pharr2016}}
+     \caption{The compact representation of binary Kd-Tree in memory. The first child is discovered immediately after the parent node in memory. An offset pointer, illustrated here with lines and arrows, is used to locate the second child. The tree's leaf nodes (D, E, and C) have no children. \protect\cite{Pharr2016}}
         \label{fig:dice}
 \end{figure}
 
 
-\subsubsection{The Surface Area Heuristic (SAH)}
-Building a binary tree from top to bottom can be done by using greedy \textbf{Surface Area Heuristics (SAH)}. The original scene is recursively partitioned using a greedy strategy for minimizing expected traversal cost. As the name suggested this method of splitting nodes considers the area/volume of the primitives to find the splitting point.
+\subsubsection{Surface Area Heuristic (SAH)}
+Building a binary tree from top to bottom can be done using greedy \textbf{Surface Area Heuristics (SAH)}. The original scene is recursively partitioned using a greedy strategy for minimizing expected traversal cost. As the name suggested, this method of splitting nodes considers the area/volume of the primitives to find the splitting point.
 
 \noindent
 \\
-Given a collection of $N$ primitives in a node tree with total 3D volume $V$, and assuming that the split point chosen will partition the space into two halves $L$ and $R$ with a number of triangles $N_L$ and $N_R$, and corresponding volumes $V_L$ and $V_R$, respectively. With the previous configuration, the projected traversal cost can be approximated as
+Given a collection of $N$ primitives in a node tree with a total 3D volume $V$, and assuming that the split point chosen will partition the space into two halves $L$ and $R$ with several triangles $N_L$ and $N_R$, and corresponding volumes $V_L$ and $V_R$, respectively. With the previous configuration, the projected traversal cost can be approximated as:
+
 
 \begin{equation}
 Cost(V) = C_T + C_I(\frac{SA(V_L)}{SA(V)}N_L \frac{SA(V_R)}{SA(V)}N_R)
@@ -581,11 +584,11 @@ Where: $V$: Total volume, $C_T$: Cost of traversal, $C_I$: Cost of intersection,
 
 \noindent
 \\
-The following example visualizes and illustrates how the SAH works. Given a scene consisting of 7 primitives, we would like to find the best split by using the SAH method. Because the intersection cost depends on the ray tracer implementation we will set it to 1. In contrast, the estimated traversal cost was set to $\frac{1}{8}$. We will set the number of buckets to 8. The previous numbers are chosen for easier calculation only.
+The following example visualizes and illustrates how the SAH works. Given a scene consisting of 7 primitives, we would like to find the best split using the SAH method. Because the intersection cost depends on the ray tracer implementation, we will set it to 1. In contrast, the estimated traversal cost was set to $\frac{1}{8}$. We will set the number of buckets to 8. The last numbers are chosen for more straightforward calculation only.
 
 \noindent
 \\
-Starting with the first iteration, the green colour represents the left space $L$, and the red colour represents the right space $R$. Since the example is in 2D, the $SA $ equals the width multiplied by the height of the rectangle. Each pixel has an area of 1. The SA of each rectangle is illustrated in Figure ~\ref{fig:sahdemo}. The overall surface area $SA(V)$ equals the summation of all the 7 primitives $1+1+4+4+4+1+1 = 16$. We can now substitute all the given information into the equation we get: 
+In the first iteration, the green colour represents the left space $L$, and the red colour represents the right space $R$. Since the example is 2D, the $SA $ equals the width multiplied by the rectangle's height. Each pixel has an area of 1. The SA of each rectangle is illustrated in Figure ~\ref{fig:sahdemo}. The overall surface area $SA(V)$ equals the summation of all the 7 primitives $1+1+4+4+4+1+1 = 16$. We can now substitute all the given information into the equation we get: 
 
 
 \begin{align*}
@@ -598,7 +601,7 @@ Starting with the first iteration, the green colour represents the left space $L
 
 \noindent
 \\
-We choose the minimum cost. In the previous iterations, it is the 4th and then assigns the primitives on the left to the left node and the right primitives to the right node. Note that for simplicity I sis not use primitives that intersect with each other. Unlike BVH, some primitives can be set to both left and right if they are between the bucket's splitting point.
+We choose the minimum cost. In the previous iterations, it is the 4th and then assigns the primitives on the left to the left node and the right primitives to the right node. Note that for simplicity, all primitives do not intersect. Unlike BVH, some primitives can be set to left and right if they are between the bucket's splitting point.
 
 
 \begin{figure}[H]	
@@ -636,33 +639,32 @@ We choose the minimum cost. In the previous iterations, it is the 4th and then a
 \end{figure}
 
 
-
 \subsection{Implemntation}
 The Kd-Tree has a variety of implementations, the one used in this project is based on \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016}. The implementation generates a binary tree that focuses on less memory consumption (Compact representation) and finds the best split by using the SAH method for splitting. We will be using a top-down approach as we did in BVH. We will split the implementation into two phases: Tree construction and tree traversal.
 
 \noindent
 \\
-Kd-Tree is a variant of \textbf{Binary Space Partitioning (BSP)} tree. BSP trees use planes to divide the space into regions. It follows a top-down approach where a bounding box bounds the whole scene. If the number of primitives inside the bounding box exceeds a pre-defined parameter, we will name it \textit{maxPrims} then, the box is split into two sub-regions based on chosen splitting criteria. Each primitive is associated with the corresponding box/region that it intersects with. This means duplicated primitives that can live in more than one box, unlike the BVH.
+Kd-Tree is a variant of \textbf{Binary Space Partitioning (BSP)} tree. BSP trees use planes to divide the space into regions. It follows a top-down approach where a bounding box bounds the whole scene. If the number of primitives inside the bounding box exceeds a pre-defined parameter, we will name it \textit{maxPrims} then; the box is split into two sub-regions based on chosen splitting criteria. Each primitive is associated with the corresponding box/region that it intersects. Consequently, duplicated primitives can be assigned to more than one bounding box, unlike the BVH.
 
 \noindent
 \\
-The procedure keeps repeating recursively until one of the two stop conditions occurs. Either the number of primitives in the sub-regions is less than \textit{maxPrims} or the other parameter, maxdepth is reached. The \textit{maxdepth} parameter is used to control the depth of the tree.  
+The procedure keeps repeating recursively until one of the two stop conditions occurs. Either the number of primitives in the sub-regions is less than \textit{maxPrims} or the other parameter, \textit{depth} is reached. The \textit{maxdepth} parameter is used to control the \textit{depth} of the tree.  
 
 \noindent
 \\
-To increase the efficiency of traversal and tree construction, kd-trees simply limit the splitting plane to only be perpendicular to one of the coordinate axes. However, this compromises some flexibility in how space is divided. Since only AABB is used hence we will only consider the three axis x, y and z.
+For simplicity and since AABB is used, only three axes will be considered for splitting x, y and z. However, this compromises some flexibility in how space is divided.
 
 \subsubsection{Construction}
-
 The recursive top-down algorithm is used to construct the Kd-Tree. We have a collection of primitives that overlap the axis-aligned space region at each step. Either the region is divided into two smaller ones and transformed into an inner node, or the recursion is stopped by making a leaf node out of the overlapping primitives.
 
 \noindent
 \\
-In the Kd-Tree, we will save the nodes in an array and not in a tree representation, as mentioned before, to increase caching time. The issue is how to predetermine the number of nodes before building the tree to initiate the array. There are two approaches here. The first is to build the binary tree and then flatten it to an array (compact representation). The second approach is to allocate memory as we build the tree dynamically. The first approach needs two steps to build the tree and then transform it into a compact form, adding an extra step that reduces performance. Also, it consumes more memory as it needs to save the tree and adds an array that contains the same number of nodes as the tree. The latter approach is preferred as it consumes less memory and improves performance. However, it needs better handling for the memory allocation, this complexity depends on the implementation and the programming language used, so I will not explain the implementation. 
+In the Kd-Tree, we will save the nodes in an array and not in a tree representation, as mentioned before, to increase caching time. The issue is predetermining the number of nodes before building the tree to initiate the array. There are two approaches here. The first is to build the binary tree and then flatten it to an array (compact representation). The second approach is to allocate memory as we build the tree dynamically. The first approach needs two steps to build the tree and then transform it into a compact form, adding an extra step that reduces performance. Also, it consumes more memory as it needs to save the tree and adds an array that contains the same number of nodes as the tree. The latter approach is preferred as it consumes less memory and improves performance. However, it needs better handling for the memory allocation; this complexity depends on the implementation and the programming language used; therefore, the implementation will not be explained. 
 
 \noindent
 \\
-For building the tree, the maximum allowed depth is needed to be given. However, what depth is preferred? Large depth will increase the number of nodes, increasing memory consumption but it will reduce complexity from linear to more logarithmic. On the other hand, reducing the depth will decrease the number of nodes but will make the traversal time more linear, killing the use of the binary tree to reduce the complexity. Based on \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016} book, a generic formula can be used to calculate the depth. This formula works for various scenes, $N$ is the number of primitives in the scene as the book suggests. 
+For building the tree, the maximum allowed depth is needed to be given. However, what depth is preferred? Significant depth will increase the number of nodes, increasing memory consumption but reducing complexity from linear to more logarithmic. On the other hand, reducing the depth will decrease the number of nodes but will make the traversal time more linear, killing the use of the binary tree to reduce the complexity. A generic formula can be used to calculate the depth based on the \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016} book. This formula works for various scenes; $ N$ is the number of primitives in the scene, as the book suggests.
+
 
 
 \begin{equation}
@@ -672,16 +674,17 @@ depth = 8 + 1.3\log(N)
 
 \noindent
 \\
-Since we are using memory allocation dynamically for the nodes array, each time the array is full, we will then reallocate more memory double the size of the old array.
+Since we are using memory allocation dynamically for the nodes array, each time the array is full, we will reallocate more memory double the size of the old array.
 
 \noindent
 \\
-Unlike in the BVH where we used the median point, in Kd-Tree SAH is used to find the splitting point. The advantage of using median point is intuitive to calculate and implement; nevertheless, it does not care about the area/volume of the primitive, it will simply split the primitives into two equal halves, unlike SAH, which considers the area/volume. Two parameters $C_T$: Cost of traversal and $C_I$: Cost of intersection are used in the SAH that will be tested and tweaked to find the best parameters. There are different methods to search for the best parameters for the best scenes; nevertheless, we will focus on the ratio between the two parameters instead. PBR suggests using 80 and 1, respectively.
+Unlike in the BVH, where we used the median point, in Kd-Tree, SAH is used to find the splitting point. The advantage of using median point is that it is intuitive to calculate and implement; nevertheless, it does not care about the area/volume of the primitive; it will simply split the primitives into two halves, unlike SAH, which considers the area/volume. Two parameters, $C_T$: Cost of traversal and $C_I$: Cost of intersection, are used in the SAH that will be tested and tweaked to find the best parameters. There are different methods to search for the best parameters for the best scenes; nevertheless, we will focus on the ratio between the two parameters instead. PBR suggests using 80 and 1, respectively.
 
 
 \noindent
 \\
-One extra parameter, \textit{emptyBonus} denoted as $b_e$ will be added to the SAH algorithm. Since rays travelling through empty areas can progress to the next kd-tree node without having to do any ray-primitive intersection checks, hence there is a little advantage for picking splits when one of the children has no primitives overlapping it. The parameter takes a value between 0 and 1 if one of the regions is empty and 0 otherwise. 
+One extra parameter, \textit{emptyBonus} denoted as $b_e$ will be added to the SAH algorithm. Since rays travelling through empty areas can progress to the next kd-tree node without having to do ray-primitive intersection checks, there is a little advantage for picking splits when one of the children has no primitives overlapping it. The parameter takes a value between 0 and 1 if one of the regions is empty and 0 otherwise. 
+
 
 
 \begin{equation}
@@ -690,7 +693,7 @@ Cost(V) = C_T + (1-b_e)C_I(\frac{SA(V_L)}{SA(V)}N_L \frac{SA(V_R)}{SA(V)}N_R)
 
 \noindent
 \\
-One challenge left, if we want to consider all the splitting points as candidates, computing the cost of splitting is expensive, but as we mentioned before, we can use a fixed number of buckets. However, which is the best number for this parameter? The bigger the number, the more accurate the splitting point will be at the cost of building the tree's performance because more calculations are needed. Instead, we will only consider the limits of the bounding boxes. Hence we will need at each cost calculation at most $2 * N$ buckets, where $N$ is the number of primitives.
+One challenge left, if we want to consider all the splitting points as candidates, computing the cost of splitting is expensive, but as we mentioned before, we can use a fixed number of buckets. However, which is the best number for this parameter? The bigger the number, the more accurate the splitting point will be at the cost of building the tree's performance because more calculations are needed. Instead, we will only consider the limits of the bounding boxes. Hence we will need at most $2 * N$ buckets at each cost calculation, where $N$ is the number of primitives.
 
 \begin{figure}[H]	
      \centering
@@ -712,7 +715,7 @@ The kd-Tree traversal is different from the BVH traversal we mentioned. BVH was 
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/traversal.png}
-     \caption{(a) The initial intersection with the parent node, gives an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, both children will be tested. The “near” node will be tested first where it has a parametric range $[t_{min}, t_{split}]$. If it is a leaf, its primitives will be tesrted; otherwise, its children will be tested recursively. (c) If the near node intersection test returns false, the far node will be tested. (d) Continuously keep visiting the tree nodes by using depth-first, front-to-back traversal until the closest intersection is found or the ray exits the tree. \protect\cite{Pharr2016}}
+     \caption{(a) The initial intersection with the parent node, gives an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, both children will be tested. The “near” node will be tested first where it has a parametric range $[t_{min}, t_{split}]$. If it is a leaf, its primitives will be tested; otherwise, its children will be tested recursively. (c) If the near node intersection test returns false, the far node will be tested. (d) Continuously keep visiting the tree nodes using depth-first, front-to-back traversal until the closest intersection is found or the ray exits the tree.  \protect\cite{Pharr2016}}
         \label{fig:dice}
 \end{figure}
 
@@ -722,25 +725,25 @@ The first intersection test will start by testing if the ray intersects the glob
 
 \noindent
 \\
-If it returns true, we proceed to the next node by using a depth-first, front-to-back traversal algorithm. If the next node is a leaf node, we iterate through the list of the primitives assigned to the node. As we discussed, we are not saving the primitives directly in the leaf node. We only save the number of primitives and the offset of the indices. This is a huge performance advantage, especially for the Kd-Tree, because in the Kd-Tree, one primitive can be in more than one node at a time. In terms of memory usage, if one leaf contains an N number of primitives, then there is a high chance of duplication of information with another leaf that contains these N primitives. You can imagine with a million primitives. This can be at least twice the number of the original primitives. Note that before going through all the primitives, if the ray already intersected primitives in other nodes and those other nodes and the intersected point is less than the $t_{min}$ of the current node, then we are sure that we can not do better. We will not find any closer primitive in the leaf node. Hence we break and return. 
+If it returns true, we proceed to the next node using a depth-first, front-to-back traversal algorithm. If the next node is a leaf node, we iterate through the list of the primitives assigned to the node. As we discussed, we are not saving the primitives directly in the leaf node. We only save the number of primitives and the offset of the indices. It is a huge performance advantage, especially for the Kd-Tree, because in the Kd-Tree, one primitive can be in more than one node at a time. In terms of memory usage, if one leaf contains an N number of primitives, then there is a high chance of duplication of information with another leaf that contains these N primitives. It can be imagined with a million primitives. This can be at least twice the number of the original primitives. Before going through all the primitives, if the ray already intersected primitives in other nodes and those other nodes and the intersected point is less than the $t_{min}$ of the current node, then we are sure that we can not do better. We will not find any closer primitive in the leaf node. Hence we break and return. 
  
 
 \noindent
 \\
-Otherwise, if it is an interior node, we would like to test its children, and unlike we did in the BVH we were going left and then right. This time we will use the intersection point to determine which is the left and the right node. By comparing the splitting point with the intersected point, we can determine which of the children has a higher chance of being intersected first. This can be done quickly by checking if $t_{split} > t_{max}$, then we do not need to check the far child node (Second/Right node), same we check if $t_{split} < t_{min}$, then we do not check the near child node (First/Left node). Otherwise, we check them both by starting with the near (Left) and proceeding to the far (Right).  
+Otherwise, if it is an interior node, we would like to test its children, and unlike we did in the BVH, we were going left and right. This time we will use the intersection point to determine the left and right nodes. By comparing the splitting point with the intersected point, we can determine which children are more likely to be intersected first. This can be done quickly by checking if $t_{split} > t_{max}$, then we do not need to check the far child node (Second/Right node), same we check if $t_{split} < t_{min}$, then we do not check the near child node (First/Left node). Otherwise, we check them both by starting with the near (Left) and proceeding to the far (Right).   
 
 \begin{figure}[H]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/traversal_case.png}
-     \caption{Different scenarios prove the ray should not intersect both children.(a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) In this case, the ray intersects the box at a point after the splitting plane, indicating that the  near child is avoided. \protect\cite{Pharr2016}}
+     \caption{Different scenarios prove the ray should not intersect both children. (a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) Ray intersects the box at a point after the splitting plane, indicating that the near child is avoided.  \protect\cite{Pharr2016}}
         \label{fig:dice}
 \end{figure}
 
 \clearpage
 
 \section{Performance Analysis}
-In this chapter, we will analyze the different data structures used, BVH, LBVH and Kd-Tree and how they perform against different scenes. We will pick up one data structure Kd-Tree and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
+In this chapter, we will analyze the different data structures used, BVH, LBVH and Kd-Tree and how they perform against different scenes. We will pick up one data structure, Kd-Tree and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
 
 
 \noindent
