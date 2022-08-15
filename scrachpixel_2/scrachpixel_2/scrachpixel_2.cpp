@@ -1,15 +1,17 @@
 // Author Alhajras Algdairy, 14.8.2022, Uni-Freiburg
 // A simple Ray tracer that render primitves by using different data structures
 // The following resources are being used in the code and edited accordingly: 
-//		www.scratchapixel.com
-//      www.realtimerendering.com
-//      cg.informatik.uni-freiburg.de/teaching.htm
-//      stackoverflow.com
-//      www.tutorialspoint.com/binary-search-tree-iterator-in-cplusplus
+//		https://www.scratchapixel.com
+//      https://www.realtimerendering.com
+//      https://cg.informatik.uni-freiburg.de/teaching.htm
+//      https://stackoverflow.com/
+//      https://www.tutorialspoint.com/binary-search-tree-iterator-in-cplusplus
 //      https://blogs.nvidia.com/blog/2021/05/27/omniverse-marbles-rtx-playable-sample
 //      https://github.com/alecjacobson/common-3d-test-models
+//		https://raytracing.github.io/
 
 #include "bvh.h"
+#include "settings.h"
 #include <algorithm>
 #include <bitset>
 #include <chrono>
@@ -50,7 +52,6 @@
 #include <valarray>
 
 template <> const Matrix44f Matrix44f::kIdentity = Matrix44f();
-enum SceneModel { IGEA, ARMADILLO, BUNNY, BUNNIES, TEST, GRASS,  BUDDHA, CITY };
 using namespace std;
 float RAY_EPSILON = 0.000000001;
 unsigned int rayId = 0;
@@ -77,20 +78,6 @@ float clamp(const float& lo, const float& hi, const float& v)
 }
 
 std::vector<SceneObject> sceneFixed;
-
-// Settings of the raytracer
-struct Settings
-{
-	uint32_t width = 640; // Width of the scene
-	uint32_t height = 480; // Height of the scene
-	float fov = 90;
-	Vec3f backgroundColor = Vec3f(1, 1, 1); // Standard bg color is white
-	float bias = 0.0001; // Error allowed
-	uint32_t aa_samples = 1; // Anti aliasing samples
-	AccType dataStructure = BVH; // 0 bvh, 1 kd tree
-	SceneModel sceneModel = BUNNY;
-};
-
 
 void fresnel(const Vec3f& I, const Vec3f& N, const float& ior, float& kr)
 {
@@ -522,7 +509,7 @@ inline float random_float()
 //  This will write pixels into a file
 void write_into_file(const Settings& settings, int frame, Vec3f* image) {
 	// Save result to a PPM image (keep these flags if you compile under Windows)
-	std::ofstream ofs("./" + std::to_string(frame) + "out.ppm", std::ios::out | std::ios::binary);
+	std::ofstream ofs("./output.ppm", std::ios::out | std::ios::binary);
 	ofs << "P6\n" << settings.width << " " << settings.height << "\n255\n";
 	for (unsigned i = 0; i < settings.width * settings.height; ++i) {
 		ofs << (unsigned char)(std::min(float(1), image[i].x / settings.aa_samples) * 255) <<
@@ -686,7 +673,7 @@ std::vector<SceneObject> createScene_new(Settings settings) {
 				s.radius = 0.01 * 5;
 				s.center = vertex * 100 + shift;
 				s.center.y += -10;
-				s.center.z += -50;
+				s.center.z += -60;
 				s.position = s.center;
 				s.shininess = 64;
 				s.isSphere = true;
