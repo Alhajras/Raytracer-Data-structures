@@ -1,5 +1,0 @@
-Master project Todo:
-Make BVH work for 
-17.5MB -> Made it 13MB after using the pointers
-------------------------------------------------
-13M -> 10M because changed the object array to vector
