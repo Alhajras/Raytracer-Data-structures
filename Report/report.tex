@@ -743,7 +743,7 @@ Otherwise, if it is an interior node, we would like to test its children, and un
 \clearpage
 
 \section{Performance Analysis}
-In this chapter, we will analyze the different data structures used, BVH, LBVH and Kd-Tree and how they perform against different scenes. We will pick up one data structure, Kd-Tree and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
+ Optimizing parameters is part of rendering. Therefore, in this chapter, we will analyze the different data structures used, BVH, LBVH and Kd-Tree and how they perform against different scenes. We will pick up one data structure, Kd-Tree and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
 
 
 \noindent
@@ -789,15 +789,15 @@ Anti-aliasing samples & 1 \T\B
 \end{table}
 
 \subsection{How tweaking the data structure parameters affect performance}
-Each data structure has its different implementation, in this subsection, we would like to illustrate how a small change in each data structure parameter can produce different trees which can affect the performance significantly. Only Kd-Tree will be investigated in terms of changing parameters and noticing their effect because the same result can be done by the BVH and LBVH but they will be redundant.
+Each data structure has its different implementation. In this subsection, we would like to illustrate how a slight change in each data structure parameter can produce different trees, affecting performance significantly. Only Kd-Tree will be investigated in terms of changing parameters and noticing their effect because the BVH and LBVH can do the same result, but they will be redundant.
 
 \noindent
 \\
-Figure ~\ref{fig:kdtreeexample} shows two different constructed binary trees based on the same algorithm Kd-Tree and the same input scene, however by changing the maximum number of primitives in the leaf node parameter \textit{maxPrims} from 1 to 2, we can note that one tree is shorter than the other! How would this affect the performance? 
+Figure ~\ref{fig:kdtreeexample} shows two different constructed binary trees based on the same algorithm Kd-Tree and the same input scene; however, by changing the maximum number of primitives in the leaf node parameter \textit{maxPrims} from 1 to 2. We can note that one tree is shorter than the other! How would this affect the performance? 
 
 \noindent
 \\
-A deeper tree means more nodes which leads to more memory consumption. Moreover, if the splitting criteria are too bad this can lead to a long traversal time. On the other hand, a shallow tree can lead to fewer nodes but leaves that contain more primitives that will require a linear search (Brute force). 
+A deeper tree means more nodes which leads to more memory consumption. Moreover, if the splitting criteria are too bad, this can lead to a long traversal time. On the other hand, a shallow tree can lead to fewer nodes but leaves that contain more primitives that will require a linear search (Brute force). 
 
 
 \begin{figure}[H]	
@@ -835,7 +835,7 @@ A deeper tree means more nodes which leads to more memory consumption. Moreover,
          \label{fig:kdtreeexampled}
      \end{subfigure}
         \captionsetup{justification=centering,margin=2cm}
-        \caption{Two different constructed kd-trees with the same implementation and scene but with different parameter.}
+        \caption{Two different constructed kd-trees with the same implementation and scene but with different parameters.}
         \label{fig:kdtreeexample}
 \end{figure}
 
@@ -843,15 +843,15 @@ A deeper tree means more nodes which leads to more memory consumption. Moreover,
 \\
 The next example demonstrates the performance differences between the two trees in simple math. Assuming the time consumed by the AABB intersection test is $0.1ms$. Let us calculate the time consumed to render the yellow sphere by talking the green path shown in the ~\ref{fig:kdtreeexample}. Sub-figure ~\ref{fig:kdtreeexampleb}
  needs five AABB tests resulting in $0.5ms$ to find the sphere, unlike in ~\ref{fig:kdtreeexampled}
- where only three AABB tests are needed resulting in $0.3ms$. The deeper tree has less performance! Nonetheless, we did not put the intersection cost of the spheres into consideration! In this example the sphere intersection cost is tiny but what if we replace the spheres with more complex models will the shallow tree still be better to use? In a shallow tree, the yellow sphere can be after the blue sphere in the list, hence one has to test the blue sphere first and then jump to the yellow. If the blue sphere (Model) in general has a high intersection cost let's say $0.3ms$. then this will be added to the shallow tree cost to become $0.3ms + 0.3ms = 0.6ms$ which is larger than the long path in the deeper tree. Even though the model is as simple as a triangle or sphere only, we need to remember that for the long list that contains a big number of primitives this will add a leaner complexity.
+ where only three AABB tests are needed resulting in $0.3ms$. The deeper tree has less performance than the other! Nonetheless, we did not consider the intersection cost of the spheres! In this example, the sphere intersection cost is tiny, but what if we replace the spheres with more complex models? Will the shallow tree still be better to use? In a shallow tree, the yellow sphere can be after the blue sphere in the list; hence one has to test the blue sphere first and then jump to the yellow. If the blue sphere (Model) generally has a high intersection cost, assumingly $0.3ms$. Then this will be added to the shallow tree cost to become $0.3ms + 0.3ms = 0.6ms$, which is larger than the long path in the deeper tree. Even though the model is as simple as a triangle or sphere only, we must remember that for the long list containing many primitives, this will add a leaner complexity.
 
 \noindent
 \\
-After understanding the concept of the effect of the parameters on building the tree, Kd-Tree is used to analyse this further by using my current ray tracer. In this experience, we will change two parameters: The maximum number of primitives assigned to each leaf \textit{maxPrims} and the Maximum depth of the tree \textit{depth}. For better analyses, I have fixed the model which is the Stanford bunny. Moreover, other SAH parameters are fixed to focus only on the two parameters mentioned. 
+After understanding the concept of the effect of the parameters on building the tree, Kd-Tree is used to analyse this further by using the current ray tracer. In this experience, we will change two parameters: The maximum number of primitives assigned to each leaf \textit{maxPrims} and the Maximum depth of the tree \textit{depth}. For better analyses, one model is fixed and used. Moreover, other SAH parameters are fixed to focus only on the two parameters mentioned. 
 
 \noindent
 \\
-By changing the \textit{maxPrims} parameter and fixing the other parameters we can note that the larger the value the less it takes to build the tree, for example when increasing maxPrims from  1 to 100, the build time increased by almost 2X. This is predictable as we discussed before, when the maxPrims parameter is big we stop the recursion of building the tree hence we stop creating more interior nodes as shown in the table the total number of nodes decreases by almost 418X consequently the tree depth becomes smaller. On the other hand, we note that rendering time increased by 1.2X. This is because some leaf contains 100 primitives that the ray has to go through them linearly and test them until it finds the right primitive or even worse not find an intersection after going through 100 primitive intersections. This explains why the number of intersection tests shown in the table has increased by almost  61X. When the value is set up to 10, this gave the best of both worlds, as the building and the rendering time are acceptable.  This is the trade-off when choosing the right parameter for the right scene.
+By changing the \textit{maxPrims} parameter and fixing the other parameters, we can note that the larger the value, the less it takes to build the tree. For instance, when increasing ${maxPrims} from  1 to 100, the build time increased by almost 2X. This is predictable; as we discussed before when the ${maxPrims} parameter is significant, we stop the recursion of building the tree; hence we stop creating more interior nodes; as shown in the table, the total number of nodes decreases by almost 418X. Consequently, the tree depth becomes smaller. On the other hand, we note that rendering time increased by 1.2X. This is because some leaf contains 100 primitives that the ray has to go through them linearly and test them until it finds the right primitive or, even worse, not find an intersection after going through 100 primitive intersections. This explains why the number of intersection tests shown in the table has increased by almost  61X. Setting the value to 10 as a trade-off results in an acceptable building and the rendering time.
 
 
 \begin{table}[ht] 
@@ -896,11 +896,12 @@ depth = 100& 35, 947 & 44, 854 & 683, 669 & 1.871 s & 9.546 s\T\B
 
 \noindent
 \\
-Increasing the number of the depth parameter increases the building time however it reduces the rendering time significantly. For example, by changing the depth from 5 to 10, the total building and rendering time combined is reduced by almost 3X, although the building time is increased we notice the massive gain in the rendering time which is very often the bottleneck in ray tracing. By changing the value from 10 to 28, which is the value suggested by the Equation \eqref{eq:depth} we mentioned earlier, we note that the overall performance increased by almost 1.2X. Increasing the depth to 100 reaches a saturation point where the depth does not play any role in performance. The reason is for each scene there is a maximum value depth that the tree can produce and regardless of increasing the depth parameter if the parameter is bigger than the maximum depth of the tree then it is useless to constrain the tree with the value bigger than its maximum reachable depth.  We can conclude that the formula used in the PBR book looks promising and deliver the best result out of the values used in the table. 
+Increasing the number of the depth parameter increases the building time; however, it reduces the rendering time significantly. For example, by changing the depth from 5 to 10, the building and rendering time combined is reduced by almost 3X. Although the building time is increased, we notice the massive gain in the rendering time, which is very often the bottleneck in ray tracing. By changing the value from 10 to 28, which is the value suggested by the Equation \eqref{eq:depth} we mentioned earlier, we note that the overall performance increased by almost 1.2X. Increasing the depth to 100 reaches a saturation point where the depth does not play any role in performance. The reason is that for each scene, there is a maximum value depth that the tree can produce, and regardless of increasing the depth parameter, if the parameter is more significant than the maximum depth of the tree, then it is useless to constrain the tree with the value more significant than its maximum reachable depth. We can conclude that the formula used in the PBR book looks promising and delivers the best result from the values used in the table. 
 
 \noindent
 \\
-Tweaking both parameters to find the optimal result is different from tweaking one parameter and fixing one. In order to find the best combination of parameters for a random scene one can use one of the well-known parameter optimization techniques such as  Grid Search, we will not cover this part in this report as I have used a simple manual method. 
+Tweaking both parameters to find the optimal result is different from tweaking one parameter and fixing one. In order to find the best combination of parameters for a random scene, one can use one of the well-known parameter optimization techniques such as  Grid Search. Parameter optimization techniques will not be covered in this report.  
+
 
 \subsection{Investigating different data structures}
 Different models with a diverse range of primitives are used for proper comparison. The models Stanford-bunny \protect\cite{stanfordbunny}, Igea \protect\cite{igea}, Asian Dragon \protect\cite{stanfordxyzdragon}, and Happy Buddha \protect\cite{buddha} used are taken from the following repository \protect\cite{Jacobson2021}.
