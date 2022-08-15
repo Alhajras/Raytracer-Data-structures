@@ -1,4 +1,4 @@
-# Rendering-Lab
+# Rendering-Master-Project
 
 This is a ray tracer implemented as part of the master project at the University of Freiburg. The report of the work done can be found <a href="/Report/report.pdf">here</a>. The ray tracer was tested on a machine with Ubuntu 20.04.2 LTS. In order to run the code, run this command in the root directory:
 
