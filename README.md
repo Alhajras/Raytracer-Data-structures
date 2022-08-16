@@ -1,6 +1,6 @@
 # Rendering-Master-Project
 
-This is a ray tracer implemented as part of the master project at the University of Freiburg. The report of the work done can be found <a href="/Report/report.pdf">here</a>. In order to run the code, run this command in the root directory:
+This is a ray tracer implemented as part of the master project at the University of Freiburg. The ray tracer is an extension of the old ray tracer used in the <a href="https://github.com/Alhajras/Raytracer/blob/main/lab_report_1/lab_report_1.pdf">rendering lab</a>.The report of the work done can be found <a href="/Report/report.pdf">here</a>. In order to run the code, run this command in the root directory:
 
 ```
 g++ -o output main.cpp
