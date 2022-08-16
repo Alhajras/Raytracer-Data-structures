@@ -38,19 +38,6 @@ dataStructure: options are (BVH, KDTREE, LBVH, NONE), default value is Bunny
 sceneModel: Model from the models in the models directory, default value is the bunny
 ```
 
-There is one small issue when using BVH. You may notice noise for coplanar triangles if they are quite large. This happens very occasionally but might be visible for some cases. It can be fixed by adding a small epsilon value (`0.00001`) to make the triangle non-coplanar. This is being done for some demo scenes. Unfortunately, the bug itself was not possible to fix in the given time.
-
-One thing to remember is the arguments passed to scene object. If nothing is passed, the scene renders with ambient, diffuse as well as specular material properties and AABBs are used. The arguments can be passed as:
-```
-Scene scene()
-
-Scene scene(1, 1, 1, 1) // ambient, diffuse, specular, aabb, in that order
-
-Scene scene(1, 1, 1, 1, color(0, 0, 0)) // this extra argument will change the background color to black or any other color of user's choice
-
-Scene scene(1, 1, 1, 1, texture("textures/stars.ppm")) // this extra argument will change the background to a texture
-```
-
 The external libraries are saved in the folder `libraries` and some parts taken from [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html) in the folder `RTIOW`. `aabb.h` is also placed in `Scratchapixel` as I'm using the same implementation explained there. There are some other places which are quite similar to how they were explained in [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html) but it's rather difficult to separate everything as I also did a lot of changes.
 
 ## Thanks to
