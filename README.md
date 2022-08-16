@@ -23,7 +23,7 @@ Next are some of the renderd results:
 
 | analysis_scene_1() | analysis_scene_2() | analysis_scene_3() | analysis_scene_4() |
 | --------  | ------------------- | --------------------- |---------------------|
-| ![analysis scene 1](/example%20renders/analysis_scene_1.png)| ![analysis scene 2](/example%20renders/analysis_scene_2.png) | ![analysis scene 3](/example%20renders/analysis_scene_3.png) | ![analysis scene 4](/example%20renders/analysis_scene_4.png) |
+| ![analysis scene 1](/project/raytracer/images/bunny (2).PNG)| ![analysis scene 2](project/raytracer/images/igea.PNG) | ![analysis scene 3](/example%20renders/analysis_scene_3.png) | ![analysis scene 4](/example%20renders/analysis_scene_4.png) |
 
 
 | analysis_scene_5() | analysis_scene_6() | analysis_scene_7()  | analysis_scene_8() |
