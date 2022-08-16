@@ -13,22 +13,18 @@ This will start rendering a scene a sanford bunny.
 
 Next are some of the renderd results:
 
-| nature_scene() | textured_spheres() | benchmark_scene() | showcase_scene_1(true) |
+| showcase 1 | showcase 2 | showcase 3 | showcase 4 |
 | --------  | ------------------- | --------------------- |---------------------|
 | ![nature scene](/project/raytracer/images/texture_2.PNG)| ![textured spheres](/project/raytracer/images/texture_1.PNG)      | ![benchmark scene](/project/raytracer/images/texture_3.PNG) | ![showcase scene](/project/raytracer/images/spec_reflection.PNG) |
 
-| showcase_scene_1(false) | showcase_scene_2(true) | showcase_scene_2(false) | showcase_scene_3() |
-| --------  | ------------------- | --------------------- |---------------------|
-| ![showcase scene](/project/raytracer/images/refraction__0_5.PNG)| ![showcase scene 2](/example%20renders/showcase_scene_2_area_light.png) | ![showcase scene 2](/example%20renders/showcase_scene_2_point_light.png) | ![showcase scene 3](/project/raytracer/images/multi_shadow_multi_spec.PNG) |
+| showcase 5 | showcase 6|
+| --------  | ------------------- |
+| ![showcase scene](/project/raytracer/images/refraction__0_5.PNG) | ![showcase scene 3](/project/raytracer/images/multi_shadow_multi_spec.PNG) |
 
-| analysis_scene_1() | analysis_scene_2() | analysis_scene_3() | analysis_scene_4() |
-| --------  | ------------------- | --------------------- |---------------------|
-| ![analysis scene 1](/project/raytracer/images/bunny (2).PNG)| ![analysis scene 2](project/raytracer/images/igea.PNG) | ![analysis scene 3](/example%20renders/analysis_scene_3.png) | ![analysis scene 4](/example%20renders/analysis_scene_4.png) |
+| showcase 7 | showcase 8 |
+| --------  | ------------------- |
+| ![analysis scene 1](/project/raytracer/images/bunny%20(2).PNG)| ![analysis scene 2](project/raytracer/images/igea.PNG)  |
 
-
-| analysis_scene_5() | analysis_scene_6() | analysis_scene_7()  | analysis_scene_8() |
-| --------  | ------------------- | --------------------- |---------------------|
-| ![analysis scene 5](/example%20renders/analysis_scene_5.png)| ![analysis scene 6](/example%20renders/analysis_scene_6.png) | ![analysis scene 7](/example%20renders/analysis_scene_7.png) | ![analysis scene 8](/example%20renders/analysis_scene_8.png) |
 
 
 There are some other constants that can be set in the file `constants.h`. Set `USE_UNIFORM_GRIDS = true` if you want to use compact grid. Likewise, set `BVH_CENTROID_SPLIT = true` and `USE_BVH = true` if you want to use BVH. Remember to set the other structure to `false` if using another structure. So, set `USE_UNIFORM_GRIDS = false` if using BVH and vice versa. By default, `USE_UNIFORM_GRIDS = false` and `USE_BVH = true` for centroid split method (`BVH_CENTROID_SPLIT = true`). Note, that there is an SAH split implementation in `bvh.h` but it was not possible to complete it in the given time so it is commented out. To use compact grid:
