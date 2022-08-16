@@ -28,27 +28,8 @@ using Vec3i = Vec3<int32_t>;
 using Vec3ui = Vec3<uint32_t>;
 using Matrix44f = Matrix44<float>;
 int spheres_intersections_counter = 0;
-// igea [20:50]
-// bunny [10:15]
+
 const int MaxLeaves = 2;
-static int bytePrefix[] = {
-		8, 7, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 4,
-		3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-};
 inline
 Vec3f mix(const Vec3f& a, const Vec3f& b, const float& mixValue)
 {
@@ -137,7 +118,7 @@ public:
 	}
 
 	Vec3f Diagonal() const { return max - min; }
-
+    // https://pbr-book.org/3ed-2018/Geometry_and_Transformations/Bounding_Boxes
 	float SurfaceArea() const {
 		Vec3f d = Diagonal();
 		return 2 * (d.x * d.y + d.x * d.z + d.y * d.z);
@@ -584,7 +565,8 @@ std::shared_ptr<Node> constructLBVHNew(
 
 
 
-
+// Thinking Parallel, Part III: Tree Construction on the GPU
+// https://developer.nvidia.com/blog/thinking-parallel-part-iii-tree-construction-gpu
 std::shared_ptr<Node> constructLBVHTree(
 	std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes)
 {	
@@ -602,146 +584,6 @@ std::shared_ptr<Node> constructLBVHTree(
 	std::cout << "Total number of nodes: " << totalNodes << "\n";
 	return root;
 }
-
-int constructKDTree(std::vector<SceneObject>& objects, std::shared_ptr<Node> currentNode, std::vector<std::shared_ptr<Node>>& nodes, int depth)
-{
-	   // If this is a leaf node
-	if (objects.size() <= 15) // this measn we only have one node and two children
-	{
-		for (int i = 0; i < (int)objects.size(); i++)
-		{
-			//currentNode->objs[i] = objects[i].objId; //we assign the ids of the root node, left and right nodes
-		}
-		currentNode->isleaf = true; // leaf node has two objects as children
-		nodes.push_back(currentNode);
-		return (int)nodes.size() - 1;
-	}
-
-
-	// If it is not a leaf node
-	std::shared_ptr<Node> newLeftNode = std::make_shared<Node>();
-	newLeftNode->left = NULL;
-	newLeftNode->right = NULL;
-	std::shared_ptr<Node> newRightNode = std::make_shared<Node>();
-	newRightNode->left = NULL;
-	newRightNode->right = NULL;
-	std::vector<int> leftPointers;
-	std::vector<SceneObject> leftObjects;
-	Vec3f midLeft;
-	float maxLeftX = -1 * std::numeric_limits<float>::max();
-	float minLeftX = std::numeric_limits<float>::max();
-	float maxLeftY = -1 * std::numeric_limits<float>::max();
-	float minLeftY = std::numeric_limits<float>::max();
-	float maxLeftZ = -1 * std::numeric_limits<float>::max();
-	float minLeftZ = std::numeric_limits<float>::max();
-	Vec3f midRight;
-	float maxRightX = -1 * std::numeric_limits<float>::max();
-	float minRightX = std::numeric_limits<float>::max();
-	float maxRightY = -1 * std::numeric_limits<float>::max();
-	float minRightY = std::numeric_limits<float>::max();
-	float maxRightZ = -1 * std::numeric_limits<float>::max();
-	float minRightZ = std::numeric_limits<float>::max();
-	std::vector<int> rightPointers;
-	std::vector<SceneObject> rightObjects;
-	for (int i = 0; i < objects.size(); i++)
-	{
-		// here I am splitting the objects which are their center is in the left of the 
-		// Middle point of the node to the left, we can change the currentNode.midpoint,
-		// By using splitting average or other ways look at my presentations
-		if (objects[i].position[currentNode->longestAxis] < currentNode->midpoint)
-		{
-			// we create the new left bbox parameters
-			if (objects[i].position[0] - objects[i].radius < minLeftX)
-				minLeftX = objects[i].position[0] - objects[i].radius;
-			if (objects[i].position[1] - objects[i].radius < minLeftY)
-				minLeftY = objects[i].position[1] - objects[i].radius;
-			if (objects[i].position[2] - objects[i].radius < minLeftZ)
-				minLeftZ = objects[i].position[2] - objects[i].radius;
-
-			if (objects[i].position[0] + objects[i].radius > maxLeftX)
-				maxLeftX = objects[i].position[0] + objects[i].radius;
-			if (objects[i].position[1] + objects[i].radius > maxLeftY)
-				maxLeftY = objects[i].position[1] + objects[i].radius;
-			if (objects[i].position[2] + objects[i].radius > maxLeftZ)
-				maxLeftZ = objects[i].position[2] + objects[i].radius;
-
-			midLeft += objects[i].position; // here we are using the average for middle point 
-			leftObjects.push_back(objects[i]);
-		}
-		else
-		{
-			// we create the new right bbox parameters
-			if (objects[i].position[0] - objects[i].radius < minRightX)
-				minRightX = objects[i].position[0] - objects[i].radius;
-			if (objects[i].position[1] - objects[i].radius < minRightY)
-				minRightY = objects[i].position[1] - objects[i].radius;
-			if (objects[i].position[2] - objects[i].radius < minRightZ)
-				minRightZ = objects[i].position[2] - objects[i].radius;
-
-			if (objects[i].position[0] + objects[i].radius > maxRightX)
-				maxRightX = objects[i].position[0] + objects[i].radius;
-			if (objects[i].position[1] + objects[i].radius > maxRightY)
-				maxRightY = objects[i].position[1] + objects[i].radius;
-			if (objects[i].position[2] + objects[i].radius > maxRightZ)
-				maxRightZ = objects[i].position[2] + objects[i].radius;
-
-			midRight += objects[i].position; // here we are using the average for middle point 
-			rightObjects.push_back(objects[i]);
-		}
-	}
-
-	midLeft = Vec3f(midLeft[0] / leftObjects.size(), midLeft[1] / leftObjects.size(), midLeft[2] / leftObjects.size());
-	midRight = Vec3f(midRight[0] / rightObjects.size(), midRight[1] / rightObjects.size(), midRight[2] / rightObjects.size());
-
-	int axisindex = currentNode->longestAxis;
-	switch (axisindex) {
-	case 0:
-		newLeftNode->longestAxis = 1;
-		newLeftNode->midpoint = midLeft[1];
-		newRightNode->longestAxis = 1;
-		newRightNode->midpoint = midRight[1];
-
-		break;
-	case 1:
-		newLeftNode->longestAxis = 2;
-		newLeftNode->midpoint = midLeft[2];
-		newRightNode->longestAxis = 2;
-		newRightNode->midpoint = midRight[2];
-
-		break;
-	default:
-		newLeftNode->longestAxis = 0;
-		newLeftNode->midpoint = midLeft[0];
-		newRightNode->longestAxis = 0;
-		newRightNode->midpoint = midRight[0];
-
-	}
-
-
-	newLeftNode->minX = minLeftX;
-	newLeftNode->maxX = maxLeftX;
-	newLeftNode->minY = minLeftY;
-	newLeftNode->maxY = maxLeftY;
-	newLeftNode->minZ = minLeftZ;
-	newLeftNode->maxZ = maxLeftZ;
-
-	newRightNode->minX = minRightX;
-	newRightNode->maxX = maxRightX;
-	newRightNode->minY = minRightY;
-	newRightNode->maxY = maxRightY;
-	newRightNode->minZ = minRightZ;
-	newRightNode->maxZ = maxRightZ;
-
-	int l = constructKDTree(leftObjects, newLeftNode, nodes, 3);
-	int r = constructKDTree(rightObjects, newRightNode, nodes, 3);
-
-	currentNode->left = l;
-	currentNode->right = r;
-
-	nodes.push_back(currentNode);
-	return (int)nodes.size() - 1;
-}
-
 
 bool boundingBoxIntersection(Vec3f position, Vec3f direction, std::shared_ptr<Node> box)
 {
@@ -868,7 +710,7 @@ void bvhTraverse(Vec3f position, Vec3f direction, std::vector<std::shared_ptr<No
 }
 
 // ----------------- KD-Tree starts ---------------- //
-
+// https://pbr-book.org/3ed-2018/Primitives_and_Intersection_Acceleration/Kd-Tree_Accelerator
 // KdTreeAccel Local Declarations
 struct KdAccelNode {
 	// KdAccelNode Methods

@@ -64,7 +64,8 @@ char NUMBER_OF_CLONES = 1; // This is used to generatre clones of the model for 
 unsigned int bv_intersections_counter = 0;
 float tree_raverse_time = 0;
 
-
+// Ray Tracing: Rendering a Triangle (Barycentric Coordinates) - Scratchapixel.
+// https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/barycentric-coordinates
 inline
 float deg2rad(const float& deg)
 {
@@ -79,6 +80,8 @@ float clamp(const float& lo, const float& hi, const float& v)
 
 std::vector<SceneObject> sceneFixed;
 
+// An Overview of the Ray-Tracing Rendering Technique (source code). 
+// https://www.scratchapixel.com/code.php?id=8&origin=/lessons/3d-basic-rendering/ray-tracing-overview
 void fresnel(const Vec3f& I, const Vec3f& N, const float& ior, float& kr)
 {
 	float cosi = clamp(-1, 1, I.dotProduct(N));
@@ -99,6 +102,8 @@ void fresnel(const Vec3f& I, const Vec3f& N, const float& ior, float& kr)
 	}
 }
 
+// Introduction to Ray Tracing: a Simple Method for Creating 3D Images ....
+//  https://www.scratchapixel.com/code.php?id=3&origin=/lessons/3d-basic-rendering/introduction-to-ray-tracing
 class Triangle
 {
 public:
@@ -244,6 +249,7 @@ inline float modulo(const float& f)
 	return f - std::floor(f);
 }
 
+// https://stackoverflow.com/questions/1073336/circle-line-segment-collision-detection-algorithm
 bool intersectSphere(Vec3f position, Vec3f direction, SceneObject s, float& iTime, Vec3f& normal, Vec3f& intersection)
 {
 
