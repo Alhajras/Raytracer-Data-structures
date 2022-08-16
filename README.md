@@ -1,6 +1,6 @@
 # Rendering-Master-Project
 
-This is a ray tracer implemented as part of the master project at the University of Freiburg. The report of the work done can be found <a href="/Report/report.pdf">here</a>. The ray tracer was tested on a machine with Ubuntu 20.04.2 LTS. In order to run the code, run this command in the root directory:
+This is a ray tracer implemented as part of the master project at the University of Freiburg. The report of the work done can be found <a href="/Report/report.pdf">here</a>. In order to run the code, run this command in the root directory:
 
 ```
 g++ -o output main.cpp
@@ -9,7 +9,7 @@ and then run the output file as
 ```
 ./output
 ```
-This will start rendering a scene a sanford bunny.
+This will start rendering a `sanford bunny` by using `BVH`.
 
 Next are some of the renderd results:
 
@@ -38,7 +38,7 @@ dataStructure: options are (BVH, KDTREE, LBVH, NONE), default value is Bunny
 sceneModel: Model from the models in the models directory, default value is the bunny
 ```
 
-The external libraries are saved in the folder `libraries` and some parts taken from [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html) in the folder `RTIOW`. `aabb.h` is also placed in `Scratchapixel` as I'm using the same implementation explained there. There are some other places which are quite similar to how they were explained in [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html) but it's rather difficult to separate everything as I also did a lot of changes.
+There is a bug where the space between primitives increased but by using the bisect I have found that it started from this commit: `0a261fd3418f82cf09f6b291786ee5b2d71f68ba`
 
 ## Thanks to
 1. [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
