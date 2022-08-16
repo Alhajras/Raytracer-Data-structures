@@ -21,9 +21,9 @@ Next are some of the renderd results:
 | --------  | ------------------- |
 | ![showcase scene](/project/raytracer/images/refraction__0_5.PNG) | ![showcase scene 3](/project/raytracer/images/multi_shadow_multi_spec.PNG) |
 
-| showcase 7 | showcase 8 |
-| --------  | ------------------- |
-| ![analysis scene 1](/project/raytracer/images/bunny%20(2).PNG)| ![analysis scene 2](project/raytracer/images/igea.PNG)  |
+| showcase 7 | showcase 8 | showcase 9 |
+| --------  | --------------- | ------------------- |
+| ![analysis scene 1](/project/raytracer/images/bunny%20(2).PNG)| ![analysis scene 2](project/raytracer/images/igea.PNG)  | ![analysis scene 2](project/raytracer/images/buddah.PNG)  |
 
 
 
