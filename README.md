@@ -27,13 +27,15 @@ Next are some of the renderd results:
 
 
 
-There are some other constants that can be set in the file `constants.h`. Set `USE_UNIFORM_GRIDS = true` if you want to use compact grid. Likewise, set `BVH_CENTROID_SPLIT = true` and `USE_BVH = true` if you want to use BVH. Remember to set the other structure to `false` if using another structure. So, set `USE_UNIFORM_GRIDS = false` if using BVH and vice versa. By default, `USE_UNIFORM_GRIDS = false` and `USE_BVH = true` for centroid split method (`BVH_CENTROID_SPLIT = true`). Note, that there is an SAH split implementation in `bvh.h` but it was not possible to complete it in the given time so it is commented out. To use compact grid:
+In the <a href="/project/raytracer/settings.h">settings</a> file one can change the ray tracer configuration, most important configurations are:
 
 ```
-USE_UNIFORM_GRIDS = true;
-USE_BVH = false;
-BVH_RANDOM_SPLIT = false;
-BVH_CENTROID_SPLIT = false;
+width: Width of the scene, default value is 640
+height: Height of the scene, default value is 480
+backgroundColor: Standard bg color. default value is white
+aa_samples: Anti aliasing samples, default value is 1
+dataStructure: options are (BVH, KDTREE, LBVH, NONE), default value is Bunny
+sceneModel: Model from the models in the models directory, default value is the bunny
 ```
 
 There is one small issue when using BVH. You may notice noise for coplanar triangles if they are quite large. This happens very occasionally but might be visible for some cases. It can be fixed by adding a small epsilon value (`0.00001`) to make the triangle non-coplanar. This is being done for some demo scenes. Unfortunately, the bug itself was not possible to fix in the given time.
