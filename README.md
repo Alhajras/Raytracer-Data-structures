@@ -46,5 +46,6 @@ There is a bug where the space between primitives increased but by using the bis
 1. [Scratchapixel](https://www.scratchapixel.com/) for properly explaining all the concepts and the [AABB](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection) implementation.
 1. The grass texture in `textures` was taken from https://3djungle.net/textures/grass/1417/.
 1. The Stanford dragon, and Happy Buddha were taken from https://casual-effects.com/data/
-1. The Stanford XYZ dragon, Stanford bunny, Stanford Lucy and Caltech Spot were taken from https://github.com/alecjacobson/common-3d-test-models
-1. The grass model was taken from https://free3d.com/3d-model/high-quality-grass-78178.html
+1. The Stanford XYZ dragon, Stanford bunny, Stanford Lucy and were taken from https://github.com/alecjacobson/common-3d-test-models
+1. The Trees model was taken from https://free3d.com/3d-model/trees-9-53338.html
+1. Sci-Fi model is taken form https://free3d.com/3d-model/sci-fi-tropical-city-25746.html 
