@@ -142,11 +142,11 @@ subdivision]
 
 \section{Introduction to Ray tracing}
 \subsection{Overview}
-Ray tracing is an algorithm to simulate how light behaves in a 3D scene to generate real-life digital images in a computer. This process is called rendering. Rendering is used in various applications, such as Gaming, Animation, and Engineering.
+Ray tracing is an algorithm that simulates how light behaves in a 3D scene to generate real-life digital images in a computer. This process is known as rendering. Rendering is used in various applications, such as Gaming, Animation, and Engineering.
 
 \noindent
 \\
-Ray tracers have three different implementations; namely, Forward Ray tracing, Backward Ray tracing, and Hybrid Ray tracing; regardless of which implementation is used, the general idea of the algorithm is quite simple but extremely powerful; it is to project the 3D scene into a 2D plane (Image), to do so, a resolution must be chosen beforehand to divide the plane into small squares knows as (Pixels). Next, we try to evaluate the colour and illumination of each pixel. We cast several rays from the sensor (camera) toward the scene for each pixel. We search for any intersection by testing all the primitives, and if we hit one, we save it in a hit list. Depending on the distance between the sensor and the hit primitive, we can evaluate the nearest one to the sensor and pick its colour. Shading is the next step; this includes knowing if the primitive is in a dark or bright region in the scene. This expensive process is recursively executed until we hit the light source or reach a predefined depth. For thousands of primitives and more, testing the intersection is a performance challenge as the process is linear in time.
+Ray tracers have three different implementations, namely, Forward Ray tracing, Backward Ray tracing, and Hybrid Ray tracing. Regardless of which implementation is used, the general idea of the algorithm is straightforward but extremely powerful. It is to project the 3D scene into a 2D plane (Image). Firstly, a resolution must be chosen beforehand to divide the plane into small squares (Pixels). The next step is to evaluate the colour and illumination of each pixel. Several rays from the sensor (camera) toward the scene for each pixel are cast. Then it searches for any intersection by testing all the primitives, and if the ray hits one primitive, the primitive reference is saved into the hit list. Depending on the distance between the sensor and the hit primitive, the nearest primitives colour is returned. Shading is the next step; this includes knowing if the primitive is in a dark or bright region in the scene. This expensive process is recursively executed until the ray hits the light source or reaches a predefined depth. Testing the intersection is a performance challenge for thousands of primitives and more, as the process is linear in time.
 
 \begin{figure}[h]	
      \centering
@@ -158,7 +158,7 @@ Ray tracers have three different implementations; namely, Forward Ray tracing, B
 
 \noindent
 \\
-Although the Rasterization method can be used to overcome these obstacles, Ray tracing algorithms can relatively provide more photo-realistic images than rasterization, even though ray tracer consumes more time to render a scene. This is the reason why rasterization is used for real-time applications such as gaming more than raytracing; on the other hand, raytracing is more often used in offline applications such as simulations and interior design software.
+Although the Rasterization method can render huge scenes relatively faster than ray tracers, Ray tracing algorithms can provide more photo-realistic images than rasterization, even though ray tracer consumes more time to render a scene. Accordingly, rasterization is used for real-time (online) applications such as gaming more than ray tracing; on the other hand, ray tracing is more often used in offline applications such as simulations and interior design software, where the lightning and shadow play an essential role to the output.
 \clearpage
 
 \begin{figure}[h]	
