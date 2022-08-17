@@ -198,8 +198,7 @@ Data structures are used for sorting and searching. It can be utilized to reorde
 
 \section{Bounding Volume Hierarchies (BVH)}
 \subsection{Concept}
-The basic idea of the BVH is simple yet powerful. It is to wrap all primitives in a virtual bounding box. This box will act as metadata to show the limits of the primitive and has no idea of how the shape of the primitive inside it. This concept will make it easier to test the primitives because one can wrap a complex model with one bounding box, and if the ray intersects the bounding box of the model, then and only then can we test its primitives.
-
+The concept of BVH is straightforward yet powerful. It starts by wrapping all primitives in a virtual bounding volume. The bounding volume acts as metadata to indicate the primitive's bounds. Each group of primitives join to create a larger bounding volume until they build a bounding volume hierarchy. This concept makes it easier to test the primitives considering one can wrap a complex model with one bounding volume, and if the ray intersects the bounding volume of the model, then and only then does the ray test its sub-bounding volumes until it reaches the primitives. More details on constructing the hierarchy and traversing it will be discussed in the following sub-sections.
 
 \begin{figure}[h]	
      \centering
@@ -212,7 +211,8 @@ The basic idea of the BVH is simple yet powerful. It is to wrap all primitives i
 
 \noindent
 \\
-The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boundingboxes}. Although simple bounding volumes provide faster intersection tests, they often suffer from fitting to the model; eventually, they produce a large region of space. A compact bounding volume, on the other hand, generates fewer overlaps with other bounding volumes in the scene, producing fewer intersection tests. For example, spheres are probably the easiest bounding volume to generate for each primitive. Additionally, its intersection test is trivial and not expensive. However, we can note from the previous figure that it produces more empty regions that will be tested but will miss the model, eventually producing redundant tests. Using complex bounding volumes like \textbf{8-DOP} will have a higher probability of hitting the model and not missing it, but they are more difficult to generate and also more difficult to be tested. In this report, we will be using \textbf{AABB} because it is easy to implement, easy to test its intersection, and has less memory consumption because it only needs to save two 3D variables, the minimum and the maximum edges of the bounding box. One can use a combination of all of them, but in this report, we will only use the AABB.
+The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boundingboxes}. Although simple bounding volumes provide faster intersection tests, they often fail to fit perfectly into the model; eventually, they produce a large region of space. On the other hand, a tight bounding volume generates fewer overlaps with other bounding volumes in the scene, producing fewer intersection tests. For instance, spheres are arguably the most effortless bounding volume to create. Additionally, its intersection test is trivial and not expensive. However, it can be noticed from the previous figure that it produces more empty regions than the convex hull, leading to many rays intersecting redundant space. Using more complex bounding volumes as \textbf{8-DOP} will have a higher probability of hitting the primitive and not missing it, but they are more demanding to generate and more difficult to test. In this report, \textbf{AABB} is adopted because it is straightforward to implement and easy to test. Moreover, it consumes less memory considering it only needs to store two 3D variables, the minimum and the maximum edges of the bounding box. One can use a combination of bounding volume, but in this report, the main focus is AABB.
+
 
 \begin{figure}[h]	
      \centering
@@ -225,15 +225,15 @@ The bounding volume can have different shapes, as shown in Figure ~\ref{fig:boun
 
 \noindent
 \\
-Figure ~\ref{fig:boundingboxes} shows a scene consists of six objects. Looking at the generated binary tree, we can note that every two objects are bounded by one AABB, and then each two AABB are joined and bounded by a bigger AABB. We recursively do this until we reach the root node that covers the limits of the whole scene. This will create a hierarchy of AABBs, and this is where the \textbf{Bounding Volume Hierarchies} name came from.
+Figure ~\ref{fig:boundingvolume} illustrates the generated binary tree by using AABB. The scene consists of six objects. Every two neighbour primitives are bounded by one AABB, and then each two neighbour AABB are joined and bounded by a bigger AABB. Recursively this process is repeated until the root node that covers the limits of the whole scene is created. This leads to a hierarchy of AABBs, where the \textbf{Bounding Volume Hierarchies} name was given.
 
 \noindent
 \\
-Without the BVH tree, we will have to go through all six objects for each ray intersection test, even for the rays that do not intersect with any object. On the other hand, when we introduced BVH, we can note that for the rays that do not even intersect with the root AABB node, we do not go further to test its children. This means we will only test once rather than six times. Looking at the sphere in Figure ~\ref{fig:boundingboxes}, if a ray intersects with it, we will only have to go through a path that goes $A \rightarrow B \rightarrow D \rightarrow Sphere$. These are four tests instead of six, and these four tests are the worst-case scenario as the longest path in the tree equals three. 
+After introducing the BVH,  the rays that do not intersect with the AABB root node will not proceed to test its children. This replaces six with one intersection test for the rays that miss the primitives. Looking at the sphere in Figure ~\ref{fig:boundingvolume}, if a ray intersects with it, the path $A \rightarrow B \rightarrow D \rightarrow Sphere$ will be visited. These are four tests instead of six, and these four tests are the worst-case scenario considering the longest path in the tree is three. Previously each pixel must go through six intersection tests in a brute force algorithm. Hence for an empty rendered image based on this scene, the performance gain is 6X faster using BVH. 
 
 \noindent
 \\
-The worse case complexity for a binary tree is $\mathcal{O}(n)$, but if it is a balanced tree, it becomes $\mathcal{O}(\log{}n)$, this is significant, but the catch is we should try to build a balanced binary tree. This is where splitting criteria come in handy. 
+The worse case complexity for a binary tree is $\mathcal{O}(n)$, but if it is a balanced tree, it becomes $\mathcal{O}(\log{}n)$, this is significant, but the catch is how to build and balance binary tree from such a scene. Splitting criteria are the answer to how to build the binary tree. 
 
 
 
@@ -241,14 +241,12 @@ The worse case complexity for a binary tree is $\mathcal{O}(n)$, but if it is a 
 BVH is made of two phases, Construction of the tree and Traversal over the tree.  
 
 \subsubsection{Construction}
-There are three methods to build the BVH binary tree: \textbf{Top-down}, \textbf{Bottom-up}, and \textbf{Insertion}. Top-down is arguably the most popular technique in practice. Hence this method will be implemented in this report. It uses the \textbf{fit \& split} algorithm, where it starts with the whole model and encapsulates it with a BV and fits it, then tries to split it
-into n children, usually two. It keeps recursively splitting and fitting until it reaches the leaves and assigns the primitives to them.
+There are three methods to build the BVH binary tree: \textbf{Top-down}, \textbf{Bottom-up}, and \textbf{Insertion}. Top-down is arguably the most popular technique in practice. Hence this method is implemented in this report. It uses the \textbf{fit \& split} algorithm, where it starts with the whole model and encapsulates it with a BV (AABB) and fits it, then tries to split it into $n$ children, usually two. Recursively, splitting and fitting until it reaches the leaves and assigns the corresponding primitives to them.
 
 
 \noindent
 \\
-Building a BVH tree needs predefined parameters. The depth of the tree, maximum allowed number of primitives in the leaf nodes, splitting axis, and bounding volume for wrapping primitives. The depth of the tree will not be predefined for the BVH tree. This means the tree can go deeper as possible. The maximum allowed primitives for each leaf will be chosen to be one. For bounding volume, as previously discussed, we will use only AABB. The splitting criteria and splitting axis will be discussed next.  
-BVH tree can be constructed based on three different splitting criteria. There are four popular strategies to split the tree node:
+Building a BVH tree needs predefined parameters. The depth of the tree, maximum allowed number of primitives in the leaf nodes, splitting axis, and bounding volume type. The depth of the tree will not be predefined for the BVH tree. The maximum allowed primitive's parameter for each leaf is fixed to be one. For bounding volume, as previously discussed,  AABB is chosen. The splitting criteria and splitting axis will be discussed next. BVH trees can be constructed based on four popular splitting criteria:
 
 \begin{itemize}
 \item \textbf{Median of the centroid coordinates (Object median)}: The median of primitives, meaning if we have the next primitive positions in the x-axis as follows $\{1, 3, 3, 6, 7, 8, 9\}$ the median will be the primitive in the middle, which is $6$. This strategy will produce a well-balanced tree because it splits the primitives into two equal subtrees. Because this method is intuitive to implement and produces a well-balanced tree, this strategy will be adopted for the BVH tree. 
