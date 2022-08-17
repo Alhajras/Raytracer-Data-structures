@@ -172,27 +172,27 @@ Although the Rasterization method can render huge scenes relatively faster than 
 
 \noindent
 \\
-At Game Developers Conference, NVIDIA announced NVIDIA RTX™, a ray tracing technology that brings real-time gaming. The lighting, shadows, and surface reflection are so detailed in the marble scene that they look like a picture taken from a camera and not generated from a computer. The real challenge in real-time rendering is how to approximately render 60 high-quality frames per second.
+At Game Developers Conference, NVIDIA announced \textbf{NVIDIA RTX™}, a ray tracing technology that brings real-time gaming. The lighting, shadows, and surface reflection are so detailed in the marble scene that they look like a picture taken from a camera and not generated from a computer. The real challenge in real-time rendering is how to render 60 high-quality frames per second approximately.
 
 
 \subsection{Motivation of using acceleration data structures}
-In the ray tracing pipeline, we mentioned that each ray must execute an intersection test against all primitive contained in the scene. With $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $\mathcal{O}(N.P)$. This is equivalent to a two-for-loop complexity $\mathcal{O}(n^2)$. Meaning for each pixel, even if it does not intersect with any primitive, we will have to perform an intersection test for all the primitives in the scene. The worst-case scenario is when the rays do not intersect with any primitive or model, but the ray tracer has to trace the rays in different directions still, resulting in an empty image. 
+As previously explained, in the ray tracing pipeline, each ray must execute an intersection test against all primitives contained in the scene. With $N$ number of pixels and $P$ number of primitives, this will produce a complexity of $\mathcal{O}(N.P)$. This is equivalent to a two-for-loop complexity $\mathcal{O}(n^2)$. The worst-case scenario is when each pixel has to perform an intersection test against all the primitives in the scene without finding any hit. Although the rendering process consumes time in this scenario, it produces an empty image.  
 
 \noindent
 \\
-Brute forcing complexity is high; it increases linearly with the increase of the number of primitives. Moreover, some features such as anti-aliasing require more rays per pixel which increases the complexity to  $\mathcal{O}(N.P.S)$ where $S$ is the number of samples per pixel. 
+The previous behaviour is known as Brute forcing. Brute forcing complexity is high; it increases linearly with the number of primitives. Moreover, some features such as anti-aliasing require more rays per pixel, adding one extra dimension which increases the complexity to  $\mathcal{O}(N.P.S)$ where $S$ is the number of samples per pixel. 
 
 \noindent
 \\
-Generally, using more samples will often produce a higher quality frame; additionally, for better illumination results, more recursion (Shadow rays) must be cast after each intersection. Hence, more rays are required for better quality but with fewer intersection tests as possible for better performance.
-
-\noindent
-\\
-Giving a ray tracer that uses $S = 5$, $P = 100, 000$, and $N =  1, 280 $ x $1, 024$, $depth = 3$. This will give us a number of intersection tests, approximately $= 1, 280 * 1, 024 * 100, 000 * 5 * 3 = 1.96608*10^{12} $ intersection test. Assuming the machine used spends 0.01ms on each ray. This will result in 220 days of rendering one frame. Computers nowadays can handle this easily. However, the main challenge is scalability; some scenes contain millions of primitives making, rendering them by brute-forcing imposable.
+Generally, using more samples often produces a higher quality frame; additionally, more recursion (Shadow rays) generates better illumination results. However, each recursion depth generates one extra complexity. Giving a ray tracer that uses $S = 5$, $P = 100, 000$, and $N =  1, 280 $ x $1, 024$, $depth = 3$. This approximately require $= 1, 280 * 1, 024 * 100, 000 * 5 * 3 = 1.96608*10^{12} $ intersection test. Assuming the machine used spends $0.001 \mu$s on each ray. The computer will render the frame in 21 days. Computers nowadays can handle this easily. Nonetheless, the main challenge is scalability; some scenes contain millions of primitives, rendering them by brute force is laborious.  
 
 \noindent
 \\ 
-Preprocessing algorithms to reorder and group the primitives to make them quickly traversed and tested can be used to overcome this challenge. \textbf{Spatial subdivision} and \textbf{object subdivision} are the two basic types of data acceleration structures. Spatial subdivision algorithms partition three-dimensional space into areas and keep track of which primitives overlap which regions. On the other hand, object subdivision algorithms gradually subdivide the scene's objects into smaller groups. This way, we can only test the primitives that have a higher probability of intersecting with the ray rather than testing all primitives that are not relevant to the region the ray passes through. 
+The main challenge is to capture as many details in the scene as possible with fewer intersection tests to preserve performance.
+
+\noindent
+\\ 
+Data structures are used for sorting and searching. It can be utilized to reorder and group the primitives to make them quickly traversed and tested. \textbf{Spatial subdivision} and \textbf{object subdivision} are the two common types of data acceleration structures integrated into ray tracers. Spatial subdivision algorithms partition three-dimensional space into areas and track which primitives overlap which regions. On the other hand, object subdivision algorithms gradually subdivide the scene's objects into smaller groups. Hence, only primitives with a higher probability of intersecting the ray are tested, excluding far primitives from the ray intersection test. 
 
 \clearpage
 
