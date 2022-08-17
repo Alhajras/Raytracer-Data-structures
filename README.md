@@ -34,8 +34,8 @@ width: Width of the scene, default value is 640
 height: Height of the scene, default value is 480
 backgroundColor: Standard bg color. default value is white
 aa_samples: Anti aliasing samples, default value is 1
-dataStructure: options are (BVH, KDTREE, LBVH, NONE), default value is Bunny
-sceneModel: Model from the models in the models directory, default value is the bunny
+dataStructure: options are (BVH, KDTREE, LBVH, NONE), default value is BVH
+sceneModel: Model from the models in the models directory, default value is the Bunny
 ```
 
 There is a bug where the space between primitives increased but by using the bisect I have found that it started from this commit: `0a261fd3418f82cf09f6b291786ee5b2d71f68ba`
