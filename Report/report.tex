@@ -410,15 +410,16 @@ After finding the candidate's primitives, the last step is to find the primitive
 
 \section{Linear Bounding Volume Hierarchies (LBVH)}
 \subsection{Concept}
-While BVH boosts the renderer's performance and makes it possible to render millions of primitives in minutes, it introduces an extra step in the rendering pipeline, which is a preprocess for building the tree. The building tree process can take half of the rendering time; nevertheless, creating this tree will make the render faster to find the intersected primitive. The question now is, can we do something about it? 
+While BVH boosts the renderer's performance and makes it possible to render millions of primitives in minutes, it introduces an extra step in the rendering pipeline: building the tree. The building tree process can take half the rendering time; nevertheless, creating the tree allows for rendering millions of primitives in seconds. Hence can the tree construction phase be improved further?
 
 \noindent
 \\
-One way to solve this is to parallelize the building process. The parallelization can be done if the subtrees are independent of each other. This is what Linear Bounding Volume Hierarchies do. It creates a subprocess to make them build sub trees and join them at the end of the building of the subtrees to make one node. Naturally, parallelization will boost the performance of the construction time. Hence we will not compare it with the normal BVH. However, we will treat the LBVH as different splitting criteria and compare its performance with the BVH.
+One way to solve this is to parallelize the building process. The parallelization can be done if the subtrees are independent of each other. This is what Linear Bounding Volume Hierarchies do. It creates a subprocess to make them build sub trees and join them at the end of the building of the subtrees to make one node. Naturally, parallelization will boost the performance of the construction time. Hence when this method is compared with the BVH, only one thread is used for fairness. However, LBVH can be compared with the BVH mentioned as different splitting criteria.
 
 \noindent
 \\
-The first step is transforming the building tree problem into a sorting problem. We map the 3D centroid points for each primitive to one value that can be sorted. Morton codes do this mapping. Morton code map multidimensional data to one dimension while preserving the locality of the data points \protect\cite{wikipedia2022}. The transformation is done by interleaving the bits of the primitive's centroid in base 2. for example, taking a 3D point (x,y,z), the result Morton code will be calculated as follows: 
+The first step is transforming the building tree problem into a sorting problem. Each primitive's 3D centroid point is mapped to one value that can be sorted. Morton codes do this mapping. Morton code maps multidimensional data to one dimension while preserving the locality of the data points \protect\cite{wikipedia2022}. The transformation is done by interleaving the bits of the primitive's centroid in base 2. for example, taking a 3D point (x,y,z), the result Morton code can be calculated as follows: 
+
  
 \begin{equation}
  ...z_3y_3x_3z_2y_2x_2z_1y_1x_1z_0y_0x_0
@@ -431,15 +432,14 @@ The first step is transforming the building tree problem into a sorting problem.
 
 \noindent
 \\
-After mapping the 3D point to 1D Morton code, we can use a sorting algorithm as a Radix sort \protect\cite{Karras2012}.
+After mapping the 3D point to 1D Morton code, a sorting algorithm as a Radix sort can be used to sort the result list \protect\cite{Karras2012}.
 
 \subsubsection{Morton Code as a Splitting Criteria}
-After mapping all primitives centroid to a Morton code and sorting them, the next step is knowing how to use the sorted list to build the tree. To better understand how the LBVH constructs the binary tree, we will illustrate this with a scene as shown in Figure ~\ref{fig:mortonexample}
-. The scene is made out of 16 primitives distributed as shown. The first step is to generate the Morton code for each centroid point. Looking closely into the generated Morton codes of each primitive, we can note that each bit acts as a splitting plane that splits the primitives into more than one region. 
+After mapping all primitives centroid to a Morton code and sorting them, the next step is knowing how to use the sorted list to build the tree. Figure ~\ref{fig:mortonexample} is used to better understand how the LBVH constructs the binary tree. The scene is made out of 16 primitives distributed as shown. The first step is to generate the Morton code for each centroid point. Looking closely into the generated Morton codes of each primitive, it can be noticed that each bit acts as a splitting plane that splits the primitives into more than one region. 
 
 \noindent
 \\
-The first bit will split the y-axis into two regions. The first region with the first bit equals $1$, and the second region with the first bit equals $0$. For the binary tree, we can assign primitives with the zeros $0$xxx on the left child and the primitives with ones $1$xxx on the right. The second bit will split the scene into two areas by an x-axis plane. The third bit will split the y-axis into four regions.
+The first bit splits the y-axis into two regions. The first (top) region with the first bit equals $1$, and the second region (bottom) with the first bit equals $0$. Regarding the binary tree, the primitives with the zeros $0$xxx can be assigned to the left child node and the primitives with ones $1$xxx can be assigned to the right node. The second bit splits the scene into two areas by an x-axis plane. The third bit splits the y-axis into four regions. Recursively doing this until the last bit is reached.
 
 
 \begin{figure}[H]	
@@ -494,19 +494,19 @@ The first bit will split the y-axis into two regions. The first region with the 
 
 
 \subsection{Implemntation}
-The implementation includes two essential stages, Constructing the tree and tree Traversal. Traversal will not be repeated since the produced tree is a binary tree similar to the BVH. Hence the same traversal algorithm used in the BVH will be utilized for LBVH. Nevertheless, the main focus of the LBVH is building the tree.
+The implementation includes two essential stages, Constructing the tree and tree Traversal. Traversal is not covered since the produced tree is a binary tree similar to the BVH, and the same traversal used for the BVH can be used for LBVH. Nevertheless, the main focus of the LBVH is building the tree.
 
 
 \subsubsection{Construction}
-The first step is to generate the Morton code for each primitive and to save time. One can generate the Morton code for each primitive and start sorting them while reading the primitives from the scene. It is better than reading the whole scene than going through all primitive in linear time and then sorting them by Radix sort.
+The first step is to generate the Morton code for each primitive and to save time. One can generate the Morton code for each primitive and start sorting them while reading the primitives from the scene. It is more useful than reading the whole scene than going through all primitive in linear time and then sorting them by Radix sort.
 
 \noindent
 \\
-Next, we create the nodes and split them based on the leading bits. We start with the sorted Morton code and search for the first leading bit change. Once the bit flips, we assign the zeros to the left child node and the rest to the right child node. We calculate the global bounding box for the current primitives and create the current node since we have all we need, an AABB box and a splitting point. We recursively keep doing this until we reach leaves and assign the primitives indexes or ids to the leaves. Remember, we use an unlimited depth for the LBVH. Also, the maximum number of primitives in a leaf was set to one.
+Next, the tree nodes are created by using the Morton code as a splitting criterion. Starting with the sorted Morton code and searching for the first leading bit change. Once the bit flips, the primitives with leading zeros are assigned to the left child node and the rest to the right child node. Then the global AABB box for the current primitives is calculated. The current node is lastly created since all data are needed to create a node, an AABB box and a splitting point. Recursively repeating this process until the leaves are reached and the primitives are assigned to the leaves nodes. Note that the $depth$ parameter for the LBVH is not declared as BVH. Moreover, the maximum number of primitives in a leaf $maxPrims$ was set to one.
 
 \noindent
 \\
-Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, LBVH makes it trivial to parallelize the construction stage. To achieve this, we will use a simple conditional multithreading mechanism. Building the tree will only create a new thread if the number of primitives in the subtree is more than 100 primitives. Note that this is a random number chosen, but we do not want to create a new thread for small subtrees because it is not worth it. Note that for a fair comparison between the data structures, we will not parallelize LBVH and will only run it on one thread. 
+LBVH in this project acts as a splitting criterion of a BVH. As discussed, LBVH makes it trivial to parallelize the tree construction stage. To achieve this, one can use a conditional multithreading mechanism. Only a new thread is created if the number of primitives in a subtree is more than 100 primitives. Note that this is a random number chosen; it is not preferred to create a new thread for small subtrees because it is not worth it.
 
 
 \begin{algorithm}[H]
@@ -518,13 +518,13 @@ Until this point, LBVH acts as a splitting criterion of a BVH. As we discussed, 
 
 \State $aabb$ $\gets$ $getGlobalAABB(primitives)$
 \State $primitives$ $\gets$  $endI$ - $startI$
-\If{$primitives = 0$}
+\If{$primitives = 1$}
 	\State $node \rightarrow isleaf \gets true$
 	\State $node \rightarrow prims \gets allPrimitives[startI]$
 	\State \Return $node$
 \EndIf
 
-\State $split \gets findSplitPoint(sortedMortonCodes, startIndex, endIndex)$
+\State $split \gets findSplitPoint(sortedMortonCodes, startI, endI)$
 \State $node \rightarrow leftchild  \gets constructLBVH(allPrimitives, startI, split)$
 \State $node \rightarrow rightchild  \gets constructLBVH(allPrimitives, split, endI)$
 \State \Return $node$
