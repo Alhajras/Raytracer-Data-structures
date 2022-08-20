@@ -186,6 +186,7 @@ The previous behaviour is known as Brute forcing. Brute forcing complexity is hi
 \\
 Generally, using more samples often produces a higher quality frame; additionally, more recursion (Shadow rays) generates better illumination results. However, each recursion depth generates one extra complexity. Giving a ray tracer that uses $S = 5$, $P = 100, 000$, and $N =  1, 280 $ x $1, 024$, $depth = 3$. This approximately require $= 1, 280 * 1, 024 * 100, 000 * 5 * 3 = 1.96608*10^{12} $ intersection test. Assuming the machine used spends $0.001 \mu$s on each ray. The computer will render the frame in 21 days. Computers nowadays can handle this easily. Nonetheless, the main challenge is scalability; some scenes contain millions of primitives, rendering them by brute force is laborious.  
 
+
 \noindent
 \\ 
 The main challenge is to capture as many details in the scene as possible with fewer intersection tests to preserve performance.
@@ -398,7 +399,7 @@ After finding the candidate's primitives, the last step is to find the primitive
 			\State $return\;\;false$
 		\EndIf
 		\If{$node$ $\rightarrow$ $isLeaf = true$}
-		    \State $hitList$ $\rightarrow$ $push(node \rightarrow premitives)$
+		    \State $hitList$ $\rightarrow$ $push(node \rightarrow primitives)$
 		\Else
 			\State $intersectBVH(ray, node \rightarrow leftChild,\, hitList)$
 			\State $intersectBVH(ray, node \rightarrow rightChild,\, hitList)$
@@ -584,7 +585,7 @@ Cost(V) = C_T + C_I(\frac{SA(V_L)}{SA(V)}N_L + \frac{SA(V_R)}{SA(V)}N_R)
 
 \noindent
 \\
-Where: $V$: Total volume, $C_T$: Cost of traversal, $C_I$: Cost of intersection, $SA$: Surface area, $N_L$: Number of left premitives, $•N_R$: Number of right premitives.
+Where: $V$: Total volume, $C_T$: Cost of traversal, $C_I$: Cost of intersection, $SA$: Surface area, $N_L$: Number of left primitives, $•N_R$: Number of right primitives.
 
 \noindent
 \\
