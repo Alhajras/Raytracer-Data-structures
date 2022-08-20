@@ -646,30 +646,33 @@ In the previous iterations, the 5th iteration results in the minimum cost. Hence
 
 
 \subsection{Implemntation}
-The Kd-Tree has a variety of implementations, the one used in this project is based on \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016}. The implementation generates a binary tree that focuses on less memory consumption (Compact representation) and finds the best split by using the SAH method for splitting. We will be using a top-down approach as we did in BVH. We will split the implementation into two phases: Tree construction and tree traversal.
+The Kd-Tree has a variety of implementations, the one used in this project is based on \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016}. The implementation generates a binary tree that focuses on less memory consumption (Compact representation) and finds the best split by using the SAH method for splitting. The top-down approach was adopted as BVH. The implementation is split into two phases: Tree construction and Tree traversal.
 
 \noindent
 \\
-Kd-Tree is a variant of \textbf{Binary Space Partitioning (BSP)} tree. BSP trees use planes to divide the space into regions. It follows a top-down approach where a bounding box bounds the whole scene. If the number of primitives inside the bounding box exceeds a pre-defined parameter, we will name it \textit{maxPrims} then; the box is split into two sub-regions based on chosen splitting criteria. Each primitive is associated with the corresponding box/region that it intersects. Consequently, duplicated primitives can be assigned to more than one bounding box, unlike the BVH.
+Kd-Tree is a variant of \textbf{Binary Space Partitioning (BSP)} tree. BSP trees use planes to divide the space into regions. It follows a top-down approach where a bounding volume bounds the whole scene. If the number of primitives inside the bounding volume exceeds a pre-defined parameter \textit{maxPrims}, then the volume is split into two sub-regions based on chosen splitting criteria. Each primitive is associated with the corresponding volume/region that it intersects. Consequently, duplicated primitives can be assigned to more than one bounding volume, unlike the BVH.
+
 
 \noindent
 \\
-The procedure keeps repeating recursively until one of the two stop conditions occurs. Either the number of primitives in the sub-regions is less than \textit{maxPrims} or the other parameter, \textit{depth} is reached. The \textit{maxdepth} parameter is used to control the \textit{depth} of the tree.  
+The fit-split procedure keeps repeating recursively until one of the two stop conditions occurs. Either the number of primitives in the sub-regions is less than \textit{maxPrims} or the other parameter, the maximum allowed tree depth \textit{depth} is reached. The \textit{maxdepth} parameter is used to control the \textit{depth} of the tree.  
 
 \noindent
 \\
 For simplicity and since AABB is used, only three axes will be considered for splitting x, y and z. However, this compromises some flexibility in how space is divided.
 
 \subsubsection{Construction}
-The recursive top-down algorithm is used to construct the Kd-Tree. We have a collection of primitives that overlap the axis-aligned space region at each step. Either the region is divided into two smaller ones and transformed into an inner node, or the recursion is stopped by making a leaf node out of the overlapping primitives.
+The concept of building the Kd-Tree is similar to the BVH, where AABB is the chosen BV, a top-down algorithm is used, and the stopping condition are thje \textit{maxdepth} and \textit{depth}. However, the first difference is the splitting criteria where SAH is used instead of the median method. Moreover, compact tree representation is used. The last difference is that when assigning the primitives in the Kd-Tree, the primitives can be assigned to both left and right children within the same split.
+
 
 \noindent
 \\
-In the Kd-Tree, we will save the nodes in an array and not in a tree representation, as mentioned before, to increase caching time. The issue is predetermining the number of nodes before building the tree to initiate the array. There are two approaches here. The first is to build the binary tree and then flatten it to an array (compact representation). The second approach is to allocate memory as we build the tree dynamically. The first approach needs two steps to build the tree and then transform it into a compact form, adding an extra step that reduces performance. Also, it consumes more memory as it needs to save the tree and adds an array that contains the same number of nodes as the tree. The latter approach is preferred as it consumes less memory and improves performance. However, it needs better handling for the memory allocation; this complexity depends on the implementation and the programming language used; therefore, the implementation will not be explained. 
+In the Kd-Tree, the nodes are saved in an array and not in a binary tree representation, as mentioned before, to increase caching time. The issue is predetermining the number of nodes before building the tree to initiate the array. There are two approaches to tackle this issue. The first is to build the binary tree and then flatten it to an array (compact representation). The second approach is to allocate memory as a tree being built dynamically. The first approach needs two steps to build the tree and then transform it into a compact form, adding an extra step that reduces performance. Also, it consumes more memory as it needs to save the tree and adds an array that contains the same number of nodes as the tree. The latter approach is preferred as it consumes less memory and improves performance. However, it needs better handling for the memory allocation; this complexity depends on the implementation and the programming language used; therefore, the implementation will not be covered in the report. 
+
 
 \noindent
 \\
-For building the tree, the maximum allowed depth is needed to be given. However, what depth is preferred? Significant depth will increase the number of nodes, increasing memory consumption but reducing complexity from linear to more logarithmic. On the other hand, reducing the depth will decrease the number of nodes but will make the traversal time more linear, killing the use of the binary tree to reduce the complexity. A generic formula can be used to calculate the depth based on the \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016} book. This formula works for various scenes; $ N$ is the number of primitives in the scene, as the book suggests.
+Since the maximum depth of the tree is used, the question is, what depth is preferred? Significant depth increases the number of nodes, increasing memory consumption but reducing complexity from linear to more logarithmic. On the other hand, reducing the depth decreases the number of nodes, but it makes the traversal time more linear, killing the use of the binary tree to reduce the complexity. A generic formula can be used to calculate the depth based on the \textbf{Physically Based Rendering PBR} \protect\cite{Pharr2016} book. This formula works for various scenes; $ N$ is the number of primitives in the scene, as the book suggests.
 
 
 
@@ -680,18 +683,15 @@ depth = 8 + 1.3\log(N)
 
 \noindent
 \\
-Since we are using memory allocation dynamically for the nodes array, each time the array is full, we will reallocate more memory double the size of the old array.
+Since dynamic memory allocation for the nodes array is used, each time the array is full, more memory the double the size of the old array is reallocated.
 
 \noindent
 \\
-Unlike in the BVH, where we used the median point, in Kd-Tree, SAH is used to find the splitting point. The advantage of using median point is that it is intuitive to calculate and implement; nevertheless, it does not care about the area/volume of the primitive; it will simply split the primitives into two halves, unlike SAH, which considers the area/volume. Two parameters, $C_T$: Cost of traversal and $C_I$: Cost of intersection, are used in the SAH that will be tested and tweaked to find the best parameters. There are different methods to search for the best parameters for the best scenes; nevertheless, we will focus on the ratio between the two parameters instead. PBR suggests using 80 and 1, respectively.
-
+Unlike in the BVH, where the median point is used, in Kd-Tree, SAH is used to find the splitting point. The advantage of using a median point is that it is intuitive to calculate and implement; nevertheless, it does not care about the area/volume of the primitive; it will simply split the primitives into two halves, whereas SAH considers the area/volume. Two parameters, $C_T$: Cost of traversal and $C_I$: Cost of intersection, are used in the SAH that can be tweaked to find the best parameters. There are different methods to search for the best parameters for the best scenes; nevertheless, the report uses a fixed ratio between the two parameters. PBR suggests using 80 and 1, respectively.
 
 \noindent
 \\
-One extra parameter, \textit{emptyBonus} denoted as $b_e$ will be added to the SAH algorithm. Since rays travelling through empty areas can progress to the next kd-tree node without having to do ray-primitive intersection checks, there is a little advantage for picking splits when one of the children has no primitives overlapping it. The parameter takes a value between 0 and 1 if one of the regions is empty and 0 otherwise. 
-
-
+One extra parameter, \textit{emptyBonus} denoted as $b_e$ is added to the SAH algorithm. Since rays travelling through empty areas can progress to the next kd-tree node without having to do ray-primitive intersection checks, there is a little advantage for picking splits when one of the children has no primitives overlapping it. The parameter takes a value between 0 and 1 if one of the regions is empty and 0 otherwise.
 
 \begin{equation}
 Cost(V) = C_T + (1-b_e)C_I(\frac{SA(V_L)}{SA(V)}N_L + \frac{SA(V_R)}{SA(V)}N_R)
@@ -699,7 +699,8 @@ Cost(V) = C_T + (1-b_e)C_I(\frac{SA(V_L)}{SA(V)}N_L + \frac{SA(V_R)}{SA(V)}N_R)
 
 \noindent
 \\
-One challenge left, if we want to consider all the splitting points as candidates, computing the cost of splitting is expensive, but as we mentioned before, we can use a fixed number of buckets. However, which is the best number for this parameter? The bigger the number, the more accurate the splitting point will be at the cost of building the tree's performance because more calculations are needed. Instead, we will only consider the limits of the bounding boxes. Hence we will need at most $2 * N$ buckets at each cost calculation, where $N$ is the number of primitives.
+In the demonstration, a fixed number of buckets is used. However, which is the best number for this parameter? The bigger the number, the more accurate the splitting point will be at the cost of building the tree's performance because more calculations are needed. Instead, only the limits of the bounding boxes are considered. Hence at most, $2 * N$ buckets at each cost calculation are needed, where $N$ is the number of primitives.
+
 
 \begin{figure}[H]	
      \centering
@@ -711,10 +712,11 @@ One challenge left, if we want to consider all the splitting points as candidate
 
 \noindent
 \\
-Some edge cases can occur when the same number of primitives are assigned for both children. At this point, we are not gaining any performance from creating an interior node. The solution is to try other axes instead of the best-chosen axis. If the same edge case occurred for all axes, we would create one leaf node and assign all the primitives. It also can be worse to split than creating a leaf node based on the SAH algorithm. In that case, a leaf node is created rather than splitting. 
+Some edge cases can occur when the same number of primitives are assigned for both children. At this point, no performance is gained from creating an interior node. The solution is to try other axes instead of the best-chosen axis. If the same edge case occurred for all axes, a leaf node is created, and the primitives are assigned to it. It also can be worse to split than creating a leaf node based on the SAH algorithm. In that case, a leaf node is created rather than splitting. 
+
 
 \subsubsection{Traversal}
-The kd-Tree traversal is different from the BVH traversal we mentioned. BVH was a binary tree traversal where we start with the root node and go to the left or right child. On the other hand, the Kd-tree uses a depth-first, front-to-back traversal algorithm. 
+The kd-Tree traversal is different from the BVH traversal mentioned. BVH was a binary tree traversal that starts with the root node and goes to the left or right child. On the other hand, the current Kd-Tree uses a depth-first, front-to-back traversal algorithm. 
 
 
 \begin{figure}[H]	
@@ -722,27 +724,30 @@ The kd-Tree traversal is different from the BVH traversal we mentioned. BVH was 
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/traversal.png}
      \caption{(a) The initial intersection with the parent node, gives an initial parametric $[t_{min}, t_{max}]$ range to consider. (b) Because this range is nonempty, both children will be tested. The “near” node will be tested first where it has a parametric range $[t_{min}, t_{split}]$. If it is a leaf, its primitives will be tested; otherwise, its children will be tested recursively. (c) If the near node intersection test returns false, the far node will be tested. (d) Continuously keep visiting the tree nodes using depth-first, front-to-back traversal until the closest intersection is found or the ray exits the tree.  \protect\cite{Pharr2016}}
-        \label{fig:dice}
+        \label{fig:depthfirst}
 \end{figure}
 
 \noindent
 \\
-The first intersection test will start by testing if the ray intersects the global bounding box of the whole Kd-Tree $[t_{min}, t_{max}]$. If it returns false, we stop testing other nodes in the tree instantly because this means the ray does not pass any primitive.
+The first intersection test starts by testing if the ray intersects the global 	AABB of the whole Kd-Tree $[t_{min}, t_{max}]$. If it returns false, it stops testing other nodes in the tree instantly since the ray does intersect the root node.
 
 \noindent
 \\
-If it returns true, we proceed to the next node using a depth-first, front-to-back traversal algorithm. If the next node is a leaf node, we iterate through the list of the primitives assigned to the node. As we discussed, we are not saving the primitives directly in the leaf node. We only save the number of primitives and the offset of the indices. It is a huge performance advantage, especially for the Kd-Tree, because in the Kd-Tree, one primitive can be in more than one node at a time. In terms of memory usage, if one leaf contains an N number of primitives, then there is a high chance of duplication of information with another leaf that contains these N primitives. It can be imagined with a million primitives. This can be at least twice the number of the original primitives. Before going through all the primitives, if the ray already intersected primitives in other nodes and those other nodes and the intersected point is less than the $t_{min}$ of the current node, then we are sure that we can not do better. We will not find any closer primitive in the leaf node. Hence we break and return. 
+If it returns true, the next node using a depth-first, front-to-back traversal algorithm is found. If the next node is a leaf node, it iterates through the list of the primitives assigned to the node. As discussed, only the number of primitives and the offset of the indices are saved in the leaf node. It is a huge performance advantage, especially for the Kd-Tree, because in the Kd-Tree, one primitive can be in more than one node at a time. In terms of memory usage, if one leaf contains an $N$ number of primitives, then there is a high chance of duplication of information with another leaf that contains these $N$ primitives. It can be imagined with a million primitives. This can be at least twice the number of the original primitives.
+While going through all the primitives, if the ray already intersected primitives in other nodes and those other nodes and the intersected point is less than the $t_{min}$ of the current node, then it is guaranteed that the ray tracer will not find other closer intersection. Hence it breaks and returns. 
  
 
 \noindent
 \\
-Otherwise, if it is an interior node, we would like to test its children, and unlike we did in the BVH, we were going left and right. This time we will use the intersection point to determine the left and right nodes. By comparing the splitting point with the intersected point, we can determine which children are more likely to be intersected first. This can be done quickly by checking if $t_{split} > t_{max}$, then we do not need to check the far child node (Second/Right node), same we check if $t_{split} < t_{min}$, then we do not check the near child node (First/Left node). Otherwise, we check them both by starting with the near (Left) and proceeding to the far (Right).   
+Otherwise, its children are tested next if it is an interior node. The intersection point is used to determine the left and right nodes. Comparing the splitting point with the intersected point can determine which children are likelier to be intersected first. This can be done quickly by checking if $t_{split} > t_{max}$, then the far child node (Second/Right node) will not be tested. Same checking if $t_{split} < t_{min}$, then the near child node (First/Left node) will not be tested. Otherwise, both are checked by starting with the near (Left) and proceeding to the far (Right).   
+  
 
 \begin{figure}[H]	
      \centering
      \captionsetup{justification=centering,margin=2cm}
      \includegraphics[width=10cm]{images/kdtree/traversal_case.png}
-     \caption{Different scenarios prove the ray should not intersect both children. (a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence we are sure it will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) Ray intersects the box at a point after the splitting plane, indicating that the near child is avoided.  \protect\cite{Pharr2016}}
+     \caption{Different scenarios prove the ray should not intersect both children. (a) The ray intersects the splitting plane at a point bigger than the $t_{max}$; hence it is guaranteed that the ray will not intersect the far child node. A negative sign denotes the bottom ray's direction away from the dividing plane. (b) Ray intersects the box at a point after the splitting plane, indicating that the near child is avoided. 
+ \protect\cite{Pharr2016}}
         \label{fig:dice}
 \end{figure}
 
