@@ -754,7 +754,7 @@ Otherwise, its children are tested next if it is an interior node. The intersect
 \clearpage
 
 \section{Performance Analysis}
- Optimizing parameters is part of rendering. Therefore, in this chapter, we will analyze the different data structures used, BVH, LBVH and Kd-Tree and how they perform against different scenes. We will pick up one data structure, Kd-Tree and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
+Optimizing parameters is part of rendering. Therefore, this chapter analyses the different data structures used, BVH, LBVH and Kd-Tree and how they perform against different scenes. One data structure is selected, Kd-Tree and tweak its different parameters and analyze how small changes in the parameter can affect the performance.
 
 
 \noindent
@@ -774,7 +774,7 @@ Property & Value \T\B  \\
 Machine & Intel(R) i7-8565U 16GB RAM\T\B
 \\    
 \hline
-Resolution & 640x480  \T\B
+Resolution & 640\;x\;480  \T\B
 \\
  \hline
 Programming language & C++  \T\B 
@@ -800,15 +800,13 @@ Anti-aliasing samples & 1 \T\B
 \end{table}
 
 \subsection{How tweaking the data structure parameters affect performance}
-Each data structure has its different implementation. In this subsection, we would like to illustrate how a slight change in each data structure parameter can produce different trees, affecting performance significantly. Only Kd-Tree will be investigated in terms of changing parameters and noticing their effect because the BVH and LBVH can do the same result, but they will be redundant.
+Each data structure has its different implementation. This subsection illustrates how a slight change in a data structure parameter can produce different trees, affecting performance significantly. Only Kd-Tree is investigated in terms of changing parameters and noticing their effect, considering the BVH and LBVH can do the same result, but they will be redundant.
 
 \noindent
 \\
-Figure ~\ref{fig:kdtreeexample} shows two different constructed binary trees based on the same algorithm Kd-Tree and the same input scene; however, by changing the maximum number of primitives in the leaf node parameter \textit{maxPrims} from 1 to 2. We can note that one tree is shorter than the other! How would this affect the performance? 
+Figure ~\ref{fig:kdtreeexample} shows two different constructed binary trees based on the same algorithm Kd-Tree and the same input scene; nonetheless, by changing the maximum number of primitives in the leaf node parameter \textit{maxPrims} from 1 to 2. It can be noted that one tree is shorter than the other! A deeper tree represents more nodes which leads to more memory consumption. Moreover, if the splitting criteria are too poor, this can lead to a long traversal time. On the other hand, a shallow tree can lead to fewer nodes but leaves that contain more primitives that require a linear search (Brute force). 
 
-\noindent
-\\
-A deeper tree means more nodes which leads to more memory consumption. Moreover, if the splitting criteria are too bad, this can lead to a long traversal time. On the other hand, a shallow tree can lead to fewer nodes but leaves that contain more primitives that will require a linear search (Brute force). 
+ 
 
 
 \begin{figure}[H]	
@@ -852,18 +850,18 @@ A deeper tree means more nodes which leads to more memory consumption. Moreover,
 
 \noindent
 \\
-The next example demonstrates the performance differences between the two trees in simple math. Assuming the time consumed by the AABB intersection test is $0.1ms$. Let us calculate the time consumed to render the yellow sphere by talking the green path shown in the ~\ref{fig:kdtreeexample}. Sub-figure ~\ref{fig:kdtreeexampleb}
- needs five AABB tests resulting in $0.5ms$ to find the sphere, unlike in ~\ref{fig:kdtreeexampled}
- where only three AABB tests are needed resulting in $0.3ms$. The deeper tree has less performance than the other! Nonetheless, we did not consider the intersection cost of the spheres! In this example, the sphere intersection cost is tiny, but what if we replace the spheres with more complex models? Will the shallow tree still be better to use? In a shallow tree, the yellow sphere can be after the blue sphere in the list; hence one has to test the blue sphere first and then jump to the yellow. If the blue sphere (Model) generally has a high intersection cost, assumingly $0.3ms$. Then this will be added to the shallow tree cost to become $0.3ms + 0.3ms = 0.6ms$, which is larger than the long path in the deeper tree. Even though the model is as simple as a triangle or sphere only, we must remember that for the long list containing many primitives, this will add a leaner complexity.
+The next example demonstrates the performance differences between the two trees in simple math. To calculate the time consumed to render the yellow sphere by talking the green path shown in the ~\ref{fig:kdtreeexample}. Assuming the time consumed by the AABB intersection test is $0.1ms$. Sub-figure ~\ref{fig:kdtreeexampleb}
+ needs five AABB tests resulting in $0.5ms$ to find the sphere, whereas in ~\ref{fig:kdtreeexampled} only three AABB tests are needed resulting in $0.3ms$. The deeper tree has less performance than the other! Nonetheless, the intersection cost of the spheres was not considered! In this example, the sphere intersection cost is tiny, but what if the sphere is replaced with a more complex model? Will the shallow tree still be better to use? In a shallow tree, the yellow sphere can be after the blue sphere in the list; hence one has to test the blue sphere first and then jump to the yellow. If the blue sphere (Model) generally has a high intersection cost, assumingly $0.3ms$. Then this will be added to the shallow tree cost to become $0.3ms + 0.3ms = 0.6ms$, which is larger than the long path in the deeper tree. Even though the model is as simple as a triangle or sphere, it is worth mentioning that for the long list containing many primitives, this will add a leaner complexity.
+
 
 \noindent
 \\
-After understanding the concept of the effect of the parameters on building the tree, Kd-Tree is used to analyse this further by using the current ray tracer. In this experience, we will change two parameters: The maximum number of primitives assigned to each leaf \textit{maxPrims} and the Maximum depth of the tree \textit{depth}. For better analyses, one model is fixed and used. Moreover, other SAH parameters are fixed to focus only on the two parameters mentioned. 
+After understanding the concept of the effect of the parameters on building the tree, Kd-Tree is used to analyse this further by using the current ray tracer. In this experience,  only two parameters are changed by fixing the others: The maximum number of primitives assigned to each leaf \textit{maxPrims} and the Maximum depth of the tree \textit{depth}. For better analyses, one model is fixed and used. Moreover, other SAH parameters are fixed to focus only on the two parameters mentioned. The Stanford bunny is used in this configuration.
+
 
 \noindent
 \\
-By changing the \textit{maxPrims} parameter and fixing the other parameters, we can note that the larger the value, the less it takes to build the tree. For instance, when increasing ${maxPrims}$ from  1 to 100, the build time increased by almost 2X. This is predictable; as we discussed before when the ${maxPrims}$ parameter is significant, we stop the recursion of building the tree; hence we stop creating more interior nodes; as shown in the table, the total number of nodes decreases by almost 418X. Consequently, the tree depth becomes smaller. On the other hand, we note that rendering time increased by 1.2X. This is because some leaf contains 100 primitives that the ray has to go through them linearly and test them until it finds the right primitive or, even worse, not find an intersection after going through 100 primitive intersections. This explains why the number of intersection tests shown in the table has increased by almost  61X. Setting the value to 10 as a trade-off results in an acceptable building and the rendering time.
-
+By changing the \textit{maxPrims} parameter and fixing \textit{depth}, it can be noted that the larger the value, the less it takes to build the tree. For instance, when increasing ${maxPrims}$ from  1 to 100, the build time increased by almost 2X. This is predictable; as discussed before, when the ${maxPrims}$ parameter is significant, the recursion of building the tree stops earlier; hence it stops creating more interior nodes. The table shows that the total number of nodes decreases by almost 418X. Consequently, the tree depth becomes smaller. On the other hand, the rendering time increased by 1.2X. Considering some leaf contains 100 primitives, the ray has to go through them linearly and test them until it finds the right primitive or, even worse, not find an intersection after going through 100 primitive intersections. This explains why the number of intersection tests shown in the table has increased by almost  61X. Setting the value to 10 as a trade-off results in an acceptable building and the rendering time.
 
 \begin{table}[ht] 
 \centering 
@@ -907,11 +905,12 @@ depth = 100& 35, 947 & 44, 854 & 683, 669 & 1.871 s & 9.546 s\T\B
 
 \noindent
 \\
-Increasing the number of the depth parameter increases the building time; however, it reduces the rendering time significantly. For example, by changing the depth from 5 to 10, the building and rendering time combined is reduced by almost 3X. Although the building time is increased, we notice the massive gain in the rendering time, which is very often the bottleneck in ray tracing. By changing the value from 10 to 28, which is the value suggested by the Equation \eqref{eq:depth} we mentioned earlier, we note that the overall performance increased by almost 1.2X. Increasing the depth to 100 reaches a saturation point where the depth does not play any role in performance. The reason is that for each scene, there is a maximum value depth that the tree can produce, and regardless of increasing the depth parameter, if the parameter is more significant than the maximum depth of the tree, then it is useless to constrain the tree with the value more significant than its maximum reachable depth. We can conclude that the formula used in the PBR book looks promising and delivers the best result from the values used in the table. 
+Increasing the number of the $depth$ parameter increases the building time; however, it reduces the rendering time significantly. For example, by changing the $depth$ from 5 to 10, the building and rendering time combined is reduced by almost 3X. Although the building time is increased, the massive gain in the rendering time is noticeable, which is very often the bottleneck in ray tracing. By changing the value from 10 to 28, the value generated by the Equation \eqref{eq:depth} increased overall performance by almost 1.2X. Increasing the $depth$ to 100 reaches a saturation point where the $depth$ does not play any role in performance. The reason is that for each scene, there is a maximum value depth that the tree can produce, and regardless of increasing the $depth$ parameter, if the parameter is more significant than the maximum depth of the tree, then it is useless to constrain the tree with the value more significant than its maximum reachable depth. The formula used in the PBR book looks promising and delivers the best result from the values used in the table. 
+
 
 \noindent
 \\
-Tweaking both parameters to find the optimal result is different from tweaking one parameter and fixing one. In order to find the best combination of parameters for a random scene, one can use one of the well-known parameter optimization techniques such as  Grid Search. Parameter optimization techniques will not be covered in this report.  
+Tweaking both parameters to find the optimal result is different from tweaking one parameter and fixing one. In order to find the best combination of parameters for a random scene, one can use one of the well-known parameter optimization techniques such as  Grid Search. Parameter optimization techniques are not covered in this report.  
 
 
 \subsection{Investigating different data structures}
@@ -919,11 +918,12 @@ Different models with a diverse range of primitives are used for proper comparis
 
 \noindent
 \\
-Useful metrics have been calculated for the three mentioned data structures against different models. Since each data structure needs a pre-processing time to be constructed and built, \textit{(build)} time in seconds corresponds to how many seconds each data structure took to be ready to be used for the rendering stage. Rendering time \textit{(render)} is also essential to measure, as it indicates how long the overall rays travelled through the scene and includes the traversal phase. The number of intersection tests \textit{(\#int. tests)} done for the primitives is also crucial as it explains how many intersection tests are done in the rendering phase. Usually, less number of intersection tests indicates better performance. The total number of nodes metric \textit{(\#nodes)} indicates the complexity of the constructed tree and how deep it is. 
+Useful metrics have been calculated for the three mentioned data structures against different models. Since each data structure needs a pre-processing time to be constructed and built, \textit{(build)} time in seconds corresponds to how many seconds each data structure took to be ready to be used for the rendering stage. Rendering time \textit{(render)} is also essential to measure, as it indicates how long the overall rays travelled through the scene and includes the traversal phase. The number of intersection tests \textit{(\#int. tests)} done for the primitives is also crucial as it demonstrates how many intersection tests are done in the rendering phase. Usually, less number of intersection tests indicates better performance. The total number of nodes metric \textit{(\#nodes)} indicates the complexity of the constructed tree and how deep it is.
+
 
 \noindent
 \\
-Since each data structure is built using different parameters, we will fix the parameters and only change scenes. The following table shows the settings for each data structure.
+Since each data structure is built using different parameters, the parameters are fixed, and only scenes are changed. The following table shows the settings for each data structure.
 
 \begin{table}[H] 
 \centering 
@@ -935,7 +935,7 @@ Data structure & Parameters \T\B  \\
 BVH & $depth=50,\; maxPrims=1,\; splitting=median$\T\B
 \\    
 \hline
-LBVH & $depth=50,\; maxPrims=1,\; splitting=morton code$ \T\B
+LBVH & $depth=50,\; maxPrims=1,\; splitting=morton\;code$ \T\B
 \\
  \hline
 Kd-Tree & $depth = 8 + 1.3\log(N),\; maxPrims=1,\; splitting=SAH$ \T\B 
@@ -948,11 +948,11 @@ Kd-Tree & $depth = 8 + 1.3\log(N),\; maxPrims=1,\; splitting=SAH$ \T\B
 
 \noindent
 \\
-Considering the building time metric. We note that BVH is the fastest to build the tree, and Kd-Tree is the slowest; nonetheless, LBVH stays in the middle. BVH is the fastest because it uses simple splitting criteria, which is the median of the primitives. This is a cheap performance execution. Moreover, it uses a simple tree representation and does not use a compact form as Kd-Tree. LBVH is almost 2X of the BVH; even though both use the same binary tree, the splitting criteria are different. LBVH has to map the centre point of the 3D primitive to a Morton code, sort it by radix sort and then find a splitting point. These extra three stages add extra complexity to the building phase. Hence LBVH takes more time than BVH for this implementation. Kd-Tree consumes much time in the building phase since it uses the SAH algorithm to split nodes. As we explained already with an example, the SAH method can be expensive to compute, especially for some edge cases where the splitting point can not be found, and the algorithm tries the three different axes until it finds the best split or just split the AABB into halves. 
+Considering the building time metric. It can be noted that BVH is the fastest to build the tree, and Kd-Tree is the slowest; nonetheless, LBVH stays in the middle. BVH is the fastest because it uses simple splitting criteria, which is the median of the primitives. This is an affordable performance execution procedure. Moreover, it uses a simple tree representation and does not use a compact form as Kd-Tree. LBVH is almost 2X of the BVH; although both use the same binary tree, the splitting criteria differ. LBVH has to map the centroid point of the 3D primitive to a Morton code, sort it by radix sort and then find a splitting point. These extra three stages add extra complexity to the building phase. Hence LBVH takes more time than BVH for this implementation. Kd-Tree consumes much time in the building phase since it uses the SAH algorithm to split nodes. As clarified already with an example, the SAH method can be expensive to compute, especially for some edge cases where the best splitting point can not be found, and the algorithm tries the three different axes until it finds the best split or just split the AABB into halves. 
 
 \noindent
 \\
-The second metric is the rendering time. BVH and LBVH have similar rendering performances because both use the same tree traversal algorithm (Pre-order Traversal). By adding both building and rendering time, we can note that BVH spends less time than LBVH. We conclude that in the current implementation, BVH outperforms LBVH. LBVH is primarily beneficial during construction as the tree can be built on multi threads. However, this is not included as it is intuitive that multithreading will increase any algorithm performance. Multithreading LBVH can construct the tree faster than BVH, and since both are similar in rendering time, LBVH can outperform BVH in that scenario. On the other hand, Kd-Tree spends less time on the smaller models with few primitives than the ones with 1 million primitives. Adding both buildings to the rendering time, we note that Kd-Tree consumes much more time than the other data structures due to its expensive building time. 
+BVH and LBVH have similar rendering performances concerning the rendering time since both use the same tree traversal algorithm (Pre-order Traversal). Adding both building and rendering time makes it noticeable that BVH spends less time than LBVH. We conclude that in the current implementation, BVH outperforms LBVH. LBVH is primarily beneficial during construction as the tree can be built on multi threads. However, this is not included as it is intuitive that multithreading will increase performance. Multithreading LBVH can construct the tree faster than BVH, and since both are similar in rendering time, LBVH can outperform BVH in that scenario. On the other hand, Kd-Tree spends less time on rendering. When adding building to the rendering time, it can be noted that Kd-Tree consumes considerably more time than the other data structures due to its expensive building time. 
 
 
 
@@ -1007,12 +1007,12 @@ Kd-Tree \#nodes & 418, 661 & 2, 830, 597  & 415, 406  & 375, 243  \T\B
 \end{table}
 \noindent
 \\
-Concerning the number of nodes and intersections, one can note that BVH and LBVH generally deliver approximately similar output. The built tree for both methods may be due to some similarity in the splitting criteria as the median method is equivalent to the Morton code. It is only a conclusion I made. Kd-Tree shows a more complex tree representation for the smaller model and a simple tree for the larger models. Because the SAH algorithm can produce duplicated primitives in different nodes leading to long deep trees and more nodes, on the other hand, for bigger models, the number of nodes and intersections is reduced significantly. Spending more time to construct and optimise the tree will lead to longer building time; however, it acts as an investment to produce a better tree to boost the rendering (traversal) time.
+Concerning the number of nodes and intersections, one can note that BVH and LBVH generally deliver approximately similar output may be due to some similarity in the splitting criteria as the median method is equivalent to the Morton code. Kd-Tree shows a more complex tree representation for the smaller model and a simple tree for the larger models. Because the SAH algorithm can produce duplicated primitives in different nodes leading to long deep trees and more nodes, on the other hand, for bigger models, the number of nodes and intersections is reduced significantly. Spending more time to construct and optimise the tree can lead to longer building time; however, it acts as an investment to produce a better tree to boost the rendering (traversal) time.
 
 
 \noindent
 \\
-Although the average performance correlates to the number of primitives in the scene, some small scenes produce complex trees and considerable building time. For instance, looking at the Kd-Tree number of nodes can spike up because not only is the number of primitives vital to choosing the proper data structure, but other perspectives related to the scene can affect the performance, not only the number of primitives. The following scenes try to cover some of them.
+Although the average performance correlates to the number of primitives in the scene, some small scenes produce complex trees and considerable building time. For instance, looking at the Kd-Tree number of nodes can spike up as in Igea because not only is the number of primitives vital to choosing the proper data structure, but other perspectives related to the scene can affect the performance; not only the number of primitives. The following scenes try to cover some of them.
 
 \noindent
 \\
